@@ -1,0 +1,80 @@
+{% set articleCount = 0 %}
+{% set eventCount = 0 %}
+{% set cardIndex = 0 %}
+
+
+<div class="row" data-section="01">
+    <div class="col-12">
+        <div class="c-page-head c-page-head-xs">
+            <div class="u-heading__large u-heading__large-xs u-pr--6 u-bg-white">{{title}}</div>
+            <a href="{{link}}" class="c-page-head__link">View all</a>
+        </div>
+    </div>
+</div>
+
+
+<div class="row c-cards">
+    {% for i in 0..2 if articles[articleCount] %}
+        <div class= "col-12 col-md-4">
+            {{this.render('../_single-article.twig', {
+                article: articles[articleCount], 
+                position: (articleCount+1),
+                imageSize: {width: 360, height: 270},
+                containerClass: "card-5-mobile card-4-tablet card-2-desktop"
+            }) | raw}}
+            {% set articleCount = (dev) ? articleCount : articleCount + 1 %}
+        </div>
+    {% endfor %}
+
+
+</div>
+
+
+<div class="row">
+
+
+        <div class="col-12 col-md-8 col-lg-8">
+            <div class="row">
+            {% for i in 0..1 if articles[articleCount] %}
+                <div class="col-12 col-md-split">
+
+                    {{this.render('../_single-article.twig', {
+                        article: articles[articleCount], 
+                        position: (articleCount+1),
+                        imageSize: {width: 740, height: 360},
+                        containerClass: "card-5-mobile card-4-tablet card-5-desktop"
+                    }) | raw}}
+                    {% set articleCount = (dev) ? articleCount : articleCount + 1 %}
+
+                </div>
+            {% endfor %}
+            </div>
+        </div>
+
+
+
+
+
+    {% set events = _Event.getEvents({"limit": limit, "start_date": date.date | split(" ")[0]}) %}
+    <div class="col-12 col-md-4 c-events">
+        <div class="c-events-panel c-events-panel-xs">
+            <h4 class="c-events-panel__head c-events-panel__head-xs">Upcoming Events</h4>
+            <div class="c-events-panel__details">
+                
+                {% for i in 0..3 if events[i] %}
+
+                    {{this.render('../_single-event.twig', {
+                        event: events[i], 
+                        imageSuppress: 'true',
+                        containerClass: "event-card-2-mobile event-card-2-tablet event-card-2-desktop"
+                    }) | raw}}
+                    {% set eventCount = (dev) ? eventCount : eventCount + 1 %}
+
+                
+                {% endfor %}
+
+            </div>
+        </div>
+    </div>
+</div>
+

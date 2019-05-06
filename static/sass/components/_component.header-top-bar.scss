@@ -1,0 +1,23 @@
+.c-header-top-bar {
+    order:1;
+    border-bottom: 1px solid $offwhite;
+    @include flexbox();
+    @include justify-content(flex-end);
+
+    &__link {
+        color: $greyish;
+        @include font-size(11);
+        letter-spacing: 0.4px;
+        padding: 6px 11px;
+        font-weight: $weightRegular;
+        @include transition(all 0.3s ease);
+
+        &:hover {
+            color: $blue;
+        }
+    }
+    @media #{$mobile} {
+        display:none;
+    }
+
+}

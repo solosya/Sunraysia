@@ -1,0 +1,57 @@
+/* Begin page head style */
+@mixin card-plan-base {
+    @include padding(35);
+    @include padding-bottom(43);
+    border-radius: 8px;
+    background-color: #d8d8d8;
+    text-align: center;
+    label{
+        text-align: center;
+        .label-name {
+            @include font-size(28);
+            @include margin-bottom(14);
+            font-weight: 600;
+            text-align: center;
+        }
+        .label-users {
+            @include font-size(18);
+            text-align: center;
+        }
+        .lable-price {
+            @include font-size(40);
+            @include margin-top(30);
+            @include margin-bottom(40);
+            text-align: center;
+        }
+    }
+}
+
+.card-plan-desktop {
+    @media #{$desktop-up} {
+        @include card-plan-base;
+        &:not(:first-child) {
+            margin-left: 20%;
+        }
+    }
+}
+
+.card-plan-tablet {
+    @media #{$tablet} {
+        @include card-plan-base;
+        &:not(:first-child) {
+            margin-left: 20%;
+        }
+    }
+}
+
+.card-plan-mobile {
+    @media #{$mobile} {
+        @include card-plan-base;
+        width:50%;
+        margin:0px 35px;
+        flex:1 0 calc(50% - 70px);
+        max-width:calc(50% - 70px);
+    }
+}
+
+/* End page head style */

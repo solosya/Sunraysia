@@ -1,0 +1,171 @@
+{% import "partials/quotes.twig" as quotes %}
+
+{{ set(this, 'title', event.title) }}
+{{this.registerLinkTag({rel:'amphtml', href:_AppHelper.getServerUrl(false)~'?amp=1'})}}
+
+
+
+
+{{this.registerJsFile("https://maps.googleapis.com/maps/api/js?key=AIzaSyCRILYoQMiSjf_1Q_DhL199ha5w410AOLU")}}
+
+
+{% set networkData = _Network.getNetworkData() %}
+{% set site        = networkData.title | lower | split(" ")[0]%}
+
+
+{% set eventImage = false %}
+{% if event.media | length > 0 %}
+    {% set eventImage = _Media.getMediaUrl(event.media[0], 1094, 515, {'crop': 'fill', 'gravity': 'auto'} ) %}
+{% endif %}
+
+{% set startDate = _AppHelper.getDefaultTimezoneDateTime(event.startDate, 'j F Y') %}
+{% set endDate = _AppHelper.getDefaultTimezoneDateTime(event.endDate, 'j F Y') %}
+
+{% set startTime = _AppHelper.getDefaultTimezoneDateTime(event.startDate, 'g:ia') %}
+{% set endTime = _AppHelper.getDefaultTimezoneDateTime(event.endDate, 'g:ia') %}
+
+{% set date = date() %}
+{% set events = _Event.getEvents({"limit": 4, "start_date": date.date | split(" ")[0]}) %}
+
+
+<div class="o-body-container o-body-container-md u-margin-top-60">
+
+    <div class="container"> 
+        <div class="row">
+            <div class="col-9 col-md-6">
+                <div class="c-eventdetail">
+
+                    {% if eventImage %} 
+                        <div class="c-eventdetail__media">
+                            <figure> 
+                                <img src="{{eventImage}}" class="img-fluid o-media--image" alt="Article Info">
+                            </figure>
+                        </div>
+                    {% endif %}
+                    
+                    
+                    <div class="c-eventdetail__head">
+
+                        {# {% if _User.isAdminUser() %}
+                            <a href="{{event.editUrl}}" target="_blank" class="c-button c-button--rounded c-button--blue">Edit article</a>
+                        {% endif %} #}
+                        
+                        <a href="{{ networkData.defaultBlogUrl }}/@events">
+                            <div class="c-eventdetail__category">
+                                Events
+                            </div>
+                        </a>
+                        <div class="c-eventdetail__title">
+                            {{ quotes.smarten(event.title) }}  
+                        </div>
+                    </div>
+                    <div class="c-eventdetail__container">
+                        <div class="row">
+                            <div class="col-md-3">
+
+                                <div class="c-eventdetail__info">
+                                    <div class="c-eventdetail__info-item">
+                                        <span class="c-eventdetail__info-icon c-eventdetail__info-icon--calandar"></span>
+                                        <span class="c-eventdetail__info-text">{{ startDate }}</span>
+                                    </div>
+                                    <div class="c-eventdetail__info-item">
+                                        <span class="c-eventdetail__info-icon c-eventdetail__info-icon--time"></span>
+                                        <span class="c-eventdetail__info-text">{{ startTime }} - {{ endTime }}</span>
+                                    </div>
+                                    <div class="c-eventdetail__info-item">
+                                        <span class="c-eventdetail__info-icon c-eventdetail__info-icon--location"></span>
+                                        <span class="c-eventdetail__info-text">{{ event.address.address1 }},<br/>
+                                        {{ event.address.suburb }}</span>
+                                    </div>
+                                    {# <div class="c-eventdetail--source">
+                                        <span class="fa fa-laptop"></span>
+                                        youtube.com/johnbobbelitandhisband
+                                    </div> #}
+                                    <div class="c-eventdetail__info-item">
+                                        <span class="c-eventdetail__info-icon c-eventdetail__info-icon--contact"></span>
+                                        <span class="c-eventdetail__info-text" >Contact {{event.contactName}} on {{event.contactphone}}</span>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="c-eventdetail--content">
+                                    {{ event.content | raw }}
+                                </div>
+                            </div>
+
+
+
+                            <div class="col-md-6">
+                                <div class="c-eventdetail--map">
+                                {% if event.latitude and event.longitude %}
+                                    <div class="event-map">
+                                        <div id="addressMap" data-latitude="{{event.latitude}}" data-longitude="{{event.longitude}}" style="width:100%;min-height:350px;background:rgba(0,0,0,.3)"></div>
+                                    </div>
+                                {% endif %}
+
+                                    {# <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2979.9859353299985!2d-71.92062298413556!3d41.67764717923861!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89e5d5ba3876b34b%3A0x3f44c23dd11ea16f!2sPlainfield+Town+Hall!5e0!3m2!1sen!2sin!4v1552889556452" width="100%" height="450" frameborder="0" style="border:0" allowfullscreen></iframe> #}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>  
+            </div> 
+
+
+            <div class="col col-md-3 c-events">
+                {% set events = _Event.getEvents({"limit": limit, "start_date": date.date | split(" ")[0]}) %}
+
+                <div class="c-events-panel c-events-panel-xs">
+                    <h4 class="c-events-panel__head c-events-panel__head-xs">Upcoming Events</h4>
+                    <div class="c-events-panel__details">
+                        
+                        {% for i in 0..3 if events[i] %}
+                            {{this.render('partials/_single-event.twig', {
+                                event: events[i], 
+                                imageSuppress: 'true',
+                                containerClass: "event-card-2-mobile event-card-2-tablet event-card-2-desktop"
+                            }) | raw}}
+                        {% endfor %}
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+    Acme.eventMap = new Acme.GoogleMap();
+</script>
+
+
+
+
+
+
+
+                    {# <div class="col-md-9">
+                        <a href="https://www.facebook.com/sharer/sharer.php?u={{event.url}}&title={{ event.title|url_encode }}" class="share-icon facebook-icon"></a
+                        ><a href="https://twitter.com/share?text={{ event.title|url_encode }}&url={{event.url}}" class="share-icon twitter-icon"></a
+                        ><a href="mailto:?subject=Check%20out%20this%20article&body={{event.url}}" class="share-icon email-icon"></a>
+                    </div>
+             #}
+            
+                            {# show start date OR start and end data if different #}
+                            {# {% set difference = date(event.endDate).diff(date(event.startDate)) %}
+                            {% set leftDays = difference.days %}
+                            {% if leftDays > 0 %}
+                                <p class="date">{{ startDate }} - {{ endDate }}</p>
+                            {% else %}
+                                <p class="date">{{ startDate }}</p>
+                                <p class="time">{{ startTime }} - {{ endTime }} </p>
+                            {% endif %} #}
+
+
+
+
+

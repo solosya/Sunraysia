@@ -1,0 +1,123 @@
+.c-header {
+
+    // @media #{$tablet} {
+    //     background:yellow;
+    // }
+    // @media #{$mobile} {
+    //     background:green;
+    // }
+    border-bottom: 1px solid $grey;
+
+    &__container {
+          
+        display: flex;
+        @include flex-direction(row, horizontal);
+        @include flex-height(120px);
+        @include align-items(center);
+
+
+        &--fixed {
+            position: fixed;
+            @include flex-height(70px);
+            top: -70px;
+            z-index: 10000;
+            background: white;
+            @include transition(all 0.5s ease 0s);
+
+            &.active {
+                top:0;
+            }
+
+        }
+    }
+
+    &__date {
+        @include font-size(15);
+        margin: auto;
+        width: 160px;
+    }
+
+    // &__mobile-login {
+    //     flex:2;
+    //     @include font-size(14);
+    //     @media #{$tablet-up} {
+    //         display:none;
+    //     }
+    // }
+
+    // &__mobile-subscribe {
+    //     height: 25px;
+    //     @include font-size(13);
+    //     font-weight:$weightBold;
+    //     line-height:25px;
+    //     background: $blue;
+    //     color:white;
+    //     text-align:center;
+    //     @media #{$tablet-up} {
+    //         display:none;
+    //     }
+    // }
+
+    &__weather-info {
+        margin: 15px 0;
+        @include flexbox();
+        @include flex-direction(row, horizontal);
+
+        @media #{$desktop-down} {
+            display:none;
+        }
+
+    }
+
+    &__logo-container {
+        position: absolute;
+        width: 380px;
+        left: 50%;
+        transform: translateX(-190px);
+        background: pink;
+    }
+
+    &__logo {
+        width: 162px;
+        display: block;
+    }
+
+    &__login-buttons-tablet {
+        @include flexbox();
+        @include flex-direction(row, horizontal);
+        @include align-items(flex-end);
+        @include justify-content(flex-end);
+        @media #{$desktop_up} {
+            display:none;
+        }
+
+    }
+
+
+    &__login-buttons-desktop {
+        @include flexbox();
+        @include flex-direction(row, horizontal);
+        @include align-items(flex-end);
+        @include justify-content(flex-end);
+        margin-left:auto;
+        
+        @media #{$desktop-down} {
+            display:none;
+        }
+
+    }
+
+    &__login-buttons {
+
+        @include flexbox();
+        @include flex-direction(row, horizontal);
+        @include align-items(flex-end);
+        @include justify-content(flex-end);
+        margin-left:auto;
+        
+        @media #{$desktop-up} {
+            display:none;
+        }
+    }
+
+}

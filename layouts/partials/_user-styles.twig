@@ -1,0 +1,20 @@
+
+{% set themeColors = networkData['styling']['colours'] %}
+{% set primaryFont = networkData['styling']['fonts']['primaryFont'] %}
+{% set secFont     = networkData['styling']['fonts']['secondaryFont'] %}
+{% set customCss   = networkData['styling']['customStyleSheet'] %}
+
+
+<style type="text/css">
+
+    {% if themeColors.headingColor != "" %}
+        :root {
+            --main-color: {{themeColors.headingColor}};
+        }
+    {% endif %}
+
+    {% if customCss != "" %}
+        {{customCss | raw }}
+    {% endif %} 
+
+</style>

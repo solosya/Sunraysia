@@ -1,0 +1,155 @@
+.c-megamenu {
+    $self: &;
+    top: 0;
+    left: 0;
+    z-index: 90;
+    width: 100%;
+    height: 0;
+    // display: none;
+    overflow: hidden;
+    text-align: left;
+    position: fixed;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    -webkit-overflow-scrolling: touch;
+
+    @include padding(80 0 30);
+    background: rgba($offwhite, 0.99);
+
+    @include transition(all 0.3s ease-out);
+    @include transform(translateY(-100%));
+    @include transition-property(transform);
+    @include transition-duration(0.4s);
+
+    &.is-visible {
+        height: 100%;
+        -webkit-backface-visibility: visible;
+        backface-visibility: visible;
+        @include transform(translateY(0));
+    }
+
+    @include responsive(sm) {
+        display: block;
+        @include padding(140 0 50);
+    }
+
+    &__navigation {
+        @include flexbox();
+        @include margin(0);
+        @include padding(0);
+        border-top: 1px solid rgba($greyish, 0.4);
+        @include flex-direction(column, vertical);
+
+        @include responsive(sm) {
+            height: 100%;
+            border-top: 0px none;
+            @include margin-top(0);
+            @include padding-top(0);
+            @include padding-left(15);
+            border-left: 1px solid rgba($greyish, 0.4);
+        }
+
+        &--list {
+            @include margin(0);
+            @include padding(0);
+
+            a {
+                display: block;
+                color: $greyish;
+                @include padding(2 0);
+                @include font-size(14);
+                line-height: 1.45;
+                font-weight: $weightBold;
+                text-transform: uppercase;
+                @include margin-bottom(5);
+
+                &:hover,
+                &:focus {
+                    color: $blue_sh1;
+                }
+            }
+        }
+
+        @include responsive(sm) {
+            #{ $self }__navigation {
+                &--list {
+                    a {
+                        word-break: break-all;
+                        @include padding(4 0);
+                        @include font-size(13);
+                        @include padding-right(10);
+                    }
+                }
+            }
+
+            @include respond-to(lg) {
+                #{ $self }__navigation {
+                    &--list {
+                        a {
+                            word-break: inherit;
+                            @include padding(2 0);
+                            @include font-size(14);
+                            @include padding-right(0);
+                        }
+                    }
+                }
+            }
+        }
+
+        &--sublist {
+            @include margin(0);
+            @include padding(0);
+
+            >li {
+                @include margin(0);
+                @include padding(0);
+
+                >a {
+                    display: block;
+                    color: $greyish;
+                    @include padding(0);
+                    @include font-size(14);
+                    line-height: 1.73;
+                    font-weight: $weightLight;
+                    text-transform: capitalize;
+                    @include transition(all 0.3s ease);
+
+                    &:hover,
+                    &:focus {
+                        color: $blue_sh1;
+                    }
+                }
+            }
+        }
+    }
+
+    .c-col {
+        &--full {
+            @include flexbox;
+            @include align-items(flex-start);
+            @include justify-content(flex-start);
+            @include flex-direction(row, horizontal);
+
+            @include responsive(xs) {
+                height: 100%;
+                @include margin-bottom(40);
+                max-height: calc(100% - 40px);
+                @include flex-direction(row, horizontal);
+            }
+        }
+
+        &--one-fifth {
+            height: 100%;
+            width: calc(100% / 5);
+            flex: 0 0 calc(100% / 5);
+            max-width: calc(100% / 5);
+
+            &:first-child {
+                #{ $self }__navigation {
+                    border-left: 0px none;
+                    @include padding-left(0);
+                }
+            }
+        }
+    }
+}

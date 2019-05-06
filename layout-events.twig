@@ -1,0 +1,101 @@
+{{ set(this, 'title', _Blog.getBlogTitle()) }}
+{% set networkData = _Network.getNetworkData() %}
+
+{# {{this.registerJs("Acme.CardController();")}} #}
+
+{% set limit = 50 %}
+{% set date = date() %}
+{% set events = _Event.getEvents({"limit": limit, "start_date": date.date | split(" ")[0]}) %}
+{% set config       = _Network.getThemeConfig() %}
+
+
+{% set firstCount = events | length %}
+
+{{this.registerJs("Acme.cards = CardController();")}}
+
+                                                     {# renders the card    fetch-limit      fetch-offset    infinite scroll #}
+                                                     {#            ↑             ↑                 ↑            ↑            #}
+{{this.registerJs("Acme.searchFeed = new Acme.View.articleFeed(Acme.cards, " ~ limit ~ ", " ~ firstCount ~ ", true);")}}
+
+
+
+
+
+
+<!-- used to index each article as we loop over throughout the template -->
+{% set eventCount = _AppHelper.getApplicationEnv() == 'DEV' ? 0 : 0 %}
+{% set dev = _AppHelper.getApplicationEnv() == 'DEV' ? false : false %}
+
+
+    <main id="main" class="site-main" role="main">
+        <div class="container u-margin-top-60">
+            <section class="row">
+                <div class="col-9">
+                    <div class="c-events__main">
+                        <div class="c-page-head c-page-head-xs">
+                            <div class="u-heading__large u-heading__large-xs u-pr--6 u-bg-white">{{this.title}}</div>
+                            {% if not _User.isGuest() %}
+                                <div class="c-page-head__buttonwrap"><a href="{{networkData.defaultBlogUrl}}/@event-form" class="c-page-head__button">Submit an event</a></div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                <a class="listing-link" href="{{networkData.defaultBlogUrl}}/@event-form" style="background-image:url('{{networkData.templatePath}}/static/images/submit_event.svg')"></a>
+
+            </section>
+
+            {% set monthDivider = '' %}
+
+            <section class="middle">
+                <div class="row row-space maincards">
+                    <div class="col-lg-6">
+                        {% for i in 0..49 if events[eventCount] %}
+
+                            {% set eventMonth = _AppHelper.getDateTimeBasedOnTimezone(events[eventCount].startDate, 'F') %}
+                            {% if monthDivider != eventMonth %}
+                                <p class="c-events__head c-events__head-xs">{{ eventMonth }}</p>
+                                {% set monthDivider = eventMonth %}
+                            {% endif %}
+
+                            {{this.render('partials/_single-event.twig', {
+                                event: events[eventCount], 
+                                position: eventCount + 1, 
+                                imageSize: {width:300},
+                                containerClass: 'event-card-1',
+                            }) | raw}}
+                            {% set eventCount = (dev) ? eventCount : eventCount + 1 %}
+                        {% endfor %}
+                    </div>
+
+
+                    <div class="col-9 col-md-3 c-events">
+                        <div class="c-events-panel c-events-panel-xs">
+                            <h4 class="c-events-panel__head c-events-panel__head-xs">Upcoming Events</h4>
+                            <div class="c-events-panel__details">
+                                
+                                {% for i in 0..3 if events[i] %}
+
+                                    {{this.render('partials/_single-event.twig', {
+                                        event: events[i], 
+                                        imageSuppress: 'true',
+                                        containerClass: "event-card-2-mobile event-card-2-tablet event-card-2-desktop"
+                                    }) | raw}}
+                               
+                                {% endfor %}
+
+                            </div>
+                        </div>
+                            {% if config['inventory']['adSpace']['side-fix'][0] is defined %}
+                                <div class="j-adslot" id="{{config['inventory']['adSpace']['side-fix'][0]}}" data-adshape="side-fix"></div>
+                            {% endif %}
+                    </div>
+
+
+
+                </div>
+            </section>
+
+            <div class="col-lg-1 visible-lg-block"></div>            
+        </div>
+    </main><!-- .site-main -->
+

@@ -1,0 +1,107 @@
+/* Begin footer style */
+
+.c-footer {
+    background-color: $greyish;
+    padding: 28px 0 20px;
+
+    @include responsive(sm) {
+        padding: 50px 0 20px;
+    }
+
+    &__navigation {
+        @include flexbox();
+        @include flex-direction(column, vertical);
+
+        a {
+            color: $white;
+            margin-top: 20px;
+            text-transform: uppercase;
+            @include transition(all 0.3s ease);
+
+            &:hover,
+            &:focus {
+                color: $blue;
+            }
+
+            +a {
+                margin-top: 20px;
+            }
+        }
+
+        @include responsive(sm) {
+            a {
+                margin-top: 0px;
+            }
+        }
+
+        &.u-border-left {
+            border-top: 1px solid $white;
+            padding-left: 0;
+            margin-top: 20px;
+
+            @include responsive(sm) {
+                border-top: none;
+                border-left: 1px solid $white;
+                padding-left: 15px;
+                margin-top: 0;
+            }
+        }
+    }
+
+    &__logo {
+        &-text {
+            @include font-size(28);
+            letter-spacing: 3.73px;
+            font-weight: $weightBold;
+            color: $white;
+            text-transform: uppercase;
+        }
+
+        &-tagLine {
+            @include font-size(12.8);
+            letter-spacing: 2.56px;
+            font-weight: $weightMedium;
+            color: $white;
+            text-transform: uppercase;
+        }
+    }
+
+    &__bottom {
+        @include flexbox();
+        @include flex-direction(column, vertical);
+        @include justify-content(flex-start);
+        @include align-items(flex-start);
+        color: $offwhite;
+        @include font-size(11);
+        letter-spacing: 0.8px;
+        margin-top: 50px;
+
+        &__powered {
+            text-transform: uppercase;
+            margin-bottom: 10px;
+        }
+
+        &__copyright {
+            order: 2;
+        }
+
+        @include responsive(sm) {
+            @include flex-direction(row, horizontal);
+            @include justify-content(space-between);
+            @include align-items(center);
+            margin-top: 80px;
+
+            .c-footer__bottom {
+                &__powered {
+                    margin-bottom: 0px;
+                }
+
+                &__copyright {
+                    order: -1;
+                }
+            }
+        }
+    }
+}
+
+/* End footer style */

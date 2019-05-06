@@ -1,0 +1,393 @@
+{{ set(this, 'title', _Blog.getBlogTitle()) }}
+{% set networkData = _Network.getNetworkData() %}
+{% set plans = networkData['paywallPlans'] %}
+
+
+{% set plan = false %}
+{% set trial = false %}
+{% set code = false %}
+{% set trialPeriod = '14' %} {# 14 days is default in the platform #}
+
+{% set url = _AppHelper.getParsedUrl() %}
+{% set params = url['query'] %}
+
+{# c54b5f8d-f9b5-4b59-b8ca-555f822d0448 #}
+
+
+
+{% set break = false %}
+{% for k, p in params if not break %}
+
+    {% if k == 'plan' %}
+        {% for pl in plans %}
+            {% if pl.guid == p %}
+                {% set plan = pl %}
+                {% set break = true %}
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+
+    {% if k == 'trial' %}
+        {% if p == 'true' and plan['trial_status'] == '1' %}
+            {% set trial = true %}
+            {% set trialPeriod = plan['trial_period'] %}
+            {% set break = true %}
+        {% endif %}
+    {% endif %}
+
+    {% if k == 'code' %}
+        {% if p == 'true' %}
+            {% set code = true %}
+            {% set break = true %}
+        {% endif %}
+    {% endif %}
+
+{% endfor %}
+
+
+<main id="main" class="o-body-container o-body-container-md" role="main">
+    <div id="stripekey" class="hidden" >{{networkData['stripe_publishable_key']}}</div>
+    <div class="container">
+
+        {% if plan != false  %}
+
+
+            <div class="row">
+                <div class="col-9 col-lg-6">
+                    <div class="c-subscribe c-subscribe-xs">
+
+                        {% if trial %}
+                            <h2 class="c-subscribe__head">Start your 28-day free trial now</h2>
+                            <div class="c-subscribe__text">
+                                The free trial requires registration with a valid credit card. Arieor meai berkl jerrried nanie 
+                                desqule and nneior  meai berkl jerrried nanie desqule ansioe meai berkl jerrried nanie desquleas, 
+                                eop asmrop derioa. Beai berkl jerrried nanie desqule masioe.
+                            </div>
+                        {% else %}
+                            <h2 class="c-subscribe__head">Subscribe now</h2>
+                        {% endif %}
+
+
+                        
+                        <h4 class="c-subscribe__subhead">Your information</h4>
+                        
+                        <form class="horizontal-form form-contact contact__form" action="#" method="post" autocomplete="off">
+							<input type="hidden" class="" name="planid" id="planid" value="{{plan.guid}}">
+							<input type="hidden" class="" name="trial" id="trial" value="{{trial}}">
+
+
+                            <div class="form-group form-group-sm has-error u-margin-bottom-15">
+                                <input id="email" class="input__text" name="email" placeholder="Email" aria-required="true" type="email">
+                                <div class="help-block">Please enter your email address</div>
+                            </div>
+                            
+                            <div class="form-group form-group-sm u-margin-bottom-15">
+                                <input id="first-name" class="input__text" name="firstname" placeholder="First Name" aria-required="true" type="text">
+                                <div class="help-block"></div>
+                            </div>
+                            
+                            <div class="form-group form-group-sm u-margin-bottom-15">
+                                <input id="last-name" class="input__text" name="lastname" placeholder="Last Name" aria-required="true" type="text">
+                                <div class="help-block"></div>
+                            </div>
+                            
+                            <div class="form-group form-group-sm u-margin-bottom-15">
+                                <input id="password" class="input__text" name="password" placeholder="Password (must be at least five characters)" aria-required="true" type="password" value="">
+                                <div class="help-block"></div>
+                            </div>
+                            
+                            <div class="form-group form-group-sm u-margin-bottom-15">
+                                <input id="verifypassword" class="input__text" name="verifypassword" placeholder="Password verify" aria-required="true" type="password">
+                                <div class="help-block"></div>
+                            </div>
+                            
+                            <div class="form-group form-group-sm u-margin-bottom-15">
+                                <input id="organisation" class="input__text" name="organisation" placeholder="Organisation (optional)" aria-required="true" type="text">
+                                <div class="help-block"></div>
+                            </div>
+                            
+                            <div class="form-group form-group-sm u-margin-bottom-15">
+                                <div class="button-set">
+                                    <label><input id="terms" name="terms" type="checkbox" class="validate[required]"><span><!-- fake radio --></span> I agree to the <strong>Terms of Use</strong></label>
+                                </div>
+                            </div>
+                            <div class="form-group form-group-sm u-margin-bottom-15">
+                                <div class="button-set">
+                                    <label><input id="alerts" name="alerts" type="checkbox" class="validate[required]"><span><!-- fake radio --></span> Send me daily email alerts</label>
+                                </div>
+                            </div>
+                            
+                        </form>
+
+                        <div class="c-subscribe__subscription" style="margin-top:30px;">
+                            <h4 class="c-subscribe__subhead">Payment details</h4>
+                            <div class="form-group fullwidth">
+                                <label class="control-label control-label-sm" for="creditcarddetails" style="font-weight:normal;">Please enter your credit or debit card details.</label>
+                                
+                                
+                                
+                                {% if  code %}
+                                    <form action="/charge" method="post" id="payment-form">
+                                        <div class="form-row ">
+                                            <label for="code-redeem">Gift code </label>
+                                            <input type="text" class="articleExtendedData" name="code-redeem" id="code-redeem" value="" placeholder="0a1b-2c3d-4e5f">
+                                        </div>
+                                        
+                                        <div class="form-group" style="margin-top:30px;">
+                                            <button type="submit" id="subscribe" class="c-button c-button--rounded c-button--blue">Subscribe</button>
+                                        </div>
+                                    </form>
+
+                                {% else %}
+                                    <form action="/charge" method="post" id="payment-form" class="stripe-form">
+                                        <div class="form-row" style="width:100%">
+                                            <div id="card-element"><!-- a Stripe Element will be inserted here. --></div>
+                                            <!-- Used to display form errors -->
+                                            <div id="card-errors" class="card-errors" role="alert"></div>
+                                        </div>
+
+                                        <div class="form-group" style="margin-top:30px;">
+                                            <button type="submit" id="subscribe" class="c-button c-button--rounded c-button--blue">Subscribe</button>
+                                        </div>
+                                    </form>
+                                {% endif %}
+                                                
+                                {# <div class="three-column">
+                                    <div class="w490 w490-xs"><input id="creditcarddetails" class="input__text" name="creditcarddetails" placeholder="Credit card number" aria-required="true" type="text"></div>
+                                    <div class="w85 w85-xs"><input id="organisation" class="input__text" name="organisation" placeholder="MM/YY" aria-required="true" type="text"></div>
+                                    <div class="w85 w85-xs"><input id="organisation" class="input__text" name="organisation" placeholder="CVC" aria-required="true" type="text"></div>
+                                    <div class="help-block"></div>
+                                </div> #}
+                            </div>
+
+                        </div>
+                            
+                    </div>
+                </div>
+
+
+
+
+
+                <div class="col-9 col-lg-3">
+                    <div class="o-body-container--right-layout">
+                        <div class="c-subscribe__sidebar c-subscribe__sidebar-xs">
+                            <picture class="c-subscribe__Device c-subscribe__Device-xs">
+                                <img src   ="{{networkData.templatePath}}/static/images/device.png" 
+                                     srcset="{{networkData.templatePath}}/static/images/device.png 1x, {{networkData.templatePath}}/static/images/device@2x.png 2x, {{networkData.templatePath}}/static/images/device@3x.png 3x" class="img-fluid">
+                            </picture>
+
+                            {% set uc = plan.user_count %}
+                            {% set val = plan.plan_value / 100 %}
+                            {% if val == 19.89 %}
+                                {% set val = 19.90 %}
+                            {% endif %}
+
+                            <div class="c-orderSummary">
+                                <h4 class="c-orderSummary__title">Order summary</h4>
+                                <div class="c-orderSummary__price">{{plan.currency|replace({"AUD": "$", "NZD": "$", "GBP": "£", "USD": "$", "EUR": "€"})}}{{val|number_format(2, '.', ',')}} p/{{plan.period}}</div>
+                                <p class="c-orderSummary__usercount">{{plan.name}}  | {{ uc|replace({ '10001': '20+' }) }} users</p>
+                                <div class="c-orderSummary__details">
+                                    <p>What's included:</p>
+                                    <ul>
+                                        {{plan.description | raw }}
+                                    </ul>
+                                </div>
+                                <a href="{{networkData.defaultBlogUrl}}/paywall" class="btn-change">Change subscription</a>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        {% else %}
+            <div class="row">
+                <div class="col-9 ">
+                    <h1>You need to choose a plan from the subscriptions screen</h1>
+                </div>
+            </div>
+            {% endif %}
+
+
+    </div>
+
+</main>
+
+
+
+
+
+        {# <section class="row">
+            <div class="col-sm-12 market-header">
+                <div class="frankheader">
+                    <img class="frankHeader__img" src="{{networkData.templatePath}}/static/images/frank-logo.svg" width="216" height="60">
+                    <p>TRUSTED SOURCES. GLOBAL STORIES.</p>
+                </div>
+
+                <img class="ubt-logo" src="{{networkData.templatePath}}/static/images/ubt-logo.png" width="151" height="54">
+
+            </div>
+        </section>
+    </div>
+
+    <section class="market-hero">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="content">
+                        <h1>Almost there…  <br />
+                            You’re just one step away from trusted sources.</h1>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </section>
+
+
+
+
+
+
+    <div class="container-fluid">
+
+        <section class="row">
+            <div class="col-md-offset-1 col-md-7">
+                {% if plan != false  %}
+
+                    {% if trial %}
+                        <div class="trial">
+                            <h2 class="trial__header">Start your {{trialPeriod}}-day free trial now</h2>
+
+                            <p class="trial__text">
+                                A {{trialPeriod}}-day free trial requires registration with a valid credit card. After {{trialPeriod}} days, 
+                                your credit card will be charged for your chosen subscription unless you cancel 
+                                not less than two days before the end of the free period. Subscriptions are billed 
+                                monthly.
+                            </p>
+
+                            <p class="trial__text trial__text--last">
+                                To cancel your trial, visit the My Account section.  For further 
+                                information, please visit the <a href="{{networkData.defaultBlogUrl}}/faq" target="_blank">FAQ</a>.
+                            </p>
+                        </div>
+                    {% endif %}
+
+                    <form class="" method="post" action="" id="listingForm">
+                        <p class="form-section-label">Your information</p>
+
+
+                        <input type="text" class="articleExtendedData" name="firstname" id="firstname" value="" placeholder="First name">
+                        <input type="text" class="articleExtendedData" name="lastname" id="lastname" value="" placeholder="Last name">
+                        <input type="text" class="articleExtendedData" name="username" id="username" value="" placeholder="Username">
+                        <p class="form-section-note">Username must be at least five characters long and contain no spaces or special characters</p>
+
+
+                        <input type="password" class="" name="password" id="password" value="" placeholder="Password">
+                          <p class="form-section-note">Passwords must be at least six characters long and contain no spaces </p>
+                        <input type="password" class="" name="verifypassword" id="verifypassword" value="" placeholder="Password verify">
+
+
+                        <input type="email" class="" name="email" id="email" value="" placeholder="Email">
+                        <input type="text" class="articleExtendedData" name="address1" id="address1" value="" placeholder="Street address">
+                        <input type="text" class="articleExtendedData" name="address2" id="address2" value="" placeholder="Street address line 2 (optional)">
+                        <input type="text" class="articleExtendedData" name="city" id="city" value="" placeholder="City / Town">
+                        
+                        
+                        <input type="text" class="articleExtendedData" name="postcode" id="postcode" value="" placeholder="Zip / Postcode">
+                        
+                        <input type="hidden" class="" name="planid" id="planid" value="{{plan.guid}}">
+
+                        <div id="countrySelect" class="countrySelect"></div> 
+
+                        {% if trial %}
+                            <input type="checkbox" class="" onclick="return false;" value="true" id="trial" name="trial" checked> 
+                            <label>Include {{plan.trial_period}} day trial period</label>
+                        {% endif %}
+
+                        <br /><input type="checkbox" class="" id="terms" name="terms"> 
+                        <label>I agree to the frank <a href="{{networkData.defaultBlogUrl}}/terms-of-use" target="_blank">Terms of Use</a></label>
+                         {% if code %}
+                        <p class="form-section-label u-margin-top-40">Redeem Code</p>
+                        {% else %}
+                        <p class="form-section-label u-margin-top-40">Payment details</p>
+                        {% endif %}
+
+                    
+                    </form>
+                     {% if  code %}
+                    <form action="/charge" method="post" id="payment-form">
+                      <div class="form-row ">
+                        <label for="code-redeem">
+                          Gift code
+                        </label>
+                        <input type="text" class="articleExtendedData" name="code-redeem" id="code-redeem" value="" placeholder="0a1b-2c3d-4e5f">
+                      </div>
+
+                      <button id="subscribe" class="_btn _btn--red u-margin-top-25 u-margin-bottom-25">SUBSCRIBE</button>
+                    </form>
+                    {% else %}
+
+                    <form action="/charge" method="post" id="payment-form">
+                      <div class="form-row ">
+                        <label for="card-element">
+                          Credit or debit card
+                        </label>
+                        <div id="card-element">
+                          <!-- a Stripe Element will be inserted here. -->
+                        </div>
+
+                        <!-- Used to display form errors -->
+                        <div id="card-errors" class="card-errors" role="alert"></div>
+                      </div>
+
+
+                      <button id="subscribe" class="_btn _btn--red u-margin-top-25 u-margin-bottom-25">SUBSCRIBE</button>
+                    </form>
+                    {% endif %}
+
+                {% else %}
+                    <h1>You need to choose a plan from the subscriptions screen</h1>
+                {% endif %}
+            </div>			
+
+
+
+            <div class="col-md-3">
+                <div class="plan-type">
+
+                    {% if plan != false %}
+                        <div class="plan-type-header">
+                            <h2>Order Summary</h2>
+                        </div>
+                        <div class="plan-body">
+
+                            <h3>{{plan.name}}</h3>
+                            {% set uc = plan.user_count %}
+                            {% set val = plan.plan_value / 100 %}
+                            {% if val == 19.89 %}
+                                {% set val = 19.90 %}
+                            {% endif %}
+
+                            <p>{{uc|replace({ '10001': '20+' })}} users</p>
+                            <h4>{{plan.currency|replace({"AUD": "$", "NZD": "$", "GBP": "£", "USD": "$", "EUR": "€"})}}{{val|number_format(2, '.', ',')}} ({{plan.currency|raw}})/{{plan.period}}</h4>
+                            <img src="{{networkData.templatePath}}/static/images/market-screens.png?v=5">
+                            <p class="red-label u-margin-top-40">What's included in your subscription:</p>
+                            <ul class="features-list">
+                                {{plan.description | raw }}
+                            </ul>
+
+                            <a href="{{networkData.defaultBlogUrl}}#subscriptions">Change subscription</a>
+                        </div>
+
+
+
+
+                    {% endif %}
+                </div>
+            </div>
+
+        </section>
+
+    </div>
+
+</main> #}

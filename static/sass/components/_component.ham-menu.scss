@@ -1,0 +1,107 @@
+.c-hamMenu {
+    left: 15px;
+    width: 85px;
+    height: 40px;
+    padding: 0px;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    position: absolute;
+    background: none repeat scroll 0 0 $transparent;
+
+    &--tablet {
+        @media #{$desktop-up} {
+            display:none;
+        }
+    }
+
+    span {
+        left: 0;
+        width: 32px;
+        height: 2px;
+        position: absolute;
+        @include border-radius(2px);
+        @include transition(all 0.1s ease-out);
+        background: none repeat scroll 0 0 $black_sh3;
+
+        &:before,
+        &:after {
+            left: 0;
+            width: 100%;
+            height: 2px;
+            content: " ";
+            display: block;
+            position: absolute;
+            @include border-radius(2px);
+            @include transition(all 0.1s ease-out);
+            background: none repeat scroll 0 0 $black_sh3;
+        }
+
+        &:before {
+            @include transform(translateY(-9px));
+        }
+
+        &:after {
+            @include transform(translateY(9px));
+        }
+    }
+
+    small {
+        top: 54%;
+        right: 0;
+        color: $blue;
+        font-weight: bold;
+        position: absolute;
+        @include font-size(12);
+        line-height: 1.36;
+        letter-spacing: 0.5px;
+        font-weight: $weightRegular;
+        text-transform: uppercase;
+        @include transition(all 0.3s ease-out);
+        @include transform(translateY(-50%));
+    }
+
+    &:hover {
+        span {
+            background: none repeat scroll 0 0 $blue;
+
+            &:before {
+                background: none repeat scroll 0 0 $blue;
+            }
+
+            &:after {
+                background: none repeat scroll 0 0 $blue;
+            }
+        }
+
+        small {
+            color: $blue;
+        }
+    }
+
+    &.active {
+        span {
+            background: transparent;
+
+            &:before {
+                background: none repeat scroll 0 0 $blue;
+                @include transform(rotate3d(0, 0, 1, 45deg));
+            }
+
+            &:after {
+                background: none repeat scroll 0 0 $blue;
+                @include transform(rotate3d(0, 0, 1, -45deg));
+            }
+        }
+
+        small {
+            color: $blue;
+        }
+    }
+
+    @include responsive(lg) {
+        small {
+            display: block;
+        }
+    }
+}

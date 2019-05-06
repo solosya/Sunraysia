@@ -1,0 +1,58 @@
+{% import "partials/quotes.twig" as quotes %}
+{{ set(this, 'title', article.title) }}
+{{ this.registerLinkTag({rel:'amphtml', href:_AppHelper.getServerUrl(false)~'?amp=1'}) }}
+
+{% set networkData = _Network.getNetworkData() %}
+
+{% set blogInfo = _Blog.getBlog() %}
+{% set articleImg = false %}
+{% if article.media|length > 0 %}
+    {% set articleImg = _Media.getMediaUrl(article.media[0],1094, 515, {'crop': 'fill', 'gravity': 'auto'} ) %}
+{% endif %}
+
+{% set publishDate = _AppHelper.getDateTimeBasedOnTimezone(article.publishDate, 'F, Y') %}
+
+
+
+<main id="main" class="gallery" role="main">
+
+    <article class="article-main">
+
+        <div class="gallery-row">
+
+            <div class="container" style="padding-bottom:100px;">
+                <div class="row">
+                    <div class="col-md-9">
+                        <div class="page-content" style="margin:0;">
+                            <div class="content-block-top" style="margin:0;">
+                                <a href="{{blogInfo.url}}"><p class="category">{{article.label}}</p></a><br>{# <time datetime="{{publishedDate}}">{{article.publishedDate}}</time> #}
+                                <h1 class="gallery-title">{{ quotes.smarten(article.title) }}</h1>
+                            </div>
+                        </div>
+
+                        {{this.render('partials/gallery.twig', {
+                            media: article.media,
+                            type: 'article',
+                            default: true,
+                            galleryStyle: 'gallery'
+
+                        }) | raw}}
+
+                        <div id="owl-thumbs" class="owl-thumbs" data-slider-id="1">
+                            {% for image in article.media %}
+                                {% set articleImg = _Media.getMediaUrl(image,152, 95, {'crop': 'fill', 'gravity':'faces'} ) %}
+                                <img id="owl-{{loop.index}}" src="{{articleImg}}" class="owl-thumb-item">
+                            {% endfor %}
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </article>
+    
+</main>
+
+
+

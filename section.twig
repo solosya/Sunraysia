@@ -1,0 +1,169 @@
+{{ set(this, 'title', _Blog.getBlogTitle()) }}
+{% set networkData = _Network.getNetworkData() %}
+{% set site        = networkData.title | lower | split(" ")[0]%}
+
+{{this.registerJs("Acme.cards = CardController();")}}
+{% set config       = _Network.getThemeConfig() %}
+
+
+
+{% set limit = 18 %}
+
+{% set articlesArr = _Blog.getBlogFeed({'limit': limit, 'offset': 0}) %}
+{% set articles = articlesArr.articles %}
+{% set firstCount = articles | length %}
+
+
+
+
+
+
+<!-- used to index each article as we loop over throughout the template -->
+{% set articleCount = _AppHelper.getApplicationEnv() == 'DEV' ? 0 : 0 %}
+{% set popCount = _AppHelper.getApplicationEnv() == 'DEV' ? 0 : 0 %}
+{% set dev = _AppHelper.getApplicationEnv() == 'DEV' ? false : false %}
+
+
+
+
+<main id="main" class="site-main u-margin-top-60" role="main" data-article-limit="{{limit}}" data-article-count="{{articles | length}}">
+
+    <div class="container">
+
+        <div class="row">
+            <div class="col-9 col-lg-6">
+                {{this.render('partials/_single-article.twig', {
+                    article: articles[articleCount], 
+                    position: (articleCount+1),
+                    imageSize: {width: 740, height: 360},
+                    containerClass: "card-1-mobile card-1-tablet card-1-desktop"
+                }) | raw}}
+                {% set articleCount = (dev) ? articleCount : articleCount + 1 %}
+            </div>
+
+            <div class="col-9 col-lg-3">
+                {{this.render('partials/_single-article.twig', {
+                    article: articles[articleCount], 
+                    position: (articleCount+1),
+                    imageSize: {width: 740, height: 360},
+                    containerClass: "card-3-mobile card-3-tablet card-3-desktop"
+                }) | raw}}
+                {% set articleCount = (dev) ? articleCount : articleCount + 1 %}
+            </div>
+
+
+        </div>
+
+        <div class="row">
+
+            {% for i in 0..2 if articles[articleCount] %}
+                <div class="col-9 col-lg-3">
+                    {{this.render('partials/_single-article.twig', {
+                        article: articles[articleCount], 
+                        position: (articleCount+1),
+                        imageSize: {width: 360, height: 270},
+                        containerClass: "card-4-mobile card-4-tablet card-2-desktop"
+                    }) | raw}}
+                    {% set articleCount = (dev) ? articleCount : articleCount + 1 %}
+                </div>
+            {% endfor %}
+        </div>
+
+
+
+
+
+        <div class="row">
+            <div class="col-9 col-lg-6">
+            {% for i in 0..2 if articles[articleCount] %}
+                    {{this.render('partials/_single-article.twig', {
+                        article: articles[articleCount], 
+                        position: (articleCount+1),
+                        imageSize: {width: 360, height: 270},
+                        containerClass: "card-5-mobile card-5-tablet card-5-desktop"
+                    }) | raw}}
+                    {% set articleCount = (dev) ? articleCount : articleCount + 1 %}
+            {% endfor %}
+            </div>
+        </div>
+
+
+
+        <div class="row">
+
+            {% for i in 0..2 if articles[articleCount] %}
+                <div class="col-9 col-lg-3">
+                    {{this.render('partials/_single-article.twig', {
+                        article: articles[articleCount], 
+                        position: (articleCount+1),
+                        imageSize: {width: 360, height: 270},
+                        containerClass: "card-4-mobile card-4-tablet card-2-desktop"
+                    }) | raw}}
+                    {% set articleCount = (dev) ? articleCount : articleCount + 1 %}
+                </div>
+            {% endfor %}
+
+            <div class="col-9 col-lg-3">
+                {% if config['inventory']['adSpace']['hpage'][0] is defined %}
+                    <div class="j-adslot" id="{{config['inventory']['adSpace']['hpage'][0]}}" data-adshape="hpage"></div>
+                {% endif %}
+            </div>
+        </div>
+
+
+
+        <div id="loadmore_section" class="row">
+
+            {% for i in 0..2 if articles[articleCount] %}
+                <div class="col-9 col-lg-3">
+                    {{this.render('partials/_single-article.twig', {
+                        article: articles[articleCount], 
+                        position: (articleCount+1),
+                        imageSize: {width: 360, height: 270},
+                        containerClass: "card-4-mobile card-4-tablet card-2-desktop"
+                    }) | raw}}
+                    {% set articleCount = (dev) ? articleCount : articleCount + 1 %}
+                </div>
+            {% endfor %}
+        </div>
+
+        {% if articles|length >= limit %}
+            <section class="">
+                <div class="row">
+                    {{ this.render('partials/ajaxarticles_new.twig', {
+                        name            : "section-load",
+                        label           : "hi!",
+                        buttonClass     : "c-button c-button--rounded c-button--blue-bordered",
+                    }) | raw }}
+                </div>
+            </section>
+        {% endif %}
+
+    </div>
+</main>
+
+
+
+<script>
+    // main script is defered so event listener makes sure
+    // defered script is loaded before this runs
+    document.addEventListener("DOMContentLoaded", function(event) {
+        
+        Acme.cards = CardController();
+        Acme.loadMore = new Acme.View.articleFeed({
+            model           : Acme.cards,
+            infinite        : true,
+            container       : 'loadmore_section',
+            offset          : 0,
+            limit           : 2,
+            name            : 'section-load',
+            blogid          : "{{ blogData['guid'] }}",
+            card_class      : 'col-sm-3 col-xs-9 card-4-mobile card-4-tablet card-2-desktop',
+            non_pinned      : 0
+        });
+
+
+    });
+</script>
+
+            {# non_pinned      : {{articlesArr.existingNonPinnedCount}}, #}

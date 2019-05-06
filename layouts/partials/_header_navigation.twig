@@ -1,0 +1,247 @@
+{% set headermenu = _Menu.get({'menuType': 'header', "menuGroupName":"default"}) %}
+
+
+
+<header class="c-header u-mobile-margin-bottom-20 u-desktop-margin-bottom-50">
+    
+    <div id="search-bar" class="c-search-bar">
+        <div class="container">
+            <div class="row ">
+                <div class="col-12 c-search-bar__container">
+                    <form class="c-search-bar__form" method="get" id="searchform" action="{{networkData.defaultBlogUrl}}/search">
+                        <button class="c-search-bar__submit" type="submit" id="searchsubmit"></button>
+                        <input class="c-search-bar__input" type="text" name="s" placeholder="Search"/>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="o-rule"></div>
+    </div>
+
+    
+    <div class="container-fluid">
+        <div class="row">
+
+            <div id="fixed-header" class="col-12 c-header__container c-header__container--fixed">
+                <button class="c-hamMenu desktop js-hamDesktop" type="button">
+                    <span class="transition-med"></span><small>Menu</small>
+                </button>
+
+                <div class="c-header__logo-container">
+                    <a href="{{networkData.defaultBlogUrl}}" class="c-header__logo">
+                    <h1>Sunraysia Daily</h1>
+                    </a>
+                </div>
+
+                <div class="c-header__login-buttons">
+                    {% if _User.isGuest() %}
+                        <a id="signinBtn" href="javascript:;" class="c-button c-button--blue-bordered u-margin-right-10">Log in</a>
+                        <a href="{{networkData.defaultBlogUrl}}/paywall" class="c-button c-button--blue">Subscribe</a>
+
+                    {% else %}
+                        <a href="{{_AppHelper.getLogoffUrl()}}" class="c-button c-button--blue-bordered">Log out</a>
+                        <a href="{{networkData.defaultBlogUrl}}/paywall" class="c-button c-button--blue">Subscribe</a>
+
+                    {% endif %}
+                </div>
+            </div>
+
+
+
+            <div class="col-12 c-header__container">
+                <div id="weather" class="c-header__weather-info c-header__weather-info-xs j-weather-panel"></div>
+                
+                <button class="c-hamMenu c-hamMenu--tablet js-hamDevice" type="button">
+                    <span class="transition-med"></span>
+                </button>
+
+                <div class="c-header__logo-container">
+                    <a href="{{networkData.defaultBlogUrl}}" class="c-header__logo">
+                    <h1>Sunraysia Daily</h1>
+                        {# <img src="{{networkData.templatePath}}/static/images/logo.svg" class="image-fluid" /> #}
+                    </a>
+                    <p class="c-header__date">Monday 1 April 2019</p>
+                </div>
+
+                <div class="c-header__login-buttons-desktop">
+                    {% if _User.isGuest() %}
+                        <a id="signinBtn" href="javascript:;" class="c-button c-button--blue-bordered u-margin-right-10">Log in</a>
+                        <a href="{{networkData.defaultBlogUrl}}/paywall" class="c-button c-button--blue">Subscribe</a>
+                    {% else %}
+                        {% set user = _User.getUser() %}
+                        <a href="javascript:;" class="">Hi {{user.firstname}}</a>
+                    {% endif %}
+                </div>
+
+                <div class="c-header__login-buttons">
+                    {% if _User.isGuest() %}
+                        <a id="signinBtn" href="javascript:;" class="u-margin-right-10">Log in</a>
+                        <a href="{{networkData.defaultBlogUrl}}/paywall" class="">Subscribe</a>
+                    {% else %}
+                        <a href="javascript:;" class="">Hi {{user.firstname}}</a>
+                    {% endif %}
+                </div>
+
+
+            </div>
+
+            <div class="col-12 c-navigation">
+
+                <ul class="c-navigation__list">
+                    {{ this.render('../../partials/_menu.twig', {'menu': headermenu}) | raw }}
+                </ul>
+                
+                <div class="c-navigation__icons__search js-searchButton"></div>
+
+                {# <div class="c-navigation__icons">
+                    <div class="c-navigation__icons__menu o-hamburger js-menu"></div>
+                </div> #}
+
+
+            </div>
+        </div>
+    </div>
+</header>
+
+
+
+
+
+
+
+<nav id="mega-menu" class="c-megamenu c-megamenu-sm">
+    <div class="c-megamenu-nav">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="c-col--full c-col--full-xs">
+                        <div class="c-col--one-fifth">
+                            <ul class="c-megamenu__navigation c-megamenu__navigation-sm">
+                                <li class="c-megamenu__navigation--list"><a href="javascript:;">News</a></li>
+                            </ul>
+                        </div>
+                        <div class="c-col--one-fifth">
+                            <ul class="c-megamenu__navigation c-megamenu__navigation-sm">
+                                <li class="c-megamenu__navigation--list"><a href="javascript:;">Sport</a>
+                                    <ol class="c-megamenu__navigation--sublist">
+                                        <li><a href="javascript:;">News</a></li>
+                                        <li><a href="javascript:;">Sports</a></li>
+                                        <li><a href="javascript:;">Sunraysia life</a></li>
+                                        <li><a href="javascript:;">Opinion</a></li>
+                                        <li><a href="javascript:;">Photos</a></li>
+                                        <li><a href="javascript:;">Jobs</a></li>
+                                    </ol>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="c-col--one-fifth">
+                            <ul class="c-megamenu__navigation c-megamenu__navigation-sm">
+                                <li class="c-megamenu__navigation--list"><a href="javascript:;">Sunraysia Life</a>
+                                    <ol class="c-megamenu__navigation--sublist">
+                                        <li><a href="javascript:;">News</a></li>
+                                    </ol>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="c-col--one-fifth">
+                            <ul class="c-megamenu__navigation c-megamenu__navigation-sm">
+                                <li class="c-megamenu__navigation--list"><a href="javascript:;">Opinion</a>
+                                    <ol class="c-megamenu__navigation--sublist">
+                                        <li><a href="javascript:;">News</a></li>
+                                        <li><a href="javascript:;">Sports</a></li>
+                                        <li><a href="javascript:;">Sunraysia life</a></li>
+                                    </ol>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="c-col--one-fifth">
+                            <ul class="c-megamenu__navigation c-megamenu__navigation-sm">
+                                <li class="c-megamenu__navigation--list"><a href="javascript:;">Photos</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-12">
+                    <div class="c-col--full c-col--full-xs">
+                        <div class="c-col--one-fifth">
+                            <ul class="c-megamenu__navigation c-megamenu__navigation-sm">
+                                <li class="c-megamenu__navigation--list"><a href="javascript:;">Classifieds</a></li>
+                                <li class="c-megamenu__navigation--list"><a href="javascript:;">Jobs</a></li>
+                                <li class="c-megamenu__navigation--list"><a href="javascript:;">Buy & Sell</a></li>
+                                <li class="c-megamenu__navigation--list"><a href="javascript:;">Place an ad</a></li>
+                                <li class="c-megamenu__navigation--list"><a href="javascript:;">Property</a></li>
+                                <li class="c-megamenu__navigation--list"><a href="javascript:;">Auto</a></li>
+                            </ul>
+                        </div>
+                        <div class="c-col--one-fifth">
+                            <ul class="c-megamenu__navigation c-megamenu__navigation-sm">
+                                <li class="c-megamenu__navigation--list"><a href="javascript:;">Video</a></li>
+                            </ul>
+                        </div>
+                        <div class="c-col--one-fifth">
+                            <ul class="c-megamenu__navigation c-megamenu__navigation-sm">
+                                <li class="c-megamenu__navigation--list"><a href="javascript:;">Community/Events</a>
+                                    <ol class="c-megamenu__navigation--sublist">
+                                        <li><a href="javascript:;">Competitions</a></li>
+                                        <li><a href="javascript:;">Kids Club</a></li>
+                                        <li><a href="javascript:;">Join Kids Club</a></li>
+                                        <li><a href="javascript:;">Send Kids Club a letter</a></li>
+                                        <li><a href="javascript:;">Kids Club T&C’s</a></li>
+                                        <li><a href="javascript:;">Submit a baby photo</a></li>
+                                        <li><a href="javascript:;">Submit a party photo Events</a></li>
+                                    </ol>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="c-col--one-fifth">
+                            <ul class="c-megamenu__navigation c-megamenu__navigation-sm">
+                                <li class="c-megamenu__navigation--list"><a href="javascript:;">Feature Publications</a>
+                                    <ol class="c-megamenu__navigation--sublist">
+                                        <li><a href="javascript:;">News</a></li>
+                                        <li><a href="javascript:;">Sports</a></li>
+                                        <li><a href="javascript:;">Sunraysia life</a></li>
+                                        <li><a href="javascript:;">Opinion</a></li>
+                                        <li><a href="javascript:;">Photos</a></li>
+                                        <li><a href="javascript:;">Jobs</a></li>
+                                    </ol>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="c-col--one-fifth">
+                            <ul class="c-megamenu__navigation c-megamenu__navigation-sm">
+                                <li class="c-megamenu__navigation--list"><a href="javascript:;">Contact us</a></li>
+                                <li class="c-megamenu__navigation--list"><a href="javascript:;">Advertising</a></li>
+                                <li class="c-megamenu__navigation--list"><a href="javascript:;">About us</a></li>
+                                <li class="c-megamenu__navigation--list"><a href="javascript:;">Contact us</a></li>
+                                <li class="c-megamenu__navigation--list"><a href="javascript:;">Photo sales FAQs</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+
+
+
+<div class="responsive-standalone">
+
+    <div id="search-bar" class="c-mobile-search-bar">
+        <div class="c-mobile-search-bar__container">
+            <form class="c-mobile-search-bar__form" method="get" id="searchform" action="{{networkData.defaultBlogUrl}}/search">
+                <button class="c-mobile-search-bar__submit" type="submit" id="searchsubmit"></button>
+                <input class="c-mobile-search-bar__input" type="text" name="s" placeholder="Search"/>
+            </form>
+        </div>
+    </div>
+
+    <ul class="standalone-menu">
+        {{ this.render('../../partials/_menu.twig', {
+            'menu': headermenu
+            }) | raw }}
+    </ul>
+</div>
+
+{# <div class="responsive-standalone-overlay"></div> #}

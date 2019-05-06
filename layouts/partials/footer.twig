@@ -1,0 +1,57 @@
+{% set link = _Blog.getHomeBlogSettings() %}
+{% set footerMenu = _Menu.get({'menuType': 'footer', 'menuGroupName': 'default'}) %}
+
+<footer class="c-footer c-footer-sm">
+    <div class="container">
+        <div class="row">
+            <div class="col-9">
+
+                <div class="c-footer__container">
+                    <div class="row">
+                        <div class="col-12 col-md-2">
+                            <a href="javascript:;" class="c-footer__logo">
+                                logo
+                            </a>
+                        </div>
+                        <div class="col-12 col-md-2">
+                            <div class="c-footer__navigation c-footer__navigation-sm">
+                                {% if footerMenu | length > 0 %}
+                                    {{this.render('_footer_navigation.twig', {
+                                        items: footerMenu | slice(0, 3),
+                                        class: '',
+                                    }) | raw}}
+                                {% endif %}
+
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-2">
+                            <div class="c-footer__navigation c-footer__navigation-sm">
+                                <a href="javascript:;">REAL ESTATE</a>
+                                <a href="javascript:;">Sports</a>
+                                <a href="javascript:;">EVENTS</a>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-1">
+                            <div class="c-footer__navigation c-footer__navigation-sm">
+                                <a href="javascript:;">Opinion</a>
+                                <a href="javascript:;">FAQs</a>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-1">
+                            <div class="c-footer__navigation c-footer__navigation-sm u-border-left u-border-left-sm">
+                                <a href="javascript:;">Advertise</a>
+                                <a href="javascript:;">Contact</a>
+                                <a href="javascript:;">Log in</a>
+                                <a href="javascript:;">Subscribe</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="c-footer__bottom c-footer__bottom-sm">
+                    <div class="c-footer__bottom__copyright">&copy; Copyright The News Regional Victoria 2019</div>
+                    <a href="https://publish.aap.com.au" class="c-footer__bottom__powered">POWERED BY AAP PUBLISH</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>

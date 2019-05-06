@@ -1,0 +1,109 @@
+/* Begin page head style */
+.c-page-head {
+    @include flexbox();
+    @include justify-content(space-between);
+    @include align-items(center);
+    position: relative;
+    margin-bottom: 25px;
+
+    &:before {
+        content: '';
+        height: 1px;
+        width: 100%;
+        background-color: $greyish;
+        @include opacity(0.5);
+        position: absolute;
+        @include calc(top, '50% - 0.5px');
+        left: 0;
+        @include translate(0, -50%);
+        z-index: 10;
+        display: none;
+    }
+
+    &__link {
+        background-color: $blue;
+        color: $white;
+        font-style: normal;
+        padding: 4px 10px;
+        @include font-size(13);
+        z-index: 11;
+        @include transition(all 0.3s ease);
+
+        &:hover,
+        &:focus {
+            color: $white;
+        }
+    }
+    
+    &__buttonwrap {
+        position:relative;
+        &:before {
+            top:0;
+            z-index:10;
+            left:-20px;
+            content:'';
+            width:30px;
+            height:100%;
+            position:absolute;
+            background-color:$white;
+        }
+    }
+    
+    &__button {
+        z-index:11;
+        color:$white;
+        position:relative;
+        background-color:$blue;
+        @include font-size(11);
+        line-height:1;
+        @include padding(7 15);
+        @include border-radius(20px);
+        text-transform:uppercase;
+        font-weight:$weightMedium;
+
+        &:hover, &:focus {
+            color:$white;
+            background-color:darken($blue, 18%);
+        }
+    }
+
+    @include responsive(xs) {
+        &:before {
+            content: '';
+            display: block;
+        }
+
+        .c-page-head__link {
+            background-color: $white;
+            color: $greyish;
+            font-style: italic;
+            line-height: 1;
+            @include font-size(11);
+            padding: 0;
+            padding-left: 6px;
+
+            &:hover,
+            &:focus {
+                color: $blue;
+            }
+        }
+        
+        .c-page-head__button {
+            z-index:99;
+            @include font-size(13);
+            line-height: 1;
+            @include padding(12 20);
+
+            &:hover, &:focus {
+                color:$white;
+                background-color:darken($blue, 18%);
+            }
+        }
+    }
+
+    .u-heading__large {
+        line-height: 1;
+    }
+}
+
+/* End page head style */

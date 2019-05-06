@@ -1,0 +1,55 @@
+.c-mobile-search-bar {
+    width:100%;
+
+
+    &__container {
+        width:100%;
+        height: 50px;
+        @include flexbox();
+        @include justify-content(flex-end);
+        @include align-items(center);
+        left: auto;
+        right: 0;
+        top: 0;
+    }
+
+
+    &__form {
+        display:flex;
+        width:100%;
+
+    }
+    &__submit {
+        border:none;
+        background-color:transparent;
+        background-image: url('../icons/search.svg');
+        background-repeat: no-repeat;
+        background-size:contain;
+        width:24px;
+        height: 35px;
+        margin-right:5px;
+        background-position-y: center;
+    }
+
+    &__close {
+        height:20px;
+        width:20px;
+        position: relative;
+        top: 10px;
+        margin-left: 25px;
+        &:hover {
+            cursor:pointer;
+        }
+    }
+
+
+    &__input {
+        width: 100%;
+        background:none;
+        @include font-size(20);
+        border-radius:0;
+        border: none;
+        padding: 0 30px;
+        height: 40px;
+    }
+}
