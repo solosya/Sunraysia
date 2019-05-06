@@ -18916,39 +18916,79 @@ Acme.templates.create_user =
 </div>';
 
 (function($) {
-    if ($(".j-adslot").length > 0) {
-        var adslots = $(".j-adslot");
-        var deviceSize = getDeviceForAd();
-        for (i=0;i<adslots.length;i++) {
-            var elem = adslots[i];
-            var adShape = elem.dataset.adshape;
-            var self = $("#"+elem.id);
-            self.removeClass("j-adslot");
-            if (adShape == "mrec"){
-                self.html("<div class='advertisment advertisment__"+adShape+" advertisment__"+deviceSize+"'><img src='https://res.cloudinary.com/cognitives/image/upload/c_thumb,dpr_auto,f_auto,fl_lossy,q_auto,w_300/b8p32qun5ovsedngdth8'></div>");
-            } else if (adShape == "banner") {
-                if (deviceSize == "desktop") {
-                    self.html("<div class='advertisment advertisment__"+adShape+" advertisment__"+deviceSize+"'><!-- /21651851619/PH --><div id='div-gpt-ad-1555304800383-0' style='height:90px; width:970px;'><script>googletag.cmd.push(function() { googletag.display('div-gpt-ad-1555304800383-0'); });</script></div></div>");
-                } else if (deviceSize == "tablet") {
-                    self.html("<div class='advertisment advertisment__"+adShape+" advertisment__"+deviceSize+"'><!-- /21651851619/PH --><div id='div-gpt-ad-1555304898119-0' style='height:90px; width:728px;'><script>googletag.cmd.push(function() { googletag.display('div-gpt-ad-1555304898119-0'); });</script></div></div>");
-                } else if (deviceSize == "mobile") {
-                    self.html("<div class='advertisment advertisment__"+adShape+" advertisment__"+deviceSize+"'><!-- /21651851619/PH --><div id='div-gpt-ad-1555304984686-0' style='height:100px; width:300px;'><script>googletag.cmd.push(function() { googletag.display('div-gpt-ad-1555304984686-0'); });</script></div></div>");
+
+
+    Acme.LoadAds = function()
+    {
+        if ($(".j-adslot").length > 0) {
+            var adslots = $(".j-adslot");
+            var deviceSize = getDeviceForAd();
+            for (var i=0;i<adslots.length;i++) {
+                var elem = adslots[i];
+                var self = $("#"+elem.id);
+                self.removeClass("j-adslot");
+                var keysArray = [elem.id,deviceSize];
+                if ($(".j-keyword-cont").length > 0) {
+                    var keywordCont = $(".j-keyword-cont")[0];
+                    var keysExtra = keywordCont.dataset.keywords.split(',');
+                    if (keysExtra.length > 0){
+                        for (var j=0;j<keysExtra.length;j++){
+                            if (keysExtra[j] != "") {
+                                keysArray.push(keysExtra[j]);
+                            }
+                        }
+                    }
+                } else {
+                    keysArray.push('default');
                 }
+                var keysString = keysArray.join(',')
+                $.ajax({
+                    type: 'GET',
+                    url: _appJsConfig.appHostName + '/api/ad/get-all',
+                    dataType: 'json',
+                    data: {
+                        'keywords': keysString,
+                    },
+                    success: function (data, textStatus, jqXHR) {
+                        if (data.length < 1 ){
+                            console.log('no ads found with those keywords')
+                            return;
+                        } else if (data.length > 1 ){
+                            var k = Math.round(Math.random()*(data.length-1));
+                        } else {
+                            var k = 0;
+                        }
+                        var self = data[k];
+                        console.log(self);
+                        keys = self.keywords.split(',');
+                        if (self.media.path){
+                            $("#"+keys[0]).html("<div class='advertisment advertisment__"+keys[0]+" advertisment__"+keys[1]+"'><a href='"+self.button.url+"'><img src='"+self.media.path+"'></a></div>");
+                        } else if (self.description){
+                            $("#"+keys[0]).html("<div class='advertisment advertisment__"+keys[0]+" advertisment__"+keys[1]+"'>"+self.description+"</div>");
+                        }
+                        
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        console.log('error retreiving ad', textStatus, errorThrown);
+                        $('#createUserErrorMessage').text(textStatus);
+                    },
+                });
             }
+        }
 
+        function getDeviceForAd() {
+            var width = $(window).width();
+            if (width > 991) {
+                return 'desktop';
+            } else if (width < 992 && width > 767) {
+                return 'tablet';
+            } else if (width < 768) {
+                return 'mobile';
+            }
         }
     }
 
-    function getDeviceForAd() {
-        var width = $(window).width();
-        if (width > 991) {
-            return 'desktop';
-        } else if (width < 992 && width > 767) {
-            return 'tablet';
-        } else if (width < 768) {
-            return 'mobile';
-        }
-    }
+    Acme.LoadAds()
 }(jQuery));
 
 Acme.ArticleController = function() {
@@ -22003,12 +22043,12 @@ Acme.UserProfileController.prototype.listingEvents = function() {
 
     
 $('document').ready(function() {
-    var mobileView = 620;
+    var mobileView = 992;
     var desktopView = 1119;
     var pageWindow = $(window);
     var scrollMetric = [pageWindow.scrollTop()];
     var articleAd = $('#articleAdScroll');
-
+    var headerMenu = $("#fixed-header");
     
     $("img.lazyload").lazyload({
         effect : "fadeIn"
@@ -22032,6 +22072,7 @@ $('document').ready(function() {
 
 
     var isScolledPast = function(position){
+        console.log(position, scrollMetric);
         if (scrollMetric[0] >= position) {
             return true;
         }
@@ -22039,23 +22080,30 @@ $('document').ready(function() {
     };
 
 
-    // var scrollUpMenu = function() {
-    //     var isMob = isMobile();
-    //     if ( scrollMetric[1] === 'up' && isScolledPast(400) && isMob === false ){
-    //         foldawayPanel.addClass('showMenuPanel');
-    //         menuContainer.show();
-    //     } else {
-    //         menu_top_foldaway.addClass('hide');
-    //         menu_bottom_foldaway.addClass('hide');
-    //         foldawayPanel.removeClass('showMenuPanel');
-    //         menuContainer.show();
-    //     }
-    // }
+    var scrollUpMenu = function() {
+        console.log('scroll up menu');
+        var isMob = isMobile();
+        console.log(isMob);
+        if ( scrollMetric[1] === 'up' && isScolledPast(400) && isMob === false ) {
+            console.log('adding class');
+            headerMenu.addClass('active');
+
+            // menuContainer.show();
+        } else {
+            console.log('removing class');
+
+            // menu_top_foldaway.addClass('hide');
+            // menu_bottom_foldaway.addClass('hide');
+            headerMenu.removeClass('active');
+
+            // menuContainer.show();
+        }
+    }
 
 
     //Onload and resize events
     $(window).on("resize", function () {
-        // scrollUpMenu();
+        scrollUpMenu();
     }).resize();
 
     //On Scroll
@@ -22066,47 +22114,68 @@ $('document').ready(function() {
             direction = 'up';
         }
         scrollMetric = [scroll, direction];
-        // scrollUpMenu();
-        adScroll();
+        scrollUpMenu();
+        // adScroll();
     });
 
 
+    $(".js-hamDesktop").click(function(event) {
+		event.preventDefault();
+        $(this).toggleClass("active");
+        $('#mega-menu').toggleClass('is-visible');
+        $('body, html').toggleClass('u-noscroll');
+    });
     
+    $(".js-hamDevice").click(function(event) {
+		event.preventDefault();
+        $(this).toggleClass("active");
+        $('body, html').toggleClass('u-noscroll');
+
+        $('.responsive-standalone').toggleClass('navigation-active');
+        $('.responsive-standalone-close').toggleClass('open');
+        // $(".responsive-standalone-overlay").animate({
+        //     "opacity": "toggle"
+        // }, {
+        //     duration: 500
+        // }, function () {
+        //     $(".responsive-standalone-overlay").fadeIn();
+        // });
+    });
 
 
 
-    var adScroll = function() {
+    // var adScroll = function() {
 
-        //set sidebar height for desktop scrolling ad
-        if ($('#articleContentContainer').length > 0) {
-            var articleTop = $('#articleContentContainer').position().top
-            var theHeight = $('#articleContentContainer').height();
-            $('#adScrollContainer').css("height",theHeight+"px");
-            var screenHeight = $(window).height();
-            // if the window is below a certain height some of the sidebar is missing
-            // so we have to compensate so the scrolling remains smooth       
-            if (screenHeight <= 814) {
-                var screenDiff = (814 - screenHeight) + 843;
-            } else {
-                screenDiff = 843;
-            }
-            // tell ad when to scroll and when not to based on the size of the article
-            // 135 is the space above left for foldaway menu
-            if ( scrollMetric[1] === 'up' && !isScolledPast(articleTop-135)) {
-                articleAd.removeClass('fixad').removeClass('lockad-bottom').addClass('lockad-top');
-            }
-            else if ( scrollMetric[1] === 'up' && !isScolledPast((theHeight-screenDiff)+articleTop)) {
-                articleAd.removeClass('lockad-bottom').addClass('fixad');
-            }
-            else if ( scrollMetric[1] === 'down' && isScolledPast((theHeight-screenDiff)+articleTop)) {
-                articleAd.removeClass('fixad').removeClass('lockad-top').addClass('lockad-bottom');
-            } 
-            else if ( scrollMetric[1] === 'down' && isScolledPast(articleTop-135)) {
-                articleAd.removeClass('lockad-top').addClass('fixad');
-            }
-        }
+    //     //set sidebar height for desktop scrolling ad
+    //     if ($('#articleContentContainer').length > 0) {
+    //         var articleTop = $('#articleContentContainer').position().top
+    //         var theHeight = $('#articleContentContainer').height();
+    //         $('#adScrollContainer').css("height",theHeight+"px");
+    //         var screenHeight = $(window).height();
+    //         // if the window is below a certain height some of the sidebar is missing
+    //         // so we have to compensate so the scrolling remains smooth       
+    //         if (screenHeight <= 814) {
+    //             var screenDiff = (814 - screenHeight) + 843;
+    //         } else {
+    //             screenDiff = 843;
+    //         }
+    //         // tell ad when to scroll and when not to based on the size of the article
+    //         // 135 is the space above left for foldaway menu
+    //         if ( scrollMetric[1] === 'up' && !isScolledPast(articleTop-135)) {
+    //             articleAd.removeClass('fixad').removeClass('lockad-bottom').addClass('lockad-top');
+    //         }
+    //         else if ( scrollMetric[1] === 'up' && !isScolledPast((theHeight-screenDiff)+articleTop)) {
+    //             articleAd.removeClass('lockad-bottom').addClass('fixad');
+    //         }
+    //         else if ( scrollMetric[1] === 'down' && isScolledPast((theHeight-screenDiff)+articleTop)) {
+    //             articleAd.removeClass('fixad').removeClass('lockad-top').addClass('lockad-bottom');
+    //         } 
+    //         else if ( scrollMetric[1] === 'down' && isScolledPast(articleTop-135)) {
+    //             articleAd.removeClass('lockad-top').addClass('fixad');
+    //         }
+    //     }
         
-    }
+    // }
 
 
 
@@ -22151,20 +22220,20 @@ $('document').ready(function() {
 
 
 
-    $('.js-menu').on('click', function (event) {
-        event.preventDefault();
-        $('body').addClass('u-noscroll');
-        $('.responsive-standalone').addClass('navigation-active');
-        $('.responsive-standalone-close').addClass('open');
-        $(".responsive-standalone-overlay").animate({
-            "opacity": "toggle"
-        }, {
-            duration: 500
-        }, function () {
-            $(".responsive-standalone-overlay").fadeIn();
-        });
-        return false;
-    });
+    // $('.js-menu').on('click', function (event) {
+    //     event.preventDefault();
+    //     $('body').addClass('u-noscroll');
+    //     $('.responsive-standalone').addClass('navigation-active');
+    //     $('.responsive-standalone-close').addClass('open');
+    //     $(".responsive-standalone-overlay").animate({
+    //         "opacity": "toggle"
+    //     }, {
+    //         duration: 500
+    //     }, function () {
+    //         $(".responsive-standalone-overlay").fadeIn();
+    //     });
+    //     return false;
+    // });
 
     function closeMobileMenu() {
         $('body').removeClass('u-noscroll');
@@ -22215,7 +22284,7 @@ $('document').ready(function() {
     // });
 
     $('.js-searchButton').on('click',function() {
-        $('.c-search-bar').show();
+        $('#search-bar').toggleClass('c-search-bar--active');
     });
     $('.js-searchClose').on('click',function() {
         $('.c-search-bar').hide();
@@ -22275,7 +22344,7 @@ $('document').ready(function() {
 
 
 
-    adScroll();
+    // adScroll();
 
 
 });
@@ -22870,19 +22939,11 @@ Acme.Token.prototype.removeToken = function()
                                 </div>'
                             ,
                             "weatherPanel" : 
-                                '<div class="c-header__weather-info--date">{{date}}</div> \
-                                <div class="weather-panel"> \
+                                '<div class="weather-panel"> \
                                     <div class="weather-panel__icon">{{{icon}}}</div> \
-                                    <p class="weather-panel__location">{{location}}</p> \
                                     <div class="weather-panel__temperature">{{temperature}}&#176; </div> \
+                                    <p class="weather-panel__location">{{location}}</p> \
                                     <div class="weather-panel__description">{{description}}</div> \
-                                    <div class="weather-panel__pulldown-icon"> \
-                                        <img class="j-show-weather-forcast" src="' + _appJsConfig.templatePath + '/static/icons/arrow.svg"> \
-                                    </div> \
-                                </div> \
-                                \
-                                <div class="weather-dropdown hidden j-weather-panel-dropdown"> \
-                                    <div class="weather-dropdown__wind">{{{range}}} {{wind_speed}} km/h</div> \
                                 </div>'
                         };
 

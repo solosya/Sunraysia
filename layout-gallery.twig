@@ -1,6 +1,7 @@
 {{ set(this, 'title', _Blog.getBlogTitle()) }}
 {% set networkData = _Network.getNetworkData() %}
 {% set site        = networkData.title | lower | split(" ")[0]%}
+{% set blogData    = _Blog.getBlog() %}
 
 {{this.registerJs("Acme.cards = CardController();")}}
 
@@ -216,4 +217,5 @@
         </section>
 
     </div>
+    <div class="j-keyword-cont" data-keywords="{{blogData.keywords}}"></div>
 </main><!-- .site-main -->
