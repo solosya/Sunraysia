@@ -14,42 +14,42 @@
 
 
 <div class="row c-cards">
-    <div class="col-12 col-sm-split col-md-4 fourOnNine">
+    <div class="col-12 col-md-6 col-lg-4">
         {{this.render('../_single-article.twig', {
             article: articles[articleCount], 
             position: (articleCount+1),
             imageSuppress: true,
-            containerClass: "card-4-mobile card-4-tablet card-4-desktop"
+            containerClass: "card-2-mobile card-2-tablet card-2-desktop"
         }) | raw}}
         {% set articleCount = (dev) ? articleCount : articleCount + 1 %}
     </div>
 
 
-    <div class="col-12 col-sm-split col-md-4 fourOnNine">
+    <div class="col-12 col-md-6 col-lg-4">
         {{this.render('../_single-article.twig', {
             article: articles[articleCount], 
             position: (articleCount+1),
-            containerClass: "card-4-mobile card-4-tablet card-4-desktop"
+            containerClass: "card-2-mobile card-2-tablet card-2-desktop"
         }) | raw}}
         {% set articleCount = (dev) ? articleCount : articleCount + 1 %}
     </div>
 
-    <div class="col-12 col-sm-split col-md-4 fourOnNine">
+    <div class="col-12 col-md-6 col-lg-4">
         {{this.render('../_single-article.twig', {
             article: articles[articleCount], 
             position: (articleCount+1),
             imageSuppress: true,
-            containerClass: "card-4-mobile card-4-tablet card-4-desktop"
+            containerClass: "card-2-mobile card-2-tablet card-2-desktop"
         }) | raw}}
         {% set articleCount = (dev) ? articleCount : articleCount + 1 %}
     </div>
 
-    <div class="col-12 col-sm-split col-md-4 fourOnNine  d-md-none d-lg-block">
+    <div class="col-12 col-md-6 col-lg-4">
         {{this.render('../_single-article.twig', {
             article: articles[articleCount], 
             position: (articleCount+1),
             imageSuppress: true,
-            containerClass: "card-4-mobile card-4-tablet card-4-desktop"
+            containerClass: "card-2-mobile card-2-tablet card-2-desktop"
         }) | raw}}
         {% set articleCount = (dev) ? articleCount : articleCount + 1 %}
     </div>

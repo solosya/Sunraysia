@@ -88,9 +88,10 @@
 
 
 
+
     {% set params = {
         imageSuppress   : imageSuppress,
-        hasMediaClass   : (params.hasMedia) ? 'withImage__content': 'without-image',
+        hasMediaClass   : (article.hasMedia) ? 'withImage__content': 'without-image',
         placeholder     : "https://placeholdit.imgix.net/~text?w=1&h=1",
         imageMedium     : _Media.getMediaUrl(article.featuredMedia,768, 500, {'crop': 'fill', 'gravity': 'faces'} ),
         publishDate     : publishDate,
@@ -98,7 +99,7 @@
         imageSmall      : _Media.getMediaUrl(article.featuredMedia,500, 325, {'crop': 'fill', 'gravity': 'faces'} ),
         profileImg      : profileImg,
         imgHeight       : imgHeight,
-        hasMedia        : ((article.hasMedia == 'TRUE' or article.hasPreviewMedia == 'TRUE') and imageSuppress == false) ? True : False,
+        hasMedia        : ((article.hasMedia == 'TRUE' or article.hasPreviewMedia == 'TRUE') and imageSuppress == false) ? true : false,
         imgWidth        : imgWidth,
         category        : article.label,
         lazyload        : lazyload,
@@ -113,6 +114,7 @@
         id              : article.articleId,
     } %}
     
+
     {% set totalstring = "" %}
     {% set totals = (article.total is defined) ? article.total : false %}
     {% if totals and _User.isAdminUser() %}

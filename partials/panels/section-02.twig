@@ -1,8 +1,9 @@
 {% set articleCount = 0 %}
+{% set eventCount = 0 %}
 {% set cardIndex = 0 %}
 
 
-<div class="row" data-section="02">
+<div class="row" data-section="01">
     <div class="col-12">
         <div class="c-page-head c-page-head-xs">
             <div class="u-heading__large u-heading__large-xs u-pr--6 u-bg-white">{{title}}</div>
@@ -13,36 +14,52 @@
 
 
 <div class="row c-cards">
-    <div class="col-md-12 col-lg-8">
-        
-        {% for i in 0..2 if articles[articleCount] %}
+
+    <div class= "col-12 col-lg-6 order-lg-1">
+        {{this.render('../_single-article.twig', {
+            article: articles[articleCount], 
+            position: (articleCount+1),
+            imageSize: {width: 300, height: 230},
+            containerClass: "card-4-mobile card-4-tablet card-4-desktop"
+        }) | raw}}
+        {% set articleCount = (dev) ? articleCount : articleCount + 1 %}
+    </div>
+
+    <div class= "col-12 col-md-6 col-lg-3 order-lg-2">
+        {{this.render('../_single-article.twig', {
+            article: articles[articleCount], 
+            position: (articleCount+1),
+            imageSize: {width: 300, height: 230},
+            containerClass: "card-2-mobile card-2-tablet card-2-desktop"
+        }) | raw}}
+        {% set articleCount = (dev) ? articleCount : articleCount + 1 %}
+    </div>
+
+    <div class= "col-12 col-md-6 col-lg-3">
+        {{this.render('../_single-article.twig', {
+            article: articles[articleCount], 
+            position: (articleCount+1),
+            imageSize: {width: 300, height: 230},
+            containerClass: "card-2-mobile card-2-tablet card-2-desktop"
+        }) | raw}}
+        {% set articleCount = (dev) ? articleCount : articleCount + 1 %}
+    </div>
+
+</div>
+
+
+<div class="row">
+
+
+        <div class="col-12 col-lg-9">
             {{this.render('../_single-article.twig', {
                 article: articles[articleCount], 
                 position: (articleCount+1),
-                imageSize: {width: 740, height: 360},
-                containerClass: "card-5-mobile card-5-tablet card-5-desktop"
+                imageSize: {width: 550, height: 290},
+                containerClass: "card-3-mobile card-3-tablet card-3-desktop card-3-desktop-lg"
             }) | raw}}
             {% set articleCount = (dev) ? articleCount : articleCount + 1 %}
-        {% endfor %}
-
-    </div>
-
-    <div class="col-md-12 col-lg-4">
-        {% if adslots[0] is defined %}
-            <div class="j-adslot" id="{{adslots[0]}}" data-adshape="mrec"></div>
-        {% endif %}
-        <div class="row c-cards">
-            <div class="col-12">
-                {{this.render('../_single-article.twig', {
-                    article: articles[articleCount], 
-                    position: (articleCount+1),
-                    imageSize: {width: 740, height: 360},
-                    containerClass: "card-5-mobile card-5-tablet card-3-desktop"
-                }) | raw}}
-                {% set articleCount = (dev) ? articleCount : articleCount + 1 %}
-            </div>
         </div>
-    </div>
-
 
 </div>
+

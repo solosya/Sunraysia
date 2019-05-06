@@ -1,11 +1,11 @@
 .c-header {
 
-    // @media #{$tablet} {
-    //     background:yellow;
-    // }
-    // @media #{$mobile} {
-    //     background:green;
-    // }
+    @media #{$tablet} {
+        background:yellow;
+    }
+    @media #{$mobile} {
+        background:green;
+    }
     border-bottom: 1px solid $grey;
 
     &__container {

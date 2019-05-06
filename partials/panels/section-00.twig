@@ -3,77 +3,108 @@
 
 {% set popularArticles = _Article.getPopularArticles({ limit: 5, sortBy: 'VIEWS', scope: 'network' }) %}
 
-    <div class="row" data-section="00">
-        <div class="col-12 col-lg-8">
+<div class="row" data-section="00">
+        
+    <div class="col-12 col-lg-6">
+        
+        {{this.render('../_single-article.twig', {
+            article: articles[articleCount], 
+            position: (articleCount+1),
+            imageSize: {width: 635, height: 290},
+            behaviour: 'lightbox',
+            containerClass: "card-5-mobile card-5-tablet card-5-desktop"
+        }) | raw}}
+        {% set articleCount = (dev) ? articleCount : articleCount + 1 %}
+    </div>
+
+
+    <div class="col-12 col-lg-6">
+        <div class="row">
+            <div class="col-12 col-md-6">
+                {{this.render('../_single-article.twig', {
+                    article: articles[articleCount], 
+                    position: (articleCount+1),
+                    imageSize: {width: 635, height: 290},
+                    behaviour: 'lightbox',
+                    containerClass: "card-2-mobile card-2-tablet card-2-desktop"
+                }) | raw}}
+                {% set articleCount = (dev) ? articleCount : articleCount + 1 %}
+            </div>
+
+            <div class="col-12 col-md-6">
+            add here
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+
+    <div class="col-12 col-lg-9">
+        {% for i in 0..3 if articles[articleCount] %}
             {{this.render('../_single-article.twig', {
                 article: articles[articleCount], 
                 position: (articleCount+1),
                 imageSize: {width: 740, height: 360},
-                behaviour: 'lightbox',
-                containerClass: "card-1-mobile card-1-tablet card-1-desktop"
+                containerClass: "card-3-mobile card-3-tablet card-3-desktop card-3-desktop-lg"
             }) | raw}}
             {% set articleCount = (dev) ? articleCount : articleCount + 1 %}
+        {% endfor %}
+
+    </div>
+
+
+    <div class="col col-lg-3">
+        
+        {% if adslots[0] is defined %}
+            <div class="j-adslot" id="{{adslots[0]}}" data-adshape="mrec"></div>
+        {% endif %}
+
+        <div class="c-page-head c-page-head-xs">
+            <div class="u-heading--large u-heading--large-xs">Video</div>
         </div>
 
-
-        <div class="col-12 col-lg-4">
-            <div class="c-news-feed">
-                <div class="c-news-feed__title u-site-color">Most popular</div>
-                <ul class="row c-news-feed__list">
-
-                    {% for i in 0..4 if popularArticles[i] %}
-                        {% set displayClass = i > 2 ? 'd-sm-block d-md-none d-lg-block' : '' %}
-                            <li class="col-sm-12 col-md-4 col-lg-12 {{displayClass}}">
-                                {{this.render('../_single-article.twig', {
-                                    article: popularArticles[i], 
-                                    imageSuppress: true,
-                                    containerClass: "card-6-mobile card-6-tablet card-6-desktop"
-                                }) | raw}}
-                            </li>
-                    {% endfor %}
-                </ul>
-           </div>
-        </div>
-    </div> <!-- row -->
-
-
-
-
-
-
-    <div class="row">
-
-        <div class="col-12 col-lg-8">
-
+        <div class="row">
             {% for i in 0..2 if articles[articleCount] %}
-                {{this.render('../_single-article.twig', {
-                    article: articles[articleCount], 
-                    position: (articleCount+1),
-                    imageSize: {width: 740, height: 360},
-                    containerClass: "card-5-mobile card-5-tablet card-5-desktop"
-                }) | raw}}
-                {% set articleCount = (dev) ? articleCount : articleCount + 1 %}
-            {% endfor %}
             
-        </div>
+                <div class="col-12 col-md-6 col-lg-12">
 
-        <div class="col-12 col-lg-4">
-            {% if adslots[0] is defined %}
-                <div class="j-adslot" id="{{adslots[0]}}" data-adshape="mrec"></div>
-            {% endif %}
-            <div class="row c-cards">
-                <div class="col-12">
-                    {% if articles[articleCount] %}
+                    {{this.render('../_single-article.twig', {
+                        article: articles[articleCount], 
+                        position: (articleCount+1),
+                        imageSize: {width: 740, height: 360},
+                        containerClass: "card-1-mobile card-1-tablet card-1-desktop"
+                    }) | raw}}
 
-                        {{this.render('../_single-article.twig', {
-                            article: articles[articleCount], 
-                            position: (articleCount+1),
-                            imageSize: {width: 360, height: 270},
-                            containerClass: "card-5-mobile card-5-tablet card-3-desktop"
-                        }) | raw}}
-                        {% set articleCount = (dev) ? articleCount : articleCount + 1 %}
-                    {% endif %}
+                </div>
+
+            {% endfor %}
+
+            <div class="col-12 col-md-6 col-lg-12">
+                <div class="c-news-feed">
+                    <div class="c-news-feed__title">Most popular</div>
+                    <ul class="row c-news-feed__list">
+
+                        {% for i in 0..4 if popularArticles[i] %}
+                            {% set displayClass = i > 2 ? 'd-sm-block d-md-none d-lg-block' : '' %}
+                                <li class="col-sm-12 col-md-4 col-lg-12 {{displayClass}}">
+                                    {{this.render('../_single-article.twig', {
+                                        article: popularArticles[i], 
+                                        imageSuppress: true,
+                                        containerClass: "card-6-mobile card-6-tablet card-6-desktop"
+                                    }) | raw}}
+                                </li>
+                        {% endfor %}
+                    </ul>
                 </div>
             </div>
         </div>
     </div>
+</div> <!-- row -->
+
+
+
+
+
+
+
