@@ -1,56 +1,65 @@
 {% set articleCount = 0 %}
 {% set cardIndex = 0 %}
 
+{{this.render('../_section-header.twig', {
+    number: "03",
+    title: title,
+    link: link,
+}) | raw }}
 
-<div class="row" data-section="03">
-    <div class="col-12">
-        <div class="c-page-head c-page-head-xs">
-            <div class="u-heading__large u-heading__large-xs u-pr--6 u-bg-white">{{title}}</div>
-            <a href="{{link}}" class="c-page-head__link">View all</a>
-        </div>
+
+
+
+<div class="row">
+    <div class="col-12 col-md-6 col-lg-3">
+        {{this.render('../_single-article.twig', {
+            article: articles[articleCount], 
+            position: (articleCount+1),
+            imageSuppress: true,
+            containerClass: "card-2-mobile card-2-tablet card-2-desktop"
+        }) | raw}}
+        {% set articleCount = (dev) ? articleCount : articleCount + 1 %}
     </div>
+
+
+    <div class="col-12 col-md-6 col-lg-3">
+        {{this.render('../_single-article.twig', {
+            article: articles[articleCount], 
+            position: (articleCount+1),
+            containerClass: "card-2-mobile card-2-tablet card-2-desktop"
+        }) | raw}}
+        {% set articleCount = (dev) ? articleCount : articleCount + 1 %}
+    </div>
+
+    <div class="col-12 col-md-6 col-lg-3">
+        {{this.render('../_single-article.twig', {
+            article: articles[articleCount], 
+            position: (articleCount+1),
+            imageSuppress: true,
+            containerClass: "card-2-mobile card-2-tablet card-2-desktop"
+        }) | raw}}
+        {% set articleCount = (dev) ? articleCount : articleCount + 1 %}
+    </div>
+
+    <div class="col-12 col-md-6 col-lg-3">
+        {{this.render('../_single-article.twig', {
+            article: articles[articleCount], 
+            position: (articleCount+1),
+            imageSuppress: true,
+            containerClass: "card-2-mobile card-2-tablet card-2-desktop"
+        }) | raw}}
+        {% set articleCount = (dev) ? articleCount : articleCount + 1 %}
+    </div>
+
 </div>
 
 
 
-<div class="row c-cards">
-    <div class="col-12 col-md-6 col-lg-4">
-        {{this.render('../_single-article.twig', {
-            article: articles[articleCount], 
-            position: (articleCount+1),
-            imageSuppress: true,
-            containerClass: "card-2-mobile card-2-tablet card-2-desktop"
-        }) | raw}}
-        {% set articleCount = (dev) ? articleCount : articleCount + 1 %}
-    </div>
+{{this.render('/partials/_section-loadmore.twig', {
+    sectionNumber: "03", 
+    cardClass: "col-12 col-md-6 col-lg-3 card-2-mobile card-2-tablet card-2-desktop",
+    cardCount: 4,
+}) | raw}}
 
 
-    <div class="col-12 col-md-6 col-lg-4">
-        {{this.render('../_single-article.twig', {
-            article: articles[articleCount], 
-            position: (articleCount+1),
-            containerClass: "card-2-mobile card-2-tablet card-2-desktop"
-        }) | raw}}
-        {% set articleCount = (dev) ? articleCount : articleCount + 1 %}
-    </div>
 
-    <div class="col-12 col-md-6 col-lg-4">
-        {{this.render('../_single-article.twig', {
-            article: articles[articleCount], 
-            position: (articleCount+1),
-            imageSuppress: true,
-            containerClass: "card-2-mobile card-2-tablet card-2-desktop"
-        }) | raw}}
-        {% set articleCount = (dev) ? articleCount : articleCount + 1 %}
-    </div>
-
-    <div class="col-12 col-md-6 col-lg-4">
-        {{this.render('../_single-article.twig', {
-            article: articles[articleCount], 
-            position: (articleCount+1),
-            imageSuppress: true,
-            containerClass: "card-2-mobile card-2-tablet card-2-desktop"
-        }) | raw}}
-        {% set articleCount = (dev) ? articleCount : articleCount + 1 %}
-    </div>
-</div>

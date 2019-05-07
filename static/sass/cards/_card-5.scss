@@ -4,6 +4,10 @@
     margin-right: -20px;
 
     .c-cards-view {
+
+        height: 490px;
+
+
         @include flex-direction(column, vertical);
         align-items: stretch;
 
@@ -26,6 +30,7 @@
         &__category {
             margin-top:16px;
             margin-bottom:12px;
+
         }
 
         &__heading {
@@ -72,16 +77,34 @@
 
 
         &.without-image {
-            background-color:white;
+            // background-color:white;
 
             .c-cards-view {
 
                 &__container {
                     width: 100%;
-                    padding: 0 0;
                     margin-left: 0;
+                    padding: 98px 50px 50px 50px;
                     height: inherit;
                 }
+                &__category {
+                    margin-top:0;
+                    margin-bottom:20px;
+                }
+                &__heading {
+                    margin-bottom:30px;
+                    @include flex-height(76px);
+                }
+                &__description {
+                    @include font-size(15);
+                    line-height:1.6;
+                    @include flex-height(132px);
+                    margin-bottom: 70px;
+                }
+                &__author {
+                    margin-top: 0;
+                }
+        
             }
         }
     }
@@ -120,7 +143,6 @@
             text-align:center;
             padding: 0 100px 25px 100px;
             margin: 0;
-            background:pink;
         }
 
         &__category {
@@ -208,7 +230,6 @@
             &__container {
                 padding: 0 81px 25px 81px;
                 margin: 0;
-                background:pink;
             }
         }
     }

@@ -54,8 +54,7 @@ with width taken up with borders on the side #}
 
 
 
-{# <div id="{{owl}}" class="o-media js-media o-media-sm article-gallery owl-gallery-{{type}} {{owlClass}} {{defaultClass}}" data-slider-id="1" data-default="{{default}}"> #}
-<div id="{{owl}}" class="article-gallery owl-gallery-{{type}} {{owlClass}}" data-slider-id="1" data-default="{{default}}">
+<div id="{{owl}}" class="article-gallery owl-gallery-{{type}} {{owlClass}}" data-slider-id="1">
     {% for image in media %}
 
         {% set articleImgSmall = _Media.getMediaUrl(image,0, 250, {'crop': 'fill', 'gravity': gravity} ) %}
@@ -125,7 +124,6 @@ with width taken up with borders on the side #}
             <figcaption class="article-gallery__caption" style="float:unset;">
                 <p class="">{{image.caption | raw }}</p>
             </figcaption>
-
         </figure>
 
 

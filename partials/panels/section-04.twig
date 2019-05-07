@@ -2,54 +2,50 @@
 {% set cardIndex = 0 %}
 
 
-<div class="row" data-section="04">
-    <div class="col-12">
-        <div class="c-page-head c-page-head-xs">
-            <div class="u-heading__large u-heading__large-xs u-pr--6 u-bg-white">{{title}}</div>
-            <a href="{{link}}" class="c-page-head__link">View all</a>
-        </div>
-    </div>
-</div>
-
+{{this.render('../_section-header.twig', {
+    number: "04",
+    title: title,
+    link: link,
+}) | raw }}
 
 
 <div class="row c-cards">
-    <div class="col-12 col-sm-split col-md-4 fourOnNine">
+    <div class="col-12 col-md-6 col-lg-3">
         {{this.render('../_single-article.twig', {
             article: articles[articleCount], 
             position: (articleCount+1),
             imageSuppress: true,
-            containerClass: "card-4-mobile card-4-tablet card-4-desktop"
+            containerClass: "card-1-mobile card-1-tablet card-1-desktop"
         }) | raw}}
         {% set articleCount = (dev) ? articleCount : articleCount + 1 %}
     </div>
 
 
-    <div class="col-12 col-sm-split col-md-4 fourOnNine">
+    <div class="col-12 col-md-6 col-lg-3">
         {{this.render('../_single-article.twig', {
             article: articles[articleCount], 
             position: (articleCount+1),
-            containerClass: "card-4-mobile card-4-tablet card-4-desktop"
+            containerClass: "card-1-mobile card-1-tablet card-1-desktop"
         }) | raw}}
         {% set articleCount = (dev) ? articleCount : articleCount + 1 %}
     </div>
 
-    <div class="col-12 col-sm-split col-md-4 fourOnNine">
+    <div class="col-12 col-md-6 col-lg-3">
         {{this.render('../_single-article.twig', {
             article: articles[articleCount], 
             position: (articleCount+1),
             imageSuppress: true,
-            containerClass: "card-4-mobile card-4-tablet card-4-desktop"
+            containerClass: "card-1-mobile card-1-tablet card-1-desktop"
         }) | raw}}
         {% set articleCount = (dev) ? articleCount : articleCount + 1 %}
     </div>
 
-    <div class="col-12 col-sm-split col-md-4 fourOnNine  d-md-none d-lg-block">
+    <div class="col-12 col-md-6 col-lg-3">
         {{this.render('../_single-article.twig', {
             article: articles[articleCount], 
             position: (articleCount+1),
             imageSuppress: true,
-            containerClass: "card-4-mobile card-4-tablet card-4-desktop"
+            containerClass: "card-1-mobile card-1-tablet card-1-desktop"
         }) | raw}}
         {% set articleCount = (dev) ? articleCount : articleCount + 1 %}
     </div>

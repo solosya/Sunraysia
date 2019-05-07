@@ -13,7 +13,7 @@
         height:390px;
     }
     @media #{$desktop-up} {
-        height:391px;
+        height:376px;
         // .external-article-video{
         //     height: 641px !important;
         // }
@@ -50,12 +50,12 @@
     }
     
     > p {
-        @include font-size(11);
+        @include font-size(13);
         color: $greyish;
-        font-style: italic;
-        line-height: 1.36;
+        line-height: 1.46;
         font-family: $base-font-family;
         float: left;
+        margin-bottom: 20px;
     }
 }
 

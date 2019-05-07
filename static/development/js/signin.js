@@ -14,7 +14,7 @@ Acme.Signin.prototype.errorMsg = function(msg) {
 };
 Acme.Signin.prototype.handle = function(e) {
     var self = this;
-
+    console.log('handling');
     var $elem = this.parent.handle.call(this, e);
 
     if ( $elem.is('a') ) {
@@ -42,8 +42,9 @@ Acme.Signin.prototype.handle = function(e) {
             formData['rememberMe'] = 1;
 
             Acme.server.create(_appJsConfig.baseHttpPath + '/api/auth/login', formData).done(function(r) {
+                console.log(r);
                 if (r.success === 1) {
-                    window.location.reload();
+                    // window.location.reload();
 
                 } else {
                     $elem.text("Sign in")
@@ -110,7 +111,8 @@ var layouts = {
 Acme.SigninView = new Acme.Signin('modal', 'signin-modal', layouts);
 
 
-$('#signinBtn, #articleSigninBtn').on('click', function() {
+$('#signinBtn, #articleSigninBtn').on('click', function(e) {
+    e.preventDefault();
     Acme.SigninView.render("signin", "Log in");
 });
 

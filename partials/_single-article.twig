@@ -91,7 +91,6 @@
 
     {% set params = {
         imageSuppress   : imageSuppress,
-        hasMediaClass   : (article.hasMedia) ? 'withImage__content': 'without-image',
         placeholder     : "https://placeholdit.imgix.net/~text?w=1&h=1",
         imageMedium     : _Media.getMediaUrl(article.featuredMedia,768, 500, {'crop': 'fill', 'gravity': 'faces'} ),
         publishDate     : publishDate,
@@ -99,7 +98,7 @@
         imageSmall      : _Media.getMediaUrl(article.featuredMedia,500, 325, {'crop': 'fill', 'gravity': 'faces'} ),
         profileImg      : profileImg,
         imgHeight       : imgHeight,
-        hasMedia        : ((article.hasMedia == 'TRUE' or article.hasPreviewMedia == 'TRUE') and imageSuppress == false) ? true : false,
+        hasMedia        : ((article.hasMedia == 'TRUE' or article.hasPreviewMedia == 'TRUE') and imageSuppress == false) ? false : false,
         imgWidth        : imgWidth,
         category        : article.label,
         lazyload        : lazyload,
@@ -128,7 +127,6 @@
     {% set params = {
         placeholder     : "https://placeholdit.imgix.net/~text?w=1&h=1",
         hasMedia        : article.social.hasMedia,
-        hasMediaClass   : (article.social.hasMedia) ? 'withImage__content': 'without-image',
         hasContentClass : (article.social.content) ? '' : 'without__content',
         videoClass      : article.social.media['type'] == 'video' ? 'c-cards-view__media--video' : '',
         imageSmall      : article.social.media['path'],
@@ -176,7 +174,13 @@
         {% endif %}
         
         {# Article content including image #}
-        <article class="c-cards-view {{params.social == 0 ? "" : "social"}} {{params.category}} {{params.hasMediaClass}} {{lightbox}} {{params.status}}">
+        <article class="c-cards-view 
+                        {{params.social == 0 ? "" : "social"}} 
+                        {{params.category}} 
+                        {{params.hasMedia ? "" : "without-image" }} 
+                        {{lightbox}} 
+                        {{params.status}}
+                        ">
             {{ this.render('_article-'~template~'.twig', {
                 params:params, 
                 networkData: networkData

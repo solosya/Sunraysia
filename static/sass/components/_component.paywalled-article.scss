@@ -1,0 +1,64 @@
+.c-paywalled-article {
+    height: 260px;
+    padding-top: 56px;
+    background-image: linear-gradient(82deg, #c51515, #4c76c9);
+    
+    &__container {
+        @include flexbox();
+        @include flex-direction(row, horizontal);
+    }
+
+
+    &__publication {
+        @include font-size(14);
+        color: $white;
+        font-weight: $weightBold;
+        text-transform: uppercase;
+        margin-bottom: 7px;
+    }
+
+    &__text {
+        min-width: 720px;
+    }
+
+    
+    &__title {
+        @include font-size(39);
+        color: $white;
+        line-height: 1.10;
+        font-weight: $weightBold;
+        margin-bottom: 15px;
+    }
+    &__subscriptions {
+        @include font-size(18);
+        color: $white;
+        line-height: 1.13;
+    }
+
+
+    &__action {
+        width:220px;
+        padding-top:27px;
+        // @include flexbox();
+        // @include margin-bottom(30);
+    }
+
+    &__period {
+        color: $greyish;
+        font-family: $weightLight;
+        @include font-size(15);
+        line-height: 1.6;
+        font-weight: $weightRegular;
+        @include margin-bottom(30);
+        letter-spacing: normal;
+
+        a {
+            display: block;
+            @include font-size(12);
+            text-decoration: underline;
+            @include margin-top(14);
+            color: $greyish;
+            font-family: $primaryFont;
+        }
+    }
+}

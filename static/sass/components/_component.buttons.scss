@@ -1,3 +1,5 @@
+/* Begin header style */
+
 .c-button {
     border: none;
     outline: none;
@@ -18,24 +20,24 @@
     @include justify-content(center);
     text-transform: uppercase;
     
-    &--block {
+    &-block {
         width: $viewportSize;
         display: block;
     }
 
-    &--inline {
+    &-inline {
         display:inline-block;
     }
 
-    &--rounded {
+    &-rounded {
         @include border-radius(25px);
     }
 
-    &--radius {
+    &-radius {
         @include border-radius(4px);
     }
     
-    &--md {
+    &-md {
         height: auto;
         @include padding(12 30);
     }
@@ -200,10 +202,7 @@
         border-width: 1px;
     }
 
-    +.c-button {
-        margin-left: 10px;
-    }
-    
+   
     &-disabled {
         @include opacity(.5);
         pointer-events: none;
@@ -248,4 +247,56 @@
         background-color: $greyish;
     }
 }
+
+.c-button-transparent {
+    color:$black_sh3;
+    cursor:pointer;
+    border:0px none;
+    @include opacity(1);
+    @include font-size(15);
+    background-color:transparent;
+    @include flexbox();
+    text-align: center;
+    @include align-items(center);
+    
+    .icon {
+        color:$black_sh3;
+        @include size(18px);
+        @include opacity(1);
+        text-align:center;
+        @include font-size(14);
+        line-height:25px;
+        @include margin-right(5);
+    }
+
+    &:last-child {
+        .icon {
+            @include margin-left(5);
+            @include margin-right(0);
+        }
+    }
+    &:first-child {
+        .icon {
+            @include margin-left(0);
+            @include margin-right(5);
+        }
+    }
+    
+    &:hover, &:focus, &:active {
+        color:$red;
+        @include opacity(1);
+
+        .icon {
+            color:$red;
+        }
+    }
+    
+    &.selected {
+        .icon {
+            color:$red;
+            @include opacity(1);
+        }
+    }
+}
+
 /* End header style */

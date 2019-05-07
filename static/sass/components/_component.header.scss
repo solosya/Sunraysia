@@ -37,27 +37,6 @@
         width: 160px;
     }
 
-    // &__mobile-login {
-    //     flex:2;
-    //     @include font-size(14);
-    //     @media #{$tablet-up} {
-    //         display:none;
-    //     }
-    // }
-
-    // &__mobile-subscribe {
-    //     height: 25px;
-    //     @include font-size(13);
-    //     font-weight:$weightBold;
-    //     line-height:25px;
-    //     background: $blue;
-    //     color:white;
-    //     text-align:center;
-    //     @media #{$tablet-up} {
-    //         display:none;
-    //     }
-    // }
-
     &__weather-info {
         margin: 15px 0;
         @include flexbox();
@@ -74,11 +53,9 @@
         width: 380px;
         left: 50%;
         transform: translateX(-190px);
-        background: pink;
     }
 
     &__logo {
-        width: 162px;
         display: block;
     }
 

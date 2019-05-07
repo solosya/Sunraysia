@@ -1,0 +1,15 @@
+.c-section-head {
+    margin-bottom: 25px;
+
+    &__title {
+        @include font-size(32);
+        color: $blue;
+        font-weight: $weightBold;
+        padding-bottom: 8px;
+    }
+
+    &__rule {
+        border-top: 1px solid $darkergrey;
+        height:1px;
+    }
+}

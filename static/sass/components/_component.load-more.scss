@@ -1,0 +1,19 @@
+.c-loadmore {
+    color:$info;
+    @include font-size(18);
+    font-weight:$weightBold;
+    @include transition(all 0.3s ease);
+    
+    .icon {
+        color:$greyish;
+        @include margin-right(4);
+    }
+    
+    &:hover {
+        color:$blue_sh1;
+        
+        .icon {
+            color:$blue_sh1;
+        }
+    }
+}

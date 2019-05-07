@@ -25,6 +25,7 @@
 {% endif %}
 
 
+{% set showPaywall = true %}
 
 
 {% if showPaywall == true %}
@@ -36,11 +37,8 @@
 {% else %}
     {# Only grab these if article is not paywalled #}
     {# {% set relatedArticles = _Article.getPopularArticles({ blogId: article.blog.id, limit: 3, excludeArticleIds : [article.id], interval: 168 }) %} #}
-    {% set recentArticles = _Article.getRecentArticles({ limit: 5, excludeArticleIds : [article.id] }) %}
+    {% set recentArticles = _Article.getRecentArticles({ limit: 3, excludeArticleIds : [article.id] }) %}
 {% endif %}
-
-
-
 
 {% set articleImg = false %}
 {% set featured = false %}
@@ -66,43 +64,20 @@
 {% endif %}
 
 
-{% set relatedArticles = _Article.getPopularArticles({ blogId: article.blog.id, limit: 3, excludeArticleIds : [article.id], interval: 168 }) %}
-{% set recentArticles = _Article.getRecentArticles({ limit: 5, excludeArticleIds : [article.id] }) %}
 
 {% set testCount = 0 %}
 
 
 
-<main id="main" class="o-body-container o-body-container-md u-margin-top-60" role="main">
+<main id="main" class="u-margin-top-60 u-margin-bottom-60" role="main">
     <div class="container">
         <div class="row">
-            <div class="col-9 col-lg-6">
+            <div class="col-md-6 offset-md-1">
 
-                <div class="c-article c-article-sm ">
-
-                    {% if articleImg %} 
-
-                        <div class="gallery-container relative">
-
-                            {% if article.media|length > 0 %}
-                                {% set imageFeature = featured == 'image' ? true : false %}
-                                {{this.render('partials/gallery.twig', {
-                                    media: article.media,
-                                    default: imageFeature
-                                }) | raw}}
-                            {% endif %}
-
-                        </div> 
-
-                    {% endif %}
-
-
-                    <div class="c-article__main u-desktop-margin-top-50">
+                <div class="c-article">
+                    <div class="c-article__main">
                         <div class="c-article__head">
                             
-                            {% if _User.isAdminUser() %}
-                                    <a href="{{article.editUrl}}" target="_blank" class="c-article__edit-link">Edit article</a>
-                            {% endif %}
 
 
                             <div class="c-article__category">
@@ -111,59 +86,87 @@
                             <div class="c-article__title">
                                 {{ quotes.smarten(article.title) }}
                             </div>
-                            <div class="c-article__posted-on">
-                                <time class="c-article__published">{{article.publishedDate}}</time>
-                                {% if updated %}
-                                    <time class="c-article__updated">Updated {{ updateDate | capitalize }}</time>
-                                {% endif %}
-
-                            </div>
 
 
 
-                            <div class="c-article__posted-by row">
-                                <div class="c-article__author col-3">
-                                    <div class="c-article__avatar" style="background-image: url({{ profileImg }});"></div>
+                            <div class="c-article__posted-by">
+                                <div class="c-article__author">
                                     <a class="c-article__author-name" href="{{_AppHelper.getUserProfileUrl(article.createdBy['username'])}}/posts">{{ article.createdBy['displayName'] }}</a>
+
+                                    {% if article['createdBy']['coauthors'] %}
+                                        {% for author in article['createdBy']['coauthors'] %}
+                                            <a class="c-article__author-name" href="{{_AppHelper.getUserProfileUrl(author['username'])}}/posts">{{ author['displayName'] }}</a>
+                                        {% endfor %}
+                                    {% endif %}
+
+                                    <time class="c-article__published">{{article.publishedDate}}</time>
+                                    {% if updated %}
+                                         - <time class="c-article__updated">Updated {{ updateDate | capitalize }}</time>
+                                    {% endif %}
                                 </div>
 
-                                {% if article['createdBy']['coauthors'] %}
-                                    {% for author in article['createdBy']['coauthors'] %}
-                                        <div class="c-article__author col-3">
-                                            <div class="c-article__avatar" style="background-image: url({{ _Media.getMediaUrl(author['media'], 100, 100, {radius: 'max', gravity: 'face', 'crop': 'thumb', type: 'user'}) }});"></div>
-                                            <a class="c-article__author-name" href="{{_AppHelper.getUserProfileUrl(author['username'])}}/posts">{{ author['displayName'] }}</a>
-                                        </div>
-                                    {% endfor %}
-                                {% endif %}
-
                             </div>
 
+                            {% if _User.isAdminUser() %}
+                                    <a href="{{article.editUrl}}" target="_blank" class="c-article__edit-link">Edit article</a>
+                            {% endif %}
 
-                        </div>
+                        </div> <!-- close head -->
 
-                        <div class="c-article__container c-article__container-sm">
+
+                    {% if articleImg %} 
+
+                        <div class="gallery-container relative">
+                            {% if article.media|length > 0 %}
+                                {{this.render('partials/gallery.twig', {
+                                    media: article.media
+                                }) | raw}}
+                            {% endif %}
+                                                    
+
+                        </div> 
+
+                    {% endif %}
+
+
+
+
+
+
+                        <div class="c-article__container">
                                 {{ ArticleContent | _resizeImages({'width': 600}) | raw }}
                         </div>
 
 
 
-                        {% if showPaywall == true %}
-                            <div class="c-article__paywalled-view">
-                                <div class="o-paywalled">
-                                    <div class="o-paywalled__head">
-                                        To read the full story on Regional News
-                                    </div>
-                                    <div class="o-paywalled__action">
-                                        <a href="{{networkData.defaultBlogUrl}}/paywall" class="c-button c-button--rounded c-button--blue c-article__subscribe-button">Subscribe Now</a>
-                                        <a href="{{networkData.defaultBlogUrl}}/paywall" class="c-button c-button--rounded c-button--blue-bordered">Start Free Trail</a>
-                                    </div>
-                                    <div class="o-paywalled__period">
-                                        Subscribe now to start a free trial of Regional News for 28 days
-                                        <a href="{{networkData.defaultBlogUrl}}/paywall#subscriptions">View our subscription options</a>
-                                    </div>
-                                </div>
+    {% if showPaywall == true %}
+                        </div><!-- close main -->
+                    </div><!-- close article -->
+                </div><!-- close col -->
+            </div><!-- close row -->
+        </div><!-- close container -->
+        <div class="c-article__paywalled-view">
+            <div class="c-paywalled-article">
+                <div class="container">
+                    <div class="row">
+                        <div class="c-paywalled-article__container offset-lg-1">
+                            <div class="c-paywalled-article__text">
+                                <h3 class="c-paywalled-article__publication">Sunraysia Daily</h3>
+                                <h1 class="c-paywalled-article__title">See how the story develops.<br />
+                                    Subscribe now to Sunraysia Daily.</h1>
+                                <a class="c-paywalled-article__subscriptions" href="#">Click here to view subscription options</a>
                             </div>
-                        {% endif %}
+
+                            <div class="c-paywalled-article__action">
+                                <a href="{{networkData.defaultBlogUrl}}/paywall" class="c-button c-button-block  c-button--red u-margin-bottom-5">Subscribe</a>
+                                <a id="articleSigninBtn" href="#" class="c-button c-button-block  c-button--wtbg  c-button--wtbg-bordered c-button--boderwidth1">Log in</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
 
                     </div>
 
@@ -177,7 +180,9 @@
                 </div>
                 <!-- End Article Page -->
             </div>
-            <div class="col-9 col-lg-3">
+
+
+            <div class="col-12 col-lg-3">
                 <div class="o-body-container__right-layout">
                     {% if config['inventory']['adSpace']['side-fix'][0] is defined %}
                         <div class="j-adslot" id="{{config['inventory']['adSpace']['side-fix'][0]}}" data-adshape="side-fix"></div>
@@ -187,26 +192,30 @@
 
         </div>
 
-        <div class="row c-related-articles u-desktop-margin-top-100">
-            <div class="col-9">
-                <h1 class="c-related-articles__header" >Latest stories</h1>
-            </div>
-            
-            <div class="col-9">
-                <div class="row">
-                    {% for i in 0..2 if recentArticles[i] %}
-                        <div class="col-3">
-                            {{this.render('partials/_single-article.twig', {
-                                article: recentArticles[i], 
-                                imageSize: {width: 300, height: 180},
-                                containerClass: 'card-2-mobile card-2-tablet card-2-desktop',
-                                site:   site
-                            }) | raw}}
-                        </div>
-                    {% endfor %}
+
+        {% if recentArticles | length > 0 %}
+            <div class="row c-related-articles u-desktop-margin-top-100">
+                <div class="col-12">
+                    <h1 class="c-related-articles__header" >You might also like</h1>
+                </div>
+                
+                <div class="col-12">
+                    <div class="row">
+                        {% for i in 0..2 if recentArticles[i] %}
+                            <div class="col">
+                                {{this.render('partials/_single-article.twig', {
+                                    article: recentArticles[i], 
+                                    imageSize: {width: 300, height: 180},
+                                    containerClass: 'card-2-mobile card-2-tablet card-2-desktop',
+                                    site:   site
+                                }) | raw}}
+                            </div>
+                        {% endfor %}
+                    </div>
                 </div>
             </div>
-        </div>
+        {% endif %}
+
 
 
 

@@ -28,7 +28,7 @@ $('document').ready(function() {
 
 
     var isScolledPast = function(position){
-        console.log(position, scrollMetric);
+
         if (scrollMetric[0] >= position) {
             return true;
         }
@@ -37,22 +37,11 @@ $('document').ready(function() {
 
 
     var scrollUpMenu = function() {
-        console.log('scroll up menu');
         var isMob = isMobile();
-        console.log(isMob);
         if ( scrollMetric[1] === 'up' && isScolledPast(400) && isMob === false ) {
-            console.log('adding class');
             headerMenu.addClass('active');
-
-            // menuContainer.show();
         } else {
-            console.log('removing class');
-
-            // menu_top_foldaway.addClass('hide');
-            // menu_bottom_foldaway.addClass('hide');
             headerMenu.removeClass('active');
-
-            // menuContainer.show();
         }
     }
 

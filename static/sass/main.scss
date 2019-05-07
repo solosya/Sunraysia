@@ -50,6 +50,7 @@
 @import 'component.error';
 
 @import 'component.article';
+@import 'component.paywalled-article';
 @import 'component.advertisment';
 @import 'component.related-articles';
 @import 'component.article-gallery';
@@ -64,7 +65,8 @@
 @import 'component.event';
 @import 'component.events-panel';
 
-
+@import 'component.section-head';
+@import 'component.load-more';
 @import 'component.ham-menu';
 @import 'component.mobile-search-bar';
 @import 'component.search-bar';
