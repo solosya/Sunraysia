@@ -3,55 +3,68 @@
 
 <footer class="c-footer c-footer-sm">
     <div class="container">
-        <div class="row">
-            <div class="col-9">
 
-                <div class="c-footer__container">
+        <div class="c-footer__container">
+            <div class="row">
+                <div class="col-12 col-md-5">
+                    <a href="javascript:;" class="c-footer__logo">
+                        logo
+                    </a>
+                    <p>GET IN TOUCH</p>
+                    <p>22 Deaking Avenue, Mildura VIC 3500</p>
+                    <p>PO Box 1400, Mildura Vic 3502</p>
+                    <p><span>Telephone</span> 03 5023 0211</p>
+                    <p><span>Editorial</span> news@sunrasiadaily.com.au</p>
+                    <p><span>Advertising</span> adbookings@sunrasiadaily.com.au</p>
+                    <p><span>Admin</span> admin@sunrasiadaily.com.au</p>
+                </div>
+
+
+                <div class="col-12 col-md-7">
                     <div class="row">
-                        <div class="col-12 col-md-2">
-                            <a href="javascript:;" class="c-footer__logo">
-                                logo
-                            </a>
-                        </div>
-                        <div class="col-12 col-md-2">
+                        <div class="col-12 col-md-4">
                             <div class="c-footer__navigation c-footer__navigation-sm">
                                 {% if footerMenu | length > 0 %}
                                     {{this.render('_footer_navigation.twig', {
-                                        items: footerMenu | slice(0, 3),
+                                        items: footerMenu | slice(0, 6),
                                         class: '',
                                     }) | raw}}
                                 {% endif %}
+                                <a href="javascript:;">REAL ESTATE</a>
+                                <a href="javascript:;">Sports</a>
+                                <a href="javascript:;">EVENTS</a>
+                                <a href="javascript:;">REAL ESTATE</a>
+                                <a href="javascript:;">Sports</a>
+                                <a href="javascript:;">EVENTS</a>
 
                             </div>
                         </div>
-                        <div class="col-12 col-md-2">
+                        <div class="col-12 col-md-4">
                             <div class="c-footer__navigation c-footer__navigation-sm">
+                                <a href="javascript:;">REAL ESTATE</a>
+                                <a href="javascript:;">Sports</a>
+                                <a href="javascript:;">EVENTS</a>
                                 <a href="javascript:;">REAL ESTATE</a>
                                 <a href="javascript:;">Sports</a>
                                 <a href="javascript:;">EVENTS</a>
                             </div>
                         </div>
-                        <div class="col-12 col-md-1">
+                        <div class="col-12 col-md-4">
                             <div class="c-footer__navigation c-footer__navigation-sm">
-                                <a href="javascript:;">Opinion</a>
-                                <a href="javascript:;">FAQs</a>
-                            </div>
-                        </div>
-                        <div class="col-12 col-md-1">
-                            <div class="c-footer__navigation c-footer__navigation-sm u-border-left u-border-left-sm">
-                                <a href="javascript:;">Advertise</a>
-                                <a href="javascript:;">Contact</a>
-                                <a href="javascript:;">Log in</a>
-                                <a href="javascript:;">Subscribe</a>
+                                <a href="javascript:;">REAL ESTATE</a>
+                                <a href="javascript:;">Sports</a>
+                                <a href="javascript:;">EVENTS</a>
+                                <a href="javascript:;">REAL ESTATE</a>
+                                <a href="javascript:;">Sports</a>
+                                <a href="javascript:;">EVENTS</a>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="c-footer__bottom c-footer__bottom-sm">
-                    <div class="c-footer__bottom__copyright">&copy; Copyright The News Regional Victoria 2019</div>
-                    <a href="https://publish.aap.com.au" class="c-footer__bottom__powered">POWERED BY AAP PUBLISH</a>
-                </div>
             </div>
+        </div>
+        <div class="c-footer__bottom">
+            <div class="c-footer__bottom__copyright">&copy; Sunraysia 2019. Powered by AAP Publish</div>
         </div>
     </div>
 </footer>

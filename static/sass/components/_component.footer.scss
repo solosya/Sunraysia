@@ -1,12 +1,8 @@
 /* Begin footer style */
 
 .c-footer {
-    background-color: $greyish;
-    padding: 28px 0 20px;
-
-    @include responsive(sm) {
-        padding: 50px 0 20px;
-    }
+    background-color: $blue;
+    padding: 70px 0 0 0;
 
     &__navigation {
         @include flexbox();
