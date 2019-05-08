@@ -1,5 +1,4 @@
 @mixin card-1-base() {
-    @include card-name("c1 mobile");
     margin-left: -20px;
     margin-right: -20px;
     .c-cards-view {
@@ -44,18 +43,40 @@
         }
 
         &.without-image {
-            .c-cards-view__container {
-                width: 100%;
-                margin-left: 0px;
-                padding: 0px 20px 0;
+            .c-cards-view {
+
+                &__container {
+                    width: 100%;
+                    margin-left: 0px;
+                    padding: 30px 30px 30px 30px;
+                }
+                &__category {
+                    margin-top: 0;
+                    margin-bottom: 33px;
+                }
+                &__heading {
+                    @include flex-height(68px);
+                    @include font-size(18);
+                    margin-bottom:5px;
+                }
+        
+                &__description {
+                    margin-bottom: 33px;
+                    display: block;
+                    overflow: hidden;
+                    @include flex-height(61px);
+
+                }
+
+                &__author {
+                    position: relative;
+                    top:0;
+                    right:0;
+
+                }
+        
             }
 
-            .c-cards-view__description {
-                margin-bottom: 15px;
-                display: block;
-                max-height: 90px;
-                overflow: hidden;
-            }
         }
 
         &.social {
@@ -94,6 +115,8 @@
 .card-1-mobile {
     @media #{$mobile} {
         @include card-1-base();
+        @include card-name("c1 mobile");
+
     }
 }
 
@@ -123,6 +146,7 @@
             @include flex-height(54px);
             @include font-size(18);
             line-height:1.36;
+            color:red;
         }
 
     }

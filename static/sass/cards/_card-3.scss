@@ -1,25 +1,15 @@
 @mixin card-3-base() {
-    @include card-name("C3 mobile");
     margin-left: -20px;
     margin-right: -20px;
     .c-cards-view {
         @include flex-direction(column, vertical);
 
-        &__media {
-
-            // &--video {
-            //     &:before {
-            //         @include size(55px);
-            //     }
-            // }
-        }
 
         &__container {
-            padding: 0 25px 30px 25px;
+            padding:30px 25px;
         }
 
         &__category {
-            margin-top: 30px;
             margin-bottom: 11px;
         }
 
@@ -30,6 +20,9 @@
         &__description {
             margin-top: 5px;
             @include flex-height(40px);
+        }
+        &__author {
+            clear:both;
         }
 
         &__time {
@@ -43,17 +36,37 @@
         }
 
         &.without-image {
-            .c-cards-view__container {
-                width: 100%;
-                margin-left: 0px;
-                padding: 0px 20px 0;
-            }
+            .c-cards-view {
+                &__container {
+                    width: 100%;
+                    margin-left: 0px;
+                    padding: 30px 50px;
+                }
+                &__category {
+                }
+        
+                &__heading {
+                    float:left;
+                    @include font-size(22);
+                    line-height:1.4;
+                    display: inline-block;
+                    width:200px;
+                    @include flex-height(93px);
+                }
 
-            .c-cards-view__description {
-                margin-bottom: 15px;
-                display: block;
-                max-height: 90px;
-                overflow: hidden;
+                &__description {
+                    @include font-size(13);
+                    line-height: 2;
+                    float:right;
+                    display: inline-block;
+                    max-width:350px;
+                    @include flex-height(105px);
+
+                }
+                &__author {
+                    position:absolute;
+                    bottom:10px;
+                }
             }
         }
 
@@ -80,11 +93,12 @@
 
 
 
-.card-3-mobile {
-    @media #{$mobile} {
-        @include card-3-base();
-    }
-}
+// .card-3-mobile {
+//     @media #{$mobile} {
+//         @include card-3-base();
+//         @include card-name("C3 mobile");
+//     }
+// }
 
 
 @mixin card-3-tablet-base() {
@@ -95,7 +109,7 @@
 
     .c-cards-view {
         @include flex-direction(row, horizontal);
-        height: 247px;
+        @include flex-height(247px);
 
         &__media {
             @include flex-width(300px);
@@ -107,9 +121,7 @@
         &__category {
             margin-bottom: 26px;
         }
-        &__description {
-            margin-top: 20px;
-        }
+
         &__time {
             margin-top: 20px;
         }
@@ -129,37 +141,35 @@
         @include card-3-tablet-base();
         @include card-name("C3 desktop");
 
-        // .c-cards-view {
-        //     @include flex-direction(row, horizontal);
-        //     height: 290px;
-    
-        //     &__media {
-        //         @include flex-width(400px);
-        //     }
-        //     &__container {
-        //         padding-left: 25px;
-        //     }
+        .c-cards-view {
 
-        //     &__category {
-        //         margin-bottom: 26px;
-        //     }
-
-        //     &__heading {
-        //         @include flex-height(93px);
-        //         @include font-size(22);
-        //         line-height:1.36;
-
-        //     }
+            height: 290px;
 
 
-        //     &__description {
-        //         margin-top: 5px;
-        //         @include flex-height(61px);
-        //     }
-        //     &__time {
-        //         margin-top: 20px;
-        //     }
-        // }
+            &.without-image {
+                .c-cards-view {
+                    &__container {
+                        width: 100%;
+                        margin-left: 0px;
+                        padding: 30px 65px 30px 50px;
+                    }
+
+                    &__heading {
+                        width:46%;
+                    }
+
+                    &__description {
+                        @include font-size(15);
+                        @include flex-height(175px);
+                        width:54%;
+                        max-width:none;
+                        line-height:1.76;
+
+                    }
+
+                }
+            }
+        }
     }
 }
 
@@ -173,7 +183,7 @@
 
         .c-cards-view {
             @include flex-direction(row, horizontal);
-            height: 290px;
+            min-height: 290px;
     
             &__media {
                 @include flex-width(550px);
@@ -201,6 +211,32 @@
             &__time {
                 margin-top: 20px;
             }
+
+            &.without-image {
+                .c-cards-view {
+
+                    &__heading {
+                        width:46%;
+                        padding-right:50px;
+                    }
+
+                    &__description {
+                        width:54%;
+                        max-width:none;
+                        
+                        @include font-size(15);
+                        @include flex-height(175px);
+                        line-height:1.76;
+
+
+                    }
+
+                }
+            }
+
+
+
+
         }
     }
 }

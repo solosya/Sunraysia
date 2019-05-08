@@ -2,7 +2,53 @@
 
 .c-footer {
     background-color: $blue;
-    padding: 70px 0 0 0;
+    padding: 40px 0 25px 0;
+    color:white;
+    
+    @media #{$desktop-up} {
+        padding: 70px 0 25px 0;
+
+    }
+
+
+    &__subhead {
+        font-weight: $weightBold;
+        @include font-size(14);
+        margin-bottom: 10px;
+
+        @media #{$desktop-down} {
+            padding-top: 25px;
+            margin-top: 30px;
+            border-top: 1px solid $offwhite;
+        }
+
+
+    }
+
+    &__address {
+        margin-bottom: 11px;
+
+        @include font-size(12);
+
+        &--bold {
+            font-weight: $weightBold;
+        }
+    }
+
+    &__email {
+        @include font-size(12);
+        margin-bottom: 3px;
+
+        &--bold {
+            font-weight: $weightBold;
+        }
+    }
+
+    &__navigation-container {
+        @media #{$desktop-up} {
+            margin-top: -50px;
+        }
+    }
 
     &__navigation {
         @include flexbox();
@@ -10,8 +56,8 @@
 
         a {
             color: $white;
-            margin-top: 20px;
             text-transform: uppercase;
+            font-weight: $weightBold;
             @include transition(all 0.3s ease);
 
             &:hover,
@@ -24,27 +70,24 @@
             }
         }
 
-        @include responsive(sm) {
-            a {
-                margin-top: 0px;
-            }
-        }
-
         &.u-border-left {
-            border-top: 1px solid $white;
-            padding-left: 0;
-            margin-top: 20px;
-
-            @include responsive(sm) {
-                border-top: none;
-                border-left: 1px solid $white;
-                padding-left: 15px;
-                margin-top: 0;
+            padding-left: 26px;
+            border-left: 1px solid $white;
+           
+            @media #{$desktop-down} {
+                &:first-child {
+                    padding-left: 15px;
+                    border:none;
+                }
             }
         }
     }
 
     &__logo {
+
+        width: 256px;
+        display:block;
+
         &-text {
             @include font-size(28);
             letter-spacing: 3.73px;
@@ -63,41 +106,45 @@
     }
 
     &__bottom {
-        @include flexbox();
-        @include flex-direction(column, vertical);
-        @include justify-content(flex-start);
-        @include align-items(flex-start);
-        color: $offwhite;
+        border-top: 1px solid $offwhite;
+
+        // @include flexbox();
+        // @include flex-direction(column, vertical);
+        // @include justify-content(flex-start);
+        // @include align-items(flex-start);
+        color: $white;
         @include font-size(11);
-        letter-spacing: 0.8px;
         margin-top: 50px;
+        padding-top:15px;
 
-        &__powered {
-            text-transform: uppercase;
-            margin-bottom: 10px;
+    }
+    &__copyright {
+        display: inline-block;
+    }
+    &__links {
+        float:right;
+    }
+    &__link {
+
+        color:$white;
+        &:after {
+            content:"";
+            position:relative;
+            top:2px;
+            display:inline-block;
+            margin: 0 7px;
+            height:10px;
+            width:1px;
+            background:white;
         }
-
-        &__copyright {
-            order: 2;
-        }
-
-        @include responsive(sm) {
-            @include flex-direction(row, horizontal);
-            @include justify-content(space-between);
-            @include align-items(center);
-            margin-top: 80px;
-
-            .c-footer__bottom {
-                &__powered {
-                    margin-bottom: 0px;
-                }
-
-                &__copyright {
-                    order: -1;
-                }
+        &:last-child {
+            &:after {
+                display:none;
             }
         }
     }
+
+
 }
 
 /* End footer style */

@@ -8,7 +8,11 @@
     cursor: pointer;
     position: absolute;
     background: none repeat scroll 0 0 $transparent;
-
+    
+    &:focus {
+        outline:0;
+    }
+    
     &--tablet {
         @media #{$desktop-up} {
             display:none;

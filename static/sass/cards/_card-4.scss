@@ -4,7 +4,10 @@
     margin-right: -20px;
 
     .c-cards-view {
+        // height: 490px;
+        
         @include flex-direction(column, vertical);
+        
         align-items: stretch;
 
 
@@ -72,16 +75,32 @@
 
 
         &.without-image {
-            background-color:white;
-
             .c-cards-view {
 
                 &__container {
                     width: 100%;
-                    padding: 0 0;
                     margin-left: 0;
+                    padding: 30px 25px 30px 25px;
                     height: inherit;
                 }
+                &__category {
+                    margin-top:0;
+                    margin-bottom:50px;
+                }
+                &__heading {
+                    margin-bottom:30px;
+                    @include flex-height(76px);
+                }
+                &__description {
+                    @include font-size(15);
+                    line-height:1.6;
+                    @include flex-height(225px);
+                    margin-bottom: 27px;
+                }
+                &__author {
+                    margin-top: 0;
+                }
+        
             }
         }
     }
@@ -100,8 +119,6 @@
     margin-right: 0;
 
     .c-cards-view {
-
-        height: 493px;
 
         &__media {
             @include flex-height(290px);

@@ -1,52 +1,84 @@
-.c-news-feed__list{ 
-    counter-reset: my-badass-counter;
+.c-news-feed {
 
-}
-.c-news-feed__list > li:before {
-    content: counter(my-badass-counter, decimal-leading-zero);
-    counter-increment: my-badass-counter;
-    position:absolute;
-    color: var(--main-color);
-    @include font-size(16);
-    line-height: 1.2;
-    font-weight: $weightBold;
-    min-width: 35px;
-}
+    &__list { 
+        counter-reset: my-badass-counter;
 
+    }
+    &__list > li > div:before {
+        content: counter(my-badass-counter, decimal);
+        counter-increment: my-badass-counter;
+        position:absolute;
+        color: $info;
+        @include font-size(18);
+        line-height: 1.2;
+        font-weight: $weightBold;
+        min-width: 18px;
+    }
+
+    &__title {
+        color: $black;
+        @include font-size(22);
+        line-height: 1.36;
+        font-weight: $weightBold;
+        position: relative;
+    }
+
+    &__list {
+        padding: 0px;
+
+        li {
+            margin-top: 15px;
+        }
+        &__items {
+            @include flexbox();
+        }
+    }
+}
 
 @mixin card-6-base() {
-    margin-left: 34px;
+
+    border-bottom: 1px solid rgba($greyish, 0.3);
+    padding-bottom: 14px;
+
     .c-cards-view {
         height: inherit;
         margin-bottom:0;
+        box-shadow:none;
+
         &__media {
             display:none;
         }
 
         &__container {
+            margin-left:19px;
             // @include calc(width, '100% - 112px');
         }
         &__category {
             display:none;
         }
         &__heading {
-            @include font-size(16);
-            font-weight: $weightBold;
-            min-height:40px;
-            max-height: 40px;
+            @include font-size(15);
+            color:$greyish;
+            font-weight: $weightMedium;
+            min-height:37px;
+            max-height:37px;
         }
         &__description {
-            display:block;
-            @include font-size(13);
-            max-height: 40px;
-            margin-bottom:0;
+            display:none;
         }
         &__author {
             display:none;
         }
 
         &.without-image {
-            background: $white none repeat scroll 0 0 !important;
+            .c-cards-view__heading {
+                @include font-size(15);
+                color:$greyish;
+                font-weight: $weightMedium;
+                min-height:37px !important;
+                max-height:37px;
+            }
+    
         }
 
     }

@@ -98,7 +98,7 @@
         imageSmall      : _Media.getMediaUrl(article.featuredMedia,500, 325, {'crop': 'fill', 'gravity': 'faces'} ),
         profileImg      : profileImg,
         imgHeight       : imgHeight,
-        hasMedia        : ((article.hasMedia == 'TRUE' or article.hasPreviewMedia == 'TRUE') and imageSuppress == false) ? false : false,
+        hasMedia        : ((article.hasMedia == 'TRUE' or article.hasPreviewMedia == 'TRUE') and imageSuppress == false) ? true : false,
         imgWidth        : imgWidth,
         category        : article.label,
         lazyload        : lazyload,
