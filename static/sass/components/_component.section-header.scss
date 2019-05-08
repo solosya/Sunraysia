@@ -1,0 +1,8 @@
+.c-section-header{
+    @include font-size(30);
+    border-bottom: 1px solid $greyish;
+    font-weight: $weightLight;
+    text-transform:uppercase;
+    padding-bottom: 6px;
+    margin-bottom: 25px;
+}

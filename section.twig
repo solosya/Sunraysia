@@ -13,6 +13,8 @@
 {% set firstCount = articles | length %}
 
 
+{% set popularArticles = _Article.getPopularArticles({ limit: 4, sortBy: 'VIEWS', scope: 'network' }) %}
+{# {% set recentArticles = _Article.getRecentArticles({ limit: 4}) %} #}
 
 
 
@@ -25,13 +27,13 @@
 
 
 
-<main id="main" class="site-main u-margin-top-60" role="main" data-article-limit="{{limit}}" data-article-count="{{articles | length}}">
+<main id="main" class="site-main u-margin-top-60 u-margin-bottom-60" role="main" data-article-limit="{{limit}}" data-article-count="{{articles | length}}">
 
     <div class="container">
 
         <div class="row">
             <div class="col-12">
-                <h1>{{ _Blog.getBlogTitle() }}</h1>
+                <h1 class="c-section-header">{{ _Blog.getBlogTitle() }}</h1>
             </div>
         </div>
 
@@ -65,7 +67,7 @@
                             article: articles[articleCount], 
                             position: (articleCount+1),
                             imageSize: {width: 740, height: 360},
-                            containerClass: "card-4-mobile card-3-tablet card-3-desktop"
+                            containerClass: "card-4-mobile card-3-tablet card-3-desktop card-3-desktop-lg"
                         }) | raw}}
                         {% set articleCount = (dev) ? articleCount : articleCount + 1 %}
                     </div>
@@ -98,6 +100,25 @@
                 }) | raw}}
                 {% set articleCount = (dev) ? articleCount : articleCount + 1 %}
 
+
+                <div class="c-news-feed">
+                    <div class="c-news-feed__title">Most popular</div>
+                    <ul class="row c-news-feed__list">
+
+                        {% for i in 0..3 if popularArticles[i] %}
+                                <li class="col-sm-12">
+                                    {{this.render('/partials/_single-article.twig', {
+                                        article: popularArticles[i], 
+                                        imageSuppress: true,
+                                        containerClass: "card-6-mobile card-6-tablet card-6-desktop"
+                                    }) | raw}}
+                                </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+
+
+
             </div>
 
             <div class="col-12 col-lg-9">
@@ -106,7 +127,7 @@
                     article: articles[articleCount], 
                     position: (articleCount+1),
                     imageSize: {width: 360, height: 270},
-                    containerClass: "card-4-mobile card-3-tablet card-3-desktop"
+                    containerClass: "card-4-mobile card-3-tablet card-3-desktop card-3-desktop-lg"
                 }) | raw}}
                 {% set articleCount = (dev) ? articleCount : articleCount + 1 %}
 
@@ -128,14 +149,33 @@
 
 
         </div>
+        <div class="row">
+                {% for i in 0..7 if articles[articleCount] %}
+                    <div class="col-12 col-lg-3">
+                    {{this.render('partials/_single-article.twig', {
+                        article: articles[articleCount], 
+                        position: (articleCount+1),
+                        imageSize: {width: 360, height: 270},
+                        containerClass: "card-4-mobile card-2-tablet card-2-desktop"
+                    }) | raw}}
+                    {% set articleCount = (dev) ? articleCount : articleCount + 1 %}
+                    </div>
+                {% endfor %}
+        </div>
 
 
-            {{this.render('/partials/_section-loadmore.twig', {
-                sectionNumber: "02", 
-                cardClass: "col-12 col-lg-3 card-4-mobile card-2-tablet card-2-desktop card-2-desktop-lg",
-                cardCount: 9,
-                limit: 8
-            }) | raw}}
+        <div class="row">
+            <div class="col-12">
+
+                {{this.render('/partials/_section-loadmore.twig', {
+                    sectionNumber: "02", 
+                    cardClass: "col-12 col-lg-3 card-4-mobile card-2-tablet card-2-desktop card-2-desktop-lg",
+                    cardCount: 9,
+                    limit: 8
+                }) | raw}}
+                </div>
+        </div>
+
 
     </div>
     <div class="j-keyword-cont" data-keywords="{{blogData.keywords}}"></div>
