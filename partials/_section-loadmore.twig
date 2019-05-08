@@ -19,7 +19,7 @@
             model           : CardController(),
             container       : 'loadmore_section_{{sectionNumber}}',
             offset          : 0,
-            limit           : 5,
+            limit           : {{ limit }},
             name            : 'section-load-{{sectionNumber}}',
             blogid          : "{{ blogData['guid'] }}",
             card_class      : "{{cardClass}}",

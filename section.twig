@@ -2,7 +2,6 @@
 {% set networkData = _Network.getNetworkData() %}
 {% set site        = networkData.title | lower | split(" ")[0]%}
 {% set blogData     = _Blog.getBlog() %}
-{{this.registerJs("Acme.cards = CardController();")}}
 {% set config       = _Network.getThemeConfig() %}
 
 
@@ -31,113 +30,112 @@
     <div class="container">
 
         <div class="row">
-            <div class="col-9 col-lg-6">
+            <div class="col-12">
+                <h1>{{ _Blog.getBlogTitle() }}</h1>
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div class="col-12 col-lg-9">
+                
+                <div class="row">
+                    <div class="col-12 col-lg-8">
+                        {{this.render('partials/_single-article.twig', {
+                            article: articles[articleCount], 
+                            position: (articleCount+1),
+                            imageSize: {width: 740, height: 360},
+                            containerClass: "card-5-mobile card-5-tablet card-5-desktop"
+                        }) | raw}}
+                        {% set articleCount = (dev) ? articleCount : articleCount + 1 %}
+                    </div>
+
+                    <div class="col-12 col-lg-4">
+                        {{this.render('partials/_single-article.twig', {
+                            article: articles[articleCount], 
+                            position: (articleCount+1),
+                            imageSize: {width: 740, height: 360},
+                            containerClass: "card-4-mobile card-2-tablet card-2-desktop"
+                        }) | raw}}
+                        {% set articleCount = (dev) ? articleCount : articleCount + 1 %}
+                    </div>
+
+                    <div class="col-12">
+                        {{this.render('partials/_single-article.twig', {
+                            article: articles[articleCount], 
+                            position: (articleCount+1),
+                            imageSize: {width: 740, height: 360},
+                            containerClass: "card-4-mobile card-3-tablet card-3-desktop"
+                        }) | raw}}
+                        {% set articleCount = (dev) ? articleCount : articleCount + 1 %}
+                    </div>
+                </div>
+            </div>
+
+            
+            <div class="col-12 col-lg-3">
+
                 {{this.render('partials/_single-article.twig', {
                     article: articles[articleCount], 
                     position: (articleCount+1),
-                    imageSize: {width: 740, height: 360},
+                    imageSize: {width: 360, height: 270},
+                    containerClass: "card-4-mobile card-2-tablet card-2-desktop"
+                }) | raw}}
+                {% set articleCount = (dev) ? articleCount : articleCount + 1 %}
+ 
+            </div>
+
+
+        </div>
+
+        <div class="row">
+            <div class="col-12 col-lg-3">
+                {{this.render('partials/_single-article.twig', {
+                    article: articles[articleCount], 
+                    position: (articleCount+1),
+                    imageSize: {width: 360, height: 270},
                     containerClass: "card-1-mobile card-1-tablet card-1-desktop"
                 }) | raw}}
                 {% set articleCount = (dev) ? articleCount : articleCount + 1 %}
+
             </div>
 
-            <div class="col-9 col-lg-3">
+            <div class="col-12 col-lg-9">
+
                 {{this.render('partials/_single-article.twig', {
                     article: articles[articleCount], 
                     position: (articleCount+1),
-                    imageSize: {width: 740, height: 360},
-                    containerClass: "card-3-mobile card-3-tablet card-3-desktop"
+                    imageSize: {width: 360, height: 270},
+                    containerClass: "card-4-mobile card-3-tablet card-3-desktop"
                 }) | raw}}
                 {% set articleCount = (dev) ? articleCount : articleCount + 1 %}
-            </div>
 
 
-        </div>
-
-        <div class="row">
-
-            {% for i in 0..2 if articles[articleCount] %}
-                <div class="col-9 col-lg-3">
-                    {{this.render('partials/_single-article.twig', {
-                        article: articles[articleCount], 
-                        position: (articleCount+1),
-                        imageSize: {width: 360, height: 270},
-                        containerClass: "card-4-mobile card-4-tablet card-2-desktop"
-                    }) | raw}}
-                    {% set articleCount = (dev) ? articleCount : articleCount + 1 %}
-                </div>
-            {% endfor %}
-        </div>
-
-
-
-
-
-        <div class="row">
-            <div class="col-9 col-lg-6">
-            {% for i in 0..2 if articles[articleCount] %}
-                    {{this.render('partials/_single-article.twig', {
-                        article: articles[articleCount], 
-                        position: (articleCount+1),
-                        imageSize: {width: 360, height: 270},
-                        containerClass: "card-5-mobile card-5-tablet card-5-desktop"
-                    }) | raw}}
-                    {% set articleCount = (dev) ? articleCount : articleCount + 1 %}
-            {% endfor %}
-            </div>
-        </div>
-
-
-
-        <div class="row">
-
-            {% for i in 0..2 if articles[articleCount] %}
-                <div class="col-9 col-lg-3">
-                    {{this.render('partials/_single-article.twig', {
-                        article: articles[articleCount], 
-                        position: (articleCount+1),
-                        imageSize: {width: 360, height: 270},
-                        containerClass: "card-4-mobile card-4-tablet card-2-desktop"
-                    }) | raw}}
-                    {% set articleCount = (dev) ? articleCount : articleCount + 1 %}
-                </div>
-            {% endfor %}
-
-            <div class="col-9 col-lg-3">
-                {% if config['inventory']['adSpace']['hpage'][0] is defined %}
-                    <div class="j-adslot" id="{{config['inventory']['adSpace']['hpage'][0]}}" data-adshape="hpage"></div>
-                {% endif %}
-            </div>
-        </div>
-
-
-
-        <div id="loadmore_section" class="row">
-
-            {% for i in 0..2 if articles[articleCount] %}
-                <div class="col-9 col-lg-3">
-                    {{this.render('partials/_single-article.twig', {
-                        article: articles[articleCount], 
-                        position: (articleCount+1),
-                        imageSize: {width: 360, height: 270},
-                        containerClass: "card-4-mobile card-4-tablet card-2-desktop"
-                    }) | raw}}
-                    {% set articleCount = (dev) ? articleCount : articleCount + 1 %}
-                </div>
-            {% endfor %}
-        </div>
-
-        {% if articles|length >= limit %}
-            <section class="">
                 <div class="row">
-                    {{ this.render('partials/ajaxarticles_new.twig', {
-                        name            : "section-load",
-                        label           : "hi!",
-                        buttonClass     : "c-button c-button--rounded c-button--blue-bordered",
-                    }) | raw }}
-                </div>
-            </section>
-        {% endif %}
+                {% for i in 0..2 if articles[articleCount] %}
+                    <div class="col-lg-4">
+                    {{this.render('partials/_single-article.twig', {
+                        article: articles[articleCount], 
+                        position: (articleCount+1),
+                        imageSize: {width: 360, height: 270},
+                        containerClass: "card-1-mobile card-1-tablet card-1-desktop"
+                    }) | raw}}
+                    {% set articleCount = (dev) ? articleCount : articleCount + 1 %}
+                    </div>
+                {% endfor %}
+
+            </div>
+
+
+        </div>
+
+
+            {{this.render('/partials/_section-loadmore.twig', {
+                sectionNumber: "02", 
+                cardClass: "col-12 col-lg-3 card-4-mobile card-2-tablet card-2-desktop card-2-desktop-lg",
+                cardCount: 9,
+                limit: 8
+            }) | raw}}
 
     </div>
     <div class="j-keyword-cont" data-keywords="{{blogData.keywords}}"></div>
@@ -145,26 +143,4 @@
 
 
 
-<script>
-    // main script is defered so event listener makes sure
-    // defered script is loaded before this runs
-    document.addEventListener("DOMContentLoaded", function(event) {
-        
-        Acme.cards = CardController();
-        Acme.loadMore = new Acme.View.articleFeed({
-            model           : Acme.cards,
-            infinite        : true,
-            container       : 'loadmore_section',
-            offset          : 0,
-            limit           : 2,
-            name            : 'section-load',
-            blogid          : "{{ blogData['guid'] }}",
-            card_class      : 'col-sm-3 col-xs-9 card-4-mobile card-4-tablet card-2-desktop',
-            non_pinned      : {{articlesArr.existingNonPinnedCount}}
-        });
 
-
-    });
-</script>
-
-            {# non_pinned      : {{articlesArr.existingNonPinnedCount}}, #}
