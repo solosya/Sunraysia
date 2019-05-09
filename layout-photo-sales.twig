@@ -1,0 +1,14 @@
+{{ set(this, 'title', _Blog.getBlogTitle()) }}
+
+{% set networkData = _Network.getNetworkData() %}
+
+
+<h1>PHOTO SALES</h1>
+
+<main id="photo-sales" role="main">
+    <h1>Welcome to photo sales</h1>
+</main>
+
+
+<link rel="stylesheet" href="{{networkData.templatePath}}/photo-sales/css/main.40b4a62f.css" type="text/css" media="all">
+{{ this.registerJsFile( networkData.templatePath ~ "/photo-sales/js/main.93ff1c59.js") }}
