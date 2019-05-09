@@ -5,19 +5,18 @@
     outline: none;
     background: none;
     cursor: pointer;
-    padding: 10px 16px;
+    padding: 10px 14px;
     display: inline-block;
     border: 2px solid $transparent;
     @include font-size(12);
     line-height: 1.5;
-    font-weight: $weightBold;
     @include transition(all 0.3s ease);
     min-width: 120px;
     text-align: center;
     height: 40px;
-    @include flexbox();
-    @include align-items(center);
-    @include justify-content(center);
+    // @include flexbox();
+    // @include align-items(center);
+    // @include justify-content(center);
     text-transform: uppercase;
     
     &--block {
@@ -25,7 +24,7 @@
         display: block;
     }
 
-    &-inline {
+    &--inline {
         display:inline-block;
     }
 

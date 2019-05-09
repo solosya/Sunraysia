@@ -1,6 +1,5 @@
 .c-myAccount {
     padding-right:0;
-    margin-bottom:35px;
     
    
     
@@ -10,9 +9,12 @@
         @include margin-bottom(30);
     }
     &__head {
-        color:$black;
-        @include font-size(28);
+        color:$greyish;
+        @include font-size(30);
         @include margin-bottom(20);
+        font-weight: $weightLight;
+        padding-bottom: 10px;
+        border-bottom: 1px solid rgba( $greyish, 0.5);
     }
     &__subhead {
         color:$greyish;

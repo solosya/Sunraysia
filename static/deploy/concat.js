@@ -22111,6 +22111,9 @@ $('document').ready(function() {
         $("#user-menu").toggle();
     });
 
+    $("#user-menu-button-tablet").click(function(event) {
+        $("#user-menu-tablet").toggle();
+    });
 
     $(".js-hamDesktop").click(function(event) {
 		event.preventDefault();
