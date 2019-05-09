@@ -24,18 +24,14 @@
     &__input {
         display:block;
         width:100%;
-        padding: 4px 0;
+        padding: 14px 0 14px 12px;
         outline:0;
-        border:0;
-        border-bottom: 1px solid $offwhite;
-        @include font-size(13);
+        @include font-size(16);
         @include transition(all .3s ease-out);
-        line-height:28px;
+        line-height:45px;
 
         &--bordered {
             border: 1px solid $offwhite;
-            border-radius:6px;
-            padding: 4px 8px;
 		}
 		
 		&.formError {
@@ -49,13 +45,10 @@
     }
 
     &__label {
-        width:100%;
-        flex:0 0 100%;
-        max-width:100%;
-        color: $greyish;
-        margin-bottom:7px;
+		display:block;
+        color: $black;
         @include font-size(14);
-        line-height:1.5;
+        line-height:1.8;
         font-weight:$weightBold;
     }
 

@@ -14,9 +14,9 @@
 {% set userLimit = 10 %}
 {% set user = _User.getUser() %}
 
-{% if user %} 
+{# {% if user %} 
     {% set propListingsArr = _User.getUserArticles(user.guid, 0, 10, {'blogs':[propBlogId], 'status': 'published'}) %}
-{% endif %}
+{% endif %} #}
 
 
 
@@ -32,109 +32,108 @@
 
         <div class="row">
 
-            <div class="col-12 col-md-8">
-                <div class="c-myAccount c-myAccount-xs">
-                    {{this.render('layouts/partials/messages.twig') | raw}}
+            <div class="col-12 col-lg-8">
+
+                <div class="row">
+                    <div class="col-12 col-lg-6">
+                        <div class="c-myAccount c-myAccount-xs">
+                            {{this.render('layouts/partials/messages.twig') | raw}}
 
 
 
-                    <h2 class="c-myAccount__head">My Account</h2>
-                    <h4 class="c-myAccount__subhead">My details</h4>
-                    
-                    
-                    {# ERROR TEXT #}
-                    <div id="error-container" class="c-form__group c-form__group--horizontal has-error" style="display:none">
-                        <label class="c-form__label c-account-form__label" for="first-name"></label>
-                        <p id="account-form__errorText" class="c-account-form__errorText u-margin-bottom-10"></p>
+                            <h2 class="c-myAccount__head">My detials</h2>
+                            
+                            
+                            {# ERROR TEXT #}
+                            <div id="error-container" class="c-form__group has-error" style="display:none">
+                                <label class="c-form__label c-account-form__label" for="first-name"></label>
+                                <p id="account-form__errorText" class="c-account-form__errorText u-margin-bottom-10"></p>
+                            </div>
+
+                            <form id="profile-form" class="c-form" action="#" method="post" autocomplete="off">
+                                <input type="hidden" name="_csrf" value="{{_AppHelper.getCsrfToken()}}" />
+                                <input type="hidden" name="profileImage" id="userProfileImage" value="" />
+
+                                {# FIRST NAME #}
+                                <div class="c-form__group has-error">
+                                    <label class="c-form__label c-account-form__label" for="first-name">First name</label>
+                                    <input id="first-name" class="c-form__input c-form__input--bordered c-account-form__input" name="firstname" placeholder="First Name" aria-required="true" type="text" value="{{user.firstname}}">
+                                    <div class="c-form__help-block">Please enter your first name</div>
+                                </div>
+
+                                {# LAST NAME #}
+                                <div class="c-form__group u-margin-top-15">
+                                    <label class="c-form__label c-account-form__label" for="last-name">Last name</label>
+                                    <input id="last-name" class="c-form__input c-form__input--bordered c-account-form__input" name="lastname" placeholder="Last Name" aria-required="true" type="text" value="{{user.lastname}}">
+                                    <div class="c-form__help-block"></div>
+                                </div>
+
+                                {# EMAIL #}
+                                <div class="c-form__group u-margin-top-15">
+                                    <label class="c-form__label c-account-form__label" for="email">Email address</label>
+                                    <input id="email" class="c-form__input c-form__input--bordered c-account-form__input" name="email" placeholder="Email" aria-required="true" type="text" value="{{user.email}}">
+                                    <div class="c-form__help-block"></div>
+                                </div>
+
+
+                                {# Number #}
+                                <div class="c-form__group u-margin-top-15">
+                                    <label class="c-form__label c-account-form__label" for="organisation">Contact number</label>
+                                    <input id="contact-number" class="c-form__input c-form__input--bordered c-account-form__input" name="contact-number"  value="{{user.contactnumber}}" aria-required="true" type="text">
+                                    <div class="c-form__help-block"></div>
+                                </div>
+
+
+                                {# PASSWORD #}
+                                <div class="c-form__group u-margin-top-15">
+                                    <label class="c-form__label c-account-form__label" for="password">Password</label>
+                                    <input id="password" class="c-form__input c-form__input--bordered c-account-form__input" name="password" placeholder="Set new password" aria-required="true" type="password">
+                                    <div class="c-form__help-block"></div>
+                                </div>
+
+                                {# PASSWORD VERIFY #}
+                                <div class="c-form__group u-margin-top-15">
+                                    <label class="c-form__label c-account-form__label" for="verifypassword">Verify password</label>
+                                    <input id="verifypassword" class="c-form__input c-form__input--bordered c-account-form__input" name="verifypassword" placeholder="Verify password" aria-required="true" type="password">
+                                    <div class="c-form__help-block"></div>
+                                </div>
+
+                                {# ORGANISATION #}
+                                
+                               
+
+                                {# SUBMIT #}
+                                <div class="form-group no-margin-bottom  u-margin-top-20">
+                                    <button type="submit" id="" class="c-button c-button--rounded c-button--lightgrey c-account-form__update" name="">Update</button>
+                                </div>
+                            </form>
+                        </div>
                     </div>
 
-                    <form id="profile-form" class="c-form" action="#" method="post" autocomplete="off">
-                        <input type="hidden" name="_csrf" value="{{_AppHelper.getCsrfToken()}}" />
-                        <input type="hidden" name="profileImage" id="userProfileImage" value="" />
+                    <div class="col-12 col-md-6">
+                        <div class="c-current-plan">
+                            
+                            <label class="c-form__label c-account-form__label" for="">Current plan</label>
 
-                        {# FIRST NAME #}
-                        <div class="c-form__group c-form__group--horizontal has-error">
-                            <label class="c-form__label c-account-form__label" for="first-name">First name</label>
-                            <input id="first-name" class="c-form__input c-form__input--bordered c-account-form__input" name="firstname" placeholder="Full Name" aria-required="true" type="text" value="{{user.firstname}}">
-                            <div class="c-form__help-block">Please enter your first name</div>
-                        </div>
+                            {% if pwstats['type'] == 'time' %}
+                                    <div class="c-account-form__static-text">{{pwstats['name']}} at {{pwstats['currency']|replace({"AUD": "$", "NZD": "$", "GBP": "£", "USD": "$", "EUR": "€"})}}{{ pwstats['plan_value']/100}} per {{pwstats['period']}}</div>
 
-                        {# LAST NAME #}
-                        <div class="c-form__group c-form__group--horizontal u-margin-top-15">
-                            <label class="c-form__label c-account-form__label" for="last-name">Last name</label>
-                            <input id="last-name" class="c-form__input c-form__input--bordered c-account-form__input" name="lastname" placeholder="Last Name" aria-required="true" type="text" value="{{user.lastname}}">
-                            <div class="c-form__help-block"></div>
-                        </div>
-
-                        {# EMAIL #}
-                        <div class="c-form__group c-form__group--horizontal u-margin-top-15">
-                            <label class="c-form__label c-account-form__label" for="email">Email</label>
-                            <input id="email" class="c-form__input c-form__input--bordered c-account-form__input" name="email" placeholder="email" aria-required="true" type="text" value="{{user.email}}">
-                            <div class="c-form__help-block"></div>
-                        </div>
-
-                        {# PASSWORD #}
-                        <div class="c-form__group c-form__group--horizontal u-margin-top-15">
-                            <label class="c-form__label c-account-form__label" for="password">Password</label>
-                            <input id="password" class="c-form__input c-form__input--bordered c-account-form__input" name="password" placeholder="Password" aria-required="true" type="password">
-                            <div class="c-form__help-block"></div>
-                        </div>
-
-                        {# PASSWORD VERIFY #}
-                        <div class="c-form__group c-form__group--horizontal u-margin-top-15">
-                            <label class="c-form__label c-account-form__label" for="verifypassword">Verify password</label>
-                            <input id="verifypassword" class="c-form__input c-form__input--bordered c-account-form__input" name="verifypassword" placeholder="Set new password" aria-required="true" type="password">
-                            <div class="c-form__help-block"></div>
-                        </div>
-
-                        {# ORGANISATION #}
-                        <div class="c-form__group c-form__group--horizontal u-margin-top-15">
-                            <label class="c-form__label c-account-form__label" for="organisation">Organisation</label>
-                            <input id="organisation" class="c-form__input c-form__input--bordered c-account-form__input" name="abn_business_name"  value="{{user.business_name}}" aria-required="true" type="text">
-                            <div class="c-form__help-block"></div>
-                        </div>
-                        
-
-                        {# EMAIL ALERTS #}
-                        <div class="c-form__group u-margin-top-20">
-                            <div class="button-set">
-                                <label>
-                                    <input id="alerts" name="alerts" type="checkbox" class="c-form__checkbox validate[required]"><span><!-- fake radio --></span> Send me daily email alerts
-                                </label>
-                            </div>
-                        </div>
-                        
-
-                        {# SUBMIT #}
-                        <div class="form-group no-margin-bottom  u-margin-top-20">
-                            <button type="submit" id="" class="c-button c-button--rounded c-button--blue" name="">Update</button>
-                        </div>
-                    </form>
-
-                    <div class="o-rule"><hr></div>
-
-                    <div class="c-myAccount__Subscription">
-                        <h4 class="c-myAccount__subhead">Subscription details</h4>
-                        
-
-                        {% if pwstats['type'] == 'time' %}
-
-                            {# CURRENT PLAN #}
-                            <div class="c-form__group c-form__group--horizontal">
-                                <label class="c-form__label c-account-form__label" for="">Current plan</label>
-                                <div class="c-account-form__static-text">{{pwstats['name']}} at {{pwstats['currency']|replace({"AUD": "$", "NZD": "$", "GBP": "£", "USD": "$", "EUR": "€"})}}{{ pwstats['plan_value']/100}} per {{pwstats['period']}}
-                                    {% if pwstats['status'] == 'cancelled' %}
-                                        <a id="cancelAccount" href="#" class="c-account-form__btn-cancel">Restart Subscription</a>
-                                    {% else %} 
-                                        <a id="cancelAccount" href="#" class="c-account-form__btn-cancel">Cancel subscription</a>
-                                    {% endif %} 
-
+                            {% else %} 
+                                <div class="c-account-form__static-text">
+                                    <span>{{ pwstats['plan_value']/100}}/{{pwstats['total_articles']}}</span>
                                 </div>
-                            </div>
+
+                                <label class="c-form__label c-account-form__label" for="">Articles Remaining</label>
+                                <div class="c-account-form__static-text">
+                                    <span>{{ pwstats['article_count']}}</span>
+                                </div>
+                            {% endif %} 
+
+                            <hr class="divide divide--dark" />
 
 
                             {# STATUS #}
-                            <div class="c-form__group c-form__group--horizontal u-margin-top-15 {% if pwstats['status'] == 'cancelled' %} u-margin-bottom-30 {% endif %}">
+                            <div class="c-form__group u-margin-top-15 {% if pwstats['status'] == 'cancelled' %} u-margin-bottom-30 {% endif %}">
                                 <label class="c-form__label c-account-form__label" for="">Status</label>
 
                                 <!-- Use this for Paid -->
@@ -146,79 +145,71 @@
                                 </div>
 
                             </div>
-                            
+                                
+                            <hr class="divide divide--dark" />
 
-                            {# USERS #}
-                            <div class="c-form__group c-form__group--horizontal u-margin-top-15">
-                                <label class="c-form__label c-account-form__label" for="">Users</label>
-                                <div class="c-account-form__static-text">{{ pwstats['user_count'] }}</div>
-                            </div>
+                                {# USERS #}
+                                {# <div class="c-form__group u-margin-top-15">
+                                    <label class="c-form__label c-account-form__label" for="">Users</label>
+                                    <div class="c-account-form__static-text">{{ pwstats['user_count'] }}</div>
+                                </div> #}
 
 
                             {# NEXT PAYMENT #}
                             {% if pwstats['status'] != 'free' %}
-                                <div class="c-form__group c-form__group--horizontal no-margin-bottom u-margin-top-15">
+                                <div class="c-form__group no-margin-bottom u-margin-top-15">
                                     <label class="c-form__label c-account-form__label" for="">Next payment</label>
                                     <div class="c-account-form__static-text">{{ pwstats['expiry_date']}}</div>
                                 </div>
                             {% endif %} 
 
+                            <hr class="divide divide--dark" />
+
+                            <a id="change-plan" href="#" class="c-button c-button--red c-account-form__btn-cancel">Change Subscription</a>
+
+                            {% if pwstats['status'] == 'cancelled' %}
+                                <a id="cancelAccount" href="#" class="c-button c-button--boredered c-account-form__btn-cancel">Restart Subscription</a>
+                            {% else %} 
+                                <a id="cancelAccount" href="#" class="c-button c-button--boredered c-account-form__btn-cancel">Cancel subscription</a>
+                            {% endif %} 
 
 
-                        {% else %} 
-                            <div class="c-form__group c-form__group--horizontal">
-                                <label class="c-form__label c-account-form__label" for="">Current plan</label>
-                                <div class="c-account-form__static-text">
-                                    <span>{{ pwstats['plan_value']/100}}/{{pwstats['total_articles']}}</span>
-                                </div>
-                            </div>
 
-                            <div class="c-form__group c-form__group--horizontal">
-                                <label class="c-form__label c-account-form__label" for="">Articles Remaining</label>
-                                <div class="c-account-form__static-text">
-                                    <span>{{ pwstats['article_count']}}</span>
-                                </div>
-                            </div>
-                            
-                        {% endif %} 
-
-
+                        </div>
                     </div>
-                    
-
-
-                    <div class="o-rule"><hr></div>
-
-
-
-
-
-                    <form id="update-card-form" action="/update" method="post">
-                        <div class="c-form__group">
-                            <label class="c-form__label" for="creditcarddetails">Change your credit card details</label>
-                                <div class="three-column">
-                                    <div id="card-element">
-                                    <!-- a Stripe Element will be inserted here. -->
-                                    </div>
-                                </div>
-                        </div>
-                        
-                        <div class="c-form__group c-form__group--horizontal">
-                            <label class="c-form__label c-account-form__label" for="">Payment method</label>
-                            <div class="c-account-form__static-text">credit card/**** **** **** 5261</div>
-                        </div>
-                        
-                        <div class="c-form__group no-margin-bottom u-margin-top-15">
-                            <button type="submit" id="btnContact" class="c-button c-button--rounded c-button--blue" name="contact-button">Update</button>
-                        </div>
-                    </form>
-
-
                 </div>
 
 
 
-                <div class="o-rule"><hr></div>
+                
+
+
+
+
+
+
+
+                <form id="update-card-form" action="/update" method="post">
+                    <div class="c-form__group">
+                        <label class="c-form__label" for="creditcarddetails">Change your credit card details</label>
+                            <div class="three-column">
+                                <div id="card-element">
+                                <!-- a Stripe Element will be inserted here. -->
+                                </div>
+                            </div>
+                    </div>
+                    
+                    <div class="c-form__group">
+                        <label class="c-form__label c-account-form__label" for="">Payment method</label>
+                        <div class="c-account-form__static-text">credit card/**** **** **** 5261</div>
+                    </div>
+                    
+                    <div class="c-form__group no-margin-bottom u-margin-top-15">
+                        <button type="submit" id="btnContact" class="c-button c-button--rounded c-button--blue" name="contact-button">Update</button>
+                    </div>
+                </form>
+
+
 
 
 
@@ -312,11 +303,6 @@
                                     <div style="position:relative">
                                         <input id="managed-user-search-field" name="s" type="text" placeholder="Find a user" class="c-form__input">
                                         <button type="submit" class="c-managed-user-search__icon"></button>
-
-                                        {# <input type="search" class="managed-users-search__field" name="s" id="managed-user-search-field" placeholder="Find a user" required="">
-                                        <button class="managed-users-search__button" type="submit" id="user-search-submit">
-                                            Search
-                                        </button> #}
                                     </div>
                                 </form>
                             </div>
@@ -362,37 +348,6 @@
 
 
 
-
-                {% set hasPropListings =  propListingsArr | length > 0 %}
-                {% set propLink = hasPropListings ? "Edit listings" : "Submit a listing"  %}
-                
-
-                <div class="c-myAccount__AddUsers u-margin-top-40">
-                    <h4 class="c-myAccount__subhead">Property Listings</h4>
-                    <div class="c-myAccount__user-counts">
-                        <a href="{{networkData.defaultBlogUrl}}/@property-form">{{propLink}}</a> 
-                    </div>
-                </div>
-
-
-                {% if hasPropListings %}
-                    <div id="realEstateListings" class="">
-
-                        {% for property in propListingsArr %}
-                            
-                            <a href="{{property.url}}" target="_blank">
-                                <li id="{{user.id}}" class="c-managed-user" data-guid="{{property.guid}}">
-                                    <p class="c-managed-user__email j-email">{{property.title}}</p>
-                                    <p class="c-managed-user__email j-email">{{property.publishedAt}}</p>
-                                    <span class="c-managed-user__close j-deleteListing "></span>
-                                </li>
-                            </a>
-                        {% endfor %}
-                    </div>
-
-                {% else %}
-                    <p class="no-listings"> You have no current listings </p>
-                {% endif %}
 
             </div>
                 

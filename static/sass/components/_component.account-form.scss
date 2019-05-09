@@ -3,11 +3,16 @@
         height:44px;
     }
     &__label {
-        width:115px;
-        flex:0 0 115px;
-        max-width:115px;
-        margin-bottom:0;
+        // width:115px;
+        // flex:0 0 115px;
+        // max-width:115px;
+        // margin-bottom:0;
     }
+
+    &__update {
+        width: 90%;
+    }
+
     &__btn-cancel {
         float:right;
         color:$blue;

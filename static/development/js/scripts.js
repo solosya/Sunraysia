@@ -64,6 +64,11 @@ $('document').ready(function() {
     });
 
 
+    $("#user-menu-button").click(function(event) {
+        $("#user-menu").toggle();
+    });
+
+
     $(".js-hamDesktop").click(function(event) {
 		event.preventDefault();
         $(this).toggleClass("active");

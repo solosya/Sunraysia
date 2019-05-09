@@ -18605,7 +18605,6 @@ Acme.templates.systemCardTemplate =
             <h2 class="c-cards-view__heading js-c-cards-view-heading j-truncate">{{{ params.title }}}</h2>\
             <p class="c-cards-view__description js-c-cards-view-description j-truncate">{{{ params.content }}}</p>\
             <div class="c-cards-view__author">\
-                <div class="c-cards-view__author-name">{{ params.author }}</div>\
                 <time class="c-cards-view__time" datetime="{{params.publishDate}}">{{params.publishDate}}</time>\
             </div>\
         </div>'+ 
@@ -22072,7 +22071,7 @@ $('document').ready(function() {
 
 
     var isScolledPast = function(position){
-        console.log(position, scrollMetric);
+
         if (scrollMetric[0] >= position) {
             return true;
         }
@@ -22081,22 +22080,11 @@ $('document').ready(function() {
 
 
     var scrollUpMenu = function() {
-        console.log('scroll up menu');
         var isMob = isMobile();
-        console.log(isMob);
         if ( scrollMetric[1] === 'up' && isScolledPast(400) && isMob === false ) {
-            console.log('adding class');
             headerMenu.addClass('active');
-
-            // menuContainer.show();
         } else {
-            console.log('removing class');
-
-            // menu_top_foldaway.addClass('hide');
-            // menu_bottom_foldaway.addClass('hide');
             headerMenu.removeClass('active');
-
-            // menuContainer.show();
         }
     }
 
@@ -22116,6 +22104,11 @@ $('document').ready(function() {
         scrollMetric = [scroll, direction];
         scrollUpMenu();
         // adScroll();
+    });
+
+
+    $("#user-menu-button").click(function(event) {
+        $("#user-menu").toggle();
     });
 
 
@@ -22453,7 +22446,7 @@ Acme.Signin.prototype.errorMsg = function(msg) {
 };
 Acme.Signin.prototype.handle = function(e) {
     var self = this;
-
+    console.log('handling');
     var $elem = this.parent.handle.call(this, e);
 
     if ( $elem.is('a') ) {
@@ -22481,6 +22474,7 @@ Acme.Signin.prototype.handle = function(e) {
             formData['rememberMe'] = 1;
 
             Acme.server.create(_appJsConfig.baseHttpPath + '/api/auth/login', formData).done(function(r) {
+                console.log(r);
                 if (r.success === 1) {
                     window.location.reload();
 
@@ -22549,7 +22543,8 @@ var layouts = {
 Acme.SigninView = new Acme.Signin('modal', 'signin-modal', layouts);
 
 
-$('#signinBtn, #articleSigninBtn').on('click', function() {
+$('#signinBtn, #articleSigninBtn').on('click', function(e) {
+    e.preventDefault();
     Acme.SigninView.render("signin", "Log in");
 });
 

@@ -8,6 +8,28 @@
     }
     border-bottom: 1px solid $grey;
 
+
+
+    &__username {
+        @include font-size(14);
+        font-weight: $weightMedium;
+        color: $greyish;
+
+        &:after {
+            content: "";
+            width: 14px;
+            height:7px;
+            display:block;
+            float: right;
+            margin-top: 5px;
+            margin-left: 10px;
+            background-repeat: no-repeat;
+            background-size:contain;
+            background-image: url('../icons/arrow.svg');
+    
+        }
+    }
+
     &__container {
           
         display: flex;

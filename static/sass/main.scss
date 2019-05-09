@@ -75,6 +75,8 @@
 @import 'component.mega-menu';
 @import 'component.header';
 @import 'component.header-top-bar';
+@import 'component.user-menu';
+
 @import 'component.footer';
 // @import 'component.forms';
 @import 'component.messagebox';
@@ -99,6 +101,7 @@
 
 //my account page
 @import 'component.myAccount';
+@import 'component.current-plan'; 
 @import 'component.account-plans'; 
 @import 'component.managed-user'; 
 @import 'component.managed-user-new'; 
@@ -134,6 +137,7 @@
 @import "card-5";
 @import "card-6";
 @import "card-7";
+@import "card-8";
 
 @import "card-social-popup";
 

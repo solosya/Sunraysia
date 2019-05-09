@@ -44,7 +44,7 @@ Acme.Signin.prototype.handle = function(e) {
             Acme.server.create(_appJsConfig.baseHttpPath + '/api/auth/login', formData).done(function(r) {
                 console.log(r);
                 if (r.success === 1) {
-                    // window.location.reload();
+                    window.location.reload();
 
                 } else {
                     $elem.text("Sign in")

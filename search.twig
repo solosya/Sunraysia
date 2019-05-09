@@ -1,5 +1,5 @@
 
-{% set limit = 3 %}
+{% set limit = 20 %}
 {% set articles = _Search.searchArticles({'limit': limit, 'offset': 0, 'search': search, 'sortBy': 'published'}) %}
 {% set config   = _Network.getThemeConfig() %}
 
@@ -17,7 +17,8 @@
 <main id="main" class="o-body-container o-body-container-md searchPage u-margin-top-60" role="main">
     <div class="container">
         <div class="row">
-            <div class="col-md-6">
+
+            <div class="offset-md-1 col-md-7">
                 <div class="c-search">
                     <div class="c-search__head">
                         {% set resultString = firstCount < 2 ? 'result' : 'results' %}
@@ -25,28 +26,38 @@
                     </div>
 
                     <div id="results">
-                    {% for article in articles %}
+                        {% for article in articles %}
 
-                        {{this.render('partials/_single-article.twig', {
-                            article: article, 
-                            imageSuppress: 'true',
-                            containerClass: "card-5-mobile card-5-tablet card-5-desktop"
-                        }) | raw}}
+                            {{this.render('partials/_single-article.twig', {
+                                article: article, 
+                                imageSuppress: 'true',
+                                containerClass: "card-5-mobile card-8-tablet card-8-desktop"
+                            }) | raw}}
+                            <hr class="divide u-margin-top-20 u-margin-bottom-20 u-margin-right-100" />
+                        {% endfor %}
 
-                    {% endfor %}
+
+                        {% for i in 0..6  %}
+
+                            {{this.render('partials/_single-article.twig', {
+                                article: articles[0], 
+                                imageSuppress: 'true',
+                                containerClass: "card-5-mobile card-8-tablet card-8-desktop"
+                            }) | raw}}
+                            <hr class="divide  u-margin-top-20 u-margin-bottom-20  u-margin-right-100" />
+
+                        {% endfor %}
+
+
                     </div>
     
 
                     {% if articles|length >= limit %}
-                        <section class="">
-                            <div class="row">
-                                {{ this.render('partials/ajaxarticles_new.twig', {
-                                    name            : "search-load",
-                                    label           : "more",
-                                    buttonClass     : "",
-                                }) | raw }}
-                            </div>
-                        </section>
+                        {{ this.render('partials/ajaxarticles_new.twig', {
+                            name            : "search-load",
+                            label           : "more",
+                            buttonClass     : "",
+                        }) | raw }}
                     {% endif %}
 
                 </div>
@@ -55,6 +66,7 @@
 
 
             <div class="col-9 col-lg-3">
+                place add here
                 {% if config['inventory']['adSpace']['side-fix'][0] is defined %}
                     <div class="j-adslot" id="{{config['inventory']['adSpace']['side-fix'][0]}}" data-adshape="side-fix"></div>
                 {% endif %}
@@ -75,12 +87,11 @@
         Acme.loadMore = new Acme.View.articleFeed({
             model           : Acme.cards,
             container       : 'results',
-            infinite        : true,
             limit           : {{limit}},
             loadtype        : 'api/search',
             searchterm      : "{{search}}",
             name            : 'search-load', //name of the search button
-            card_class      : 'card-5-mobile card-5-tablet card-5-desktop'
+            card_class      : 'card-5-mobile card-8-tablet card-8-desktop'
         });
     });
 </script>

@@ -20,7 +20,7 @@
     @include justify-content(center);
     text-transform: uppercase;
     
-    &-block {
+    &--block {
         width: $viewportSize;
         display: block;
     }
@@ -29,15 +29,15 @@
         display:inline-block;
     }
 
-    &-rounded {
+    &--rounded {
         @include border-radius(25px);
     }
 
-    &-radius {
+    &--radius {
         @include border-radius(4px);
     }
     
-    &-md {
+    &--md {
         height: auto;
         @include padding(12 30);
     }
@@ -53,7 +53,7 @@
             background-color: $blue_sh1;
         }
 
-        &-bordered {
+        &--bordered {
             color: $blue;
             border-color: $black_sh3;
             background-color: $white;
@@ -77,7 +77,7 @@
             background-color: darken($info, 10%);
         }
 
-        &-bordered {
+        &--bordered {
             color: $info;
             border-color: $info;
             background-color: $white;
@@ -101,7 +101,7 @@
             background-color: $blackred;
         }
 
-        &-bordered {
+        &--bordered {
             color: $error;
             border-color: $error;
             background-color: $white;
@@ -137,7 +137,7 @@
             background-color: $blue_sh1;
         }
 
-        &-bordered {
+        &--bordered {
             color: $white;
             border-color: $white;
             background: transparent;
@@ -161,7 +161,7 @@
             background-color: darken($greyish,7.5%);
         }
 
-        &-bordered {
+        &--bordered {
             color: $greyish;
             border-color: $greyish;
             background-color: $white;
@@ -185,7 +185,7 @@
             background-color: darken($black_sh5,8.5%);
         }
 
-        &-bordered {
+        &--bordered {
             color: $black_sh5;
             border-color: $black_sh5;
             background-color: $white;
@@ -203,12 +203,12 @@
     }
 
    
-    &-disabled {
+    &--disabled {
         @include opacity(.5);
         pointer-events: none;
     }
     
-    &-text {
+    &--text {
         height: auto;
         border: 0px none;
         text-align: left;
@@ -219,7 +219,7 @@
         @include transition(all 0.3s ease);
     }
     
-    &-link-muted {
+    &--link-muted {
         color:$greyish;
         @include font-size(14);
         line-height: 1.4;

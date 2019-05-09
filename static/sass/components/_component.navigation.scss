@@ -47,17 +47,17 @@
 
 
                 &.active {
-                    color: $blue;
+                    color: $blue_sh4;
 
-                    &:after {
-                        content: '';
-                        height:1px;
-                        width:15px;
-                        background:$greyish;
-                        position: absolute;
-                        left: 0;
-                        bottom: -3px;
-                    }
+                    // &:after {
+                    //     content: '';
+                    //     height:1px;
+                    //     width:15px;
+                    //     background:$greyish;
+                    //     position: absolute;
+                    //     left: 0;
+                    //     bottom: -3px;
+                    // }
                 }
 
                 &:hover {

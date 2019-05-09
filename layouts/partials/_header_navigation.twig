@@ -68,7 +68,14 @@
                         <a href="{{networkData.defaultBlogUrl}}/paywall" class="c-button c-button--blue">Subscribe</a>
                     {% else %}
                         {% set user = _User.getUser() %}
-                        <a href="javascript:;" class="">Hi {{user.firstname}}</a>
+                        <a id="user-menu-button" href="javascript:;" class="c-header__username">Hi {{user.firstname}}</a>
+                        <div id="user-menu" class="c-user-menu" style="display:none">
+                            <p class="c-user-menu__name">{{user.firstname}} {{user.lastnight}}</p>
+                            <p class="c-user-menu__email">{{user.email}}</p>
+                            <hr class="divide divide--dark" />
+                            <a class="c-user-menu__link" href="{{networkData.defaultBlogUrl}}/user/edit-profile">My Account</a>
+                            <a class="c-user-menu__link" href="{{_AppHelper.getLogoffUrl()}}">Log out</a>
+                        </div>
                     {% endif %}
                 </div>
 

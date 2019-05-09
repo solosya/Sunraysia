@@ -1,0 +1,27 @@
+.c-user-menu {
+    min-width: 200px;
+    background-color: $offwhite;
+    padding: 18px;
+    position: absolute;
+    right: 0;
+    top: 21px;
+    z-index:100;
+    @include box-shadow(0 2px 10px 6px rgba(89, 88, 89, 0.1));
+    
+    &__name {
+        @include font-size(14);
+        font-weight: $weightMedium;
+    }
+
+    &__email {
+        @include font-size(12);
+    }
+
+    &__link {
+        @include font-size(14);
+        display:block;
+        color: $greyish;
+        margin-top:6px;
+    }
+
+}

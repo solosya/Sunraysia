@@ -454,11 +454,15 @@ div[class*="col-sm"] {
 
 
 
-hr.divide {
-    margin:28px 0;
+.divide {
     border: 0;
     border-top: 1px solid $offwhite;
+
+    &--dark {
+        border-color: rgba( $greyish, 0.5);
+    }
 }
+
 
 
 .space-only {
@@ -490,13 +494,6 @@ hr.divide {
     }
 }
 
-
-.divide {
-    margin-top: 32px;
-    margin-bottom: 42px;
-    border: 0;
-    border-top: 1px solid color(lightgrey);
-}
 
 .u-noscroll {overflow:hidden}
 .clearfix {overflow:auto;overflow-x:hidden}
@@ -597,103 +594,6 @@ hr.divide {
 .flex13{-webkit-flex:13 0 0;-ms-flex:13 0 0;flex:13 0 0;-moz-flex:13 0 0;}
 .flex15{-webkit-flex:15 0 0;-ms-flex:15 0 0;flex:15 0 0;-moz-flex:15 0 0;}
 
-.divideright {
-    @media #{$tablet} {
-    // @media screen and (min-width : 768px)  and (max-width : 991px) {
-
-        &:after {
-            content: '';
-            display: block;
-            height: 100%;
-            background: color(lightgrey);
-            width: 1px;
-            position: absolute;
-            top: 0;
-            right: -13px;
-        }
-        &:last-child {
-            &:after {
-                display:none;
-            }
-        }
-        &.dairy {
-            &:after {
-                right: 0;
-            }
-        }
-        &.divideright__nogap {
-            &:after {
-                right: 0;
-            }
-        }
-    }
-}
-.divideright-desk {
-    @media #{$desktop_up} {
-        &:after {
-            content: '';
-            display: block;
-            height: 100%;
-            background: color(lightgrey);
-            width: 1px;
-            position: absolute;
-            top: 0;
-            right: -13px;
-        }
-        &:last-child {
-            &:after {
-                display:none;
-
-            }
-        }
-        &.dairy {
-            &:after {
-                right: 0;
-            }
-        }
-        &.divideright__nogap {
-            &:after {
-                right: 0;
-            }
-        }
-        &.after-display{
-            &:after {
-                display:block;
-            }
-        }
-    }
-}
-
-.divideright-main {
-    &:after {
-        content: '';
-        display: block;
-        height: 100%;
-        background: color(lightgrey);
-        width: 1px;
-        position: absolute;
-        top: 0;
-        right: 5px;
-    }
-    &:last-child {
-        &:after {
-            display:none;
-        }
-    }
-}
-
-.divideright-ofs {
-    &:after {
-        content: '';
-        display: block;
-        height: 100%;
-        background: color(lightgrey);
-        width: 1px;
-        position: absolute;
-        top: 0;
-        right: -85px;
-    }
-}
 
 
 /* Begin utility view style */

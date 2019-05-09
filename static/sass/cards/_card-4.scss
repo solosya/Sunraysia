@@ -4,7 +4,6 @@
     margin-right: -20px;
 
     .c-cards-view {
-        // height: 490px;
         
         @include flex-direction(column, vertical);
         
@@ -119,6 +118,7 @@
     margin-right: 0;
 
     .c-cards-view {
+        height: 490px;
 
         &__media {
             @include flex-height(290px);

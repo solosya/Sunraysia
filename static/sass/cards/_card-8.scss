@@ -1,0 +1,127 @@
+@mixin card-8-base() {
+    margin-left: -20px;
+    margin-right: -20px;
+    .c-cards-view {
+        @include flex-direction(column, vertical);
+        margin:0;
+        box-shadow:none;
+
+        &__container {
+            padding:0 130px 0 0;
+        }
+
+        &__category {
+            margin-bottom: 11px;
+        }
+
+        &__heading {
+            // @include flex-height(64px);
+            @include font-size(22);
+        }
+        &__description {
+            @include font-size(13);
+            margin-top: 10px;
+            @include flex-height(40px);
+        }
+        &__author {
+            clear:both;
+        }
+
+        &__time {
+            margin-top: 13px;
+        }
+
+        &.video {
+            .c-cards-view__media .video-icon {
+                @include size(40px);
+            }
+        }
+
+        &.without-image {
+            .c-cards-view {
+                &__heading {
+                    // @include flex-height(64px);
+                    // @include font-size(22);
+                }
+        
+            }
+        }
+
+        &.social {
+
+            .social-icon {
+                @include size(30px);
+
+                &:before {
+                    @include font-size(13);
+                    line-height: 32px;
+                }
+            }
+
+            &.without-image {
+                .c-cards-view__container {
+                    padding-top: 40px;
+                }
+            }
+        }
+
+    }
+}
+
+
+
+// .card-8-mobile {
+//     @media #{$mobile} {
+//         @include card-8-base();
+//         @include card-name("C3 mobile");
+//     }
+// }
+
+
+@mixin card-8-tablet-base() {
+    @include card-8-base();
+
+    margin-left: 0;
+    margin-right: 0;
+
+    .c-cards-view {
+        @include flex-direction(row, horizontal);
+        @include flex-height(136px);
+
+        &__media {
+            @include flex-width(300px);
+            img {
+                height:100%;
+            }
+        }
+
+    }
+}
+
+.card-8-tablet {
+    @media #{$tablet} {
+        @include card-8-tablet-base();
+        @include card-name("C3 tablet");
+    }
+}
+
+
+.card-8-desktop {
+    @media #{$desktop-up} {
+        @include card-8-tablet-base();
+        @include card-name("C3 desktop");
+
+        .c-cards-view {
+            &.without-image {
+                .c-cards-view {
+                    &__container {
+                    }
+                }
+            }
+        }
+    }
+}
+
+
+
+
