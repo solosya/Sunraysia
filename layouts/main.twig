@@ -81,7 +81,7 @@
 
 
     {% if _AppHelper.getApplicationEnv() == 'PROD'%}
-        <link rel="stylesheet" href="{{networkData.templatePath}}/static/deploy/concat.min.css?v=161e8662" type="text/css" media="all">
+        <link rel="stylesheet" href="{{networkData.templatePath}}/static/deploy/concat.min.css?v=9918e62e" type="text/css" media="all">
     {% else %}
 
         <link rel='stylesheet' href='{{networkData.templatePath}}/static/deploy/concat.css' type='text/css' media='all' />
@@ -158,7 +158,6 @@
 
 
 <body class="body {{ layout }} {{ pageClass }}" data-class="{{ pageClass | split(' ')[0] }}"  data-networkid="{{networkData['id']}}" data-v="26">
-
 
 {{ this.beginBody() }}
       

@@ -11,6 +11,7 @@
 {% set pwstats = _User.getPaywallStats(true) %}
 {% set plans = _Network.getNetworkData()['paywallPlans'] %}
 
+
 {% set userLimit = 10 %}
 {% set user = _User.getUser() %}
 
@@ -23,6 +24,7 @@
 
 
 {% set articleCount = _AppHelper.getApplicationEnv() == 'DEV' ? 0 : 0 %}
+
 <!-- 3 is job, 4 is property, 5 is event -->
 {% set dev = _AppHelper.getApplicationEnv() == 'DEV' ? false : false %}
 
@@ -194,8 +196,7 @@
                 <div id="plans" class="row u-margin-top-60" style="display:none">
                     <div class="col-12">
                         <h2 class="c-myAccount__head">Change subscription</h2>
-
-                        {% if pwstats.userManager == true %}
+                        {% if pwstats['userManager'] == true or pwstats['user_role']['IsSystemAdmin'] %}
 
                             {% set totalPlanUserCount       = pwstats['user_count'] %}
                             {% set managedUsersObj          = _User.getPaywallManagedUsers({"limit": userLimit}) %}

@@ -11,7 +11,7 @@
     margin: auto auto;
     width:468px;
     background:white;
-    padding:30px 50px;
+    padding:25px 20px;
     border-radius:3px;
     @media #{$media-ipadSmall} {
         width:auto;
@@ -25,31 +25,27 @@
 
 .signin-modal__header {
     overflow:auto;
-    margin-bottom: 20px;
-    padding-top: 5px;
-    
-    .popupVideo__headerlogo {
-        display: none;
-    }
-
 }
+
 .signin-modal__title {
-    @include font-size(22);
-    text-align:left;
-    font-weight: $weightRegular;
-    margin-bottom:28px;
+    @include font-size(18);
+    text-align:center;
+    font-weight: $weightBold;
+    margin-bottom:20px;
+}
+.signin-modal__message {
+    @include font-size(13);
 }
 
 .signin-modal__close {
     display:block;
-    float:right;
     height:20px;
     width:20px;
     background:url("../icons/cross-black.svg");
     background-repeat:no-repeat;
-    position:relative;
-    bottom:3px;
-
+    position: absolute;
+    top: 0;
+    right: 0;
 }
 
 .signin-modal__content-window {

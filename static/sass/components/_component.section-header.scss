@@ -5,4 +5,10 @@
     text-transform:uppercase;
     padding-bottom: 6px;
     margin-bottom: 25px;
+    position:relative;
+
+    &__button {
+        position:absolute;
+        right:0;
+    }
 }

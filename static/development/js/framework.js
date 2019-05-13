@@ -599,7 +599,7 @@
             var tmp = Handlebars.compile(Acme.templates[this.template]);
             var tmp = tmp(this.data);
 
-        
+            console.log(data);
             $('body').addClass('u-noscroll').append(tmp);
             if (layout) {
                 this.renderLayout(layout, this.data);
@@ -616,6 +616,7 @@
                 var tmp = Handlebars.compile(Acme.templates[this.layouts[layout]]);
                 $('#'+this.parentCont).attr("title", layout); 
                 var layout = tmp(data);
+                console.log(data);
                 $('#'+this.parentCont).find('#dialogContent').empty().append(layout); 
             } else {
                 console.log(this.layouts[layout], 'Does not exist' );

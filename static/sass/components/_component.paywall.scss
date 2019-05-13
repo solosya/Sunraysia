@@ -1,0 +1,76 @@
+/* Begin page head style */
+.c-payWall {
+    $self:&;
+    @include margin-top(100);
+    
+    @include responsive(md) {
+        z-index:1;
+        @include margin-top(115);
+    }
+    
+    &--pricing {
+        width:100%;
+        @include flexbox;
+        position:relative;
+        @include align-self(stretch);
+        @include align-items(flex-start);
+        @include align-content(flex-start);
+        @include justify-content(space-between);
+        @include flex-direction(column, vertical);
+        
+        &:before {
+            top:0;
+            left:0;
+            right:0;
+            content:'';
+            height:100%;
+            min-height:450px;
+            position:absolute;
+            height:calc(100% - 80px);
+            @include linear-gradient(19deg, #c51515, #4c76c9);
+        }
+        
+        @include responsive(md) {
+            @include flex-direction(row, horizontal);
+            
+            &:before {
+                min-height:inherit;
+                height:calc(100% - 80px);
+                max-height:calc(100% - 80px);
+            }
+            
+            @include respond-to(lg) {
+                &:before {
+                    min-height:550px;
+                    max-height:calc(100% - 70px);
+                }
+            }
+        }
+        
+        .row {
+            height: 100%;
+            margin-top: -45px;
+        }
+        
+
+    }
+
+}
+
+.c-totalpayvalue {
+    @include flexbox;
+    @include justify-content(space-between);
+    @include align-items(center);
+    &__title {
+        @include font-size(20);
+        font-weight: $weightLight;
+        color: $greyish;
+    }
+    &__value {
+        @include font-size(22);
+        font-weight: $weightMedium;
+        color: $black;
+    }
+}
+
+/* End page head style */

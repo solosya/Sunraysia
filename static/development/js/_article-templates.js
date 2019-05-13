@@ -265,6 +265,7 @@ Acme.templates.modal =
     <div id="dialog" class="{{name}}__window"> \
         <div class="{{name}}__container centerContent" style="scrolling == unusable position:fixed element"> \
             <div class="{{name}}__header"> \
+                <h2 class="{{name}}__title">{{title}}</h2> \
                 <a class="{{name}}__close" href="#" data-behaviour="close"></a> \
             </div> \
             <div class="{{name}}__content-window" id="dialogContent" style="scrolling == unusable position:fixed element"></div> \
@@ -348,18 +349,17 @@ Acme.templates.socialPopup =
 Acme.templates.signinFormTmpl = 
 '<form id="loginForm" class="vertical-form" action="#" method="post" autocomplete="off"> \
     <div class="c-form c-login-modal"> \
-        <h2 class="c-login-modal__title">Log in</h2> \
-        <input id="email" class="c-form__input" name="username" placeholder="Email Address" aria-required="true" type="text"> \
+        <input id="email" class="c-login-modal__input c-form__input c-form__input--bordered-bottom" name="username" placeholder="Email Address" aria-required="true" type="text"> \
         <div class="c-form__help-block">Please enter your email address</div> \
         \
-        <input id="password" class="c-form__input" name="password" placeholder="Password" aria-required="true" type="password"> \
+        <input id="password" class="c-login-modal__input c-form__input c-form__input--bordered-bottom u-margin-top-10" name="password" placeholder="Password" aria-required="true" type="password"> \
         <div class="c-form__help-block">Please enter your email Password</div> \
         <a href="javascript:;" class="c-login-modal__password-link" data-layout="forgot">Forgot password?</a> \
     </div> \
     \
     <div class="c-form__buttons"> \
-        <button type="submit" class="c-button c-button--rounded c-button--blue-bordered u-margin-right-10">Sign up</button> \
-        <button id="signinBtn" type="submit" class="c-button c-button--rounded c-button--blue j-signin">Log in</button> \
+        <a href="'+_appJsConfig.appHostName +'/paywall" class="c-button c-button--blue-bordered u-margin-right-10">Sign up</a> \
+        <button id="signinBtn" type="submit" class="c-button c-button--blue j-signin">Log in</button> \
     </div> \
     \
     <div class="c-login-modal__subaction"> \
@@ -380,23 +380,22 @@ Acme.templates.forgotFormTmpl =
     <div class="c-form__help-block">Please enter your email address</div> \
     \
     <div class="c-form__buttons"> \
-        <button type="submit" class="c-button c-button--rounded c-button--blue-bordered j-forgot-email">Send Email</button> \
+        <button type="submit" class="c-button c-button--blue-bordered j-forgot-email">Send Email</button> \
     </div> \
 </form>';
 
 
 
 Acme.templates.userPlanMessage = 
-'<p>{{title}}</p> \
+'<p class="{{name}}__message">{{message}}</p> \
 <form name="loginForm" id="loginForm" class="active u-margin-top-20" action="javascript:void(0);" method="post" accept-charset="UTF-8" autocomplete="off"> \
-    <button id="cancelbutton" class="c-button c-button--rounded c-button--blue-bordered" data-role="cancel">OK</button> \
+    <button id="cancelbutton" class="c-button c-button--blue-bordered" data-role="cancel">OK</button> \
 </form>';
 
 Acme.templates.userPlanOkCancel = 
-'<p>{{title}}</p> \
+'<p class="{{name}}__message">{{message}}</p> \
 <form name="loginForm" id="loginForm" class="active u-margin-top-20" action="javascript:void(0);" method="post" accept-charset="UTF-8" autocomplete="off"> \
-    <button id="okaybutton" class="c-button c-button--inline c-button--rounded c-button--blue-bordered" data-role="okay">OK</button> \
-    <button id="cancelbutton" class="c-button c-button-inline c-button--rounded c-button--blue-bordered" data-role="cancel">Cancel</button> \
+    <button id="okaybutton" class="c-button c-button--inline c-button--blue-bordered" data-role="okay">Yes, cancel my subscription</button> \
 </form>';
 
 

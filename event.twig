@@ -17,7 +17,7 @@
     {% set eventImage = _Media.getMediaUrl(event.media[0], 1094, 515, {'crop': 'fill', 'gravity': 'auto'} ) %}
 {% endif %}
 
-{% set startDate = _AppHelper.getDefaultTimezoneDateTime(event.startDate, 'j F Y') %}
+{% set startDate = _AppHelper.getDefaultTimezoneDateTime(event.startDate, 'l, jS F') %}
 {% set endDate = _AppHelper.getDefaultTimezoneDateTime(event.endDate, 'j F Y') %}
 
 {% set startTime = _AppHelper.getDefaultTimezoneDateTime(event.startDate, 'g:ia') %}
@@ -27,28 +27,24 @@
 {% set events = _Event.getEvents({"limit": 4, "start_date": date.date | split(" ")[0]}) %}
 
 
-<div class="o-body-container o-body-container-md u-margin-top-60">
+<div class="o-body-container o-body-container-md u-tablet-margin-top-40 u-desktop-margin-top-60">
 
     <div class="container"> 
         <div class="row">
-            <div class="col-9 col-md-6">
+            
+            
+            <div class="col-12 col-md-12 col-lg-7 col-xl-6 offset-xl-1">
                 <div class="c-eventdetail">
 
                     {% if eventImage %} 
-                        <div class="c-eventdetail__media">
-                            <figure> 
-                                <img src="{{eventImage}}" class="img-fluid o-media--image" alt="Article Info">
-                            </figure>
-                        </div>
+                        <figure class="c-eventdetail__media"> 
+                            <img src="{{eventImage}}" class="img-fluid o-media--image" alt="Article Info">
+                        </figure>
                     {% endif %}
                     
                     
                     <div class="c-eventdetail__head">
 
-                        {# {% if _User.isAdminUser() %}
-                            <a href="{{event.editUrl}}" target="_blank" class="c-button c-button--rounded c-button--blue">Edit article</a>
-                        {% endif %} #}
-                        
                         <a href="{{ networkData.defaultBlogUrl }}/@events">
                             <div class="c-eventdetail__category">
                                 Events
@@ -58,46 +54,47 @@
                             {{ quotes.smarten(event.title) }}  
                         </div>
                     </div>
+
+
                     <div class="c-eventdetail__container">
-                        <div class="row">
-                            <div class="col-md-3">
 
-                                <div class="c-eventdetail__info">
-                                    <div class="c-eventdetail__info-item">
-                                        <span class="c-eventdetail__info-icon c-eventdetail__info-icon--calandar"></span>
-                                        <span class="c-eventdetail__info-text">{{ startDate }}</span>
-                                    </div>
-                                    <div class="c-eventdetail__info-item">
-                                        <span class="c-eventdetail__info-icon c-eventdetail__info-icon--time"></span>
-                                        <span class="c-eventdetail__info-text">{{ startTime }} - {{ endTime }}</span>
-                                    </div>
-                                    <div class="c-eventdetail__info-item">
-                                        <span class="c-eventdetail__info-icon c-eventdetail__info-icon--location"></span>
-                                        <span class="c-eventdetail__info-text">{{ event.address.address1 }},<br/>
-                                        {{ event.address.suburb }}</span>
-                                    </div>
-                                    {# <div class="c-eventdetail--source">
-                                        <span class="fa fa-laptop"></span>
-                                        youtube.com/johnbobbelitandhisband
-                                    </div> #}
-                                    <div class="c-eventdetail__info-item">
-                                        <span class="c-eventdetail__info-icon c-eventdetail__info-icon--contact"></span>
-                                        <span class="c-eventdetail__info-text" >Contact {{event.contactName}} on {{event.contactphone}}</span>
-                                    </div>
 
+
+                        <div class="row u-margin-bottom-30">
+                            <div class="col-md-5">
+                                <div class="c-eventdetail__info-item">
+                                    <span class="c-eventdetail__info-icon c-eventdetail__info-icon--calandar"></span>
+                                    <div>
+                                        <p class="c-eventdetail__info-text"><strong><em>{{ startDate }}</em></strong></p>
+                                        <p class="c-eventdetail__info-text c-eventdetail__time">{{ startTime }} - {{ endTime }}</p>
+                                    </div>
                                 </div>
                             </div>
 
-                            <div class="col-md-6">
-                                <div class="c-eventdetail--content">
+                            <div class="col-md-6 u-mobile-margin-top-20">
+                                <div class="c-eventdetail__info-item">
+                                    <span class="c-eventdetail__info-icon c-eventdetail__info-icon--location"></span>
+                                    <div>
+                                        <p class="c-eventdetail__info-text">{{ event.address.address1 }}</p>
+                                        <p class="c-eventdetail__info-text">{{ event.address.suburb }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="row">
+
+                            <div class="col-md-12">
+                                <div class="c-eventdetail__content">
                                     {{ event.content | raw }}
                                 </div>
                             </div>
 
 
 
-                            <div class="col-md-6">
-                                <div class="c-eventdetail--map">
+                            <div class="col-md-12">
+                                <div class="c-eventdetail__map">
                                 {% if event.latitude and event.longitude %}
                                     <div class="event-map">
                                         <div id="addressMap" data-latitude="{{event.latitude}}" data-longitude="{{event.longitude}}" style="width:100%;min-height:350px;background:rgba(0,0,0,.3)"></div>
@@ -113,23 +110,8 @@
             </div> 
 
 
-            <div class="col col-md-3 c-events">
-                {% set events = _Event.getEvents({"limit": limit, "start_date": date.date | split(" ")[0]}) %}
-
-                <div class="c-events-panel c-events-panel-xs">
-                    <h4 class="c-events-panel__head c-events-panel__head-xs">Upcoming Events</h4>
-                    <div class="c-events-panel__details">
-                        
-                        {% for i in 0..3 if events[i] %}
-                            {{this.render('partials/_single-event.twig', {
-                                event: events[i], 
-                                imageSuppress: 'true',
-                                containerClass: "event-card-2-mobile event-card-2-tablet event-card-2-desktop"
-                            }) | raw}}
-                        {% endfor %}
-
-                    </div>
-                </div>
+            <div class="col col-md-3 offset-md-1 c-events">
+                Ads   
             </div>
         </div>
     </div>
@@ -150,17 +132,6 @@
 
 
 
-
-
-
-
-                    {# <div class="col-md-9">
-                        <a href="https://www.facebook.com/sharer/sharer.php?u={{event.url}}&title={{ event.title|url_encode }}" class="share-icon facebook-icon"></a
-                        ><a href="https://twitter.com/share?text={{ event.title|url_encode }}&url={{event.url}}" class="share-icon twitter-icon"></a
-                        ><a href="mailto:?subject=Check%20out%20this%20article&body={{event.url}}" class="share-icon email-icon"></a>
-                    </div>
-             #}
-            
                             {# show start date OR start and end data if different #}
                             {# {% set difference = date(event.endDate).diff(date(event.startDate)) %}
                             {% set leftDays = difference.days %}

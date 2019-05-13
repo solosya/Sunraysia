@@ -145,10 +145,10 @@ $screen-md-max:              ($screen-lg-min - 1) !default;
 $center:					center;
 
 
-$desktop-lg: 			"screen and (min-width : 1200px)";
+$desktop-lg: 			"screen and (min-width : 1330px)";
 $desktop-up: 			"screen and (min-width : 992px)";
 $desktop-down: 			"screen and (max-width : 992px)";
-$desktop: 				"screen and (min-width : 992px) and (max-width : 1199px)";
+$desktop: 				"screen and (min-width : 992px) and (max-width : 1329px)";
 // $smallDevices: 			"screen and (min-width : 1025px) and (max-width : 1150px)";
 // $ipadPortrait: 			"screen and (max-width : 992px)";
 $phone: 				"screen and (min-width : 200px) and (max-width : 480px)";

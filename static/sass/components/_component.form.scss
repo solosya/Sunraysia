@@ -19,21 +19,33 @@
 
     }
 
+	input:-webkit-autofill {
+		background-color: #FAFFBD !important;
+	}
 
 
     &__input {
         display:block;
         width:100%;
-        padding: 14px 0 14px 12px;
-        outline:0;
+        padding: 0 0 0 12px;
+		outline:0;
+		
         @include font-size(16);
         @include transition(all .3s ease-out);
         line-height:45px;
+
 
         &--bordered {
             border: 1px solid $offwhite;
 		}
 		
+        &--bordered-bottom {
+			border:none;
+            border-bottom: 1px solid $offwhite;
+		}
+
+
+
 		&.formError {
 			border-color:$error;
 

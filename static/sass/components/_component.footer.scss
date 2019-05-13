@@ -51,33 +51,37 @@
     }
 
     &__navigation {
-        @include flexbox();
-        @include flex-direction(column, vertical);
-
-        a {
-            color: $white;
-            text-transform: uppercase;
-            font-weight: $weightBold;
-            @include transition(all 0.3s ease);
-
-            &:hover,
-            &:focus {
-                color: $blue;
+        display:none;
+        @media #{$tablet-up } {
+            display:block;
+            @include flexbox();
+            @include flex-direction(column, vertical);
+    
+            a {
+                color: $white;
+                text-transform: uppercase;
+                font-weight: $weightBold;
+                @include transition(all 0.3s ease);
+    
+                &:hover,
+                &:focus {
+                    color: $blue;
+                }
+    
+                +a {
+                    margin-top: 20px;
+                }
             }
-
-            +a {
-                margin-top: 20px;
-            }
-        }
-
-        &.u-border-left {
-            padding-left: 26px;
-            border-left: 1px solid $white;
-           
-            @media #{$desktop-down} {
-                &:first-child {
-                    padding-left: 15px;
-                    border:none;
+    
+            &.u-border-left {
+                padding-left: 26px;
+                border-left: 1px solid $white;
+               
+                @media #{$desktop-down} {
+                    &:first-child {
+                        padding-left: 15px;
+                        border:none;
+                    }
                 }
             }
         }

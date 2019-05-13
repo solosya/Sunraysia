@@ -79,8 +79,10 @@
                                 '<div class="weather-panel"> \
                                     <div class="weather-panel__icon">{{{icon}}}</div> \
                                     <div class="weather-panel__temperature">{{temperature}}&#176; </div> \
-                                    <p class="weather-panel__location">{{location}}</p> \
-                                    <div class="weather-panel__description">{{description}}</div> \
+                                    <div> \
+                                        <p class="weather-panel__location">{{location}}</p> \
+                                        <div class="weather-panel__description">{{description}}</div> \
+                                    </div> \
                                 </div>'
                         };
 
@@ -111,18 +113,23 @@
                                 "range" : range
                             }
                         ));
-                        
 
-                        var forecast = data.daily.slice(1,7).map(function(data) {
-                            return forecastTmp({
-                                "icon": weatherIcons( data.icon ),
-                                "description" : weatherStatus( data.icon ),
-                                "temperature" : Math.round(data.temperature),
-                                "date" : data.date.split(',')[0]
+                        if (data.daily) {
+
+                            var forecast = data.daily.slice(1,7).map(function(data) {
+                                return forecastTmp({
+                                    "icon": weatherIcons( data.icon ),
+                                    "description" : weatherStatus( data.icon ),
+                                    "temperature" : Math.round(data.temperature),
+                                    "date" : data.date.split(',')[0]
+                                });
                             });
-                        });
+                            $('.j-weather-panel-dropdown').append(forecast);
 
-                        $('.j-weather-panel-dropdown').append(forecast);
+                        }
+
+                        $('#header-date').text(data.date);
+
 
 
                     };

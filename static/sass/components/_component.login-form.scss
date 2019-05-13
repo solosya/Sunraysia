@@ -8,6 +8,12 @@
 
     }
 
+    &__input {
+        @include font-size(13);
+        line-height: 30px;
+        padding-bottom: 5px;
+        padding-top: 5px;
+    }
 
     &__password-link {
         @include font-size(11);

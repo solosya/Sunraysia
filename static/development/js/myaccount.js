@@ -340,7 +340,8 @@ Acme.UserProfileController.prototype.pageEvents = function ()
         var listelem = $(e.target).closest('li');
 
         var status = 'cancelled';
-        message = "Are you sure you want to cancel your plan?"
+        title = "Cancel your subscription";
+        message = "Are you sure you want to cancel your subscription?"
         if ($(e.target).text() == 'Restart Subscription') {
             message = "Do you want to reactivate your plan? You will be billed on the next payment date."
             status = 'paid'
@@ -350,7 +351,7 @@ Acme.UserProfileController.prototype.pageEvents = function ()
             _csrf: this.csrfToken, 
         };
 
-        Acme.SigninView.render("userPlanChange", message)
+        Acme.SigninView.render("userPlanChange", title, { message : message })
             .done(function() {
                 $('#dialog').parent().remove();
                 
@@ -422,7 +423,7 @@ Acme.UserProfileController.prototype.pageEvents = function ()
                     msg = msg.replace(/(.+)(\d\d)$/g, "$1.$2");
                 }
             }
-            Acme.SigninView.render("userPlanChange", "Are you sure you want to change plan?" + msg)
+            Acme.SigninView.render("userPlan", "Are you sure you want to change plan?", {message: msg})
                 .done(function() {
                     $('#dialog').parent().remove();
                     

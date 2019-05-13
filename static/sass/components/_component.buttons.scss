@@ -7,18 +7,23 @@
     cursor: pointer;
     padding: 10px 14px;
     display: inline-block;
-    border: 2px solid $transparent;
+    border: 1px solid $transparent;
     @include font-size(12);
     line-height: 1.5;
     @include transition(all 0.3s ease);
     min-width: 120px;
     text-align: center;
     height: 40px;
+    outline:0;
     // @include flexbox();
     // @include align-items(center);
     // @include justify-content(center);
     text-transform: uppercase;
     
+    &:focus {
+        outline:none;
+    }
+
     &--block {
         width: $viewportSize;
         display: block;
@@ -52,7 +57,7 @@
             background-color: $blue_sh1;
         }
 
-        &--bordered {
+        &-bordered {
             color: $blue;
             border-color: $black_sh3;
             background-color: $white;
@@ -76,7 +81,7 @@
             background-color: darken($info, 10%);
         }
 
-        &--bordered {
+        &-bordered {
             color: $info;
             border-color: $info;
             background-color: $white;
@@ -100,7 +105,7 @@
             background-color: $blackred;
         }
 
-        &--bordered {
+        &-bordered {
             color: $error;
             border-color: $error;
             background-color: $white;
@@ -136,7 +141,7 @@
             background-color: $blue_sh1;
         }
 
-        &--bordered {
+        &-bordered {
             color: $white;
             border-color: $white;
             background: transparent;
@@ -160,7 +165,7 @@
             background-color: darken($greyish,7.5%);
         }
 
-        &--bordered {
+        &-bordered {
             color: $greyish;
             border-color: $greyish;
             background-color: $white;
@@ -184,7 +189,7 @@
             background-color: darken($black_sh5,8.5%);
         }
 
-        &--bordered {
+        &-bordered {
             color: $black_sh5;
             border-color: $black_sh5;
             background-color: $white;

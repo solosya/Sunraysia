@@ -1,0 +1,129 @@
+/* User Detail scss style */
+.c-paymenttab {
+    .nav-tabs {
+        border-bottom:1px rgba($greyish, 0.5) solid;
+        @include padding-bottom(11);
+        @include margin-bottom(20);
+        li {
+            border-left:1px rgba($greyish, 0.5) solid;
+            &:first-child{
+                border: none;
+            }
+           a {
+                display: block;
+                @include font-size(0);
+                @include padding(9 30);
+                text-align: center;
+                & span {
+                    display: inline-block; 
+                }
+                
+                &.cardicon, &.paypal, &.pay, &.gpay {
+                    span {
+                        @include size(80px,40px);
+                        background-image:url('../images/icons/payicon/sprite.png');
+                        background-position:left top;
+                        background-repeat:no-repeat;
+                        background-size:80px auto;
+                    }
+                }
+                
+                &.cardicon {
+                    span {
+                        @include size(80px,18px);
+                        background-position:left -242px;
+                    }
+                }
+                &.paypal {
+                    span{
+                        background-position:left 0px;
+                    }
+                }
+                &.pay {
+                    span {
+                        background-position:left -80px;
+                    }
+                }
+               &.gpay {
+                    span{
+                        background-position:left -160px;
+                    }
+                }
+
+                
+                strong{
+                    @include font-size(12.5);
+                    color:#9e9e9e;
+                    font-weight: $weightRegular;
+                    text-align: center;
+                    display: block;
+                    @include padding-top(12);
+                }
+
+                &:hover, &.active  {
+                    &.cardicon{
+                        span {
+                            background-position:left -260px;
+                        }
+                    }
+                    &.paypal{
+                        span {
+                            background-position:left -40px;
+                        }
+                    }
+                    &.pay{
+                        span {
+                            background-position:left -120px;
+                        }
+                    }
+                    &.gpay{
+                        span {
+                            background-position:left -200px;
+                        }
+                    }
+                    strong{
+                        color:$blue_sh2;
+                    }
+                }
+
+            }
+
+            &.active {
+                a {
+                    &.cardicon{
+                        span {
+                            background-position:left -260px;
+                        }
+                    }
+                    strong{
+                        color:$blue_sh2; 
+                    }
+                }
+            }
+          
+            @media only screen and (max-width: 575px) {
+                width:50%;
+                margin-bottom:5px;
+                &:nth-child(3){
+                    border: none;
+                }
+            } 
+
+        }
+    }
+    .tab-content {
+        @include padding-bottom(10);
+        @include margin-bottom(16);
+        border-bottom:1px rgba($greyish, 0.5) solid;
+    }
+
+    .paycontent {
+        @include font-size(15);
+        font-weight: $weightMedium;
+        line-height: 1.47;
+        color: $greyish;
+        @include padding-bottom(9);
+    }
+ 
+}
+/* User Detail scss style */

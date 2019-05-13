@@ -92,36 +92,34 @@
                 </figure>
             {% endif %}
 
-            <div class="c-eventcards-view__date">{{ startDay }} <span class="c-eventcards-view__month">{{startMonth}}</span></div>
+            {# <div class="c-eventcards-view__date">{{ startDay }} <span class="c-eventcards-view__month">{{startMonth}}</span></div> #}
 
             <div class="c-eventcards-view__container">
-                <div class="c-eventcards-view__info">
-                    <div class="c-eventcards-view__category">Events</div>
-                    <h2  class="c-eventcards-view__heading js-card-heading  {{figureClass}}">{{ quotes.smarten(event.title) }}</h2>
-                    <p   class="c-eventcards-view__description j-truncate">{{ quotes.smarten(event.excerpt | raw) }}</p>
-                    <div class="c-eventcards-view__day">{{ fullStartDate }}</div>
-                    <div class="c-eventcards-view__time">{{startTime}} - {{endTime}}</div>
-                    <div class="c-eventcards-view__time-venue">{{startTime}} - {{venue}}</div>
+                <div class="c-eventcards-view__category">Events</div>
+                <h2  class="c-eventcards-view__heading js-card-heading  {{figureClass}}">{{ quotes.smarten(event.title) }}</h2>
+                <p   class="c-eventcards-view__description j-truncate">{{ quotes.smarten(event.excerpt | raw) }}</p>
+                <div class="c-eventcards-view__day">{{ fullStartDate }}</div>
+                <div class="c-eventcards-view__time">{{startTime}} - {{endTime}}</div>
+                <div class="c-eventcards-view__time-venue">{{startTime}} - {{venue}}</div>
 
-                    {# <div class="event-time">
-                        {% if startDay == endDay %}
-                            <p class="date">{{ startDay }}</p>
+                {# <div class="event-time">
+                    {% if startDay == endDay %}
+                        <p class="date">{{ startDay }}</p>
+                        <p class="month">{{ eventStartMonth }}</p>
+                    {% else %}
+                        <p class="date">{{ startDay }}-{{ endDay }}</p>
+                        {% if eventStartMonth == eventEndMonth %}
                             <p class="month">{{ eventStartMonth }}</p>
                         {% else %}
-                            <p class="date">{{ startDay }}-{{ endDay }}</p>
-                            {% if eventStartMonth == eventEndMonth %}
-                                <p class="month">{{ eventStartMonth }}</p>
-                            {% else %}
-                                <p class="month">{{ eventStartMonth }} {{ eventEndMonth }}</p>
-                            {% endif %}
+                            <p class="month">{{ eventStartMonth }} {{ eventEndMonth }}</p>
                         {% endif %}
-                    </div> #}
-           
-                    <div class="c-eventcards-view__author">
-                        <div class="c-eventcards-view__author__name">{{venue}}</div>
-                    </div>
-
+                    {% endif %}
+                </div> #}
+        
+                <div class="c-eventcards-view__author">
+                    <div class="c-eventcards-view__author__name">{{venue}}</div>
                 </div>
+
             </div>
         </article>
     </a>

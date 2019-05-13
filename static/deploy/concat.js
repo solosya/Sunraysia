@@ -18362,7 +18362,7 @@ function(a){"use strict";void 0===a.en&&(a.en={"mejs.plural-form":1,"mejs.downlo
             var tmp = Handlebars.compile(Acme.templates[this.template]);
             var tmp = tmp(this.data);
 
-        
+            console.log(data);
             $('body').addClass('u-noscroll').append(tmp);
             if (layout) {
                 this.renderLayout(layout, this.data);
@@ -18379,6 +18379,7 @@ function(a){"use strict";void 0===a.en&&(a.en={"mejs.plural-form":1,"mejs.downlo
                 var tmp = Handlebars.compile(Acme.templates[this.layouts[layout]]);
                 $('#'+this.parentCont).attr("title", layout); 
                 var layout = tmp(data);
+                console.log(data);
                 $('#'+this.parentCont).find('#dialogContent').empty().append(layout); 
             } else {
                 console.log(this.layouts[layout], 'Does not exist' );
@@ -18757,6 +18758,7 @@ Acme.templates.modal =
     <div id="dialog" class="{{name}}__window"> \
         <div class="{{name}}__container centerContent" style="scrolling == unusable position:fixed element"> \
             <div class="{{name}}__header"> \
+                <h2 class="{{name}}__title">{{title}}</h2> \
                 <a class="{{name}}__close" href="#" data-behaviour="close"></a> \
             </div> \
             <div class="{{name}}__content-window" id="dialogContent" style="scrolling == unusable position:fixed element"></div> \
@@ -18840,18 +18842,17 @@ Acme.templates.socialPopup =
 Acme.templates.signinFormTmpl = 
 '<form id="loginForm" class="vertical-form" action="#" method="post" autocomplete="off"> \
     <div class="c-form c-login-modal"> \
-        <h2 class="c-login-modal__title">Log in</h2> \
-        <input id="email" class="c-form__input" name="username" placeholder="Email Address" aria-required="true" type="text"> \
+        <input id="email" class="c-login-modal__input c-form__input c-form__input--bordered-bottom" name="username" placeholder="Email Address" aria-required="true" type="text"> \
         <div class="c-form__help-block">Please enter your email address</div> \
         \
-        <input id="password" class="c-form__input" name="password" placeholder="Password" aria-required="true" type="password"> \
+        <input id="password" class="c-login-modal__input c-form__input c-form__input--bordered-bottom u-margin-top-10" name="password" placeholder="Password" aria-required="true" type="password"> \
         <div class="c-form__help-block">Please enter your email Password</div> \
         <a href="javascript:;" class="c-login-modal__password-link" data-layout="forgot">Forgot password?</a> \
     </div> \
     \
     <div class="c-form__buttons"> \
-        <button type="submit" class="c-button c-button--rounded c-button--blue-bordered u-margin-right-10">Sign up</button> \
-        <button id="signinBtn" type="submit" class="c-button c-button--rounded c-button--blue j-signin">Log in</button> \
+        <a href="'+_appJsConfig.appHostName +'/paywall" class="c-button c-button--blue-bordered u-margin-right-10">Sign up</a> \
+        <button id="signinBtn" type="submit" class="c-button c-button--blue j-signin">Log in</button> \
     </div> \
     \
     <div class="c-login-modal__subaction"> \
@@ -18872,23 +18873,22 @@ Acme.templates.forgotFormTmpl =
     <div class="c-form__help-block">Please enter your email address</div> \
     \
     <div class="c-form__buttons"> \
-        <button type="submit" class="c-button c-button--rounded c-button--blue-bordered j-forgot-email">Send Email</button> \
+        <button type="submit" class="c-button c-button--blue-bordered j-forgot-email">Send Email</button> \
     </div> \
 </form>';
 
 
 
 Acme.templates.userPlanMessage = 
-'<p>{{title}}</p> \
+'<p class="{{name}}__message">{{message}}</p> \
 <form name="loginForm" id="loginForm" class="active u-margin-top-20" action="javascript:void(0);" method="post" accept-charset="UTF-8" autocomplete="off"> \
-    <button id="cancelbutton" class="c-button c-button--rounded c-button--blue-bordered" data-role="cancel">OK</button> \
+    <button id="cancelbutton" class="c-button c-button--blue-bordered" data-role="cancel">OK</button> \
 </form>';
 
 Acme.templates.userPlanOkCancel = 
-'<p>{{title}}</p> \
+'<p class="{{name}}__message">{{message}}</p> \
 <form name="loginForm" id="loginForm" class="active u-margin-top-20" action="javascript:void(0);" method="post" accept-charset="UTF-8" autocomplete="off"> \
-    <button id="okaybutton" class="c-button c-button--inline c-button--rounded c-button--blue-bordered" data-role="okay">OK</button> \
-    <button id="cancelbutton" class="c-button c-button-inline c-button--rounded c-button--blue-bordered" data-role="cancel">Cancel</button> \
+    <button id="okaybutton" class="c-button c-button--inline c-button--blue-bordered" data-role="okay">Yes, cancel my subscription</button> \
 </form>';
 
 
@@ -21909,7 +21909,8 @@ Acme.UserProfileController.prototype.pageEvents = function ()
         var listelem = $(e.target).closest('li');
 
         var status = 'cancelled';
-        message = "Are you sure you want to cancel your plan?"
+        title = "Cancel your subscription";
+        message = "Are you sure you want to cancel your subscription?"
         if ($(e.target).text() == 'Restart Subscription') {
             message = "Do you want to reactivate your plan? You will be billed on the next payment date."
             status = 'paid'
@@ -21919,7 +21920,7 @@ Acme.UserProfileController.prototype.pageEvents = function ()
             _csrf: this.csrfToken, 
         };
 
-        Acme.SigninView.render("userPlanChange", message)
+        Acme.SigninView.render("userPlanChange", title, { message : message })
             .done(function() {
                 $('#dialog').parent().remove();
                 
@@ -21991,7 +21992,7 @@ Acme.UserProfileController.prototype.pageEvents = function ()
                     msg = msg.replace(/(.+)(\d\d)$/g, "$1.$2");
                 }
             }
-            Acme.SigninView.render("userPlanChange", "Are you sure you want to change plan?" + msg)
+            Acme.SigninView.render("userPlan", "Are you sure you want to change plan?", {message: msg})
                 .done(function() {
                     $('#dialog').parent().remove();
                     
@@ -22940,8 +22941,10 @@ Acme.Token.prototype.removeToken = function()
                                 '<div class="weather-panel"> \
                                     <div class="weather-panel__icon">{{{icon}}}</div> \
                                     <div class="weather-panel__temperature">{{temperature}}&#176; </div> \
-                                    <p class="weather-panel__location">{{location}}</p> \
-                                    <div class="weather-panel__description">{{description}}</div> \
+                                    <div> \
+                                        <p class="weather-panel__location">{{location}}</p> \
+                                        <div class="weather-panel__description">{{description}}</div> \
+                                    </div> \
                                 </div>'
                         };
 
@@ -22972,18 +22975,23 @@ Acme.Token.prototype.removeToken = function()
                                 "range" : range
                             }
                         ));
-                        
 
-                        var forecast = data.daily.slice(1,7).map(function(data) {
-                            return forecastTmp({
-                                "icon": weatherIcons( data.icon ),
-                                "description" : weatherStatus( data.icon ),
-                                "temperature" : Math.round(data.temperature),
-                                "date" : data.date.split(',')[0]
+                        if (data.daily) {
+
+                            var forecast = data.daily.slice(1,7).map(function(data) {
+                                return forecastTmp({
+                                    "icon": weatherIcons( data.icon ),
+                                    "description" : weatherStatus( data.icon ),
+                                    "temperature" : Math.round(data.temperature),
+                                    "date" : data.date.split(',')[0]
+                                });
                             });
-                        });
+                            $('.j-weather-panel-dropdown').append(forecast);
 
-                        $('.j-weather-panel-dropdown').append(forecast);
+                        }
+
+                        $('#header-date').text(data.date);
+
 
 
                     };

@@ -14,11 +14,8 @@
     &__location {
         margin:0;
         font-family: $font-family-sans-serif;        
-        @include font-size(12);
-        @include margin-right(10);
-        line-height: 1.6rem;
-        text-transform: uppercase;
-		font-weight: normal;
+        @include font-size(13);
+		font-weight: $weightMedium;
     }
 
     &__date {
@@ -31,7 +28,7 @@
         font-family: $font-family-sans-serif;
         color:$blue;
         @include font-size(22);
-        font-weight: bold;
+        font-weight: $weightRegular;
         @include margin-right(10);
     }
     &__description {
@@ -39,9 +36,7 @@
         font-style: italic;
         font-family: $font-family-sans-serif;
         @include font-size(11);
-        line-height: 1.6rem;
         font-weight: normal;
-        @include margin-right(10);
         @media #{$mobile}{
             display:none;
         }
@@ -60,7 +55,7 @@
         margin: 0px;
         margin-left: 0px;
         padding-left: 6px;
-        margin-right:20px;
+        // margin-right:20px;
         padding-right: 8px;
         position: relative;
         height: 26px !important;
