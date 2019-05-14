@@ -19,6 +19,14 @@
         }
     }
 
+    @media #{$mobile} {
+        left:auto;
+        right:0;
+        order:2;
+    }
+
+
+
     span {
         left: 0;
         width: 32px;

@@ -33,21 +33,8 @@
                                 imageSuppress: 'true',
                                 containerClass: "card-5-mobile card-8-tablet card-8-desktop"
                             }) | raw}}
-                            <hr class="divide u-margin-top-20 u-margin-bottom-20 u-margin-right-100" />
+                            <hr class="d-none d-md-block divide u-margin-top-20 u-margin-bottom-20 u-margin-right-100" />
                         {% endfor %}
-
-
-                        {% for i in 0..6  %}
-
-                            {{this.render('partials/_single-article.twig', {
-                                article: articles[0], 
-                                imageSuppress: 'true',
-                                containerClass: "card-5-mobile card-8-tablet card-8-desktop"
-                            }) | raw}}
-                            <hr class="divide  u-margin-top-20 u-margin-bottom-20  u-margin-right-100" />
-
-                        {% endfor %}
-
 
                     </div>
     

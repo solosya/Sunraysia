@@ -129,6 +129,7 @@
                         }
 
                         $('#header-date').text(data.date);
+                        $('#mobile-date').text(data.date);
 
 
 

@@ -26,8 +26,37 @@
             background-repeat: no-repeat;
             background-size:contain;
             background-image: url('../icons/arrow.svg');
+        }
+
+        &-mobile {
+            @include font-size(14);
+            font-weight: $weightMedium;
+            color: $white;
+            float:right;
+            line-height: 36px;
+            margin-right:20px;
+            &:hover {
+                color:$blue_sh1;
+            }
+            &:after {
+                content: "";
+                border: solid $white;
+                border-width: 0 1px 1px 0;
+                border-color:inherit;
+                display: inline-block;
+                padding: 4px;
+                transform: rotate(45deg);
+                -webkit-transform: rotate(45deg);
+                margin-left: 10px;
+                margin-bottom:2px;
+
+                &:hover {
+                    border-color: $blue_sh1;
+                }
+            }
     
         }
+
     }
 
     &__container {
@@ -37,6 +66,16 @@
         @include flex-height(120px);
         @include align-items(center);
 
+        @media #{$desktop-down} {
+            @include flex-height(112px);
+        }
+
+        @media #{$mobile} {
+            @include flex-height(65px);
+        }       
+
+
+
 
         &--fixed {
             position: fixed;
@@ -45,18 +84,27 @@
             z-index: 10000;
             background: white;
             @include transition(all 0.5s ease 0s);
-
+            border-bottom: 1px solid $offwhite;
             &.active {
                 top:0;
             }
-
+            @media #{$desktop-down} {
+                display:none;
+            }       
         }
     }
+
 
     &__date {
         @include font-size(15);
         margin: auto;
-        width: 160px;
+        text-align:center;
+
+        @media #{$mobile} {
+            display:none;
+        }
+
+
     }
 
     &__weather-info {
@@ -75,6 +123,26 @@
         width: 380px;
         left: 50%;
         transform: translateX(-190px);
+
+        &--fixed {
+            height: 41px;
+            width: 270px;
+            transform: translateX(-135px);
+        }
+
+
+        @media #{$desktop-down} {
+            height: auto;
+            width: 270px;
+            transform: translateX(-135px);
+        }
+        @media #{$mobile} {
+            transform:none;
+            position:relative;
+            left:0;
+            order:1;
+        }
+
     }
 
     &__logo {
@@ -86,7 +154,7 @@
         @include flex-direction(row, horizontal);
         @include align-items(flex-end);
         @include justify-content(flex-end);
-        @media #{$desktop_up} {
+        @media #{$desktop_down} {
             display:none;
         }
 
@@ -103,7 +171,6 @@
         @media #{$desktop-down} {
             display:none;
         }
-
     }
 
     &__login-buttons {
@@ -117,6 +184,23 @@
         @media #{$desktop-up} {
             display:none;
         }
+        @media #{$mobile} {
+            display:none;
+        }
+    }
+
+    &__mobile-login-buttons {
+        background-color: $blue;
+        height:36px; 
+    }
+
+    &__mobile-date {
+        color:white;
+        @include font-size(14);
+        font-weight: $weightMedium;
+        line-height:36px;
+        padding-left:25px;
+        float:left;
     }
 
 }

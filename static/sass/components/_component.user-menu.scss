@@ -5,9 +5,16 @@
     position: absolute;
     right: 0;
     top: 21px;
-    z-index:100;
+    z-index:1000;
     @include box-shadow(0 2px 10px 6px rgba(89, 88, 89, 0.1));
     
+
+    @media #{$desktop-down} {
+        clear:both;
+        position:relative;
+        top:0;
+    }
+
     &__name {
         @include font-size(14);
         font-weight: $weightMedium;

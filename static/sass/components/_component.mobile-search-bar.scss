@@ -1,6 +1,6 @@
 .c-mobile-search-bar {
     width:100%;
-
+    background:white;
 
     &__container {
         width:100%;
@@ -11,6 +11,7 @@
         left: auto;
         right: 0;
         top: 0;
+        padding-left: 25px;
     }
 
 
@@ -49,7 +50,12 @@
         @include font-size(20);
         border-radius:0;
         border: none;
-        padding: 0 30px;
+        padding: 0 10px;
+        margin-right:10px;
         height: 40px;
+        &:focus {
+            outline:none;
+            border-bottom:1px solid $offwhite;
+        }
     }
 }

@@ -1,0 +1,26 @@
+{{ set(this, 'title', _Blog.getBlogTitle()) }}
+{% set networkData = _Network.getNetworkData() %}
+{% set blogData     = _Blog.getBlog() %}
+{% set config       = _Network.getThemeConfig() %}
+
+
+{% set sideMenu = _Menu.get({'menuType': 'header', "menuGroupName":"classifieds"}) %}
+{# <pre>
+{{dump(sideMenu)}}
+</pre> #}
+
+
+
+<main id="main" class="site-main u-margin-top-60 u-margin-bottom-60" role="main" data-article-limit="{{limit}}" data-article-count="{{articles | length}}">
+    <div class="acme-container">
+        <div class="acme-row">
+            <div class="acme-col-md-8">
+                <h1>This is the classifieds!!!</h1>
+            </div>
+            <div class="acme-col-md-4">
+                <h1>4 col!!!</h1>
+            </div>
+
+        </div>
+    </div>
+</main>

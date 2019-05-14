@@ -34,15 +34,15 @@
 		transition:.2s ease;
 	}
 	
-	&:hover::after {
-		transform: rotate(45deg);
-		// border-color: $blue;
-		height: 120%;
-	}
-	&:hover::before {
-		// border-color: $blue;
-		transform: scale(.8);
+	// &:hover::after {
+	// 	transform: rotate(45deg);
+	// 	// border-color: $blue;
+	// 	height: 120%;
+	// }
+	// &:hover::before {
+	// 	// border-color: $blue;
+	// 	transform: scale(.8);
 		
-	}
+	// }
 	
 }

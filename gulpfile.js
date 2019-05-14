@@ -46,7 +46,6 @@ gulp.task('concat', function () {
         './static/development/js/sdk/media-player/mediaelementplayer.css',
         './static/development/js/plugins/owl.carousel.min.css',
         './static/development/js/plugins/owl.theme.default.css',
-        './static/development/js/plugins/view-1.1.3.css'
 
     ]) // path to your file
     .pipe(concat('concat.css'))
@@ -104,15 +103,15 @@ gulp.task('scripts', function(){
 
 
         './static/development/js/sdk/cloudinary/jquery.cloudinary.js',
-        './static/development/js/sdk/common.js',
+        './static/development/js/sdk/notifications.js',
         './static/development/js/sdk/blog.js',
         './static/development/js/sdk/article.js',
-        './static/development/js/sdk/search.js',
+        // './static/development/js/sdk/search.js',
         './static/development/js/sdk/disqus.js',
         './static/development/js/sdk/video-player.js',
         './static/development/js/sdk/user-articles.js',
-        './static/development/js/sdk/follow.js',
-        './static/development/js/sdk/login.js',
+        // './static/development/js/sdk/follow.js',
+        // './static/development/js/sdk/login.js',
         './static/development/js/sdk/image.js',
         './static/development/js/sdk/social-share.js',
         './static/development/js/sdk/yii/yii.js',

@@ -4,8 +4,8 @@
     top: 121px;
     width: 350px;
     height: $viewportSize;
-    /* display: none;
-    border-right: 1px solid $border; */
+    // display: none;
+    // border-right: 1px solid $border;
     left: 0;
     right: auto;
     text-align: left;
@@ -26,6 +26,19 @@
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
     background: $offwhite none repeat scroll 0 0;
+
+    @media #{$desktop-up} {
+        display:none;
+    }
+
+    @media #{$mobile} {
+        top: 66px;
+        width:100%;
+
+    }
+    @media #{$tablet} {
+        top: 113px;
+    }
 
     &.navigation-active {
         visibility: visible;

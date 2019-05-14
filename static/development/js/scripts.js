@@ -67,7 +67,13 @@ $('document').ready(function() {
     $("#user-menu-button").click(function(event) {
         $("#user-menu").toggle();
     });
+    $("#user-menu-button-fixed").click(function(event) {
+        $("#user-menu-fixed").toggle();
+    });
 
+    $("#user-menu-mobile-button").click(function(event) {
+        $("#user-menu-mobile").toggle();
+    });
     $("#user-menu-button-tablet").click(function(event) {
         $("#user-menu-tablet").toggle();
     });
@@ -237,7 +243,9 @@ $('document').ready(function() {
     // });
 
     $('.js-searchButton').on('click',function() {
-        $('#search-bar').toggleClass('c-search-bar--active');
+        $('#search-bar').toggleClass('c-search-bar--active')
+            .find('.c-search-bar__input').focus();
+
     });
     $('.js-searchClose').on('click',function() {
         $('.c-search-bar').hide();
