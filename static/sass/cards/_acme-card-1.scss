@@ -1,9 +1,9 @@
-@mixin card-2-base() {
+@mixin acme-card-1-base() {
     margin-left: -20px;
     margin-right: -20px;
     background: $white;
 
-    .c-cards-view {
+    .acme-c-cards-view {
         @include flex-direction(column, vertical);
 
 
@@ -70,21 +70,21 @@
     }
 }
 
-.card-2-mobile {
+.acme-card-1-mobile {
     @media #{$mobile} {
-        @include card-2-base();
+        @include acme-card-1-base();
         @include card-name("C2 mobile");
 
     }
 }
 
 
-@mixin card-2-tablet-base {
-    @include card-2-base();
+@mixin acme-card-1-tablet-base {
+    @include acme-card-1-base();
     margin-left: 0;
     margin-right: 0;
     
-    .c-cards-view {
+    .acme-c-cards-view {
         height: 493px;
 
         &__media {
@@ -143,19 +143,17 @@
 
 }
 
-.card-2-tablet {
+.acme-card-1-tablet {
     @media #{$tablet} {
         @include card-name("C2 tablet");
-        @include card-2-tablet-base();
+        @include acme-card-1-tablet-base();
     }
 
 }
-.card-2-desktop {
-
+.acme-card-1-desktop {
     @media #{$desktop-up} {
-
         @include card-name("C2 desktop");
-        @include card-2-tablet-base();
+        @include acme-card-1-tablet-base();
     }
 }
 

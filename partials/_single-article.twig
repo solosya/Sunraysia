@@ -7,6 +7,10 @@
 {% set dev           = dev           is defined and dev == true             ? true      : false   %}
 {% set inline        = inline        is defined and inline != ''            ? inline    : ''      %}
 
+{# This can add a prefix to the card class to segregate its styles #}
+{% set cardType      = cardType      is defined and cardType != ''          ? cardType  : ''      %}
+
+
 {% set lightbox   = '' %}
 {% set articleImg = '' %}
 
@@ -174,7 +178,7 @@
         {% endif %}
         
         {# Article content including image #}
-        <article class="c-cards-view 
+        <article class="{{cardType}}c-cards-view 
                         {{params.social == 0 ? "" : "social"}} 
                         {{params.category}} 
                         {{params.hasMedia ? "" : "without-image" }} 

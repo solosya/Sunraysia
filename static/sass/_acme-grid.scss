@@ -19,7 +19,6 @@ $acme-container-max-widths: (
 
 
 .acme-row {
-    background-color:red;
     display: flex;
     flex-wrap: wrap;
     margin-right: -15px;
@@ -53,7 +52,6 @@ $acme-container-max-widths: (
     padding-left: ($acme-grid-gutter-width / 2);
     margin-right: auto;
     margin-left: auto;
-    background-color:purple;
     box-sizing: border-box;
 
   }

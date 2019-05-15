@@ -5,22 +5,337 @@
 
 
 {% set sideMenu = _Menu.get({'menuType': 'header', "menuGroupName":"classifieds"}) %}
-{# <pre>
-{{dump(sideMenu)}}
-</pre> #}
+{% set panels = _Menu.get({'menuType': 'header', "menuGroupName":"Classifieds panels"}) %}
+{% set url = _AppHelper.getParsedUrl() %}
+
+
+
+{# *******************************************************
+                Fetch all needed feeds
+******************************************************* #}
+{% set blogFeeds = {} %}
+
+{# This page can either render panels or entire section work of articles #}
+{% set fullPage = false %}
+
+{% if url.query | length > 0 %}
+    {% if url.query.section is defined and url.query.section != "" %}
+        {% set panels = [{'blogTitle': url.query.section}] %}
+        {% set fullPage = true %}
+    {% endif %}
+
+    {% if url.query.category is defined and url.query.category != "" %}
+        {% set break = false %}
+        {% for panel in panels if not break  %}
+            {% if panel.blogTitle == url.query.category %}
+                {% set panels = panel %}
+                {% set break = true %}
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+
+{% endif %}
+
+
+{% for panel in panels %}
+
+    {% set break = false %}
+    
+    {% for blog in networkData.networkBlogs if not break %}
+        {% set blogTitle = blog.title | lower %}
+
+        {# FOR DEV  #}
+        {# {% if dev %}
+            {% set blogFeeds = blogFeeds | merge({
+                (key) : { 
+                    'feed' : _Blog.getBlogFeed({'limit': 1, 'offset': 0}), 
+                    'link' : blog.link 
+                    } 
+                }) %}
+        {% endif %} #}
+
+
+        {# FOR PRODUCTION #}
+
+        {% if blogTitle == panel.blogTitle | lower %}
+
+            {% set feed = _Blog.getBlogFeed({
+                'offset' : 0, 
+                'blogid' : blog.guid,
+                'limit'  : 4
+                })
+            %}
+
+            {% set blogFeeds = blogFeeds | merge({
+                (blog.title) : {
+                    'feed'      : feed,
+                    'link'      : blog.link
+                    }
+                }) %}
+            {% set break = true %}
+        {% endif %}
+
+    {% endfor %}
+{% endfor %}
 
 
 
 <main id="main" class="site-main u-margin-top-60 u-margin-bottom-60" role="main" data-article-limit="{{limit}}" data-article-count="{{articles | length}}">
     <div class="acme-container">
         <div class="acme-row">
-            <div class="acme-col-md-8">
-                <h1>This is the classifieds!!!</h1>
-            </div>
-            <div class="acme-col-md-4">
-                <h1>4 col!!!</h1>
-            </div>
+            <div class="acme-col-12">
 
+                <div class="c-section-header c-section-header--bold c-section-header--large c-section-header--normal-case">{{this.title}}
+                    {% if not _User.isGuest() %}
+                        <a href="{{networkData.defaultBlogUrl}}/@event-form" class="c-section-header__button c-button c-button--red">Submit an listing</a>
+                    {% endif %}
+                </div>
+
+
+           {# *********************************************
+                        Filter and search
+              ********************************************* #}
+                <div class="c-filter--search c-filter--search-xs form-group">
+                    <div class="c-filter--search--field c-filter--search--field-xs">
+                        <span class="fa fa-search c-search-icon"></span>
+                        <input type="text" class="form-control" name="firstname" id="firstname" placeholder="Search the classifieds">
+                    </div>
+                    <div class="c-filter--search--select c-filter--search--select-xs">
+                        <div class="selectdropdown">
+                            <select class="form-control">
+                                <option>Option one</option>
+                                <option>Option Two</option>
+                                <option>Option Three</option>
+                                <option>Option Four</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="c-filter--search--button">
+                        <button type="submit" class="c-button c-button--red">Search</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+
+
+
+
+        <div class="acme-row">
+
+
+           {# *********************************************
+                        Classifieds Side Menu
+              ********************************************* #}
+            <aside class="acme-col-12 acme-col-lg-3 acme-col-md-3 acme-col-sm-4">
+                <div id="classified-menu" class="c-classified-lists c-classified-lists-xs">
+                    {{ this.render('/partials/_menu-classifieds.twig', {'menu': sideMenu}) | raw }}
+                </div>
+            </aside>
+
+
+
+
+
+
+
+           {# *********************************************
+                            Main content
+              ********************************************* #}
+            <div class="acme-col-12 acme-col-lg-9 acme-col-md-9 acme-col-sm-8 acme-com-xs-12">
+
+                {% if fullPage == true %}
+
+
+
+
+                {% else %}
+
+
+
+                    {% set bannerNo = 1 %}
+
+                    {% for pagesection in blogFeeds | keys %}
+                        {% set params = {
+                            'networkData' : networkData,
+                            'blogFeeds'   : blogFeeds,
+                            'blogData'    : blogData,
+                            'dev'         : dev,
+                            'config'      : {
+                                blogs: [pagesection],
+                                template: "partials/panels/section-classified-panel",
+                                title: pagesection,
+                                nomargin: true,
+                            },
+                        } %}
+
+                        {{this.render('render.twig', params) | raw}} 
+
+                        {% if loop.index in bannerSpots %}
+                            {% if config['inventory']['adSpace']['banner'][bannerNo] is defined %}
+                                <div class="j-adslot" id="{{config['inventory']['adSpace']['banner'][bannerNo]}}" data-adshape="banner"></div>
+                            {% endif %}
+                            {% set bannerNo = bannerNo + 1 %}
+                        {% endif %}
+
+                    {% endfor %}
+                {% endif %}
+
+
+
+                
+                <div class="acme-row">
+                    <div class="acme-col-12">
+                        <a href="javascript:;" class="c-button c-button--blue c-button-inline js-modalTrigger" data-toggle="modal" data-target="#ModalMultiImageGallery">Multi Image Gallery</a>
+                        
+                        <a href="javascript:;" class="c-button c-button--blue c-button-inline js-modalTrigger" data-toggle="modal" data-target="#ModalAdPopUp">Image pop up of ad</a>
+                        
+                        <a href="javascript:;" class="c-button c-button--blue c-button-inline js-modalTrigger" data-toggle="modal" data-target="#ModalAnnouncements">Announcements</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+    <div class="clearfix"></div>
+
+
+    <!-- Begins Modals Section -->
+    <div class="o-modal o-modal-gallery o-modal-gallery-xs o-modal-medium">
+        <!-- Remove User Modal -->
+        <div class="modal" id="ModalMultiImageGallery">
+            <div class="modal-dialog">
+                <div class="modal-content modal-content-md">
+                    <div class="o-modal__container o-modal__container--gallery">
+                        <!-- Modal Header -->
+                        <div class="o-modal__container-head">
+                            <div class="o-modal--title o-modal--title-xs text-left">Classifieds</div>
+                            <button type="button" class="modal-close" data-dismiss="modal"><i class="fa fa-times"></i></button>
+                        </div>
+                        <!-- Modal body -->
+                        <div class="o-modal__container-body o-modal__container-body">
+                            <div class="o-media o-media-sm js-slider">
+                                <figure class="o-media--item">
+                                    <div class="o-media--item--galllery">
+                                        <img src="static/images/slider/hockey.jpg" class="img-fluid o-media--image" alt="Article Info">
+                                        <div class="slide-count-wrap">
+                                            <span class="current"></span>
+                                        </div>
+                                    </div>
+                                </figure>
+                                <figure class="o-media--item">
+                                    <div class="o-media--item--galllery">
+                                        <img src="static/images/slider/hockey.jpg" class="img-fluid o-media--image" alt="Article Info">
+                                        <div class="slide-count-wrap">
+                                            <span class="current"></span>
+                                        </div>
+                                    </div>
+                                </figure>
+                            </div>
+                            <div class="o-modal--discription">
+                                <div class="c-cards-view__additionalinfo">
+                                    <div class="c-cards-view__additionalinfo--category">Motor vehicles</div>
+                                </div>
+                                <div class="c-cards-view__info">
+                                    <div class="c-cards-view__info--heading js-card-heading">Vintage tractor</div>
+                                    <div class="c-cards-view__info--description js-card-description">2004, BA, auto, FSH, 70,000kms, reg to July 2019, excellent cond, CAPPS3, $12,000. Phone 0448 235 740 after 6pm.</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        
+        <div class="modal" id="ModalAdPopUp">
+            <div class="modal-dialog">
+                <div class="modal-content modal-content-md">
+                    <div class="o-modal__container o-modal__container--gallery">
+                        <!-- Modal Header -->
+                        <div class="o-modal__container-head">
+                            <div class="o-modal--title o-modal--title-xs text-left">Jobs</div>
+                            <button type="button" class="modal-close" data-dismiss="modal"><i class="fa fa-times"></i></button>
+                        </div>
+                        <!-- Modal body -->
+                        <div class="o-modal__container-body o-modal__container-body verticalScrollBar">
+                            <div class="o-modal--discription no-margin">
+                                <div class="c-cards-view__additionalinfo">
+                                    <div class="c-cards-view__additionalinfo--category">jobs vacant</div>
+                                </div>
+                                <div class="c-cards-view__info no-margin">
+                                    <div class="c-cards-view__info--heading js-card-heading">Tyre Fitter</div>
+                                </div>
+                            </div>
+                            <div class="o-media o-media-sm">
+                                <img src="static/images/ad-popup.jpg" class="img-fluid o-media--image" alt="Article Info">
+                            </div>
+                            <div class="o-modal--discription">
+                                <div class="c-cards-view__info--description js-card-description">30th March 2019</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        
+        <div class="modal" id="ModalAnnouncements">
+            <div class="modal-dialog">
+                <div class="modal-content modal-content-md">
+                    <div class="o-modal__container o-modal__container--gallery">
+                        <!-- Modal Header -->
+                        <div class="o-modal__container-head">
+                            <div class="o-modal--title o-modal--title-xs text-left">Announcements</div>
+                            <button type="button" class="modal-close" data-dismiss="modal"><i class="fa fa-times"></i></button>
+                        </div>
+                        <!-- Modal body -->
+                        <div class="o-modal__container-body o-modal__container-body">
+                            <div class="o-modal--discription no-margin">
+                                <div class="c-cards-view__additionalinfo">
+                                    <div class="c-cards-view__additionalinfo--category">Birthday greetings</div>
+                                </div>
+                                <div class="c-cards-view__info no-margin">
+                                    <div class="c-cards-view__info--heading js-card-heading no-margin">Birthday wishes</div>
+                                </div>
+                            </div>
+                            <div class="o-modal--discription">
+                                <div class="c-cards-view__info--description js-card-description">Happy birthday Liz with love from your family.</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </main>
+
+
+<script>
+    // main script is defered so event listener makes sure
+    // defered script is loaded before this runs
+    document.addEventListener("DOMContentLoaded", function() {
+
+        
+        $('#classified-menu').on('click', 'li > a', function (event) {
+            
+            var parent = $(this).parent().parent();
+            
+            parent.children('li.open').children('.c-classified-submenu').slideUp(200);
+            parent.children('li.open').removeClass('open');
+
+            var sub = $(this).next();
+            var slideOffeset = -200;
+            var slideSpeed = 200;
+
+            if (sub.is(":visible")) {
+                $(this).parent().removeClass("open");
+                sub.slideUp(slideSpeed, function () {});
+            } else {
+                $(this).parent().addClass("open");
+                sub.slideDown(slideSpeed, function () {});
+            }
+        });
+    });
+</script>
+

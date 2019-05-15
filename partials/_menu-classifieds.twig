@@ -1,0 +1,46 @@
+<ul class="c-classified-lists--items listVerticalScrollBar">
+
+{% for parentItem in menu %}
+    {% set activeClass = (parentItem.link == _AppHelper.getServerUrl()) ? 'open' : ''%}
+    {% set children = parentItem.children is defined and parentItem.children | length > 0  %}
+    {% set childrenClass = children ? "has-child": ""  %}
+    {% set name = "" %}
+    {% if parentItem.label != "" %}
+        {% set name = parentItem.label %}
+    {% elseif parentItem.blogTitle != "" %}
+        {% set name = parentItem.blogTitle %}
+    {% elseif parentItem.pageTitle != "" %}
+        {% set name = parentItem.pageTitle %}
+    {% endif %}
+
+    <li class="{{activeClass}}">
+        <a  class="{{childrenClass}}"
+            {% if children %}
+                href="{{parentItem.link | raw}}?category={{name | lower}}"
+            {% else %}
+                href="{{parentItem.link | raw}}?section={{name | lower}}"
+            {% endif %}
+            {% if parentItem.target != "" %} 
+                target="{{parentItem.target}}"
+            {% endif %} 
+        >{{name}}</a>
+    
+
+        {% if children %}
+
+            <ul class="c-classified-submenu" style="display:none">
+                {% for childItem in parentItem.children %}
+                    {% set activeClass = (childItem.link == _AppHelper.getServerUrl()) ? 'active' : ''%}
+
+                    <li class="">
+                        <a class="{{activeClass}}" href="{{childItem.link |raw}}" {% if childItem.target != "" %}target="{{childItem.target}}"{% endif %}>
+                            {{ ((childItem.label is empty) ? ((childItem.pageTitle is empty) ? childItem.blogTitle : childItem.pageTitle) : childItem.label)}}
+                        </a>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    </li>
+{% endfor %}
+
+</ul>

@@ -43,6 +43,10 @@
 
     {% set margin = 'u-margin-top-30 u-desktop-margin-top-40' %}
 
+    {% if config.nomargin is defined %}
+        {% set margin = '' %}
+    {% endif %}
+
     {% if config.background %}
         <div class="u-section-background {{margin}}">
             {% set margin = '' %}

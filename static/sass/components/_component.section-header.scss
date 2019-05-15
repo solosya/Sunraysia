@@ -11,4 +11,35 @@
         position:absolute;
         right:0;
     }
+
+    &--large {
+        @include font-size(40);
+    }
+
+    &--normal-case {
+        text-transform:none;
+    }
+
+
+    &--bold {
+        font-weight: $weightBold;
+    }
+
+
+    &--panel {
+        @include font-size(32);
+        text-transform:none;   
+    }
+
+
+    &__listcount {
+        color: $greyish;
+        font-weight: $weightRegular;
+        font-style: normal;
+        text-align: right;
+        @include font-size(15);
+        line-height: 1.4;
+        @include transition(all 0.3s ease);
+        margin-top:15px;
+    }
 }

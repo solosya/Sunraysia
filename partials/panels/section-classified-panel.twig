@@ -1,0 +1,60 @@
+{% set articleCount = 0 %}
+{% set cardIndex = 0 %}
+
+{{this.render('../_section-header.twig', {
+    number: "03",
+    title: title,
+    link: link,
+}) | raw }}
+
+
+
+
+<div class="acme-row">
+    <div class="acme-col-12 acme-col-md-6 acme-col-lg-4">
+        {{this.render('../_single-article.twig', {
+            article: articles[articleCount], 
+            position: (articleCount+1),
+            imageSuppress: true,
+            cardType: "acme-",
+            containerClass: "acme-card-1-mobile acme-card-1-tablet acme-card-1-desktop"
+        }) | raw}}
+        {% set articleCount = (dev) ? articleCount : articleCount + 1 %}
+    </div>
+
+
+    <div class="acme-col-12 acme-col-md-6 acme-col-lg-4">
+        {{this.render('../_single-article.twig', {
+            article: articles[articleCount], 
+            position: (articleCount+1),
+            cardType: "acme-",
+            containerClass: "acme-card-1-mobile acme-card-1-tablet acme-card-1-desktop"
+        }) | raw}}
+        {% set articleCount = (dev) ? articleCount : articleCount + 1 %}
+    </div>
+
+    <div class="acme-col-12 acme-col-md-6 acme-col-lg-4">
+        {{this.render('../_single-article.twig', {
+            article: articles[articleCount], 
+            position: (articleCount+1),
+            imageSuppress: true,
+            cardType: "acme-",
+            containerClass: "acme-card-1-mobile acme-card-1-tablet acme-card-1-desktop"
+        }) | raw}}
+        {% set articleCount = (dev) ? articleCount : articleCount + 1 %}
+    </div>
+
+
+</div>
+
+
+
+{{this.render('/partials/_section-loadmore.twig', {
+    sectionNumber: "03", 
+    limit: 10,
+    cardClass: "acme-col-12 acme-col-md-6 acme-col-lg-3 acme-card-1-mobile acme-card-1-tablet acme-card-1-desktop",
+    cardCount: 4,
+}) | raw}}
+
+
+
