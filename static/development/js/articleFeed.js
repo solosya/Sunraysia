@@ -2,8 +2,9 @@ Acme.Feed = function() {};
 
 Acme.Feed.prototype.fetch = function()
 {
+    console.log('like, actually, like fetching and shit');
     var self = this;
-    self.elem.html("Please wait...");
+    // self.elem.html("Please wait...");
     // blogfeed makes 2 sql calls.  
     //      Offset is to get pinned contect 
     //      nonPinnedOffset gets the rest
@@ -12,9 +13,10 @@ Acme.Feed.prototype.fetch = function()
     if (self.options.search != null) {
         self.options.blogid = this.options.blogid; // search takes an id instead of a guid
     }
-
+    console.log(self.options);
     return Ajax_LoadFeed(self.options).done(function(data) {
         if (data.success == 1) {
+            console.log(data);
             self.render(data);
         }
     });
@@ -48,19 +50,22 @@ Acme.Feed.prototype.events = function()
 
 Acme.View.articleFeed = function(options)
 {
-    this.feedModel = options.model;
-    this.limit     = options.limit      || 10;
-    this.offset    = options.offset     || this.limit;
-    this.infinite  = options.infinite   || false;
-    this.failText  = options.failText   || null;
-    this.container = $('#' + options.container);
-    this.template  = options.cardTemplate;
-    this.cardClass = options.card_class;
-
-    this.options = {
+    this.feedModel  = options.model;
+    this.limit      = options.limit      || 10;
+    this.offset     = options.offset     || 0;
+    this.infinite   = options.infinite   || false;
+    this.failText   = options.failText   || null;
+    this.container  = $('#' + options.container);
+    this.template   = options.cardTemplate;
+    this.cardClass  = options.card_class;
+    this.renderType = options.renderType || 'append';
+    this.before     = options.before || false;
+    this.after      = options.after || false;
+    
+    this.options    = {
         'nonPinnedOffset'   :   options.non_pinned || -1,
         'loadtype'          :   options.loadtype || "home",
-        'offset'            :   options.offset || options.limit,
+        'offset'            :   options.offset || 0,
         'blogid'            :   options.blogid,
         'search'            :   options.searchterm    || null,
         'limit'             :   options.limit,
@@ -107,13 +112,23 @@ Acme.View.articleFeed.prototype.render = function(data)
         html = ["<p>" + self.failText + "</p>"];
     } else {
         for (var i in articles) {
-            console.log()
             articles[i].imageOptions = {'width': self.imgWidth, 'height': self.imgHeight};
-            html.push( self.feedModel.renderCard(articles[i], self.cardClass, self.template) );
+            html.push( self.feedModel.renderCard(articles[i], {
+                cardClass: self.cardClass,
+                template: self.template,
+                type: "acme-"
+            }));
         }
+        if (self.before ) {
+            html = [self.before].concat(html);
+        }
+        if (self.after) {
+            html = html.concat([self.after]);
+        }
+    
     }
 
-    (self.rendertype === "write")
+    (self.renderType === "write")
         ? self.container.empty().append( html.join('') )
         : self.container.append( html.join('') );
     
@@ -145,114 +160,5 @@ Acme.View.articleFeed.prototype.render = function(data)
 
 
 
-
-
-// used on my account page for managed users.  needed?
-// Acme.View.userFeed = function(options)
-// {
-//     this.feedModel = options.model;
-//     this.limit     = options.limit || 10;
-//     this.offset    = options.offset || this.limit;
-//     this.infinite  = options.infinite || false;
-//     this.failText  = options.failText || null;
-//     this.container = $('#' + options.container);
-//     this.template  = options.cardTemplate;
-//     this.cardClass = options.card_class;
-
-
-//     this.options = {
-//         'nonPinnedOffset'   :   options.non_pinned_offset || -1,
-//         'loadtype'          :   options.loadtype || "home",
-//         'offset'            :   options.offset || options.limit,
-//         'blogid'            :   options.blogguid,
-//         'search'            :   options.searchterm    || null,
-//         'limit'             :   options.limit,
-//         // 'page'              :   self.elem.data('page') || 1, // page is used for user articles
-//     };
-
-//     this.waypoint  = false;
-//     this.elem      = $('#' + options.name);
-//     this.events();
-// };
-
-// Acme.View.userFeed.prototype = new Acme.Feed();
-// Acme.View.userFeed.constructor = Acme.View.userFeed;
-// Acme.View.userFeed.prototype.parent = Acme.Feed.prototype;
-
-// Acme.View.userFeed.prototype.render = function(data) 
-// {
-//     var self = this;
-//     var users = data.users.users || data.users;
-
-
-
-//     var label      =   self.button_label  || "Load more",
-//         ads_on     =   self.ads           || null,
-//         rendertype =   self.rendertype    || null;
-
-//     self.elem.html(label);
-
-//     // remove the load more button when finished
-//     (users.length < self.options.limit) 
-//         ? self.elem.css('display', 'none')
-//         : self.elem.show();
-
-//     // add counts to the dom for next request
-//     self.options.offset += self.options.limit;
-
-//     var html = [];
-
-//     if (users.length === 0 && self.failText) {
-//         html = ["<p>" + self.failText + "</p>"];
-//     } else {
-//         for (var i in users) {
-//             users[i].imageOptions = {'width': self.imgWidth, 'height': self.imgHeight};
-//             html.push( self.feedModel.renderCard(users[i], self.cardClass, self.template) );
-//         }
-//     }
-
-//     (rendertype === "write")
-//         ? self.container.empty().append( html.join('') )
-//         : self.container.append( html.join('') );
-
-        
-//     (users.length < self.options.limit) 
-//         ? self.elem.css('display', 'none')
-//         : self.elem.show();
-
-
-//     if (self.waypoint) {
-//         (users.length < self.options.limit)
-//             ? self.waypoint.disable()
-//             : self.waypoint.enable();
-//     }
-
-    
-//     $(".card .content > p, .card h2").dotdotdot();     
-//     // $('.video-player').videoPlayer();
-//     $("div.lazyload").lazyload({
-//         effect: "fadeIn"
-//     });
-    
-//     this.feedModel.events();
-
-// };
-
-
-
-
-
-
-
-
-// Acme.Usercard = function(){};
-// Acme.Usercard.prototype.render = function(user, cardClass, template, type)
-// {
-//     user['cardClass'] = cardClass;
-//     var template = (template) ? Acme.templates[template] : Acme.systemCardTemplate;
-//     userTemplate = Handlebars.compile(template);
-//     var template = userTemplate(user);
-//     return template;
-// }
 
 

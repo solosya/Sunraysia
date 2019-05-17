@@ -7,11 +7,16 @@ var Card = function() {
 };
 
 
-Card.prototype.renderCard = function(card, cardClass, template)
+Card.prototype.renderCard = function(card, options)
 {
     var self = this;
-    var template = (template) ? Acme.templates[template] : Acme.templates.systemCardTemplate;
-    card['containerClass'] = cardClass;
+    options = options || {};
+    var template = (options.template) ? Acme.templates[options.template] : Acme.templates.systemCardTemplate;
+    card['containerClass'] = options.cardClass || "";
+    card['cardType'] = options.type || "";
+
+    
+    
     if (card.status == "draft") {
         card['articleStatus'] = "draft";
         card['containerClass'] += " draft"; 
@@ -20,7 +25,7 @@ Card.prototype.renderCard = function(card, cardClass, template)
     card['pinTitle'] = (card.isPinned == 1) ? 'Un-Pin Article' : 'Pin Article';
     card['pinText']  = (card.isPinned == 1) ? 'Un-Pin' : 'Pin';
     card['promotedClass'] = (card.isPromoted == 1)? 'ad_icon' : '';
-    
+    console.log(card);
     // mainly for screen to turn off lazyload and loading background img
     // card['imgClass'] = (card.lazyloadImage == false) ? '' : 'lazyload';
     // card['imgBackgroundStyle'] = (card.lazyloadImage == false) ? '' : 'style="background-image:url(https://placeholdit.imgix.net/~text?w=1&h=1)"';
@@ -28,9 +33,15 @@ Card.prototype.renderCard = function(card, cardClass, template)
 
     // card['readingTime']= self.renderReadingTime(card.readingTime);
     
-    var width = 500;
-    var height = 350;
+    var width = options.imageWidth || 500;
+    var height = options.imageHeight || 350;
 
+    if (options.imageOriginal) {
+        var width = card.featuredMedia.width;
+        var height = card.featuredMedia.height;
+    }
+
+    console.log(width, height);
     // if (card.imageOptions) {
     //     width = card.imageOptions.width || width;
     //     height = card.imageOptions.height || height;
@@ -147,12 +158,12 @@ Card.prototype.bindSocialUpdatePost = function ()
     });
 };
 
-Card.prototype.bindSocialPostPopup = function()
+Card.prototype.bindLightbox = function()
 {
     var isRequestSent = false;
-    $(document).on('click', 'article.lightbox', function (e) {
+    var self = this;
+    $(document).unbind().on('click', 'article.lightbox', function (e) {
         e.preventDefault();
-
         var csrfToken = $('meta[name="csrf-token"]').attr("content");
 
         var isSocial = $(this).parent().data('social');
@@ -191,13 +202,31 @@ Card.prototype.bindSocialPostPopup = function()
 
                     data.templatePath = _appJsConfig.templatePath;
 
-                    var articleTemplate = Handlebars.compile(Acme.templates.socialPopup);
-                    var article = articleTemplate(data);
-                    $('.modal').html(article);
 
-                    setTimeout(function () {
-                        $('.modal').modal('show');
-                    }, 0);
+                    var layouts = {
+                        "classifieds" : 'systemCardTemplate',
+                    };
+            
+                    Acme.LightBox = new Acme.lightBox('modal', 'lightbox-modal', layouts);
+                    console.log(data);
+                    var article = self.renderCard(data, {
+                        cardClass : "acme-card-10-mobile acme-card-10-tablet acme-card-10-desktop",
+                        type : "acme-",
+                        imageOriginal: true,
+                    });
+                    console.log(article);
+                    Acme.LightBox.render(null, "Classifieds", article);
+
+
+                    // var articleTemplate = Handlebars.compile(Acme.templates.socialPopup);
+                    // var article = articleTemplate(data);
+                    // console.log(article);
+                    // $("body").prepend(article);
+                    // $('.modal').html(article);
+
+                    // setTimeout(function () {
+                    //     $('.modal').modal('show');
+                    // }, 0);
                 },
                 error: function (jqXHR, textStatus, errorThrown) {
                     console.log(errorThrown, textStatus, jqXHR);
@@ -368,5 +397,5 @@ Card.prototype.events = function()
         this.bindDeleteHideArticle();
         this.bindSocialUpdatePost();
     }
-    this.bindSocialPostPopup();
+    this.bindLightbox();
 };

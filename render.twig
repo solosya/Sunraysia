@@ -53,9 +53,16 @@
 
     {% endif %}
 
+    {% if config.wrapper is not defined %}
         <section class="container {{margin}}">
-            {{this.render(config.template ~ ".twig" , params) | raw}} 
+    {% endif %}
+
+    {{this.render(config.template ~ ".twig" , params) | raw}} 
+
+    {% if config.wrapper is not defined %}
         </section>
+    {% endif %}
+
 
     {% if config.background %}
         </div>

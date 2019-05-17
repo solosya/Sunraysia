@@ -1,12 +1,13 @@
-@mixin acme-card-1-base() {
+@mixin acme-card-10-base() {
     background: $white;
 
     .acme-c-cards-view {
-        @include flex-direction(row, horizontal);
-        @include flex-height(162px);
+        @include flex-direction(column, vertical);
+        box-shadow: none;
+
 
         &__media {
-            @include flex-width(100px);
+            // @include flex-width(100px);
             img {
                 height:100%;
             }
@@ -16,7 +17,7 @@
         &__container {
             @include flexbox();
             @include flex-direction(column, vertical);
-            padding: 15px 10px 15px 20px;
+            padding: 15px 10px 15px 0;
         }
 
         &__category {
@@ -28,7 +29,6 @@
 
         &__heading {
             @include font-size(22);
-            @include flex-height(32px);
             order: 3;
         }
         &__description {
@@ -79,54 +79,54 @@
     }
 }
 
-.acme-card-1-mobile {
+.acme-card-10-mobile {
     @media #{$mobile} {
-        @include acme-card-1-base();
+        @include acme-card-10-base();
         @include card-name("acme 1 mobile");
     }
 }
 
 
-.acme-card-1-tablet {
+.acme-card-10-tablet {
     @media #{$tablet} {
         @include card-name("acme 1 tablet");
-        @include acme-card-1-base();
+        @include acme-card-10-base();
 
         .acme-c-cards-view {
 
             &__media {
-                @include flex-width(167px);
+
             }   
         }
 
     }
 }
 
-.acme-card-1-desktop {
+.acme-card-10-desktop {
     @media #{$desktop-up} {
         @include card-name("acme 1 desktop");
-        @include acme-card-1-base();
+        @include acme-card-10-base();
 
         
         .acme-c-cards-view {
-            @include flex-height(280px);
-
-            @include flex-direction(column, vertical);
-
 
             &__container {
             }
+ 
+ 
             &__media {
-                @include flex-height(192px);
-                min-width:100%;
-                max-width:100%;
-                // @include flex-width(167px);
+                min-height:320px;
+                min-width:none;
+                text-align:center;
+
+                img {
+                    min-width:none !important;
+                    width:auto !important;
+                    object-fit:none;
+                }
             }   
 
-            &__description {
-                    display:none;
-            }
-
+            
             &__author {
                 display:none;
             }

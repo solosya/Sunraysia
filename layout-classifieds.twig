@@ -1,12 +1,14 @@
 {{ set(this, 'title', _Blog.getBlogTitle()) }}
-{% set networkData = _Network.getNetworkData() %}
+{% set networkData  = _Network.getNetworkData() %}
 {% set blogData     = _Blog.getBlog() %}
 {% set config       = _Network.getThemeConfig() %}
 
-
-{% set sideMenu = _Menu.get({'menuType': 'header', "menuGroupName":"classifieds"}) %}
-{% set panels = _Menu.get({'menuType': 'header', "menuGroupName":"Classifieds panels"}) %}
+{% set sideMenu = _Menu.get({'menuType': 'header', "menuGroupName": _Blog.getBlogTitle() }) %}
+{% set panels = _Menu.get({'menuType': 'header', "menuGroupName":  _Blog.getBlogTitle() ~ " panels"}) %}
 {% set url = _AppHelper.getParsedUrl() %}
+{% set currentPage = _Blog.getBlogTitle() %}
+
+{% set articleCount = 0 %}
 
 
 
@@ -17,32 +19,50 @@
 
 {# This page can either render panels or entire section work of articles #}
 {% set fullPage = false %}
+{% set limit = 4 %}
 
 {% if url.query | length > 0 %}
+
+
+    {# SECTION VIEW #}
     {% if url.query.section is defined and url.query.section != "" %}
         {% set panels = [{'blogTitle': url.query.section}] %}
+        {% set currentPage = url.query.section %}
+
+        {% set blogTitle = "" %}
+        {% set blogLink = "" %}
         {% set fullPage = true %}
+        {% set limit = 12 %}
     {% endif %}
 
+    {# CATEGORY VIEW #}
     {% if url.query.category is defined and url.query.category != "" %}
+        {% set currentPage = url.query.category %}
+
+        {# if category view, we need to get the sections within this category to display
+        as panels.  We get them from the sidemenu #}
         {% set break = false %}
-        {% for panel in panels if not break  %}
-            {% if panel.blogTitle == url.query.category %}
-                {% set panels = panel %}
+        {% for panel in sideMenu if not break  %}
+            {% if panel.blogTitle | lower == url.query.category | lower %}
+                {% set panels = panel.children %}
                 {% set break = true %}
             {% endif %}
         {% endfor %}
     {% endif %}
-
 {% endif %}
 
 
+
+
+
+{# Get the blog feed for the section(s)  #}
 {% for panel in panels %}
 
     {% set break = false %}
     
     {% for blog in networkData.networkBlogs if not break %}
-        {% set blogTitle = blog.title | lower %}
+        {% set blogTitle = blog.title %}
+        {% set blogLink = blog.link %}
 
         {# FOR DEV  #}
         {# {% if dev %}
@@ -57,12 +77,12 @@
 
         {# FOR PRODUCTION #}
 
-        {% if blogTitle == panel.blogTitle | lower %}
-
+        {% if blogTitle | lower == panel.blogTitle | lower %}
+            
             {% set feed = _Blog.getBlogFeed({
                 'offset' : 0, 
                 'blogid' : blog.guid,
-                'limit'  : 4
+                'limit'  : limit
                 })
             %}
 
@@ -80,15 +100,25 @@
 
 
 
+
+
+
+
+
+
+
 <main id="main" class="site-main u-margin-top-60 u-margin-bottom-60" role="main" data-article-limit="{{limit}}" data-article-count="{{articles | length}}">
     <div class="acme-container">
         <div class="acme-row">
             <div class="acme-col-12">
 
-                <div class="c-section-header c-section-header--bold c-section-header--large c-section-header--normal-case">{{this.title}}
-                    {% if not _User.isGuest() %}
-                        <a href="{{networkData.defaultBlogUrl}}/@event-form" class="c-section-header__button c-button c-button--red">Submit an listing</a>
-                    {% endif %}
+                <a href="{{blogData.url}}">
+                    <div class="c-section-header c-section-header--bold c-section-header--large c-section-header--normal-case">{{this.title}}
+                </a> 
+
+                {% if not _User.isGuest() %}
+                    <a href="{{networkData.defaultBlogUrl}}/@event-form" class="c-section-header__button c-button c-button--red">Submit an listing</a>
+                {% endif %}
                 </div>
 
 
@@ -98,10 +128,10 @@
                 <div class="c-filter--search c-filter--search-xs form-group">
                     <div class="c-filter--search--field c-filter--search--field-xs">
                         <span class="fa fa-search c-search-icon"></span>
-                        <input type="text" class="form-control" name="firstname" id="firstname" placeholder="Search the classifieds">
+                        <input type="text" class="form-control" name="searcg" id="search" placeholder="Search the classifieds">
                     </div>
-                    <div class="c-filter--search--select c-filter--search--select-xs">
-                        <div class="selectdropdown">
+                    {# <div class="c-filter--search--select c-filter--search--select-xs">
+                        <div class="selectdropdown" style="width:100%">
                             <select class="form-control">
                                 <option>Option one</option>
                                 <option>Option Two</option>
@@ -109,9 +139,9 @@
                                 <option>Option Four</option>
                             </select>
                         </div>
-                    </div>
+                    </div> #}
                     <div class="c-filter--search--button">
-                        <button type="submit" class="c-button c-button--red">Search</button>
+                        <button id="search-button" type="submit" class="c-button c-button--red">Search</button>
                     </div>
                 </div>
             </div>
@@ -127,9 +157,12 @@
            {# *********************************************
                         Classifieds Side Menu
               ********************************************* #}
-            <aside class="acme-col-12 acme-col-lg-3 acme-col-md-3 acme-col-sm-4">
+            <aside class="acme-col-12 acme-col-lg-3 acme-col-md-4 acme-col-sm-4">
                 <div id="classified-menu" class="c-classified-lists c-classified-lists-xs">
-                    {{ this.render('/partials/_menu-classifieds.twig', {'menu': sideMenu}) | raw }}
+                    {{ this.render('/partials/_menu-classifieds.twig', {
+                        'menu': sideMenu,
+                        'current': currentPage
+                    }) | raw }}
                 </div>
             </aside>
 
@@ -142,55 +175,109 @@
            {# *********************************************
                             Main content
               ********************************************* #}
-            <div class="acme-col-12 acme-col-lg-9 acme-col-md-9 acme-col-sm-8 acme-com-xs-12">
+            <div class="acme-col-12 acme-col-lg-9 acme-col-md-8 acme-col-sm-12 acme-com-xs-12">
 
+
+
+
+
+                {# *********************************************
+                                Full section page
+                    ********************************************* #}
                 {% if fullPage == true %}
 
+                    {% set articles = blogFeeds[blogTitle].feed.articles %}
+                    <div id="results" class="">
+
+                        <div class="acme-row c-section-head">
+                            <div class="acme-col-12">
+                                <a href="{{blogLink}}">
+                                    <div class="c-section-head__title">{{blogTitle}}</div>
+                                </a> 
+                                <div class="c-section-head__rule"></div>
+                            </div>
+                        </div>
+
+                        <div class="acme-row">
+                        {% for i in 0..11 if articles[i] %}
+                            <div class="acme-col-12 acme-col-md-12 acme-col-lg-4">
+                                {{this.render('/partials/_single-article.twig', {
+                                    article: articles[articleCount], 
+                                    position: (articleCount+1),
+                                    cardType: "acme-",
+                                    behaviour: 'lightbox',
+                                    containerClass: "acme-card-1-mobile acme-card-1-tablet acme-card-1-desktop"
+                                }) | raw}}
+                                {% set articleCount = (dev) ? articleCount : articleCount + 1 %}
+                            </div>
+                        {% endfor %}
+                        </div>
+                    </div>
 
 
 
+
+
+
+
+                {# *********************************************
+                                    Category panel page
+                    ********************************************* #}
                 {% else %}
+                    <div id="results" class="">
 
+                        {% set bannerNo = 1 %}
 
+                        {% for pagesection in blogFeeds | keys %}
+                            {% set params = {
+                                'networkData' : networkData,
+                                'blogFeeds'   : blogFeeds,
+                                'blogData'    : blogData,
+                                'dev'         : dev,
+                                'config'      : {
+                                    blogs: [pagesection],
+                                    template: "partials/panels/section-classified-panel",
+                                    title: pagesection,
+                                    nomargin: true,
+                                    wrapper: false,
+                                },
+                            } %}
 
-                    {% set bannerNo = 1 %}
+                            {{this.render('render.twig', params) | raw}} 
 
-                    {% for pagesection in blogFeeds | keys %}
-                        {% set params = {
-                            'networkData' : networkData,
-                            'blogFeeds'   : blogFeeds,
-                            'blogData'    : blogData,
-                            'dev'         : dev,
-                            'config'      : {
-                                blogs: [pagesection],
-                                template: "partials/panels/section-classified-panel",
-                                title: pagesection,
-                                nomargin: true,
-                            },
-                        } %}
-
-                        {{this.render('render.twig', params) | raw}} 
-
-                        {% if loop.index in bannerSpots %}
-                            {% if config['inventory']['adSpace']['banner'][bannerNo] is defined %}
-                                <div class="j-adslot" id="{{config['inventory']['adSpace']['banner'][bannerNo]}}" data-adshape="banner"></div>
+                            {% if loop.index in bannerSpots %}
+                                {% if config['inventory']['adSpace']['banner'][bannerNo] is defined %}
+                                    <div class="j-adslot" id="{{config['inventory']['adSpace']['banner'][bannerNo]}}" data-adshape="banner"></div>
+                                {% endif %}
+                                {% set bannerNo = bannerNo + 1 %}
                             {% endif %}
-                            {% set bannerNo = bannerNo + 1 %}
-                        {% endif %}
 
-                    {% endfor %}
+                        {% endfor %}
+
+                    </div>
                 {% endif %}
 
 
+                {# <div class="acme-row">
+                    <div class="acme-col-12">
+                        {{this.render('/partials/_section-loadmore.twig', {
+                            sectionNumber: "02", 
+                            cardClass: "col-12 col-lg-3 card-4-mobile card-2-tablet card-2-desktop card-2-desktop-lg",
+                            cardCount: 9,
+                            limit: 8
+                        }) | raw}}
+                    </div>
+                </div> #}
 
-                
+
+
                 <div class="acme-row">
                     <div class="acme-col-12">
-                        <a href="javascript:;" class="c-button c-button--blue c-button-inline js-modalTrigger" data-toggle="modal" data-target="#ModalMultiImageGallery">Multi Image Gallery</a>
+                        <a href="javascript:;" class="c-button c-button--blue c-button-inline "  data-target="#ModalMultiImageGallery">Multi Image Gallery</a>
                         
-                        <a href="javascript:;" class="c-button c-button--blue c-button-inline js-modalTrigger" data-toggle="modal" data-target="#ModalAdPopUp">Image pop up of ad</a>
+                        <a href="javascript:;" class="c-button c-button--blue c-button-inline "  data-target="#ModalAdPopUp">Image pop up of ad</a>
                         
-                        <a href="javascript:;" class="c-button c-button--blue c-button-inline js-modalTrigger" data-toggle="modal" data-target="#ModalAnnouncements">Announcements</a>
+                        <a href="javascript:;" class="c-button c-button--blue c-button-inline "  data-target="#ModalAnnouncements">Announcements</a>
                     </div>
                 </div>
             </div>
@@ -198,6 +285,169 @@
         <div class="clearfix"></div>
     </div>
     <div class="clearfix"></div>
+
+
+
+
+
+
+
+
+<div id="classified-menu-mobile-open" class="c-classified-lists__open">Categories</div>
+<div id="classified-menu-mobile" class="c-classified-lists c-classified-lists-xs c-classified-lists--mobile">
+    <div id="classified-menu-mobile-close">close</div>
+    {{ this.render('/partials/_menu-classifieds.twig', {'menu': sideMenu}) | raw }}
+</div>
+
+
+<script>
+    // main script is defered so event listener makes sure
+    // defered script is loaded before this runs
+    document.addEventListener("DOMContentLoaded", function() {
+
+
+        Acme.lightBox = function(template, parent, layouts) {
+            this.template = template;
+            this.parentCont = parent;
+            this.layouts = layouts;
+            this.parent = Acme.modal.prototype;
+        };
+        Acme.lightBox.prototype = new Acme.modal();
+        Acme.lightBox.constructor = Acme.lightBox;
+        Acme.lightBox.prototype.handle = function(e) {
+            var self = this;
+            var $elem = this.parent.handle.call(this, e);
+            console.log('handling from subclass');
+        };
+
+        var layouts = {
+            "classifieds" : 'systemCardTemplate',
+        };
+
+
+        {# *******************************************
+                            SEARCH
+           ******************************************* #}
+
+        $('#classified-menu-mobile-open').on('click', function() {
+            $('#classified-menu-mobile').addClass('active');
+            $('body, html').toggleClass('u-noscroll');
+        });
+        $('#classified-menu-mobile-close').on('click', function() {
+            $('#classified-menu-mobile').removeClass('active');
+            $('body, html').toggleClass('u-noscroll');
+        });
+
+        $('#classified-menu, #classified-menu-mobile').on('click', 'li > a + div > span', function (event) {
+            event.preventDefault();
+            var parent = $(this).closest('ul');
+
+            var arrowContainer = $(this).parent('div');
+
+            parent.children('li.open').children('.c-classified-submenu').slideUp(200);
+            parent.children('li.open').removeClass('open');
+
+            var list = $(this).closest('li');
+            var childList = list.find('ul');
+            var slideOffeset = -200;
+            var slideSpeed = 200;
+
+            if (childList.is(":visible")) {
+                list.removeClass("open");
+                arrowContainer.removeClass('open');
+                childList.slideUp(slideSpeed, function () {});
+            } else {
+                list.addClass("open");
+                arrowContainer.addClass('open');
+                childList.slideDown(slideSpeed, function () {});
+            }
+        });
+
+
+
+        {# *******************************************
+                            SEARCH
+           ******************************************* #}
+        Acme.cards = CardController();
+        Acme.search = new Acme.View.articleFeed({
+            model           : Acme.cards,
+            container       : 'results',
+            limit           : {{limit}},
+            offset          : 0,
+            blogid          : {{blogData.id}},
+            loadtype        : 'api/search',
+            searchterm      : "{{search}}",
+            name            : 'fd', //name of the loadmore button
+            renderType      : 'write',
+            before          : '<div class="acme-row">',
+            after           : '</div>',
+            card_class      : 'acme-col-12 acme-col-md-12 acme-col-lg-4 acme-card-1-mobile acme-card-1-tablet acme-card-1-desktop'
+        }); 
+        console.log(Acme.search);
+
+        $('#search-button').on('click', function(e) {
+            e.preventDefault();
+            console.log('fetching');
+            Acme.search.options.search = $('#search').val();
+            if (!Acme.search.options.search) {
+                return;
+            }
+            console.log(Acme.search.options);
+            Acme.search.fetch();
+        });
+
+
+
+
+
+
+
+        {# Acme.LightBox = new Acme.lightBox('modal', 'signin-modal', layouts); #}
+
+        {# $(document).unbind().on('click', 'article.lightbox', function (e) {
+            e.preventDefault();
+            console.log('lightboxxingra');
+            var csrfToken = $('meta[name="csrf-token"]').attr("content");
+            Acme.LightBox.render("classifieds", "Log in", );
+
+        }); #}
+
+
+    
+    });
+
+
+
+
+
+
+
+
+
+
+
+
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
     <!-- Begins Modals Section -->
@@ -309,33 +559,3 @@
         </div>
     </div>
 </main>
-
-
-<script>
-    // main script is defered so event listener makes sure
-    // defered script is loaded before this runs
-    document.addEventListener("DOMContentLoaded", function() {
-
-        
-        $('#classified-menu').on('click', 'li > a', function (event) {
-            
-            var parent = $(this).parent().parent();
-            
-            parent.children('li.open').children('.c-classified-submenu').slideUp(200);
-            parent.children('li.open').removeClass('open');
-
-            var sub = $(this).next();
-            var slideOffeset = -200;
-            var slideSpeed = 200;
-
-            if (sub.is(":visible")) {
-                $(this).parent().removeClass("open");
-                sub.slideUp(slideSpeed, function () {});
-            } else {
-                $(this).parent().addClass("open");
-                sub.slideDown(slideSpeed, function () {});
-            }
-        });
-    });
-</script>
-

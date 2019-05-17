@@ -590,20 +590,37 @@
         Acme.modal.prototype = new Acme.listen();
 
         Acme.modal.prototype.render = function(layout, title, data) {
-            this.data = data || this.data;
+
+            var preRendered = false;
+            console.log(typeof data);
+            if (typeof data === 'string') {
+                console.log('its a string!!');
+                preRendered = true;
+            } else {
+                this.data = data || this.data;
+            }
+
             if (title) {
                 this.data['title'] = title;
             }
             this.data['name'] = this.parentCont;
-
+            console.log(this.template);
             var tmp = Handlebars.compile(Acme.templates[this.template]);
             var tmp = tmp(this.data);
+            console.log(tmp);
 
-            console.log(data);
+            $('html').addClass('u-noscroll')
             $('body').addClass('u-noscroll').append(tmp);
+
             if (layout) {
                 this.renderLayout(layout, this.data);
             }
+
+            if (preRendered) {
+                console.log('prerendering!!!');
+                this.renderPreLayout(data);
+            }
+
             this.events();
             this.rendered(); // lifecycle hook that can be overriden
             return this.dfd.promise();
@@ -612,15 +629,20 @@
             var data = data || {};
 
             var layoutTemplate = Acme.templates[this.layouts[layout]];
+
             if (layoutTemplate) {
                 var tmp = Handlebars.compile(Acme.templates[this.layouts[layout]]);
+                console.log(this.parentCont);
                 $('#'+this.parentCont).attr("title", layout); 
                 var layout = tmp(data);
-                console.log(data);
                 $('#'+this.parentCont).find('#dialogContent').empty().append(layout); 
             } else {
                 console.log(this.layouts[layout], 'Does not exist' );
             }
+        };
+        Acme.modal.prototype.renderPreLayout = function(html) {
+            console.log('appending');
+            $('#'+this.parentCont).find('#dialogContent').empty().append(html); 
         };
         Acme.modal.prototype.events = function() 
         {
@@ -656,6 +678,7 @@
         };
         Acme.modal.prototype.closeWindow = function() {
             $('body').removeClass('u-noscroll');
+            $('html').removeClass('u-noscroll')
             $('#'+this.parentCont).remove();
         };
     

@@ -14,7 +14,7 @@ Acme.Signin.prototype.errorMsg = function(msg) {
 };
 Acme.Signin.prototype.handle = function(e) {
     var self = this;
-    console.log('handling');
+
     var $elem = this.parent.handle.call(this, e);
 
     if ( $elem.is('a') ) {

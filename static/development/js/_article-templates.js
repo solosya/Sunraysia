@@ -54,7 +54,7 @@ var cardTemplateTop =
         data-article-image="{{{image}}}" \
         data-article-text="{{params.title}}"> \
         \
-        <article class="c-cards-view {{# ifCond params.social "==" 1}} social {{/ifCond}} {{params.category}} {{hasMediaClass}} {{status}}">';
+        <article class="{{cardType}}c-cards-view {{# ifCond params.social "==" 1}} social {{/ifCond}} {{params.category}} {{hasMediaClass}} {{status}}">';
 
 var cardTemplateBottom = 
         '</article>\
@@ -100,7 +100,7 @@ var cardTemplateBottom =
 Acme.templates.systemCardTemplate = 
     cardTemplateTop + 
         '{{#if params.hasMedia}}\
-            <figure class="c-cards-view__media" {{params.videoClass}}>\
+            <figure class="{{cardType}}c-cards-view__media" {{params.videoClass}}>\
                 <img class="img-fluid lazyload" data-original="{{params.image}}" src="{{params.image}}" style="background-image:url("{{placeholder}}"")>\
                 <div class="video-icon"></div> \
             </figure>\
@@ -108,80 +108,27 @@ Acme.templates.systemCardTemplate =
         \
         <div class="social-icon"></div>\
         \
-        <div class="c-cards-view__container">\
-            <div class="c-cards-view__category">{{ params.category }}</div>\
-            <h2 class="c-cards-view__heading js-c-cards-view-heading j-truncate">{{{ params.title }}}</h2>\
-            <p class="c-cards-view__description js-c-cards-view-description j-truncate">{{{ params.content }}}</p>\
-            <div class="c-cards-view__author">\
-                <time class="c-cards-view__time" datetime="{{params.publishDate}}">{{params.publishDate}}</time>\
+        <div class="{{cardType}}c-cards-view__container">\
+            <div class="{{cardType}}c-cards-view__category">{{ params.category }}</div>\
+            <h2 class="{{cardType}}c-cards-view__heading j-truncate">{{{ params.title }}}</h2>\
+            <p class="{{cardType}}c-cards-view__description j-truncate">{{{ params.content }}}</p>\
+            <div class="{{cardType}}c-cards-view__author">\
+                <time class="{{cardType}}c-cards-view__time" datetime="{{params.publishDate}}">{{params.publishDate}}</time>\
             </div>\
         </div>'+ 
     cardTemplateBottom;
 
 
 
-    Acme.templates.property_card = 
-    cardTemplateTop +  
-        '{{#if hasMedia}} \
-            <figure class="c-cards-view__media {{figureClass}}"> \
-                <picture> \
-                    <source media="(max-width: 620px)" srcset="{{imageUrl}}"> \
-                    <img class="img-fluid" src="{{imageUrl}}" data-original="{{imageUrl}}"> \
-                </picture> \
-            </figure> \
-        {{/if}} \
-        \
-        <div class="c-cards-view__container"> \
-            <div class="c-cards-view__category">{{label}}</div> \
-            <h2 class="c-cards-view__heading js-c-cards-view-heading j-truncate">{{ title }}</h2> \
-            <p class="c-cards-view__description js-c-cards-view-description j-truncate">{{{ excerpt }}}</p> \
-                \
-            <div class="c-cards-view__additioanl-info"> \
-            <div class="c-cards-view__additioanl-info__price">{{ additionalInfo.pricerange }}</div> \
-            <div class="c-cards-view__additioanl-info__features"> \
-                {{#if additionalInfo.bedroom_count }} \
-                    <div class="c-cards-view__additioanl-info__features-list"> \
-                        <span class="icon fa fa-bed"></span> \
-                        <span class="text">{{ additionalInfo.bedroom_count }}</span> \
-                    </div> \
-                {{/if}} \
-                \
-                {{#if additionalInfo.bathroom_count }} \
-                    <div class="c-cards-view__additioanl-info__features-list"> \
-                        <span class="icon fa fa-bath"></span> \
-                        <span class="text">{{ additionalInfo.bathroom_count }}</span> \
-                    </div> \
-                {{/if}} \
-                \
-                {{#if additionalInfo.car_count }} \
-                    <div class="c-cards-view__additioanl-info__features-list"> \
-                        <span class="icon fa fa-car"></span> \
-                        <span class="text">{{ additionalInfo.car_count }}</span> \
-                    </div> \
-                {{/if}} \
-            </div> \
-        </div> \
-        <div class="c-cards-view__author"> \
-            <div class="c-cards-view__time">{{publishDate}}</div> \
-        </div>' +
-
-    cardTemplateBottom;
-
-
-
-
-
-
-
-
-
-
-
-
-
 // **********************************************************
 //                       CARDS END
 // **********************************************************
+
+
+
+
+
+
 
 
 
@@ -220,16 +167,6 @@ Acme.templates.swappingHelper =
 
 
 
-// Acme.templates.managed_user = 
-// '<div class="u-float-left"> \
-//     <p class="userdetails__name"> \
-//         <span class="j-firstname">{{firstname}}</span> \
-//         <span class="j-lastname">{{lastname}}</span> \
-//     </p> \
-//     <p class="j-username userdetails__username">{{username}}</p> \
-// </div>\
-// <a class="j-delete userdetails__button userdetails__button__delete u-float-right"></a> \
-// <a class="j-edit userdetails__button userdetails__button__edit u-float-right"></a>';
 
 
 Acme.templates.managed_user = 
@@ -263,7 +200,7 @@ Acme.templates.modal =
 // also margin-top:10px
 '<div id="{{name}}" class="flex_col {{name}}"> \
     <div id="dialog" class="{{name}}__window"> \
-        <div class="{{name}}__container centerContent" style="scrolling == unusable position:fixed element"> \
+        <div class="{{name}}__container" style="scrolling == unusable position:fixed element"> \
             <div class="{{name}}__header"> \
                 <h2 class="{{name}}__title">{{title}}</h2> \
                 <a class="{{name}}__close" href="#" data-behaviour="close"></a> \
@@ -312,20 +249,20 @@ Acme.templates.socialPopup =
                 </div> \
                 \
                 <div class="o-modal__container-body c-cards-view social facebook"> \
-                        <figure class="c-cards-view__media"> \
-                            <img src="{{media.path}}" alt="Image" class="img-fluid" /> \
-                            <div class="video-icon"></div> \
-                            <div class="social-icon"></div> \
-                        </figure> \
-                        \
-                        <div class="c-cards-view__container"> \
-                            <div class="c-cards-view__category">{{source}}</div> \
-                            <div class="c-cards-view__heading">{{content}}</div> \
-                            <div class="c-cards-view__author"> \
-                                <div class="c-cards-view__author-name">{{user.name}}</div> \
-                                <div class="c-cards-view__time">{{publishDate}}</div> \
-                            </div> \
+                    <figure class="c-cards-view__media"> \
+                        <img src="{{media.path}}" alt="Image" class="img-fluid" /> \
+                        <div class="video-icon"></div> \
+                        <div class="social-icon"></div> \
+                    </figure> \
+                    \
+                    <div class="c-cards-view__container"> \
+                        <div class="c-cards-view__category">{{source}}</div> \
+                        <div class="c-cards-view__heading">{{content}}</div> \
+                        <div class="c-cards-view__author"> \
+                            <div class="c-cards-view__author-name">{{user.name}}</div> \
+                            <div class="c-cards-view__time">{{publishDate}}</div> \
                         </div> \
+                    </div> \
                 </div> \
             </div> \
         </div> \
@@ -333,8 +270,43 @@ Acme.templates.socialPopup =
 </div>';
 
 
-
-
+Acme.templates.classified =
+'<div class="" id="ModalMultiImageGallery"> \
+    <div class=""> \
+        <div class="modal-content modal-content-md"> \
+            <div class="o-modal__container o-modal__container--gallery"> \
+            \
+                <div class="o-modal__container-body o-modal__container-body"> \
+                    <div class="o-media o-media-sm js-slider"> \
+                        <figure class="o-media--item"> \
+                            <div class="o-media--item--galllery"> \
+                                <img src="static/images/slider/hockey.jpg" class="img-fluid o-media--image" alt="Article Info"> \
+                                <div class="slide-count-wrap"> \
+                                    <span class="current"></span> \
+                                </div> \
+                            </div> \
+                        </figure> \
+                        <figure class="o-media--item"> \
+                            <div class="o-media--item--galllery"> \
+                                <img src="static/images/slider/hockey.jpg" class="img-fluid o-media--image" alt="Article Info"> \
+                                <div class="slide-count-wrap"> \
+                                    <span class="current"></span> \
+                                </div> \
+                            </div> \
+                        </figure> \
+                    </div> \
+                    <div class="o-modal--discription"> \
+                        <div class="c-cards-view__container"> \
+                            <div class="c-cards-view__ategory">Motor vehicles</div> \
+                            <div class="c-cards-view__heading js-truncate">Vintage tractor</div> \
+                            <div class="c-cards-view__description js-truncate">2004, BA, auto, FSH, 70,000kms, reg to July 2019, excellent cond, CAPPS3, $12,000. Phone 0448 235 740 after 6pm.</div> \
+                        </div> \
+                    </div> \
+                </div> \
+            </div> \
+        </div> \
+    </div> \
+</div>';
 
 
 

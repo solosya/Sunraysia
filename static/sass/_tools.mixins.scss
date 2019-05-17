@@ -1,5 +1,5 @@
 @mixin card-name($name) {
-	.c-cards-view {
+	.acme-cards-view, .c-cards-view {
 		&:before {
 			content:$name;
 			position:absolute;
@@ -313,10 +313,12 @@ display:flex;
 %flexbox { @include flexbox; }
 
 @mixin flex-height($int) { 
+	height: $int;
 	min-height: $int;
 	max-height: $int;
 }
 @mixin flex-width($int) { 
+	width: $int;
 	min-width: $int;
 	max-width: $int;
 }

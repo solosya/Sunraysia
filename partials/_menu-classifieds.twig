@@ -1,46 +1,71 @@
-<ul class="c-classified-lists--items listVerticalScrollBar">
+{% set subMenu = subMenu is defined and subMenu == true   ? true : false   %}
 
-{% for parentItem in menu %}
-    {% set activeClass = (parentItem.link == _AppHelper.getServerUrl()) ? 'open' : ''%}
-    {% set children = parentItem.children is defined and parentItem.children | length > 0  %}
-    {% set childrenClass = children ? "has-child": ""  %}
-    {% set name = "" %}
-    {% if parentItem.label != "" %}
-        {% set name = parentItem.label %}
-    {% elseif parentItem.blogTitle != "" %}
-        {% set name = parentItem.blogTitle %}
-    {% elseif parentItem.pageTitle != "" %}
-        {% set name = parentItem.pageTitle %}
-    {% endif %}
+{% set listClass = subMenu ? "c-classified-submenu": "c-classified-lists--items listVerticalScrollBar" %} 
+{% set displayClass = subMenu and display == false ? "display:none": "" %} 
+{% set arrowClass = subMenu and display == false ? "": "open" %} 
 
-    <li class="{{activeClass}}">
-        <a  class="{{childrenClass}}"
-            {% if children %}
-                href="{{parentItem.link | raw}}?category={{name | lower}}"
-            {% else %}
-                href="{{parentItem.link | raw}}?section={{name | lower}}"
-            {% endif %}
-            {% if parentItem.target != "" %} 
-                target="{{parentItem.target}}"
-            {% endif %} 
-        >{{name}}</a>
-    
+{% if subMenu %}
+    <div class="{{arrowClass}}"><span class="o-arrow"></span></div>
+{% endif %}
 
-        {% if children %}
 
-            <ul class="c-classified-submenu" style="display:none">
-                {% for childItem in parentItem.children %}
-                    {% set activeClass = (childItem.link == _AppHelper.getServerUrl()) ? 'active' : ''%}
+<ul class="{{listClass}}" style="{{displayClass}}">
 
-                    <li class="">
-                        <a class="{{activeClass}}" href="{{childItem.link |raw}}" {% if childItem.target != "" %}target="{{childItem.target}}"{% endif %}>
-                            {{ ((childItem.label is empty) ? ((childItem.pageTitle is empty) ? childItem.blogTitle : childItem.pageTitle) : childItem.label)}}
-                        </a>
-                    </li>
-                {% endfor %}
-            </ul>
+    {% for parentItem in menu %}
+        {% set children = parentItem.children is defined and parentItem.children | length > 0  %}
+        {% set childrenClass = children ? "has-child": ""  %}
+        {% set name = "" %}
+        {% if parentItem.label != "" %}
+            {% set name = parentItem.label %}
+        {% elseif parentItem.blogTitle != "" %}
+            {% set name = parentItem.blogTitle %}
+        {% elseif parentItem.pageTitle != "" %}
+            {% set name = parentItem.pageTitle %}
         {% endif %}
-    </li>
-{% endfor %}
 
+
+
+        {% set activeClass = '' %}
+
+
+        {% if (parentItem.link == _AppHelper.getServerUrl()) or (subMenu and name | lower == current | lower) %}
+            {% set activeClass = 'open' %}
+        {% endif %}
+
+        <li class="{{activeClass}}">
+            <a  class="{{childrenClass}}"
+
+                {% if children %}
+                    href="?category={{name | lower}}"
+                {% else %}
+                    href="?section={{name | lower}}"
+                {% endif %}
+
+                {% if parentItem.target != "" %} 
+                    target="{{parentItem.target}}"
+                {% endif %} 
+            >{{name}}</a>
+        
+            {% if children %}
+                {% set display = false %} 
+
+
+
+                {# Check if one of the children is the active page #}
+                {% for kids in parentItem.children %}
+                    {% if kids.blogTitle | lower == current | lower %}
+                        {% set display = true %} 
+                    {% endif %}
+                {% endfor %}
+
+
+                {{ this.render('/partials/_menu-classifieds.twig', {
+                    'menu': parentItem.children,
+                    'current': current,
+                    'subMenu': true,
+                    'display': display
+                }) | raw }}
+            {% endif %}
+        </li>
+    {% endfor %}
 </ul>

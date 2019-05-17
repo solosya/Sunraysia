@@ -16320,55 +16320,6 @@ var extend = function(child, parent) { for (var key in parent) { if (hasProp.cal
 
 
 }(jQuery));
-    $.fn.Ajax_LoadSearchArticles = function(options){
-        var defaults = {
-            search: '',
-            limit: 20,
-            containerClass: 'ajaxArticles',
-            onSuccess : function(){},
-            onError : function(){},
-            beforeSend : function(){},
-            onComplete : function(){}
-        };
-        
-        var opts = $.extend( {}, defaults, options );
-        
-        var offset = parseInt($('.'+opts.containerClass).data('offset'));
-        if(isNaN(offset) || offset < 0) {
-            offset = opts.limit;
-        }
-        
-        $('.'+opts.containerClass).data('offset', (offset + opts.limit));
-        
-         var csrfToken = $('meta[name="csrf-token"]').attr("content");
-        
-        $.ajax({
-            type: 'POST',
-            url: _appJsConfig.baseHttpPath + '/search/load-articles',
-            dataType: 'JSON',
-            data: {offset: offset, limit: opts.limit, search: opts.search, _csrf: csrfToken},
-            success: function (data, textStatus, jqXHR) {
-                if (opts.onSuccess && typeof opts.onSuccess === 'function') {
-                    opts.onSuccess(data, textStatus, jqXHR);
-                }                
-            },
-            error: function (jqXHR, textStatus, errorThrown) {
-                if (opts.onError && typeof opts.onError === 'function') {
-                    opts.onError(jqXHR, textStatus, errorThrown);
-                }
-            },
-            beforeSend: function (jqXHR, settings) {
-                if (opts.beforeSend && typeof opts.beforeSend === 'function') {
-                    opts.beforeSend(jqXHR, settings);
-                }
-            },
-            complete: function (jqXHR, textStatus) {
-                if (opts.onComplete && typeof opts.onComplete === 'function') {
-                    opts.onComplete(jqXHR, textStatus);
-                }
-            }
-        });        
-    };
 (function ($) {
 
     $.fn.Disqus = function (options) {
@@ -16713,360 +16664,6 @@ var extend = function(child, parent) { for (var key in parent) { if (hasProp.cal
                     opts.onComplete(jqXHR, textStatus);
                 }
             }
-        });
-    };
-}(jQuery));
-(function ($) {
-
-    //Follow/Unfollow a Blog
-    $.fn.followBlog = function (options) {
-
-        var defaults = {
-            channel : 0,
-            onSuccess: function () {},
-            onError: function () {},
-            beforeSend: function () {},
-            onComplete: function () {}
-        };
-        var opts = $.extend({}, defaults, options);
-
-        return this.each(function () {
-            var elem = $(this);
-            $(elem).click(function (e) {
-                e.preventDefault();
-                var obj = $(this);
-                var blogGuid = $(this).data('guid');
-                var status = $(this).data('status');
-                
-                if(typeof blogGuid === 'undefined' || blogGuid === '') {
-                    return false;
-                }
-                if(typeof status === 'undefined' || status === '') {
-                    return false;
-                }
-                
-                var state = (status === 'unfollow') ? 'follow' : 'unfollow';
-                var csrfToken = $('meta[name="csrf-token"]').attr("content");
-                $.ajax({
-                    type: 'POST',
-                    url: _appJsConfig.baseHttpPath + '/user/follow-blog',
-                    dataType: 'json',
-                    data: {guid: blogGuid,  _csrf: csrfToken},
-                    success: function (data, textStatus, jqXHR) {
-                        $(obj).data('status', state);
-                        $().General_ShowNotification({message: 'Follow blog successfully'});
-                        if (opts.onSuccess && typeof opts.onSuccess === 'function') {
-                            opts.onSuccess(data, obj);
-                        }
-                    },
-                    error: function (jqXHR, textStatus, errorThrown) {
-                        if (opts.onError && typeof opts.onError === 'function') {
-                            opts.onError(obj, jqXHR.responseText);
-                        }
-                    },
-                    beforeSend: function (jqXHR, settings) {
-                        if (opts.beforeSend && typeof opts.beforeSend === 'function') {
-                            opts.beforeSend(obj);
-                        }
-                    },
-                    complete: function (jqXHR, textStatus) {
-                        if (opts.onComplete && typeof opts.onComplete === 'function') {
-                            opts.onComplete(obj);
-                        }
-                    }
-                });
-            });
-        });
-    };
-    
-     
-
-    //Follow/Unfollow a user or writer
-    $.fn.followUser = function (options) {
-
-
-        var defaults = {
-            'onSuccess': function () {},
-            'onError': function () {},
-            'beforeSend': function () {},
-            'onComplete': function () {}
-        };
-        var opts = $.extend({}, defaults, options);
-
-        return this.each(function () {
-            var elem = $(this);
-            $(elem).click(function (e) {
-                e.preventDefault();
-
-                var userGuid = $(this).data('guid');
-                var status = $(this).data('status');
-                var obj = $(this);
-                
-                if(typeof userGuid === 'undefined' || userGuid === '') {
-                    return false;
-                }
-                if(typeof status === 'undefined' || status === '') {
-                    return false;
-                }
-
-                var state = (status === 'unfollow') ? 'follow' : 'unfollow';
-                var csrfToken = $('meta[name="csrf-token"]').attr("content");
-                
-                $.ajax({
-                    type: 'POST',
-                    url: _appJsConfig.baseHttpPath + '/user/follow-user',
-                    dataType: 'json',
-                    data: {guid: userGuid, _csrf: csrfToken},
-                    success: function (data, textStatus, jqXHR) {
-                        $(obj).data('status', state);
-                        $().General_ShowNotification({message: 'Follow user successfully'});
-                        if (opts.onSuccess && typeof opts.onSuccess === 'function') {
-                            opts.onSuccess(data, obj);
-                        }
-                    },
-                    error: function (jqXHR, textStatus, errorThrown) {
-                        if (opts.onError && typeof opts.onError === 'function') {
-                            opts.onError(obj, jqXHR.responseText);
-                        }
-                    },
-                    beforeSend: function (jqXHR, settings) {
-                        if (opts.beforeSend && typeof opts.beforeSend === 'function') {
-                            opts.beforeSend(obj);
-                        }
-                    },
-                    complete: function (jqXHR, textStatus) {
-                        if (opts.onComplete && typeof opts.onComplete === 'function') {
-                            opts.onComplete(obj);
-                        }
-                    }
-                });
-
-            });
-        });
-    };
-
-
-    //Follow/Unfollow a Article
-    $.fn.followArticle = function (options) {
-
-        var defaults = {
-            'onSuccess': function () {},
-            'onError': function () {},
-            'beforeSend': function () {},
-            'onComplete': function () {}
-        };
-        var opts = $.extend({}, defaults, options);
-
-        return this.each(function () {
-            var elem = $(this);
-            $(elem).click(function (e) {
-                e.preventDefault();
-
-                var guid = $(this).data('guid');
-                var status = $(this).data('status');
-                var obj = $(this);
-
-                if(typeof guid === 'undefined' || guid === '') {
-                    return false;
-                }
-                if(typeof status === 'undefined' || status === '') {
-                    return false;
-                }
-                
-                var state = (status === 'unfollow') ? 'follow' : 'unfollow';
-                var csrfToken = $('meta[name="csrf-token"]').attr("content");
-                $.ajax({
-                    type: 'POST',
-                    url: _appJsConfig.baseHttpPath + '/user/follow-article',
-                    dataType: 'json',
-                    data: {guid: guid, _csrf: csrfToken},
-                    success: function (data, textStatus, jqXHR) {
-                        $(obj).data('status', state);
-                        $().General_ShowNotification({message: 'Follow article successfully'});
-                        if (opts.onSuccess && typeof opts.onSuccess === 'function') {
-                            opts.onSuccess(data, obj);
-                        }
-                    },
-                    error: function (jqXHR, textStatus, errorThrown) {
-                        if (opts.onError && typeof opts.onError === 'function') {
-                            opts.onError(obj, jqXHR.responseText);
-                        }
-                    },
-                    beforeSend: function (jqXHR, settings) {
-                        if (opts.beforeSend && typeof opts.beforeSend === 'function') {
-                            opts.beforeSend(obj);
-                        }
-                    },
-                    complete: function (jqXHR, textStatus) {
-                        if (opts.onComplete && typeof opts.onComplete === 'function') {
-                            opts.onComplete(obj);
-                        }
-                    }
-                });
-            });
-        });
-    };
-
-}(jQuery));
-(function ($) {
-
-    $.fn.loginModal = function (options) {
-
-        var defaults = {
-            class: '',
-            minWidth : '',
-            maxWidth: '',
-            referUrl: window.location.href,
-            onLoad: function () {}
-        };
-        var opts = $.extend({}, defaults, options);
-
-        return this.each(function () {
-            var elem = $(this);
-            $(elem).click(function (e) {
-                e.preventDefault();
-                var $modal;
-                $modal = document.createElement("div");
-                $modal.id = "forceLogin-Modal";
-                $modal.className = "modal fade" + opts.class;
-                $modal.style.minWidth = opts.minWidth + "px";
-                $modal.style.maxWidth = opts.maxWidth + "px";
-                $modal.tabIndex = -1;
-                $modal.setAttribute("role", "dialog");
-                $modal.setAttribute("aria-labelledby", "myModalLabel");
-                
-                document.body.appendChild($modal);
-
-                $('body').modalmanager('loading');
-                setTimeout(function () {
-                    $('#forceLogin-Modal').load(_appJsConfig.baseHttpPath + '/auth/login-modal?ref=' + escape(opts.referUrl), '', function () {
-                        $('#forceLogin-Modal').modal();
-                        if (opts.onLoad && typeof opts.onLoad === 'function') {
-                            opts.onLoad();
-                        }
-                    });
-                }, 500);
-            });
-        });  
-    };
-    
-    $.fn.validateLoginForm = function (options) {
-
-        var defaults = {};
-        var opts = $.extend({}, defaults, options);
-        return this.each(function () {
-            var elem = $(this);
-            $(elem).validate({
-                rules: {
-                    username: "required",
-                    password: {
-                        required: true,
-                        minlength: 6
-                    }
-                },
-                messages: {
-                    username: "Username cannot be blank.",
-                    password: {
-                        required: "Password cannot be blank.",
-                        minlength: "Your password must be at least 6 characters"
-                    }
-                }
-            });
-        });
-    };
-    
-    $.fn.validateSignupForm = function (options) {
-
-        var defaults = {};
-        var opts = $.extend({}, defaults, options);
-
-        return this.each(function () {
-            var elem = $(this);
-            $(elem).validate({
-                rules: {
-                    firstname: "required",
-                    lastname: "required",
-                    username: "required",
-                    captcha: "required",
-                    email: {
-                        required: true,
-                        email: true
-                    },
-                    password: {
-                        required: true,
-                        minlength: 6
-                    },
-                    verifypassword: {
-                        required: true,
-                        minlength: 5,
-                        equalTo: "#password"
-                    }
-                },
-                messages: {
-                    firstname: "First name cannot be blank.",
-                    lastname: "Last name cannot be blank.",
-                    username: "Username cannot be blank.",
-                    captcha: "Captcha cannot be blank.",
-                    email: "Email cannot be blank.",
-                    password: {
-                        required: "Password cannot be blank.",
-                        minlength: "Password should contain at least 6 characters."
-                    },
-                    verifypassword: {
-                        required: "Verify password cannot be blank.",
-                        minlength: "Verify Password should contain at least 6 characters.",
-                        equalTo: "Verify Password should exactly match Password"
-                    }
-                }
-            });
-        });
-    };
-    
-    $.fn.validateSocialSignupForm = function (options) {
-
-        var defaults = {};
-        var opts = $.extend({}, defaults, options);
-
-        return this.each(function () {
-            var elem = $(this);
-            $(elem).validate({
-                rules: {
-                    firstname: "required",
-                    lastname: "required",
-                    username: "required",
-                    terms: "required",
-                    email: {
-                        required: true,
-                        email: true
-                    },
-                    password: {
-                        required: true,
-                        minlength: 6
-                    },
-                    verifypassword: {
-                        required: true,
-                        minlength: 5,
-                        equalTo: "#password"
-                    }
-                },
-                errorElement: "span",
-                messages: {
-                    firstname: "First name cannot be blank.",
-                    lastname: "Last name cannot be blank.",
-                    username: "Username cannot be blank.",
-                    email: "Email cannot be blank.",
-                    terms: "",
-                    password: {
-                        required: "Password cannot be blank.",
-                        minlength: "Password should contain at least 6 characters."
-                    },
-                    verifypassword: {
-                        required: "Verify password cannot be blank.",
-                        minlength: "Verify Password should contain at least 6 characters.",
-                        equalTo: "Verify Password should exactly match Password"
-                    }
-                }
-            });
         });
     };
 }(jQuery));
@@ -18353,20 +17950,37 @@ function(a){"use strict";void 0===a.en&&(a.en={"mejs.plural-form":1,"mejs.downlo
         Acme.modal.prototype = new Acme.listen();
 
         Acme.modal.prototype.render = function(layout, title, data) {
-            this.data = data || this.data;
+
+            var preRendered = false;
+            console.log(typeof data);
+            if (typeof data === 'string') {
+                console.log('its a string!!');
+                preRendered = true;
+            } else {
+                this.data = data || this.data;
+            }
+
             if (title) {
                 this.data['title'] = title;
             }
             this.data['name'] = this.parentCont;
-
+            console.log(this.template);
             var tmp = Handlebars.compile(Acme.templates[this.template]);
             var tmp = tmp(this.data);
+            console.log(tmp);
 
-            console.log(data);
+            $('html').addClass('u-noscroll')
             $('body').addClass('u-noscroll').append(tmp);
+
             if (layout) {
                 this.renderLayout(layout, this.data);
             }
+
+            if (preRendered) {
+                console.log('prerendering!!!');
+                this.renderPreLayout(data);
+            }
+
             this.events();
             this.rendered(); // lifecycle hook that can be overriden
             return this.dfd.promise();
@@ -18375,15 +17989,20 @@ function(a){"use strict";void 0===a.en&&(a.en={"mejs.plural-form":1,"mejs.downlo
             var data = data || {};
 
             var layoutTemplate = Acme.templates[this.layouts[layout]];
+
             if (layoutTemplate) {
                 var tmp = Handlebars.compile(Acme.templates[this.layouts[layout]]);
+                console.log(this.parentCont);
                 $('#'+this.parentCont).attr("title", layout); 
                 var layout = tmp(data);
-                console.log(data);
                 $('#'+this.parentCont).find('#dialogContent').empty().append(layout); 
             } else {
                 console.log(this.layouts[layout], 'Does not exist' );
             }
+        };
+        Acme.modal.prototype.renderPreLayout = function(html) {
+            console.log('appending');
+            $('#'+this.parentCont).find('#dialogContent').empty().append(html); 
         };
         Acme.modal.prototype.events = function() 
         {
@@ -18419,6 +18038,7 @@ function(a){"use strict";void 0===a.en&&(a.en={"mejs.plural-form":1,"mejs.downlo
         };
         Acme.modal.prototype.closeWindow = function() {
             $('body').removeClass('u-noscroll');
+            $('html').removeClass('u-noscroll')
             $('#'+this.parentCont).remove();
         };
     
@@ -18547,7 +18167,7 @@ var cardTemplateTop =
         data-article-image="{{{image}}}" \
         data-article-text="{{params.title}}"> \
         \
-        <article class="c-cards-view {{# ifCond params.social "==" 1}} social {{/ifCond}} {{params.category}} {{hasMediaClass}} {{status}}">';
+        <article class="{{cardType}}c-cards-view {{# ifCond params.social "==" 1}} social {{/ifCond}} {{params.category}} {{hasMediaClass}} {{status}}">';
 
 var cardTemplateBottom = 
         '</article>\
@@ -18593,7 +18213,7 @@ var cardTemplateBottom =
 Acme.templates.systemCardTemplate = 
     cardTemplateTop + 
         '{{#if params.hasMedia}}\
-            <figure class="c-cards-view__media" {{params.videoClass}}>\
+            <figure class="{{cardType}}c-cards-view__media" {{params.videoClass}}>\
                 <img class="img-fluid lazyload" data-original="{{params.image}}" src="{{params.image}}" style="background-image:url("{{placeholder}}"")>\
                 <div class="video-icon"></div> \
             </figure>\
@@ -18601,80 +18221,27 @@ Acme.templates.systemCardTemplate =
         \
         <div class="social-icon"></div>\
         \
-        <div class="c-cards-view__container">\
-            <div class="c-cards-view__category">{{ params.category }}</div>\
-            <h2 class="c-cards-view__heading js-c-cards-view-heading j-truncate">{{{ params.title }}}</h2>\
-            <p class="c-cards-view__description js-c-cards-view-description j-truncate">{{{ params.content }}}</p>\
-            <div class="c-cards-view__author">\
-                <time class="c-cards-view__time" datetime="{{params.publishDate}}">{{params.publishDate}}</time>\
+        <div class="{{cardType}}c-cards-view__container">\
+            <div class="{{cardType}}c-cards-view__category">{{ params.category }}</div>\
+            <h2 class="{{cardType}}c-cards-view__heading j-truncate">{{{ params.title }}}</h2>\
+            <p class="{{cardType}}c-cards-view__description j-truncate">{{{ params.content }}}</p>\
+            <div class="{{cardType}}c-cards-view__author">\
+                <time class="{{cardType}}c-cards-view__time" datetime="{{params.publishDate}}">{{params.publishDate}}</time>\
             </div>\
         </div>'+ 
     cardTemplateBottom;
 
 
 
-    Acme.templates.property_card = 
-    cardTemplateTop +  
-        '{{#if hasMedia}} \
-            <figure class="c-cards-view__media {{figureClass}}"> \
-                <picture> \
-                    <source media="(max-width: 620px)" srcset="{{imageUrl}}"> \
-                    <img class="img-fluid" src="{{imageUrl}}" data-original="{{imageUrl}}"> \
-                </picture> \
-            </figure> \
-        {{/if}} \
-        \
-        <div class="c-cards-view__container"> \
-            <div class="c-cards-view__category">{{label}}</div> \
-            <h2 class="c-cards-view__heading js-c-cards-view-heading j-truncate">{{ title }}</h2> \
-            <p class="c-cards-view__description js-c-cards-view-description j-truncate">{{{ excerpt }}}</p> \
-                \
-            <div class="c-cards-view__additioanl-info"> \
-            <div class="c-cards-view__additioanl-info__price">{{ additionalInfo.pricerange }}</div> \
-            <div class="c-cards-view__additioanl-info__features"> \
-                {{#if additionalInfo.bedroom_count }} \
-                    <div class="c-cards-view__additioanl-info__features-list"> \
-                        <span class="icon fa fa-bed"></span> \
-                        <span class="text">{{ additionalInfo.bedroom_count }}</span> \
-                    </div> \
-                {{/if}} \
-                \
-                {{#if additionalInfo.bathroom_count }} \
-                    <div class="c-cards-view__additioanl-info__features-list"> \
-                        <span class="icon fa fa-bath"></span> \
-                        <span class="text">{{ additionalInfo.bathroom_count }}</span> \
-                    </div> \
-                {{/if}} \
-                \
-                {{#if additionalInfo.car_count }} \
-                    <div class="c-cards-view__additioanl-info__features-list"> \
-                        <span class="icon fa fa-car"></span> \
-                        <span class="text">{{ additionalInfo.car_count }}</span> \
-                    </div> \
-                {{/if}} \
-            </div> \
-        </div> \
-        <div class="c-cards-view__author"> \
-            <div class="c-cards-view__time">{{publishDate}}</div> \
-        </div>' +
-
-    cardTemplateBottom;
-
-
-
-
-
-
-
-
-
-
-
-
-
 // **********************************************************
 //                       CARDS END
 // **********************************************************
+
+
+
+
+
+
 
 
 
@@ -18713,16 +18280,6 @@ Acme.templates.swappingHelper =
 
 
 
-// Acme.templates.managed_user = 
-// '<div class="u-float-left"> \
-//     <p class="userdetails__name"> \
-//         <span class="j-firstname">{{firstname}}</span> \
-//         <span class="j-lastname">{{lastname}}</span> \
-//     </p> \
-//     <p class="j-username userdetails__username">{{username}}</p> \
-// </div>\
-// <a class="j-delete userdetails__button userdetails__button__delete u-float-right"></a> \
-// <a class="j-edit userdetails__button userdetails__button__edit u-float-right"></a>';
 
 
 Acme.templates.managed_user = 
@@ -18756,7 +18313,7 @@ Acme.templates.modal =
 // also margin-top:10px
 '<div id="{{name}}" class="flex_col {{name}}"> \
     <div id="dialog" class="{{name}}__window"> \
-        <div class="{{name}}__container centerContent" style="scrolling == unusable position:fixed element"> \
+        <div class="{{name}}__container" style="scrolling == unusable position:fixed element"> \
             <div class="{{name}}__header"> \
                 <h2 class="{{name}}__title">{{title}}</h2> \
                 <a class="{{name}}__close" href="#" data-behaviour="close"></a> \
@@ -18805,20 +18362,20 @@ Acme.templates.socialPopup =
                 </div> \
                 \
                 <div class="o-modal__container-body c-cards-view social facebook"> \
-                        <figure class="c-cards-view__media"> \
-                            <img src="{{media.path}}" alt="Image" class="img-fluid" /> \
-                            <div class="video-icon"></div> \
-                            <div class="social-icon"></div> \
-                        </figure> \
-                        \
-                        <div class="c-cards-view__container"> \
-                            <div class="c-cards-view__category">{{source}}</div> \
-                            <div class="c-cards-view__heading">{{content}}</div> \
-                            <div class="c-cards-view__author"> \
-                                <div class="c-cards-view__author-name">{{user.name}}</div> \
-                                <div class="c-cards-view__time">{{publishDate}}</div> \
-                            </div> \
+                    <figure class="c-cards-view__media"> \
+                        <img src="{{media.path}}" alt="Image" class="img-fluid" /> \
+                        <div class="video-icon"></div> \
+                        <div class="social-icon"></div> \
+                    </figure> \
+                    \
+                    <div class="c-cards-view__container"> \
+                        <div class="c-cards-view__category">{{source}}</div> \
+                        <div class="c-cards-view__heading">{{content}}</div> \
+                        <div class="c-cards-view__author"> \
+                            <div class="c-cards-view__author-name">{{user.name}}</div> \
+                            <div class="c-cards-view__time">{{publishDate}}</div> \
                         </div> \
+                    </div> \
                 </div> \
             </div> \
         </div> \
@@ -18826,8 +18383,43 @@ Acme.templates.socialPopup =
 </div>';
 
 
-
-
+Acme.templates.classified =
+'<div class="" id="ModalMultiImageGallery"> \
+    <div class=""> \
+        <div class="modal-content modal-content-md"> \
+            <div class="o-modal__container o-modal__container--gallery"> \
+            \
+                <div class="o-modal__container-body o-modal__container-body"> \
+                    <div class="o-media o-media-sm js-slider"> \
+                        <figure class="o-media--item"> \
+                            <div class="o-media--item--galllery"> \
+                                <img src="static/images/slider/hockey.jpg" class="img-fluid o-media--image" alt="Article Info"> \
+                                <div class="slide-count-wrap"> \
+                                    <span class="current"></span> \
+                                </div> \
+                            </div> \
+                        </figure> \
+                        <figure class="o-media--item"> \
+                            <div class="o-media--item--galllery"> \
+                                <img src="static/images/slider/hockey.jpg" class="img-fluid o-media--image" alt="Article Info"> \
+                                <div class="slide-count-wrap"> \
+                                    <span class="current"></span> \
+                                </div> \
+                            </div> \
+                        </figure> \
+                    </div> \
+                    <div class="o-modal--discription"> \
+                        <div class="c-cards-view__container"> \
+                            <div class="c-cards-view__ategory">Motor vehicles</div> \
+                            <div class="c-cards-view__heading js-truncate">Vintage tractor</div> \
+                            <div class="c-cards-view__description js-truncate">2004, BA, auto, FSH, 70,000kms, reg to July 2019, excellent cond, CAPPS3, $12,000. Phone 0448 235 740 after 6pm.</div> \
+                        </div> \
+                    </div> \
+                </div> \
+            </div> \
+        </div> \
+    </div> \
+</div>';
 
 
 
@@ -19083,8 +18675,9 @@ Acme.Feed = function() {};
 
 Acme.Feed.prototype.fetch = function()
 {
+    console.log('like, actually, like fetching and shit');
     var self = this;
-    self.elem.html("Please wait...");
+    // self.elem.html("Please wait...");
     // blogfeed makes 2 sql calls.  
     //      Offset is to get pinned contect 
     //      nonPinnedOffset gets the rest
@@ -19093,9 +18686,10 @@ Acme.Feed.prototype.fetch = function()
     if (self.options.search != null) {
         self.options.blogid = this.options.blogid; // search takes an id instead of a guid
     }
-
+    console.log(self.options);
     return Ajax_LoadFeed(self.options).done(function(data) {
         if (data.success == 1) {
+            console.log(data);
             self.render(data);
         }
     });
@@ -19129,19 +18723,22 @@ Acme.Feed.prototype.events = function()
 
 Acme.View.articleFeed = function(options)
 {
-    this.feedModel = options.model;
-    this.limit     = options.limit      || 10;
-    this.offset    = options.offset     || this.limit;
-    this.infinite  = options.infinite   || false;
-    this.failText  = options.failText   || null;
-    this.container = $('#' + options.container);
-    this.template  = options.cardTemplate;
-    this.cardClass = options.card_class;
-
-    this.options = {
+    this.feedModel  = options.model;
+    this.limit      = options.limit      || 10;
+    this.offset     = options.offset     || 0;
+    this.infinite   = options.infinite   || false;
+    this.failText   = options.failText   || null;
+    this.container  = $('#' + options.container);
+    this.template   = options.cardTemplate;
+    this.cardClass  = options.card_class;
+    this.renderType = options.renderType || 'append';
+    this.before     = options.before || false;
+    this.after      = options.after || false;
+    
+    this.options    = {
         'nonPinnedOffset'   :   options.non_pinned || -1,
         'loadtype'          :   options.loadtype || "home",
-        'offset'            :   options.offset || options.limit,
+        'offset'            :   options.offset || 0,
         'blogid'            :   options.blogid,
         'search'            :   options.searchterm    || null,
         'limit'             :   options.limit,
@@ -19188,13 +18785,23 @@ Acme.View.articleFeed.prototype.render = function(data)
         html = ["<p>" + self.failText + "</p>"];
     } else {
         for (var i in articles) {
-            console.log()
             articles[i].imageOptions = {'width': self.imgWidth, 'height': self.imgHeight};
-            html.push( self.feedModel.renderCard(articles[i], self.cardClass, self.template) );
+            html.push( self.feedModel.renderCard(articles[i], {
+                cardClass: self.cardClass,
+                template: self.template,
+                type: "acme-"
+            }));
         }
+        if (self.before ) {
+            html = [self.before].concat(html);
+        }
+        if (self.after) {
+            html = html.concat([self.after]);
+        }
+    
     }
 
-    (self.rendertype === "write")
+    (self.renderType === "write")
         ? self.container.empty().append( html.join('') )
         : self.container.append( html.join('') );
     
@@ -19226,115 +18833,6 @@ Acme.View.articleFeed.prototype.render = function(data)
 
 
 
-
-
-// used on my account page for managed users.  needed?
-// Acme.View.userFeed = function(options)
-// {
-//     this.feedModel = options.model;
-//     this.limit     = options.limit || 10;
-//     this.offset    = options.offset || this.limit;
-//     this.infinite  = options.infinite || false;
-//     this.failText  = options.failText || null;
-//     this.container = $('#' + options.container);
-//     this.template  = options.cardTemplate;
-//     this.cardClass = options.card_class;
-
-
-//     this.options = {
-//         'nonPinnedOffset'   :   options.non_pinned_offset || -1,
-//         'loadtype'          :   options.loadtype || "home",
-//         'offset'            :   options.offset || options.limit,
-//         'blogid'            :   options.blogguid,
-//         'search'            :   options.searchterm    || null,
-//         'limit'             :   options.limit,
-//         // 'page'              :   self.elem.data('page') || 1, // page is used for user articles
-//     };
-
-//     this.waypoint  = false;
-//     this.elem      = $('#' + options.name);
-//     this.events();
-// };
-
-// Acme.View.userFeed.prototype = new Acme.Feed();
-// Acme.View.userFeed.constructor = Acme.View.userFeed;
-// Acme.View.userFeed.prototype.parent = Acme.Feed.prototype;
-
-// Acme.View.userFeed.prototype.render = function(data) 
-// {
-//     var self = this;
-//     var users = data.users.users || data.users;
-
-
-
-//     var label      =   self.button_label  || "Load more",
-//         ads_on     =   self.ads           || null,
-//         rendertype =   self.rendertype    || null;
-
-//     self.elem.html(label);
-
-//     // remove the load more button when finished
-//     (users.length < self.options.limit) 
-//         ? self.elem.css('display', 'none')
-//         : self.elem.show();
-
-//     // add counts to the dom for next request
-//     self.options.offset += self.options.limit;
-
-//     var html = [];
-
-//     if (users.length === 0 && self.failText) {
-//         html = ["<p>" + self.failText + "</p>"];
-//     } else {
-//         for (var i in users) {
-//             users[i].imageOptions = {'width': self.imgWidth, 'height': self.imgHeight};
-//             html.push( self.feedModel.renderCard(users[i], self.cardClass, self.template) );
-//         }
-//     }
-
-//     (rendertype === "write")
-//         ? self.container.empty().append( html.join('') )
-//         : self.container.append( html.join('') );
-
-        
-//     (users.length < self.options.limit) 
-//         ? self.elem.css('display', 'none')
-//         : self.elem.show();
-
-
-//     if (self.waypoint) {
-//         (users.length < self.options.limit)
-//             ? self.waypoint.disable()
-//             : self.waypoint.enable();
-//     }
-
-    
-//     $(".card .content > p, .card h2").dotdotdot();     
-//     // $('.video-player').videoPlayer();
-//     $("div.lazyload").lazyload({
-//         effect: "fadeIn"
-//     });
-    
-//     this.feedModel.events();
-
-// };
-
-
-
-
-
-
-
-
-// Acme.Usercard = function(){};
-// Acme.Usercard.prototype.render = function(user, cardClass, template, type)
-// {
-//     user['cardClass'] = cardClass;
-//     var template = (template) ? Acme.templates[template] : Acme.systemCardTemplate;
-//     userTemplate = Handlebars.compile(template);
-//     var template = userTemplate(user);
-//     return template;
-// }
 
 
 
@@ -19461,11 +18959,16 @@ var Card = function() {
 };
 
 
-Card.prototype.renderCard = function(card, cardClass, template)
+Card.prototype.renderCard = function(card, options)
 {
     var self = this;
-    var template = (template) ? Acme.templates[template] : Acme.templates.systemCardTemplate;
-    card['containerClass'] = cardClass;
+    options = options || {};
+    var template = (options.template) ? Acme.templates[options.template] : Acme.templates.systemCardTemplate;
+    card['containerClass'] = options.cardClass || "";
+    card['cardType'] = options.type || "";
+
+    
+    
     if (card.status == "draft") {
         card['articleStatus'] = "draft";
         card['containerClass'] += " draft"; 
@@ -19474,7 +18977,7 @@ Card.prototype.renderCard = function(card, cardClass, template)
     card['pinTitle'] = (card.isPinned == 1) ? 'Un-Pin Article' : 'Pin Article';
     card['pinText']  = (card.isPinned == 1) ? 'Un-Pin' : 'Pin';
     card['promotedClass'] = (card.isPromoted == 1)? 'ad_icon' : '';
-    
+    console.log(card);
     // mainly for screen to turn off lazyload and loading background img
     // card['imgClass'] = (card.lazyloadImage == false) ? '' : 'lazyload';
     // card['imgBackgroundStyle'] = (card.lazyloadImage == false) ? '' : 'style="background-image:url(https://placeholdit.imgix.net/~text?w=1&h=1)"';
@@ -19482,9 +18985,15 @@ Card.prototype.renderCard = function(card, cardClass, template)
 
     // card['readingTime']= self.renderReadingTime(card.readingTime);
     
-    var width = 500;
-    var height = 350;
+    var width = options.imageWidth || 500;
+    var height = options.imageHeight || 350;
 
+    if (options.imageOriginal) {
+        var width = card.featuredMedia.width;
+        var height = card.featuredMedia.height;
+    }
+
+    console.log(width, height);
     // if (card.imageOptions) {
     //     width = card.imageOptions.width || width;
     //     height = card.imageOptions.height || height;
@@ -19601,12 +19110,12 @@ Card.prototype.bindSocialUpdatePost = function ()
     });
 };
 
-Card.prototype.bindSocialPostPopup = function()
+Card.prototype.bindLightbox = function()
 {
     var isRequestSent = false;
-    $(document).on('click', 'article.lightbox', function (e) {
+    var self = this;
+    $(document).unbind().on('click', 'article.lightbox', function (e) {
         e.preventDefault();
-
         var csrfToken = $('meta[name="csrf-token"]').attr("content");
 
         var isSocial = $(this).parent().data('social');
@@ -19645,13 +19154,31 @@ Card.prototype.bindSocialPostPopup = function()
 
                     data.templatePath = _appJsConfig.templatePath;
 
-                    var articleTemplate = Handlebars.compile(Acme.templates.socialPopup);
-                    var article = articleTemplate(data);
-                    $('.modal').html(article);
 
-                    setTimeout(function () {
-                        $('.modal').modal('show');
-                    }, 0);
+                    var layouts = {
+                        "classifieds" : 'systemCardTemplate',
+                    };
+            
+                    Acme.LightBox = new Acme.lightBox('modal', 'lightbox-modal', layouts);
+                    console.log(data);
+                    var article = self.renderCard(data, {
+                        cardClass : "acme-card-10-mobile acme-card-10-tablet acme-card-10-desktop",
+                        type : "acme-",
+                        imageOriginal: true,
+                    });
+                    console.log(article);
+                    Acme.LightBox.render(null, "Classifieds", article);
+
+
+                    // var articleTemplate = Handlebars.compile(Acme.templates.socialPopup);
+                    // var article = articleTemplate(data);
+                    // console.log(article);
+                    // $("body").prepend(article);
+                    // $('.modal').html(article);
+
+                    // setTimeout(function () {
+                    //     $('.modal').modal('show');
+                    // }, 0);
                 },
                 error: function (jqXHR, textStatus, errorThrown) {
                     console.log(errorThrown, textStatus, jqXHR);
@@ -19822,7 +19349,7 @@ Card.prototype.events = function()
         this.bindDeleteHideArticle();
         this.bindSocialUpdatePost();
     }
-    this.bindSocialPostPopup();
+    this.bindLightbox();
 };
 
 /***                      ****
@@ -22111,7 +21638,13 @@ $('document').ready(function() {
     $("#user-menu-button").click(function(event) {
         $("#user-menu").toggle();
     });
+    $("#user-menu-button-fixed").click(function(event) {
+        $("#user-menu-fixed").toggle();
+    });
 
+    $("#user-menu-mobile-button").click(function(event) {
+        $("#user-menu-mobile").toggle();
+    });
     $("#user-menu-button-tablet").click(function(event) {
         $("#user-menu-tablet").toggle();
     });
@@ -22281,7 +21814,9 @@ $('document').ready(function() {
     // });
 
     $('.js-searchButton').on('click',function() {
-        $('#search-bar').toggleClass('c-search-bar--active');
+        $('#search-bar').toggleClass('c-search-bar--active')
+            .find('.c-search-bar__input').focus();
+
     });
     $('.js-searchClose').on('click',function() {
         $('.c-search-bar').hide();
@@ -22346,94 +21881,94 @@ $('document').ready(function() {
 
 });
 
-var SearchController = (function ($) {
-    return {
-        listing: function () {
-            SearchController.Listing.init();
-        }
-    };
-}(jQuery));
+// var SearchController = (function ($) {
+//     return {
+//         listing: function () {
+//             SearchController.Listing.init();
+//         }
+//     };
+// }(jQuery));
 
-SearchController.Listing = (function ($) {
+// SearchController.Listing = (function ($) {
 
-    var attachEvents = function () {
+//     var attachEvents = function () {
         
-        $('.loadMoreArticles').on('click', function(e){
-            e.preventDefault();
-            var btnObj = $(this);
-            $.fn.Ajax_LoadSearchArticles({
-                'search': $('input.header__search-text').val(),
-                onSuccess: function(data, textStatus, jqXHR){
-                      if (data.success == 1) {
-                        for (var i in data.articles) {
-                            data.articles[i]['containerClass'] = 'col-quarter';
+//         $('.loadMoreArticles').on('click', function(e){
+//             e.preventDefault();
+//             var btnObj = $(this);
+//             $.fn.Ajax_LoadSearchArticles({
+//                 'search': $('input.header__search-text').val(),
+//                 onSuccess: function(data, textStatus, jqXHR){
+//                       if (data.success == 1) {
+//                         for (var i in data.articles) {
+//                             data.articles[i]['containerClass'] = 'col-quarter';
                             
-                            data.articles[i]['promotedClass'] = (data.articles[i].isPromoted == 1)? 'ad_icon' : '';
-                            data.articles[i]['hasArticleMediaClass'] = (data.articles[i].hasMedia == 1)? 'withImage__content' : 'without__image';
+//                             data.articles[i]['promotedClass'] = (data.articles[i].isPromoted == 1)? 'ad_icon' : '';
+//                             data.articles[i]['hasArticleMediaClass'] = (data.articles[i].hasMedia == 1)? 'withImage__content' : 'without__image';
                             
-                            data.articles[i]['blogClass']= '';
-                            if(data.articles[i].blog['id'] !== null) {
-                               data.articles[i]['blogClass']= 'card--blog_'+data.articles[i].blog['id'];
-                            } 
+//                             data.articles[i]['blogClass']= '';
+//                             if(data.articles[i].blog['id'] !== null) {
+//                                data.articles[i]['blogClass']= 'card--blog_'+data.articles[i].blog['id'];
+//                             } 
                             
-                            var ImageUrl = $.image({media:data.articles[i]['featuredMedia'], mediaOptions:{width: 500 ,height:350, crop: 'limit'} });
-                            data.articles[i]['imageUrl'] = ImageUrl;
+//                             var ImageUrl = $.image({media:data.articles[i]['featuredMedia'], mediaOptions:{width: 500 ,height:350, crop: 'limit'} });
+//                             data.articles[i]['imageUrl'] = ImageUrl;
                            
-                            var articleTemplate = Handlebars.compile(systemCardTemplate);
+//                             var articleTemplate = Handlebars.compile(systemCardTemplate);
 
-                            var article = articleTemplate(data.articles[i]);
-                            $('.ajaxArticles').append(article);
-                        }
-                        if(data.articles.length < 20) {
-                            $(btnObj).css('display', 'none');
-                        }
+//                             var article = articleTemplate(data.articles[i]);
+//                             $('.ajaxArticles').append(article);
+//                         }
+//                         if(data.articles.length < 20) {
+//                             $(btnObj).css('display', 'none');
+//                         }
 
-                        bindSocialShareArticle();
-                        $(".card p, .card h1").dotdotdot();
+//                         bindSocialShareArticle();
+//                         $(".card p, .card h1").dotdotdot();
                         
-                         //Lazyload implement
-                        $("div.lazyload").lazyload({
-                            effect: "fadeIn"
-                        });
-                    }
+//                          //Lazyload implement
+//                         $("div.lazyload").lazyload({
+//                             effect: "fadeIn"
+//                         });
+//                     }
                 
                    
-                },
-                beforeSend: function(jqXHR, settings){
-                    $(btnObj).html("Please wait...");
-                },
-                onComplete: function(jqXHR, textStatus){
-                    $(btnObj).html("Load More");
-                }
-            });
-        });
+//                 },
+//                 beforeSend: function(jqXHR, settings){
+//                     $(btnObj).html("Please wait...");
+//                 },
+//                 onComplete: function(jqXHR, textStatus){
+//                     $(btnObj).html("Load More");
+//                 }
+//             });
+//         });
         
-        var bindSocialShareArticle = function () {
-            $('.shareIcons').SocialShare({
-                onLoad: function (obj) {
-                    var title = obj.parents('div.article').find('.card__news-category').text();
-                    var url = obj.parents('div.article').find('a').attr('href');
-                    var content = obj.parents('div.article').find('.card__news-description').text();
-                    $('.rrssb-buttons').rrssb({
-                        title: title,
-                        url: url,
-                        description: content
-                    });
-                    setTimeout(function () {
-                        rrssbInit();
-                    }, 10);
-                }
-            });
-        };
+//         var bindSocialShareArticle = function () {
+//             $('.shareIcons').SocialShare({
+//                 onLoad: function (obj) {
+//                     var title = obj.parents('div.article').find('.card__news-category').text();
+//                     var url = obj.parents('div.article').find('a').attr('href');
+//                     var content = obj.parents('div.article').find('.card__news-description').text();
+//                     $('.rrssb-buttons').rrssb({
+//                         title: title,
+//                         url: url,
+//                         description: content
+//                     });
+//                     setTimeout(function () {
+//                         rrssbInit();
+//                     }, 10);
+//                 }
+//             });
+//         };
 
-    };
-    return {
-        init: function () {
-            attachEvents();
-        }
-    };
+//     };
+//     return {
+//         init: function () {
+//             attachEvents();
+//         }
+//     };
 
-}(jQuery));
+// }(jQuery));
 (function ($) {
 
 
@@ -22450,7 +21985,7 @@ Acme.Signin.prototype.errorMsg = function(msg) {
 };
 Acme.Signin.prototype.handle = function(e) {
     var self = this;
-    console.log('handling');
+
     var $elem = this.parent.handle.call(this, e);
 
     if ( $elem.is('a') ) {
@@ -22991,6 +22526,7 @@ Acme.Token.prototype.removeToken = function()
                         }
 
                         $('#header-date').text(data.date);
+                        $('#mobile-date').text(data.date);
 
 
 
