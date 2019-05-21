@@ -115,23 +115,23 @@
 
        {% if panels[pagesection]['active'] is not defined or panels[pagesection]['active'] == true %}
 
-       {% if breaking.partial is defined and "00" in panels[pagesection]['template'] %}
-            {% set params = {
-                'networkData' : networkData,
-                'blogFeeds'   : blogFeeds,
-                'blogData'    : blogData,
-                'config'      : breaking.partial,
-                'dev'         : dev
-            } %}
-       {% else %}
-            {% set params = {
-                'networkData' : networkData,
-                'blogFeeds'   : blogFeeds,
-                'blogData'    : blogData,
-                'config'      : panels[pagesection],
-                'dev'         : dev
-            } %}
-        {% endif %}
+            {% if breaking.partial is defined and "00" in panels[pagesection]['template'] %}
+                {% set params = {
+                    'networkData' : networkData,
+                    'blogFeeds'   : blogFeeds,
+                    'blogData'    : blogData,
+                    'config'      : breaking.partial,
+                    'dev'         : dev
+                } %}
+            {% else %}
+                {% set params = {
+                    'networkData' : networkData,
+                    'blogFeeds'   : blogFeeds,
+                    'blogData'    : blogData,
+                    'config'      : panels[pagesection],
+                    'dev'         : dev
+                } %}
+            {% endif %}
 
             {{this.render('render.twig', params) | raw}} 
 

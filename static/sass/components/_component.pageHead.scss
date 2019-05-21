@@ -66,6 +66,13 @@
             background-color:darken($blue, 18%);
         }
     }
+    &--bottom{
+        @media #{$desktop-up}{
+            &:before{
+                margin-top: 22px;
+            }
+        }
+    }
 
     @include responsive(xs) {
         &:before {

@@ -14,12 +14,14 @@
                 if ($(".j-keyword-cont").length > 0) {
                     var keywordCont = $(".j-keyword-cont")[0];
                     var keysExtra = keywordCont.dataset.keywords.split(',');
-                    if (keysExtra.length > 0){
+                    if (keysExtra[0] != ""){
                         for (var j=0;j<keysExtra.length;j++){
                             if (keysExtra[j] != "") {
                                 keysArray.push(keysExtra[j]);
                             }
                         }
+                    } else {
+                        keysArray.push('default');
                     }
                 } else {
                     keysArray.push('default');
@@ -34,7 +36,7 @@
                     },
                     success: function (data, textStatus, jqXHR) {
                         if (data.length < 1 ){
-                            console.log('no ads found with those keywords')
+                            console.log('no ads found with those keywords',keysString)
                             return;
                         } else if (data.length > 1 ){
                             var k = Math.round(Math.random()*(data.length-1));

@@ -31,7 +31,12 @@
             </div>
 
             <div class="col-12 col-md-6">
-            add here
+                {% if adslots[0] is defined %}
+                    <div class="j-adslot" id="{{adslots[0]}}" data-adshape="mrec"></div>
+                {% endif %}
+                {% if adslots[1] is defined %}
+                    <div class="j-adslot" id="{{adslots[1]}}" data-adshape="custom"></div>
+                {% endif %}
             </div>
         </div>
     </div>
@@ -59,8 +64,8 @@
             <div class="j-adslot" id="{{adslots[0]}}" data-adshape="mrec"></div>
         {% endif %}
 
-        <div class="c-page-head c-page-head-xs">
-            <div class="u-heading--large u-heading--large-xs">Video</div>
+        <div class="c-page-head c-page-head-xs c-page-head--bottom">
+            <div class="u-heading__large u-heading__large-xs">Video</div>
         </div>
 
         <div class="row">
@@ -84,7 +89,7 @@
                     <div class="c-news-feed__title">Most popular</div>
                     <ul class="row c-news-feed__list">
 
-                        {% for i in 0..3 if popularArticles[i] %}
+                        {% for i in 0..2 if popularArticles[i] %}
                                 <li class="col-sm-12">
                                     {{this.render('../_single-article.twig', {
                                         article: popularArticles[i], 

@@ -2,14 +2,11 @@
 {% set cardIndex = 0 %}
 
 
-<div class="row" data-section="05">
-    <div class="col-9">
-        <div class="c-page-head c-page-head-xs">
-            <div class="u-heading__large u-heading__large-xs u-pr--6 u-bg-white">{{title}}</div>
-            <a href="{{link}}" class="c-page-head__link">View all</a>
-        </div>
-    </div>
-</div>
+{{this.render('../_section-header.twig', {
+    number: "05",
+    title: title,
+    link: link,
+}) | raw }}
 
 
 
