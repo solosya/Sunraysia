@@ -78,8 +78,6 @@ Acme.View.articleFeed = function(options)
     this.elem      = $('#' + options.name);
     // This is the load LESS button if you have one
     this.lessElem  = $('#less-' + options.name);
-    console.log(this.lessElem);
-    console.log('#less-' + options.name);
     this.failText  = options.failText || null;
     this.events();
 };
