@@ -9,13 +9,14 @@ var Card = function() {
 
 Card.prototype.renderCard = function(card, options)
 {
+    // console.log(options);
     var self = this;
     options = options || {};
     var template = (options.template) ? Acme.templates[options.template] : Acme.templates.systemCardTemplate;
     card['containerClass'] = options.cardClass || "";
     card['cardType'] = options.type || "";
 
-    
+
     
     if (card.status == "draft") {
         card['articleStatus'] = "draft";
@@ -25,7 +26,7 @@ Card.prototype.renderCard = function(card, options)
     card['pinTitle'] = (card.isPinned == 1) ? 'Un-Pin Article' : 'Pin Article';
     card['pinText']  = (card.isPinned == 1) ? 'Un-Pin' : 'Pin';
     card['promotedClass'] = (card.isPromoted == 1)? 'ad_icon' : '';
-    console.log(card);
+    // console.log(card);
     // mainly for screen to turn off lazyload and loading background img
     // card['imgClass'] = (card.lazyloadImage == false) ? '' : 'lazyload';
     // card['imgBackgroundStyle'] = (card.lazyloadImage == false) ? '' : 'style="background-image:url(https://placeholdit.imgix.net/~text?w=1&h=1)"';
@@ -41,7 +42,7 @@ Card.prototype.renderCard = function(card, options)
         var height = card.featuredMedia.height;
     }
 
-    console.log(width, height);
+    // console.log(width, height);
     // if (card.imageOptions) {
     //     width = card.imageOptions.width || width;
     //     height = card.imageOptions.height || height;

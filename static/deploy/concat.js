@@ -17844,6 +17844,10 @@ function(a){"use strict";void 0===a.en&&(a.en={"mejs.plural-form":1,"mejs.downlo
             var self = this;
             this.defaultItem.parent().on('click', function(e) {
                 e.stopPropagation();
+
+                if (self.enabled === false ) return;
+
+
                 self.listContainer.toggle();
             });
         };
@@ -17877,6 +17881,7 @@ function(a){"use strict";void 0===a.en&&(a.en={"mejs.plural-form":1,"mejs.downlo
         {
             var self = this;
             this.listContainer.on('click', function(e) {
+
                 $.each(self.listElements, function(i,e) {
                     $(e).attr('checked', false);
                 });
@@ -17930,6 +17935,19 @@ function(a){"use strict";void 0===a.en&&(a.en={"mejs.plural-form":1,"mejs.downlo
             this.listContainer.empty();
             return this;
         };
+        Acme.listMenu.prototype.disable = function()
+        {
+            this.enabled = false;
+            $('#' + this.name).addClass("disabled");
+            return this;
+        };
+        Acme.listMenu.prototype.enable = function()
+        {
+            this.enabled = true;
+            $('#' + this.name).removeClass("disabled");
+            return this;
+        }
+
         Acme.listMenu.prototype.update = function(list)
         {
             this.list = list;
@@ -18746,7 +18764,13 @@ Acme.View.articleFeed = function(options)
     };
 
     this.waypoint  = false;
+    
+    // This is the load more button
     this.elem      = $('#' + options.name);
+    // This is the load LESS button if you have one
+    this.lessElem  = $('#less-' + options.name);
+    console.log(this.lessElem);
+    console.log('#less-' + options.name);
     this.failText  = options.failText || null;
     this.events();
 };
@@ -18771,6 +18795,7 @@ Acme.View.articleFeed.prototype.render = function(data)
         ads_on     =   self.ads           || null;
 
     self.elem.html(label);
+    self.lessElem.show();
 
     // add counts to the dom for next request
     self.options.offset += self.options.limit;
@@ -18789,7 +18814,7 @@ Acme.View.articleFeed.prototype.render = function(data)
             html.push( self.feedModel.renderCard(articles[i], {
                 cardClass: self.cardClass,
                 template: self.template,
-                type: "acme-"
+                type: ""
             }));
         }
         if (self.before ) {
@@ -18961,13 +18986,14 @@ var Card = function() {
 
 Card.prototype.renderCard = function(card, options)
 {
+    // console.log(options);
     var self = this;
     options = options || {};
     var template = (options.template) ? Acme.templates[options.template] : Acme.templates.systemCardTemplate;
     card['containerClass'] = options.cardClass || "";
     card['cardType'] = options.type || "";
 
-    
+
     
     if (card.status == "draft") {
         card['articleStatus'] = "draft";
@@ -18977,7 +19003,7 @@ Card.prototype.renderCard = function(card, options)
     card['pinTitle'] = (card.isPinned == 1) ? 'Un-Pin Article' : 'Pin Article';
     card['pinText']  = (card.isPinned == 1) ? 'Un-Pin' : 'Pin';
     card['promotedClass'] = (card.isPromoted == 1)? 'ad_icon' : '';
-    console.log(card);
+    // console.log(card);
     // mainly for screen to turn off lazyload and loading background img
     // card['imgClass'] = (card.lazyloadImage == false) ? '' : 'lazyload';
     // card['imgBackgroundStyle'] = (card.lazyloadImage == false) ? '' : 'style="background-image:url(https://placeholdit.imgix.net/~text?w=1&h=1)"';
@@ -18993,7 +19019,7 @@ Card.prototype.renderCard = function(card, options)
         var height = card.featuredMedia.height;
     }
 
-    console.log(width, height);
+    // console.log(width, height);
     // if (card.imageOptions) {
     //     width = card.imageOptions.width || width;
     //     height = card.imageOptions.height || height;
@@ -20068,7 +20094,6 @@ Acme.Form = function(validators, rules) {
     };
     Acme.Form.prototype.addInlineErrors = function()
     {
-        console.log(this.errorFields)
         if (this.errorFields.length > 0 && this.errorField) {
             this.errorField.addClass('active');
         }
@@ -21569,6 +21594,9 @@ Acme.UserProfileController.prototype.listingEvents = function() {
 };
 
     
+Acme.articleFeeds = {};
+
+
 $('document').ready(function() {
     var mobileView = 992;
     var desktopView = 1119;

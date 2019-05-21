@@ -8,6 +8,14 @@
         label           : "+ Load more",
         buttonClass     : "c-loadmore",
     }) | raw }}
+
+
+    <a  class = "load_less c-loadmore" 
+        href  = "javascript:;"
+        id    = "less-section-load-{{sectionNumber}}"
+        style = "display:none"
+        data-section="loadmore_section_{{sectionNumber}}" 
+    >Show less</a>
 </div>
 {# {% endif %} #}
 
@@ -15,7 +23,10 @@
     // main script is defered so event listener makes sure
     // defered script is loaded before this runs
     document.addEventListener("DOMContentLoaded", function() {
-        new Acme.View.articleFeed({
+
+        console.log("loadmore_section_{{sectionNumber}}");
+        console.log(Acme.articleFeeds);
+        Acme.articleFeeds["loadmore_section_{{sectionNumber}}"] = new Acme.View.articleFeed({
             model           : CardController(),
             container       : 'loadmore_section_{{sectionNumber}}',
             offset          : 0,
@@ -25,5 +36,14 @@
             card_class      : "{{cardClass}}",
             non_pinned      : {{cardCount}}
         });
+
+        $('.load_less').on('click', function(e) {
+            var section = $(this).data('section');
+            $('#' + section).empty();
+            $(this).hide();
+            Acme.articleFeeds[section].options.nonPinnedOffset = {{cardCount}}
+        });
+
+
     });
 </script>

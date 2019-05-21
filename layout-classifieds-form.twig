@@ -24,7 +24,7 @@
                     <div class="c-placelisting c-placelisting-md">
                         <div class="row">
                         <div class="col-lg-12">
-                            <div class="c-formnotice c-formnotice--medium">To place a listing, select the classifieds edition your ad should appear in - then fill out the required fields.</div>
+                            <div class="u-font-size-15 u-font-weight-medium">To place a listing, select the classifieds edition your ad should appear in - then fill out the required fields.</div>
                             
                             
                             <div class="c-section-head u-margin-top-30">
@@ -33,25 +33,25 @@
                             </div>
 
                             
-                            <div class="c-placelisting__paydiscription">Our friendly staff will contact you by phone with the cost of your advertisement. Payment is required before publication, and can be made by credit card over the phone, or in person.</div>
+                            <div class="c-placelisting__paydiscription u-font-size-15">Our friendly staff will contact you by phone with the cost of your advertisement. Payment is required before publication, and can be made by credit card over the phone, or in person.</div>
                             
                             <div class="row">
                                 <div class="col-md-6">
-                                    <input type="text" class="c-form__input c-form__input--bordered articleExtendedData" name="start_date" id="start_date" value="" placeholder="Start date*">
+                                    <input type="text" class="c-form__input c-form__input--bordered u-pointer articleExtendedData" name="start_date" id="start_date" value="" placeholder="Start date*">
                                     <div class="c-form__c-form__help-block"></div>
                                 </div>
 
                                 <div class="col-md-6">
-                                    <input type="text" class="c-form__input c-form__input--bordered articleExtendedData" name="end_date" id="end_date" value="" placeholder="End date">
+                                    <input type="text" class="c-form__input c-form__input--bordered u-pointer articleExtendedData" name="end_date" id="end_date" value="" placeholder="End date">
                                     <div class="c-form__c-form__help-block"></div>
                                 </div>
                             </div>
 
                         </div>
-                        <div class="col-lg-12">
-                            <div class="c-formrequirement u-mb--50">
+                        <div class="col-lg-12 u-margin-top-10">
+                            <div class="c-formrequirement">
                                 <div class="c-formrequirement__head">Please note </div>
-                                <ul class="c-formrequirement__list u-mb--15">
+                                <ul class="c-formrequirement__list">
                                     <li>1) Registration numbers are required for all relevant classifications (motor vehicles, caravans...)</li>
                                     <li>2) IDs are required when placing a birth notice, wedding notice and engagement notice.</li>
                                     <li>3) All trade ads must have the licence name and no. appear in the ad.</li>
@@ -103,20 +103,16 @@
                                             Category Pulldown
                             ******************************************************* #}
                             <div class="col-lg-6">
-                                <div class="c-form__group">
-                                    <div id="categorySelect" class=""></div>
-                                    <div class="c-form__help-block">Please fill out this field.</div>
-                                </div>
+                                <div id="categorySelect" class=""></div>
+                                <div class="c-form__help-block">Please fill out this field.</div>
                             </div>
 
                             {# *******************************************************
                                             Classification Pulldown
                             ******************************************************* #}
                             <div class="col-lg-6">
-                                <div class="c-form__group">
-                                    <div id="classificationSelect" class=""></div>
-                                    <div class="c-form__help-block">Please fill out this field.</div>
-                                </div>
+                                <div id="classificationSelect" class=""></div>
+                                <div class="c-form__help-block">Please fill out this field.</div>
                             </div>
 
 
@@ -129,7 +125,7 @@
 
 
                                 <div class="row">
-                                    <div class="col-lg-12">
+                                    <div class="col-lg-12 u-margin-top-15">
                                         <div class="c-form__group">
                                             <label class="c-form__label" for="title">Title*</label>
                                             <input id="title" type="title" class="c-form__input c-form__input--bordered"  placeholder="4WD for sale" name="title">
@@ -137,10 +133,10 @@
                                         </div>
                                     </div>
                                     
-                                    <div class="col-lg-12">
+                                    <div class="col-lg-12 u-margin-top-10">
                                         <div class="c-form__group">
                                             <label class="c-form__label" for="description">Description*</label>
-                                            <textarea  class="c-form__input c-form__input--bordered textareasize--medium" id="description" placeholder="Nissan 4WD for sale $1000 ONO. Contact Pete on 0431 572 997" name="description"  ></textarea>
+                                            <textarea  rows="10" class="c-form__input c-form__input--bordered u-line-height-15 u-padding-10" id="description" placeholder="Nissan 4WD for sale $1000 ONO. Contact Pete on 0431 572 997" name="description"  ></textarea>
                                             <div class="c-form__help-block">Please fill out this field.</div>
                                         </div>
                                     </div>
@@ -153,13 +149,14 @@
 
 
 
-                            <div class="col-lg-6">
-                                <div class="c-form__group u-mt--10">
+                            <div class="col-lg-6 u-margin-top-15">
+                                <div class="c-form__group">
                                     <label class="c-form__label">Upload file</label>
-                                    <div class="uploadfilebox uploadfilebox--block uploadfilebox--bgwhitered "> <a href="javascript:;">Upload image</a> </div>
+                                    <a class="c-upload-image" id="uploadFileBtn" href="javascript:;">Upload image</a> 
                                 </div>
                             </div>
-                            <div class="col-lg-12">
+
+                            <div class="col-lg-12 u-margin-top-10">
                                 <div class="c-formrequirement u-mb--50">
                                     <div class="c-formrequirement__head">Image requirements </div>
                                     <ul class="c-formrequirement__list">
@@ -194,21 +191,21 @@
                             </div>
 
 
-                            <div class="col-lg-6 u-margin-top-20">
+                            <div class="col-lg-6 u-margin-top-15">
                                 <div class="c-form__group">
                                     <label class="c-form__label" for="firstname">First name*</label>
                                     <input type="text" class="c-form__input c-form__input--bordered" id="firstname" placeholder="eg. John" name="firstname">
                                     <div class="c-form__help-block">Please fill out this field.</div>
                                 </div>
                             </div>
-                            <div class="col-lg-6 u-margin-top-20">
+                            <div class="col-lg-6 u-margin-top-15">
                                 <div class="c-form__group">
                                     <label class="c-form__label" for="lastname">Last name*</label>
                                     <input type="text" class="c-form__input c-form__input--bordered" id="lastname" placeholder="eg. Smith" name="lastname">
                                     <div class="c-form__help-block">Please fill out this field.</div>
                                 </div>
                             </div>
-                            <div class="col-lg-6 u-margin-top-20">
+                            <div class="col-lg-6 u-margin-top-15">
                                 <div class="c-form__group">
                                     <label class="c-form__label" for="email_address">Email address*</label>
                                     <input type="email" class="c-form__input c-form__input--bordered" id="email_address" placeholder="eg. johnsmith@gmail.com" name="email_address">
@@ -216,14 +213,14 @@
                                 </div>
                             </div>
 
-                            <div class="col-lg-6 u-margin-top-20">
+                            <div class="col-lg-6 u-margin-top-15">
                                 <div class="c-form__group">
                                     <label class="c-form__label" for="phone_number">Phone number*</label>
                                     <input type="tel" class="c-form__input c-form__input--bordered" id="phone_number" placeholder="Home or mobile" name="phone_number">
                                     <div class="c-form__help-block">Please fill out this field.</div>
                                 </div>
                             </div>
-                            <div class="col-lg-6 u-margin-top-20">
+                            <div class="col-lg-6 u-margin-top-15">
                                 <div class="c-form__group">
                                     <label class="c-form__label" for="street_address">Street address*</label>
                                     <input type="text" class="c-form__input c-form__input--bordered" id="street_address" placeholder="Street address" name="street_address">
@@ -231,20 +228,20 @@
                                 </div>
                             </div>
                             <div class="col-lg-6">
-                                <div class="c-form__group u-margin-top-20">
+                                <div class="c-form__group u-margin-top-15">
                                     <label class="c-form__label" for="suburb">Suburb*</label>
                                     <input type="text" class="c-form__input c-form__input--bordered" id="suburb" placeholder="Suburb" name="suburb">
                                     <div class="c-form__help-block">Please fill out this field.</div>
                                 </div>
                             </div>
-                            <div class="col-lg-6 u-margin-top-20">
+                            <div class="col-lg-6 u-margin-top-15">
                                 <div class="c-form__group">
                                     <label class="c-form__label" for="state">State*</label>
                                     <input type="text" class="c-form__input c-form__input--bordered" id="state" placeholder="State" name="state">
                                     <div class="c-form__help-block">Please fill out this field.</div>
                                 </div>
                             </div>
-                            <div class="col-lg-6 u-margin-top-20">
+                            <div class="col-lg-6 u-margin-top-15">
                                 <div class="c-form__group">
                                     <label class="c-form__label" for="postcode">Postcode*</label>
                                     <input type="tel" class="c-form__input c-form__input--bordered" id="postcode" placeholder="Postcode" name="postcode">
@@ -254,11 +251,10 @@
 
                             <div class="col-lg-12  u-margin-top-30">
                                 <div class="c-form__group">
-                                <div class="button-set">
                                     <label>
-                                    <input id="terms" name="terms" type="checkbox" class="validate[required]">
-                                    <span><!-- fake radio --></span> I have read and accept the <a href="javascript:;">Advertising Terms.</a></label>
-                                </div>
+                                        <input id="terms" name="terms" type="checkbox" class="validate[required]">
+                                        <span><!-- fake radio --></span> <span class="u-font-size-15">I have read and accept the <a href="javascript:;">Advertising Terms.</a><span>
+                                    </label>
                                 </div>
                             </div>
 
@@ -315,7 +311,9 @@
 
             this.menus = {};
 
-            this.data = {};
+            this.data = {
+                attachment : "https://cdn.filepicker.io/api/file/g7dl1GXQAm2qtSqse6Ts"
+            };
 
             this.addPullDowns();
             this.events();
@@ -352,10 +350,17 @@
                 }
 
                 this.menus.classification.update(this.classificationList);
-
+                if (this.classificationList.length === 0) {
+                    this.menus.classification.disable();
+                } else {
+                    this.menus.classification.enable();
+                }
                 var updateData = {
                     category: this.categories[this.selectedCategory].blogTitle
                 }
+
+
+
                 this.updateData(updateData);
             },
             "classification": function(data, topic) {
@@ -385,18 +390,19 @@
                         'defaultSelect' : {"label": "Select category*"},
                         'name'          : 'category',
                         'key'           : 'category',
-                        'class'         : 'formPulldowns'
+                        'class'         : 'Acme-pulldown Acme-pulldown--border'
             }).init().render();
 
             this.menus.classification = new Acme.listMenu({
                         'parent'        : $('#classificationSelect'),
                         'list'          : [],
-                        'defaultSelect' : {"label": 'Select classification*'},
+                        'defaultSelect' : {"label": 'Select classification'},
                         'name'          : 'classification',
                         'key'           : 'classification',
-                        'class'         : 'formPulldowns'
+                        'class'         : 'Acme-pulldown Acme-pulldown--border'
 
             }).init().render();
+            this.menus.classification.disable();
 
         };
         ListingForm.prototype.render = function() 
@@ -436,7 +442,7 @@
             Object.keys(this.data).forEach(function(el) {
                 formText += el + ": " + self.data[el] + '\r\n';
             });
-            console.log(formText);
+
             var formData = {
                 name: "frank",
                 email: "test@what.no",
@@ -476,31 +482,13 @@
 
 
 
-            $('.uploadFileBtn').uploadFile({
+            $('#uploadFileBtn').uploadFile({
                 onSuccess: function(data, obj){
-
-                    var resultJsonStr = JSON.stringify(data);
-
-                    var postdata = {
-                        'blogs' : self.blogId,
-                        'imgData' : resultJsonStr
-                    };
-
-                    var outer = $("#uploadFileBtn");
-                    var inner = $("#InnerUploadFileBtn");
-                    outer.addClass("spinner");
-                    inner.hide();
-
-                    Acme.server.create('/api/article/save-image', postdata).done(function(r) {
-                        if (self.saveImage(r, data) ) {
-                            outer.removeClass("spinner");
-                            inner.show();
-                        }
-                    }).fail(function(r) {
-                        // console.log(r);
-                    });
+                    console.log(data, obj);
+                    self.updateData({attachment: data.url});
                 }
             });
+
 
             $(self.container).submit(function(e) {
                 e.preventDefault();

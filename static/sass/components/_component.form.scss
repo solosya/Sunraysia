@@ -16,7 +16,129 @@
             @include align-items(center);
             @include flex-direction(row, horizontal);
         }
+		
+		input {
 
+			&[type="radio"], &[type="checkbox"] {
+				margin:0;
+				height:1px;
+				@include padding(0);
+				@include opacity(0);
+				position:absolute;
+				pointer-events:none;
+			}
+			&[type="radio"] + span, &[type="checkbox"] + span {
+				@include size(16px);
+				text-align:center;
+				display:inline-block;
+				background-color:$white;
+				border:1px solid #a7a7a7;
+				vertical-align:top;
+				position:relative;
+				margin-right:6px;
+				@include transition(all 0.1s ease);
+				@include border-radius(50%);
+			}
+			
+
+			&[type="radio"] + span::after, &[type="checkbox"] + span::after {
+				content:"";
+				display:inline-block;
+				@include opacity(0);
+				width:100%;
+				position:absolute;
+				top:0;
+				left:0;
+				height:100%;
+				@include transition(all 0.1s ease);
+			}
+			&[type="radio"]:focus + span, &[type="checkbox"]:focus + span, &[type="radio"]:active + span, &[type="checkbox"]:active + span {
+				border-color:$success;
+			}
+			&[type="radio"]:checked + span::after, &[type="checkbox"]:checked + span::after {
+				@include opacity(1);
+			}
+			&[type="radio"].error + span, &[type="checkbox"].error + span {
+				border-color:$error;
+			}
+			&[type="radio"] {
+				+ span {
+					@include border-radius(50%); 
+	
+					&::after {
+						@include border-radius(4px);
+						background-color:$blue_sh1;
+						border-color:$blue_sh1;
+					}
+				}
+				&:checked + span {
+					border:1px solid $blue_sh1;
+					@include transition(all 0.1s ease);
+				}
+			}
+			&[type="radio"]:checked + span::after {
+				border:2px solid $white;
+				@include border-radius(50%);
+			}
+	
+			&[type="checkbox"] {
+				+ span {
+					@include border-radius(50%);
+	
+					&::after {
+						@include border-radius(50%);
+						background-color:$blue_sh1;
+						border-color:$blue_sh1;
+					}
+				}
+				&:checked + span {
+					border:1px solid $blue_sh1;
+					@include transition(all 0.1s ease);
+				}
+			}
+			
+			&[type="checkbox"].sqare + span {
+				@include border-radius(0);
+				@include size(20px);
+				position: relative;
+				margin-top:0px;
+	
+				&::after {
+				  display:none;
+				}
+				&::before {
+					@include border-radius(50%);
+					font-family: 'Font Awesome 5 Pro';
+					content:'\f00c';
+					color:$white;
+					@include font-size(13);
+					position: absolute;
+					left: 3px;
+					top: 2px;
+					display: none;
+	
+				}
+			}
+			&[type="checkbox"].sqare:checked + span{
+			   background: $blue_sh1;
+			  
+			}    
+	
+			&[type="checkbox"].sqare:checked + span:before {
+				display: block;
+			}
+	
+			&[type="checkbox"]:checked + span::after {
+				border:2px solid $white;
+				@include border-radius(50%);
+			}
+	
+	
+			input[type="checkbox"]+span {
+				-webkit-border-radius: 50%;
+				border-radius: 50%;
+			}
+		}
     }
 
 	input:-webkit-autofill {
@@ -59,7 +181,7 @@
     &__label {
 		display:block;
         color: $black;
-        @include font-size(14);
+        @include font-size(16);
         line-height:1.8;
         font-weight:$weightBold;
     }

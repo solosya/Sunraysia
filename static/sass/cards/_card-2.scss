@@ -1,10 +1,10 @@
 @mixin card-2-base() {
     margin-left: -20px;
     margin-right: -20px;
-    background: $white;
 
     .c-cards-view {
         @include flex-direction(column, vertical);
+        background: $white;
 
 
         &__container {

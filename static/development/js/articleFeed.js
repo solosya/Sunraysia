@@ -73,7 +73,13 @@ Acme.View.articleFeed = function(options)
     };
 
     this.waypoint  = false;
+    
+    // This is the load more button
     this.elem      = $('#' + options.name);
+    // This is the load LESS button if you have one
+    this.lessElem  = $('#less-' + options.name);
+    console.log(this.lessElem);
+    console.log('#less-' + options.name);
     this.failText  = options.failText || null;
     this.events();
 };
@@ -98,6 +104,7 @@ Acme.View.articleFeed.prototype.render = function(data)
         ads_on     =   self.ads           || null;
 
     self.elem.html(label);
+    self.lessElem.show();
 
     // add counts to the dom for next request
     self.options.offset += self.options.limit;
@@ -116,7 +123,7 @@ Acme.View.articleFeed.prototype.render = function(data)
             html.push( self.feedModel.renderCard(articles[i], {
                 cardClass: self.cardClass,
                 template: self.template,
-                type: "acme-"
+                type: ""
             }));
         }
         if (self.before ) {
