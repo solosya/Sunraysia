@@ -530,6 +530,7 @@
                 if (self.callback) {
                     self.callback(data);
                 } else {
+                    console.log('update_state', data);
                     Acme.PubSub.publish('update_state', data);
                 }
                 

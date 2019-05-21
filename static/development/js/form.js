@@ -21,7 +21,6 @@ Acme.Form = function(validators, rules) {
     };
     Acme.Form.prototype.addInlineErrors = function()
     {
-        console.log(this.errorFields)
         if (this.errorFields.length > 0 && this.errorField) {
             this.errorField.addClass('active');
         }

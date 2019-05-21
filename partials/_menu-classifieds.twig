@@ -1,11 +1,17 @@
 {% set subMenu = subMenu is defined and subMenu == true   ? true : false   %}
 
-{% set listClass = subMenu ? "c-classified-submenu": "c-classified-lists--items listVerticalScrollBar" %} 
+{% set listClass = subMenu ? "c-classified-menu__submenu": "c-classified-menu__items listVerticalScrollBar" %} 
 {% set displayClass = subMenu and display == false ? "display:none": "" %} 
 {% set arrowClass = subMenu and display == false ? "": "open" %} 
 
 {% if subMenu %}
-    <div class="{{arrowClass}}"><span class="o-arrow"></span></div>
+    {# this div makes the surrounds of the arrow bigger to make it easier to click. #}
+    <div class="c-classified-menu__arrow-container">
+        {# this div decides the size of the arrow, within it's clickable surrounds. #}
+        <div class="c-classified-menu__arrow {{arrowClass}}"> 
+            <span class="o-arrow"></span>
+        </div>
+    </div>
 {% endif %}
 
 
@@ -32,8 +38,8 @@
             {% set activeClass = 'open' %}
         {% endif %}
 
-        <li class="{{activeClass}}">
-            <a  class="{{childrenClass}}"
+        <li class="c-classified-menu__item {{activeClass}}">
+            <a  class="c-classified-menu__item-link {{childrenClass}}"
 
                 {% if children %}
                     href="?category={{name | lower}}"
