@@ -1,5 +1,5 @@
 {% set link = _Blog.getHomeBlogSettings() %}
-{% set footerMenu = _Menu.get({'menuType': 'footer', 'menuGroupName': 'default'}) %}
+{% set footerMenu = _Menu.get({'menuType': 'header', 'menuGroupName': 'footer'}) %}
 
 <footer class="c-footer c-footer-sm">
     <div class="container">
@@ -26,37 +26,21 @@
 
                 <div class="col-12 col-lg-7 c-footer__navigation-container order-lg-2 order-md-1 d-sm-none d-md-block">
                     <div class="row">
-                        <div class="col-12 col-md-4 c-footer__navigation u-border-left">
-                            {% if footerMenu | length > 0 %}
-                                {{this.render('_footer_navigation.twig', {
-                                    items: footerMenu | slice(0, 6),
-                                    class: '',
-                                }) | raw}}
-                            {% endif %}
-                            <a href="javascript:;">REAL ESTATE</a>
-                            <a href="javascript:;">Sports</a>
-                            <a href="javascript:;">EVENTS</a>
-                            <a href="javascript:;">REAL ESTATE</a>
-                            <a href="javascript:;">Sports</a>
-                            <a href="javascript:;">EVENTS</a>
-
-                        </div>
-                        <div class="col-12 col-md-4 c-footer__navigation u-border-left">
-                            <a href="javascript:;">REAL ESTATE</a>
-                            <a href="javascript:;">Sports</a>
-                            <a href="javascript:;">EVENTS</a>
-                            <a href="javascript:;">REAL ESTATE</a>
-                            <a href="javascript:;">Sports</a>
-                            <a href="javascript:;">EVENTS</a>
-                        </div>
-                        <div class="col-12 col-md-4 c-footer__navigation u-border-left">
-                            <a href="javascript:;">REAL ESTATE</a>
-                            <a href="javascript:;">Sports</a>
-                            <a href="javascript:;">EVENTS</a>
-                            <a href="javascript:;">REAL ESTATE</a>
-                            <a href="javascript:;">Sports</a>
-                            <a href="javascript:;">EVENTS</a>
-                        </div>
+                        
+                            {% set footercols = 0 %}
+                            {% for i in 0..4 if footerMenu | length > footercols %}
+                                <div class="col-12 col-md-4 c-footer__navigation u-border-left">
+                                    
+                                        {{this.render('_footer_navigation.twig', {
+                                            items: footerMenu | slice(footercols, 6),
+                                            class: '',
+                                        }) | raw}}
+                                    
+                                </div>
+                                {% set footercols = footercols + 6 %}
+                            {% endfor %}
+                            
+                        
                     </div>
                 </div>
             </div>
