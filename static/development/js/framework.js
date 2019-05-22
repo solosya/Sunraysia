@@ -484,6 +484,10 @@
             var self = this;
             this.defaultItem.parent().on('click', function(e) {
                 e.stopPropagation();
+
+                if (self.enabled === false ) return;
+
+
                 self.listContainer.toggle();
             });
         };
@@ -517,6 +521,7 @@
         {
             var self = this;
             this.listContainer.on('click', function(e) {
+
                 $.each(self.listElements, function(i,e) {
                     $(e).attr('checked', false);
                 });
@@ -530,7 +535,6 @@
                 if (self.callback) {
                     self.callback(data);
                 } else {
-                    console.log('update_state', data);
                     Acme.PubSub.publish('update_state', data);
                 }
                 
@@ -571,6 +575,19 @@
             this.listContainer.empty();
             return this;
         };
+        Acme.listMenu.prototype.disable = function()
+        {
+            this.enabled = false;
+            $('#' + this.name).addClass("disabled");
+            return this;
+        };
+        Acme.listMenu.prototype.enable = function()
+        {
+            this.enabled = true;
+            $('#' + this.name).removeClass("disabled");
+            return this;
+        }
+
         Acme.listMenu.prototype.update = function(list)
         {
             this.list = list;

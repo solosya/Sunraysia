@@ -1,3 +1,6 @@
+Acme.articleFeeds = {};
+
+
 $('document').ready(function() {
     var mobileView = 992;
     var desktopView = 1119;
