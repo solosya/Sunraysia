@@ -31,7 +31,7 @@
                             {% for i in 0..4 if footerMenu | length > footercols %}
                                 <div class="col-12 col-md-4 c-footer__navigation u-border-left">
                                     
-                                        {{this.render('_footer_navigation.twig', {
+                                        {{this.render('_submenu_navigation.twig', {
                                             items: footerMenu | slice(footercols, 6),
                                             class: '',
                                         }) | raw}}
