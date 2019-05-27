@@ -424,7 +424,9 @@ Acme.UserProfileController.prototype.pageEvents = function ()
                 }
             }
             Acme.SigninView.render("userPlan", "Are you sure you want to change plan?", {message: msg})
-                .done(function() {
+                .done(function(r) {
+                    console.log(r);
+                    console.log('changing plan');
                     $('#dialog').parent().remove();
                     
                     $.ajax({
@@ -433,6 +435,7 @@ Acme.UserProfileController.prototype.pageEvents = function ()
                         dataType: 'json',
                         data: requestData,
                         success: function (data, textStatus, jqXHR) {
+                            console.log(data);
                             if (data.success == 1) {
                                 window.location.reload();
                             } else {
@@ -441,7 +444,8 @@ Acme.UserProfileController.prototype.pageEvents = function ()
                             }
                         },
                         error: function (jqXHR, textStatus, errorThrown) {
-                                $('#createUserErrorMessage').text(textStatus);
+                            console.log(textStatus);
+                            $('#createUserErrorMessage').text(textStatus);
                         },
                     });        
                 }); 

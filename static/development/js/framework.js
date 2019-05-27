@@ -675,7 +675,7 @@
         };
         Acme.modal.prototype.handle = function(e) {
             var $elem = $(e.target);
-
+            console.log('in teh frameowkr handle')
             if ( !$elem.is('input') && !$elem.is('a') && !$elem.parent().is('a') ) {
                 e.preventDefault();
             }
@@ -688,10 +688,12 @@
                     this.closeWindow();
 
                 } else if ($elem.text().toLowerCase() === "okay" || $elem.data('role') == 'okay') {
+                    console.log('resolving');
                     this.dfd.resolve();
                     this.closeWindow();
                 }
             }
+            console.log('allala');
             return $elem;
         };
         Acme.modal.prototype.closeWindow = function() {

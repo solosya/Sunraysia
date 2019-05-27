@@ -18035,7 +18035,7 @@ function(a){"use strict";void 0===a.en&&(a.en={"mejs.plural-form":1,"mejs.downlo
         };
         Acme.modal.prototype.handle = function(e) {
             var $elem = $(e.target);
-
+            console.log('in teh frameowkr handle')
             if ( !$elem.is('input') && !$elem.is('a') && !$elem.parent().is('a') ) {
                 e.preventDefault();
             }
@@ -18048,10 +18048,12 @@ function(a){"use strict";void 0===a.en&&(a.en={"mejs.plural-form":1,"mejs.downlo
                     this.closeWindow();
 
                 } else if ($elem.text().toLowerCase() === "okay" || $elem.data('role') == 'okay') {
+                    console.log('resolving');
                     this.dfd.resolve();
                     this.closeWindow();
                 }
             }
+            console.log('allala');
             return $elem;
         };
         Acme.modal.prototype.closeWindow = function() {
@@ -18492,7 +18494,7 @@ Acme.templates.forgotFormTmpl =
 Acme.templates.userPlanMessage = 
 '<p class="{{name}}__message">{{message}}</p> \
 <form name="loginForm" id="loginForm" class="active u-margin-top-20" action="javascript:void(0);" method="post" accept-charset="UTF-8" autocomplete="off"> \
-    <button id="cancelbutton" class="c-button c-button--blue-bordered" data-role="cancel">OK</button> \
+    <button id="cancelbutton" class="c-button c-button--blue-bordered" data-role="okay">OK</button> \
 </form>';
 
 Acme.templates.userPlanOkCancel = 
@@ -21545,7 +21547,9 @@ Acme.UserProfileController.prototype.pageEvents = function ()
                 }
             }
             Acme.SigninView.render("userPlan", "Are you sure you want to change plan?", {message: msg})
-                .done(function() {
+                .done(function(r) {
+                    console.log(r);
+                    console.log('changing plan');
                     $('#dialog').parent().remove();
                     
                     $.ajax({
@@ -21554,6 +21558,7 @@ Acme.UserProfileController.prototype.pageEvents = function ()
                         dataType: 'json',
                         data: requestData,
                         success: function (data, textStatus, jqXHR) {
+                            console.log(data);
                             if (data.success == 1) {
                                 window.location.reload();
                             } else {
@@ -21562,7 +21567,8 @@ Acme.UserProfileController.prototype.pageEvents = function ()
                             }
                         },
                         error: function (jqXHR, textStatus, errorThrown) {
-                                $('#createUserErrorMessage').text(textStatus);
+                            console.log(textStatus);
+                            $('#createUserErrorMessage').text(textStatus);
                         },
                     });        
                 }); 
@@ -22015,7 +22021,7 @@ Acme.Signin.prototype.handle = function(e) {
     var self = this;
 
     var $elem = this.parent.handle.call(this, e);
-
+    console.log('handling');
     if ( $elem.is('a') ) {
 
         if ($elem.hasClass('close')) {
