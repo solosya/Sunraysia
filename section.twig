@@ -42,6 +42,8 @@
                 
                 <div class="row">
                     <div class="col-12 col-lg-8">
+                    {% if articles[articleCount] %}                                                                
+
                         {{this.render('partials/_single-article.twig', {
                             article: articles[articleCount], 
                             position: (articleCount+1),
@@ -49,9 +51,11 @@
                             containerClass: "card-5-mobile card-5-tablet card-5-desktop"
                         }) | raw}}
                         {% set articleCount = (dev) ? articleCount : articleCount + 1 %}
+                    {% endif %}
                     </div>
 
                     <div class="col-12 col-md-6 col-lg-4">
+                    {% if articles[articleCount] %}                                                                
                         {{this.render('partials/_single-article.twig', {
                             article: articles[articleCount], 
                             position: (articleCount+1),
@@ -59,9 +63,11 @@
                             containerClass: "card-4-mobile card-2-tablet card-2-desktop"
                         }) | raw}}
                         {% set articleCount = (dev) ? articleCount : articleCount + 1 %}
+                    {% endif %}
                     </div>
 
                     <div class="col-12 col-md-6 col-lg-12">
+                    {% if articles[articleCount] %}                                                                
                         {{this.render('partials/_single-article.twig', {
                             article: articles[articleCount], 
                             position: (articleCount+1),
@@ -69,12 +75,14 @@
                             containerClass: "card-4-mobile card-2-tablet card-3-desktop card-3-desktop-lg"
                         }) | raw}}
                         {% set articleCount = (dev) ? articleCount : articleCount + 1 %}
+                        {% endif %}
                     </div>
                 </div>
             </div>
 
             
             <div class="col-12 col-lg-3">
+            {% if articles[articleCount] %}                                                                
 
                 {{this.render('partials/_single-article.twig', {
                     article: articles[articleCount], 
@@ -83,7 +91,7 @@
                     containerClass: "card-4-mobile card-3-tablet card-2-desktop"
                 }) | raw}}
                 {% set articleCount = (dev) ? articleCount : articleCount + 1 %}
- 
+            {% endif %}
             </div>
 
 
@@ -91,6 +99,7 @@
 
         <div class="row">
             <div class="col-12 col-lg-3">
+            {% if articles[articleCount] %}                                                                
                 {{this.render('partials/_single-article.twig', {
                     article: articles[articleCount], 
                     position: (articleCount+1),
@@ -98,10 +107,11 @@
                     containerClass: "card-1-mobile card-3-tablet card-1-desktop"
                 }) | raw}}
                 {% set articleCount = (dev) ? articleCount : articleCount + 1 %}
+            {% endif %}
             </div>
 
             <div class="col-12 col-lg-9">
-
+            {% if articles[articleCount] %}                                                                
                 {{this.render('partials/_single-article.twig', {
                     article: articles[articleCount], 
                     position: (articleCount+1),
@@ -109,7 +119,7 @@
                     containerClass: "card-4-mobile card-3-tablet card-3-desktop card-3-desktop-lg"
                 }) | raw}}
                 {% set articleCount = (dev) ? articleCount : articleCount + 1 %}
-
+            {% endif %}
             </div>
         </div>
         <div class="row">
