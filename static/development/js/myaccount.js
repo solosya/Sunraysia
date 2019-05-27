@@ -226,7 +226,7 @@ Acme.UserProfileController.prototype.pageEvents = function ()
     });
 
     $('#managed-user-search').on('submit', function(e) {
-        console.log('searching');
+
         e.preventDefault();
         var search = {};
         $.each($(this).serializeArray(), function(i, field) {

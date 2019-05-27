@@ -21347,7 +21347,7 @@ Acme.UserProfileController.prototype.pageEvents = function ()
     });
 
     $('#managed-user-search').on('submit', function(e) {
-        console.log('searching');
+
         e.preventDefault();
         var search = {};
         $.each($(this).serializeArray(), function(i, field) {
@@ -22128,7 +22128,7 @@ $('#signinBtn, #articleSigninBtn').on('click', function(e) {
 
 (function ($) {
 
-if ($('#stripekey').length > 0) {
+    if ($('#stripekey').length > 0) {
 
     var stripekey = $('#stripekey').html();
 
@@ -22209,9 +22209,9 @@ if ($('#stripekey').length > 0) {
     {
         this.clearInlineErrors();
         this.addInlineErrors();
+        console.log(this.data);
         if (checkTerms) {
             if (!this.data.terms) {
-
                 this.confirmView = new Acme.Confirm('modal', 'signin-modal', {'terms': 'subscribeTerms'});
                 this.confirmView.render("terms", "Terms of use");
             }
@@ -22219,11 +22219,17 @@ if ($('#stripekey').length > 0) {
     };
     SubscribeForm.prototype.submit = function(event) 
     {
+        console.log('submit');
+
         var self = this;
         event.preventDefault();
         var validated = self.validate();
         self.render(true);
+        console.log('validated??');
+        console.log(this.errorFields);
         if (!validated) return;
+        console.log('yep!');
+
 
         $('#card-errors').text('');
         if ( $('#password').val() !== $('#verifypassword').val() ) {
@@ -22232,7 +22238,7 @@ if ($('#stripekey').length > 0) {
         }
 
         function submitForm() {
-
+            console.log('auth/paywall')
             formhandler(self.data, '/auth/paywall-signup').then(function(response) {
                 console.log(response);
                 if (response.success == 1) {
@@ -22243,7 +22249,7 @@ if ($('#stripekey').length > 0) {
             });
         }
 
-
+        console.log('here now');
         if ($("#code-redeem").length > 0) {
             modal.render("spinner", "Authorising code");
             self.data['planid'] = $('#planid').val();
@@ -22252,9 +22258,12 @@ if ($('#stripekey').length > 0) {
             submitForm();
 
         } else {
+            console.log('give me a spinne!');
+
             modal.render("spinner", "Your request is being processed.");
 
             var stripeCall = stripe.createToken(card).then(function(result) {
+                console.log(result);
                 if (result.error) {
                     modal.closeWindow();
                     // Inform the user if there was an error
@@ -22277,8 +22286,29 @@ if ($('#stripekey').length > 0) {
     SubscribeForm.prototype.events = function()
     {
         var self = this;
-        $('input, textarea').on("change", function(e) {
 
+        $('.j-plan-subscribe').on("click", function(e) {
+            var elem = $(this);
+            var plan = elem.data('planid');
+            var name = elem.data('plan-name');
+            $('#planid').val(plan);
+            $('#subscription_choice').val(name);
+
+            $('.j-plan-subscribe').each(function(i, e) {
+                var button = $(e);
+                button.text('SUBSCRIBE');
+                button.removeClass('c-button--red');
+                button.addClass('c-button--grey');
+            });
+
+            elem.text('SELECTED');
+            elem.removeClass('c-button--grey');
+            elem.addClass('c-button--red');
+        });
+
+
+        $('#subscribe-form input, #subscribe-form textarea').on("change", function(e) {
+            console.log('updating');
             e.stopPropagation();
             e.preventDefault();
             var data = {};
@@ -22309,6 +22339,7 @@ if ($('#stripekey').length > 0) {
 
         if (form != null) {
             form.addEventListener('submit', function(e) {
+
                 console.log('submitting');
                 self.submit(e);
             });

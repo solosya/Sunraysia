@@ -16,7 +16,6 @@
 {% set user = _User.getUser() %}
 
 
-
 {# {% if user %} 
     {% set userImage = _User.getUserPurchases(user.guid, 0, 10, {'type':"images"}) %}
 {% endif %} #}
@@ -53,28 +52,28 @@
                                 <p id="account-form__errorText" class="c-account-form__errorText u-margin-bottom-10"></p>
                             </div>
 
-                            <form id="profile-form" class="c-form" action="#" method="post" autocomplete="off">
+                            <form id="profile-form" class="c-form" action="" method="post" autocomplete="off">
                                 <input type="hidden" name="_csrf" value="{{_AppHelper.getCsrfToken()}}" />
                                 <input type="hidden" name="profileImage" id="userProfileImage" value="" />
 
                                 {# FIRST NAME #}
                                 <div class="c-form__group has-error">
                                     <label class="c-form__label c-account-form__label" for="first-name">First name</label>
-                                    <input id="first-name" class="c-form__input c-form__input--bordered c-account-form__input" name="firstname" placeholder="First Name" aria-required="true" type="text" value="{{user.firstname}}">
+                                    <input id="first-name" class="c-form__input c-form__input--bordered c-account-form__input" name="firstname" placeholder="First Name" type="text" value="{{user.firstname}}">
                                     <div class="c-form__help-block">Please enter your first name</div>
                                 </div>
 
                                 {# LAST NAME #}
                                 <div class="c-form__group u-margin-top-15">
                                     <label class="c-form__label c-account-form__label" for="last-name">Last name</label>
-                                    <input id="last-name" class="c-form__input c-form__input--bordered c-account-form__input" name="lastname" placeholder="Last Name" aria-required="true" type="text" value="{{user.lastname}}">
+                                    <input id="last-name" class="c-form__input c-form__input--bordered c-account-form__input" name="lastname" placeholder="Last Name" type="text" value="{{user.lastname}}">
                                     <div class="c-form__help-block"></div>
                                 </div>
 
                                 {# EMAIL #}
                                 <div class="c-form__group u-margin-top-15">
                                     <label class="c-form__label c-account-form__label" for="email">Email address</label>
-                                    <input id="email" class="c-form__input c-form__input--bordered c-account-form__input" name="email" placeholder="Email" aria-required="true" type="text" value="{{user.email}}">
+                                    <input id="email" class="c-form__input c-form__input--bordered c-account-form__input" name="email" placeholder="Email" type="text" value="{{user.email}}">
                                     <div class="c-form__help-block"></div>
                                 </div>
 
@@ -82,7 +81,7 @@
                                 {# Number #}
                                 <div class="c-form__group u-margin-top-15">
                                     <label class="c-form__label c-account-form__label" for="organisation">Contact number</label>
-                                    <input id="contact-number" class="c-form__input c-form__input--bordered c-account-form__input" name="contact-number"  value="{{user.contactnumber}}" aria-required="true" type="text">
+                                    <input id="contact-number" class="c-form__input c-form__input--bordered c-account-form__input" name="contact-number" value="{{user.contactnumber}}"  type="text">
                                     <div class="c-form__help-block"></div>
                                 </div>
 
@@ -90,14 +89,14 @@
                                 {# PASSWORD #}
                                 <div class="c-form__group u-margin-top-15">
                                     <label class="c-form__label c-account-form__label" for="password">Password</label>
-                                    <input id="password" class="c-form__input c-form__input--bordered c-account-form__input" name="password" placeholder="Set new password" aria-required="true" type="password">
+                                    <input id="password" class="c-form__input c-form__input--bordered c-account-form__input" name="password" placeholder="Set new password" autocomplete="new-password" type="password">
                                     <div class="c-form__help-block"></div>
                                 </div>
 
                                 {# PASSWORD VERIFY #}
                                 <div class="c-form__group u-margin-top-15">
                                     <label class="c-form__label c-account-form__label" for="verifypassword">Verify password</label>
-                                    <input id="verifypassword" class="c-form__input c-form__input--bordered c-account-form__input" name="verifypassword" placeholder="Verify password" aria-required="true" type="password">
+                                    <input id="verifypassword" class="c-form__input c-form__input--bordered c-account-form__input" name="verifypassword" placeholder="Verify password" autocomplete="new-password" type="password">
                                     <div class="c-form__help-block"></div>
                                 </div>
 
@@ -281,7 +280,7 @@
                             
                             <div class="">
                                 <label class="c-form__label c-account-form__label" for="">Payment method</label>
-                                <div class="c-account-form__static-text">credit card/**** **** **** 5261</div>
+                                <div class="c-account-form__static-text">credit card/**** **** **** 9999</div>
                             </div>
                             
                             <div class=" no-margin-bottom u-margin-top-15">

@@ -3,21 +3,47 @@
 {% set blogData		= _Blog.getBlog() %}
 {% set blogName      = blogData.title %}
 
-{# separate plans by currency #}
-{# {% for plan in plans %}
-    {% if plan.currency | lower == 'usd' and 'School' not in plan.name %}
-        {% set usd = usd|merge([plan]) %}
-    {% endif %}
-    {% if plan.currency | lower == 'aud' and 'School' not in plan.name %}
-        {% set aus = aus|merge([plan]) %}
-    {% endif %}
-    {% if plan.currency | lower == 'gbp' and 'School' not in plan.name %}
-        {% set gbp = gbp|merge([plan]) %}
-    {% endif %}
-{% endfor %} #}
+
+{% set plan = false %}
+{% set trial = false %}
+{% set code = false %}
+{% set trialPeriod = '14' %} {# 14 days is default in the platform #}
+{% set url = _AppHelper.getParsedUrl() %}
+{% set params = url['query'] %}
+
+{# c54b5f8d-f9b5-4b59-b8ca-555f822d0448 #}
 
 
-{# {% set ui_plans = aus | slice(0,4) %} #}
+
+{% set break = false %}
+{% for k, p in params if not break %}
+
+    {% if k == 'plan' %}
+        {% for pl in plans %}
+            {% if pl.guid == p %}
+                {% set plan = pl %}
+                {% set break = true %}
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+
+    {% if k == 'trial' %}
+        {% if p == 'true' and plan['trial_status'] == '1' %}
+            {% set trial = true %}
+            {% set trialPeriod = plan['trial_period'] %}
+            {% set break = true %}
+        {% endif %}
+    {% endif %}
+
+    {% if k == 'code' %}
+        {% if p == 'true' %}
+            {% set code = true %}
+            {% set break = true %}
+        {% endif %}
+    {% endif %}
+
+{% endfor %}
+
 
 
 
@@ -29,6 +55,8 @@
  
 
 <main id="main" class="site-main" role="main">
+	<div id="stripekey" class="hidden" >{{networkData['stripe_publishable_key']}}</div>
+
     <div class="container">
         <div class="row">
             <div class="col-12 col-centered">
@@ -54,33 +82,38 @@
                 <div class="row justify-content-center">
                     <div class="col-lg-10">
                         <div class="row">
+			                {% for plan in plans %}
+                                {% set val = plan.plan_value / 100 %}
+                                <div class="col-12 col-lg-4 col-md-12 col-sm-12 col-xs-12">
+                                    <div class="c-paywall-card">
+                                        
+                                        <h3 class="c-paywall-card__name c-paywall-card__name-xs">{{plan.name}}</h3>
+                                        <p class="c-paywall-card__excerpt c-paywall-card__excerpt-xs">{{plan.description}}</p>
+                                        <div class="c-paywall-card__price c-paywall-card__price-lg">${{val}} per {{plan.period}}</div>
+                                        
+                                        <div class="c-paywall-card__Graphic c-paywall-card__Graphic-lg">
+                                            <picture class="">
+                                                <img src   ="{{networkData.templatePath}}/static/images/device.png" 
+                                                    srcset="{{networkData.templatePath}}/static/images/device.png 1x, {{networkData.templatePath}}/static/images/device@2x.png 2x, {{networkData.templatePath}}/static/images/device@3x.png 3x" class="img-fluid">
+                                            </picture>
+                                        </div>
+                                        
+                                        <ul class="c-paywall-card__Details c-paywall-card__Details-md">
+                                            <li>Amazing benefit number one here</li>
+                                            <li>Even more amazing benefit number two goes here</li>
+                                            <li>Yet another fabulous benefit to subscribing to Sunraysia Daily</li>
+                                            <li>Amazing benefit number one here</li>
+                                        </ul>
 
-                            <div class="col-12 col-lg-4 col-md-12 col-sm-12 col-xs-12">
-                                <div class="c-paywall-card">
-                                    
-                                    <h3 class="c-paywall-card__name c-paywall-card__name-xs">Subscription offer one</h3>
-                                    <p class="c-paywall-card__excerpt c-paywall-card__excerpt-xs">Spendisse ultria eces phlaretra id at nullneiair naeos 99c a day</p>
-                                    <div class="c-paywall-card__price c-paywall-card__price-lg">$29p/m</div>
-                                    
-                                    <div class="c-paywall-card__Graphic c-paywall-card__Graphic-lg">
-                                        <picture class="">
-                                            <img src   ="{{networkData.templatePath}}/static/images/device.png" 
-                                                srcset="{{networkData.templatePath}}/static/images/device.png 1x, {{networkData.templatePath}}/static/images/device@2x.png 2x, {{networkData.templatePath}}/static/images/device@3x.png 3x" class="img-fluid">
-                                        </picture>
+                                        <button type="button" 
+                                                class="c-button c-button--grey c-button-block c-button-md j-plan-subscribe" 
+                                                data-plan-name="{{plan.name}}" 
+                                                data-planid="{{plan.guid}}">Subscribe</button>
                                     </div>
-                                    
-                                    <ul class="c-paywall-card__Details c-paywall-card__Details-md">
-                                        <li>Amazing benefit number one here</li>
-                                        <li>Even more amazing benefit number two goes here</li>
-                                        <li>Yet another fabulous benefit to subscribing to Sunraysia Daily</li>
-                                        <li>Amazing benefit number one here</li>
-                                    </ul>
-
-                                    <button type="button" class="c-button c-button--grey c-button-block c-button-md">Subscribe</button>
                                 </div>
-                            </div>
-                    
-                            <div class="col-12 col-lg-4 col-md-12 col-sm-12 col-xs-12">
+                            {% endfor %}
+
+                            {# <div class="col-12 col-lg-4 col-md-12 col-sm-12 col-xs-12">
                                 <div class="c-paywall-card">
                                     
                                     <h3 class="c-paywall-card__name c-paywall-card__name-xs">Subscription offer one</h3>
@@ -101,7 +134,7 @@
                                         <li>Amazing benefit number one here</li>
                                     </ul>
 
-                                    <button type="button" class="c-button c-button--grey c-button-block c-button-md">Subscribe</button>
+                                    <button type="button" class="c-button c-button--grey c-button-block c-button-md j-plan-subscribe" data-planid="{{}}">Subscribe</button>
                                 </div>
                             </div>
                             
@@ -126,9 +159,9 @@
                                         <li>Amazing benefit number one here</li>
                                     </ul>
 
-                                    <button type="button" class="c-button c-button--grey c-button-block c-button-md">Subscribe</button>
+                                    <button type="button" class="c-button c-button--grey c-button-block c-button-md j-plan-subscribe" data-planid="{{}}">Subscribe</button>
                                 </div>
-                            </div>
+                            </div> #}
                         </div>
                     </div>
                 </div>
@@ -142,7 +175,10 @@
             <div class="col-lg-10">
                 <!-- Coustomer detail form  Section start -->
                 <div class="c-paywallform">
-                    <form class="c-form">
+                    <form id="subscribe-form" class="c-form">
+                        <input type="hidden" class="" name="planid" id="planid" value="">
+                        <input type="hidden" class="" name="trial" id="trial" value="">
+
                         <div class="row">
                             <div class="col-12">
                                 <div class="c-section-header">Your details</div>
@@ -171,14 +207,14 @@
                             <div class="col-md-6 u-margin-top-10">
                                 <div class="">
                                     <label  class="c-form__label" for="firstname">Email address*</label>
-                                    <input class="c-form__input c-form__input--bordered" type="email" id="emailaddress" placeholder="eg. johnsmith@gmail.com" name="emailaddress" required>
+                                    <input class="c-form__input c-form__input--bordered" type="email" id="email" placeholder="eg. johnsmith@gmail.com" name="email">
                                     <div class="c-form__help-block">Please fill out this field.</div>
                                 </div>
                             </div>
                             <div class="col-md-6 u-margin-top-10">
                                 <div class="">
-                                    <label class="c-form__label" for="normalselect">Subscription*</label>
-                                    <input class="c-form__input c-form__input--bordered" type="text" id="emailaddress" placeholder="eg. johnsmith@gmail.com" name="subscriptionaddress">
+                                    <label class="c-form__label" for="normalselect">Subscription</label>
+                                    <input id="subscription_choice" class="c-form__input c-form__input--bordered" type="text" id="" placeholder="Choose a plan from above" name="subscriptionaddress" readonly>
                                     <div class="c-form__help-block">Please fill out this field.</div>
                                 </div>
                             </div>
@@ -193,7 +229,7 @@
                             <div class="col-md-6 u-margin-top-10">
                                 <div class="">
                                     <label class="c-form__label" for="firstname">Confirm password*</label>
-                                    <input class="c-form__input c-form__input--bordered" type="password" id="resetpassword" placeholder="Password (must be at least five characters)" name="resetpassword" required>
+                                    <input class="c-form__input c-form__input--bordered" type="password" id="verifypassword" placeholder="Password (must be at least five characters)" name="verifypassword" required>
                                     <div class="c-form__help-block">Password (must be at least five characters)</div>
                                 </div>
                             </div>
@@ -224,6 +260,39 @@
                                 <div class="c-totalpayvalue__title">Total</div>
                                 <div class="c-totalpayvalue__value">$29 AUD</div>
                             </div>
+                            <div class="form-group fullwidth">
+                                <label class="control-label control-label-sm" for="creditcarddetails" style="font-weight:normal;">Please enter your credit or debit card details.</label>
+                                
+                                
+                                
+                                {% if  code %}
+                                    <form action="/charge" method="post" id="payment-form">
+                                        <div class="form-row ">
+                                            <label for="code-redeem">Gift code </label>
+                                            <input type="text" class="articleExtendedData" name="code-redeem" id="code-redeem" value="" placeholder="0a1b-2c3d-4e5f">
+                                        </div>
+                                        
+                                        <div class="form-group" style="margin-top:30px;">
+                                            <button type="submit" id="subscribe" class="c-button c-button--rounded c-button--blue">Subscribe</button>
+                                        </div>
+                                    </form>
+
+                                {% else %}
+                                    <form action="/charge" method="post" id="payment-form" class="stripe-form">
+                                        <div class="" style="width:100%">
+                                            <div id="card-element"><!-- a Stripe Element will be inserted here. --></div>
+                                            <!-- Used to display form errors -->
+                                            <div id="card-errors" class="card-errors" role="alert"></div>
+                                        </div>
+
+                                        <div class="form-group" style="margin-top:30px;">
+                                            <button type="submit" id="subscribe" class="c-button c-button--rounded c-button--blue">Subscribe</button>
+                                        </div>
+                                    </form>
+                                {% endif %}
+                                                
+                            </div>
+
                         </div>
                     </div>
                 </div>
