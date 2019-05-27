@@ -70,11 +70,11 @@
 
     <!-- End Hero Banner -->
 
-    <div class="clearfix"></div>
 
     <div class="clearfix"></div>
     <div class="c-payWall c-payWall-md u-mb--60">
 
+        {% if plans | length > 0 %}
         <div class="c-payWall--pricing c-payWall--pricing-md">
 
             <div class="container">
@@ -167,7 +167,14 @@
                 </div>
             </div>
         </div>
+
+        {% endif %}
     </div>
+
+
+
+
+
 
     <div class="clearfix"></div>
     <div class="container">
