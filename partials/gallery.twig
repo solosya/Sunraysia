@@ -36,23 +36,6 @@ with width taken up with borders on the side #}
 
 
 
-                    {# <div class="o-media js-media o-media-sm">
-                        <figure class="o-media__item">
-                            <div class="o-media__item__galllery">
-                                <img src="https://res.cloudinary.com/cognitives/image/upload/c_fill,dpr_auto,f_auto,fl_lossy,h_845,q_auto,w_1500/l64zmptftjfcytzrhjtd" class="img-fluid o-media__image" alt="Article Info">
-                                <div class="video-icon"></div>
-                            </div>
-                            <div class="o-media__caption">
-                                Captionipidus imillenda perferum quas simoluptur? Nam etus aut laborate ventior am ad
-                                qui sam excorate ventior am ad qui sam exceped minum quis erumque parum, si
-                                cusandameped minum eudigill excorao riasit eum nectat.
-                            </div>
-                        </figure>
-                    </div> #}
-
-
-
-
 
 <div id="{{owl}}" class="article-gallery owl-gallery-{{type}} {{owlClass}}" data-slider-id="1">
     {% for image in media %}
@@ -60,10 +43,12 @@ with width taken up with borders on the side #}
         {% set articleImgSmall = _Media.getMediaUrl(image,0, 250, {'crop': 'fill', 'gravity': gravity} ) %}
         {% set articleImgMedium = _Media.getMediaUrl(image,0, 500, {'crop': 'fill', 'gravity': gravity} ) %}
         {% set articleImg = _Media.getMediaUrl(image, imgWidth, imgHeight, {'crop': 'fill', 'gravity': gravity} ) %}
-
+        
+        
         <figure class="article-gallery__image article-gallery__image-{{galleryStyle}}" data-hash="{{loop.index}}">
                 
-            {% if image.type == 'image' or image.type == 'doc'%} 
+            {% if image.type == 'image' or image.type == 'doc' or ( image.type == 'video' and showPaywall == true ) %} 
+
                 <div class="article-gallery__img-container article-gallery__img-container-{{galleryStyle}}">
                     <picture>
                         <source media="(max-width: 728px) and (min-width: 501px)" srcset="{{articleImgMedium}}">
@@ -74,7 +59,7 @@ with width taken up with borders on the side #}
             {% endif %}                
             
             
-            {% if image.type == 'video' %} 
+            {% if image.type == 'video'  and showPaywall != true %} 
                 
                 {% set mediaUrl = "" %}
                 
