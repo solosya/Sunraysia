@@ -115,10 +115,11 @@
                 font-weight: $weightRegular;
                 @include font-size(14);
                 line-height: 1.5;
-                @include padding-left(20);
+                @include padding-left(26);
                 background-image: url('../icons/location.svg');
                 background-repeat: no-repeat;
                 background-position: left center;
+                background-size:contain;
             }
         }
     
