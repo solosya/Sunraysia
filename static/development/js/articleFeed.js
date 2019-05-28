@@ -30,6 +30,7 @@ Acme.Feed.prototype.events = function()
         self.fetch();
     });
 
+    console.log(this.infinite, this.offset, this.limit);
     if (this.infinite && this.offset >= this.limit) {
         self.waypoint = new Waypoint({
             element: self.elem,
@@ -144,6 +145,7 @@ Acme.View.articleFeed.prototype.render = function(data)
         : self.elem.show();
 
     // reset infinite load depending on article count
+    console.log(self.waypoint);
     if (self.waypoint) {
         (articles.length < self.options.limit)
             ? self.waypoint.disable()
