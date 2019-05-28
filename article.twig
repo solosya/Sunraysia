@@ -17,15 +17,16 @@
 {% set showPaywall = false %}
 {% set ArticleContent = article.content %}
 
+
 {% if   not _User.isAdminUser()     and
         paywallSection == true      and
         articleBlogData['showPaywall'] == true  %}
-    
+        {{dump('turning paywall on')}}
     {% set showPaywall = true %}
 {% endif %}
 
 
-{% set showPaywall = true %}
+{# {% set showPaywall = true %} #}
 
 
 {% if showPaywall == true %}
