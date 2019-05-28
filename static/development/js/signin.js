@@ -86,7 +86,7 @@ Acme.Signin.prototype.handle = function(e) {
 
     if ($elem.data('layout') != null) {
         var layout = $elem.data('layout');
-        this.renderLayout(layout);
+        this.renderLayout(layout, {modal_title: ""});
 
     }
 

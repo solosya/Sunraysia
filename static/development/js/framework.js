@@ -657,6 +657,12 @@
             } else {
                 console.log(this.layouts[layout], 'Does not exist' );
             }
+            console.log(typeof data.modal_title);
+            console.log(data.what);
+            console.log(typeof data.what);
+            if (typeof data.modal_title != 'undefined') {
+                $('.signin-modal__title').text(data.modal_title);
+            }
         };
         Acme.modal.prototype.renderPreLayout = function(html) {
             console.log('appending');

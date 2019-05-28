@@ -347,8 +347,7 @@ Acme.templates.forgotFormTmpl =
         Enter your email below and we will send you a link to set your password. \
     </div> \
     \
-    <input id="email" class="c-form__input" name="email" placeholder="Email Address" aria-required="true" type="text"> \
-    <span class="fa fa-check input__type--icon"></span> \
+    <input id="email" class="c-form__input c-forgot-modal__input" name="email" placeholder="Email Address" aria-required="true" type="text"> \
     <div class="c-form__help-block">Please enter your email address</div> \
     \
     <div class="c-form__buttons"> \

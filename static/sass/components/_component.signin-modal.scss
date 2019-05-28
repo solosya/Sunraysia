@@ -11,7 +11,7 @@
     margin: auto auto;
     width:468px;
     background:white;
-    padding:25px 20px;
+    padding:25px 40px;
     border-radius:3px;
     @media #{$media-ipadSmall} {
         width:auto;
@@ -29,7 +29,7 @@
 
 .signin-modal__title {
     @include font-size(18);
-    text-align:center;
+    text-align:left;
     font-weight: $weightBold;
     margin-bottom:20px;
 }
