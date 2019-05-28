@@ -39,6 +39,10 @@ ListingForm.constructor = ListingForm;
         },
         "after" : function(data, topic) {
             console.log(this.data);
+            this.errorFields;
+            this.validate();
+            this.render();
+
         }
     };
     ListingForm.prototype.render = function() 
@@ -49,9 +53,9 @@ ListingForm.constructor = ListingForm;
 
         title.val(this.data.title);
         content.val(this.data.content);
-
+            console.log(this.errorFields);
         this.clearErrorHightlights();
-
+        console.log('cleared highlights', this.errorFields);
         this.addErrorHightlights();
 
         if (this.data.id) {
@@ -71,6 +75,7 @@ ListingForm.constructor = ListingForm;
     };
     ListingForm.prototype.addErrorHightlights = function()
     {
+        console.log(this.errorFields);
         if (this.errorFields.length > 0) {
             $("#formerror").addClass('active');
         }
@@ -89,7 +94,6 @@ ListingForm.constructor = ListingForm;
         mediaids.push(newImageId);
         this.data.media_ids = mediaids.join(',');
         this.data.media_id = mediaids[0];
-
         this.renderImageThumbs([data]);
         return true;
     };
@@ -120,12 +124,13 @@ ListingForm.constructor = ListingForm;
     {
         var imageArray = $('#imageArray');
         var html = "";
-        var temp = Handlebars.compile(window.templates.carousel_item); 
+        var temp = Handlebars.compile(Acme.templates.carousel_item); 
 
         for (var i=0;i<images.length;i++) {
             var imagePath = images[i].url || images[i].path;
             html += temp({"imagePath": imagePath, 'imageid' : images[i].media_id});
         }
+
         imageArray.append(html);
     };
     ListingForm.prototype.clear = function(images) 
@@ -147,7 +152,9 @@ ListingForm.constructor = ListingForm;
     ListingForm.prototype.submit = function()
     {
         var validated = this.validate();
+        
         if (!validated) {
+            console.log(this.errorFields);
             this.render();
             return;
         }
@@ -166,9 +173,11 @@ ListingForm.constructor = ListingForm;
     ListingForm.prototype.events = function() 
     {
         var self = this;
-        $('input, textarea').on("change", function(e) {
+
+        $('#' + this.formId + ' input, textarea').on("change", function(e) {
             e.stopPropagation();
             e.preventDefault();
+            console.log('edited a field');
             var data = {};
             var elem = $(e.target);
             var elemid = elem.attr('name');
@@ -177,18 +186,18 @@ ListingForm.constructor = ListingForm;
             self.updateData(data);
 
             if (self.compulsoryFields.indexOf(elemid) > -1 ) {
-
                 if (elem.val() == '') {
                     elem.addClass("formError");
                 } else {
                     elem.removeClass("formError");
                 }
             } 
-
+            self.validate();
+            console.log(self.errorFields);
         });
 
 
-        $('.uploadFileBtn').uploadFile({
+        $('#uploadFileBtn').uploadFile({
            onSuccess: function(data, obj){
 
                 var resultJsonStr = JSON.stringify(data);
@@ -199,16 +208,13 @@ ListingForm.constructor = ListingForm;
                 };
 
                 var outer = $("#uploadFileBtn");
-                var inner = $("#InnerUploadFileBtn");
                 outer.addClass("spinner");
-                inner.hide();
 
                 Acme.server.create('/api/article/save-image', postdata).done(function(r) {
-                    // console.log(r);
-                    // console.log(data);
+                    console.log(r);
+                    console.log(data);
                     if (self.saveImage(r, data) ) {
                         outer.removeClass("spinner");
-                        inner.show();
                     }
                 }).fail(function(r) {
                     // console.log(r);
@@ -219,6 +225,7 @@ ListingForm.constructor = ListingForm;
         $('#imageArray').on('click', '.carousel-tray__delete', function(e) {
             var elem = $(e.target);
             var mediaId = elem.data('id');
+            console.log(elem, mediaId);
             Acme.PubSub.publish('update_state', {'confirmDeleteImage': {elem:elem, id:mediaId}});
         });
 
@@ -231,7 +238,7 @@ ListingForm.constructor = ListingForm;
             Acme.PubSub.publish('update_state', {'confirmDelete': ""});
         });
 
-        $('#listingForm').submit(function(e) {
+        $('#'+this.formId).submit(function(e) {
             e.preventDefault();
             self.submit();
         });
@@ -294,7 +301,7 @@ ListingForm.constructor = ListingForm;
 
 
 
-Acme.EventForm = function(blogId) 
+Acme.EventForm = function(options) 
 {
     this.subscriptions = Acme.PubSub.subscribe({
         'Acme.eventForm.listener' : ['state_changed', 'update_state']
@@ -307,11 +314,15 @@ Acme.EventForm = function(blogId)
         "content",
         "start_date",
         "end_date",
-        "contact_name",
-        "address1"
+        "contactname",
+        "address1",
+        "suburb",
+        "state"
     ];
 
-    this.blogId = blogId;
+    this.formId = options.form;
+
+    this.blogId = options.blogId;
 
     this.data = {
         'id': 0,
@@ -439,12 +450,11 @@ Acme.EventForm = function(blogId)
             } 
         };
 
-        EventPostGoogleMap();
+        // EventPostGoogleMap();
     }
 
 
 Acme.GoogleMap = function() {
-
     this.marker;
     this.geocoder;
     this.mapContainer = $('#addressMap');
@@ -531,7 +541,7 @@ Acme.Confirm = function(template, parent, layouts) {
         }
 
         if ($elem.data('role') === 'deleteImage') {
-            Acme.PubSub.publish("update_state", {'delete image': self.data });
+            Acme.PubSub.publish("update_state", {'delete image': self.imageData });
         }
 
     };
@@ -555,7 +565,8 @@ Acme.confirmView = new Acme.Confirm('modal', 'signin', layouts);
             this.render("delete", "Warning", { msg: "Are you sure you want to permanently delete this listing?", role:"delete"});
         },
         "confirmDeleteImage" : function(data, topic) {
-            this.data = data;
+            this.imageData = data;
+
             this.render("delete", "Warning", 
                 {
                      msg: "Are you sure you want to delete this image?", 

@@ -610,9 +610,8 @@
         Acme.modal.prototype.render = function(layout, title, data) {
 
             var preRendered = false;
-            console.log(typeof data);
+
             if (typeof data === 'string') {
-                console.log('its a string!!');
                 preRendered = true;
             } else {
                 this.data = data || this.data;
@@ -622,10 +621,8 @@
                 this.data['title'] = title;
             }
             this.data['name'] = this.parentCont;
-            console.log(this.template);
             var tmp = Handlebars.compile(Acme.templates[this.template]);
             var tmp = tmp(this.data);
-            console.log(tmp);
 
             $('html').addClass('u-noscroll')
             $('body').addClass('u-noscroll').append(tmp);
@@ -635,7 +632,6 @@
             }
 
             if (preRendered) {
-                console.log('prerendering!!!');
                 this.renderPreLayout(data);
             }
 
@@ -650,22 +646,17 @@
 
             if (layoutTemplate) {
                 var tmp = Handlebars.compile(Acme.templates[this.layouts[layout]]);
-                console.log(this.parentCont);
                 $('#'+this.parentCont).attr("title", layout); 
                 var layout = tmp(data);
                 $('#'+this.parentCont).find('#dialogContent').empty().append(layout); 
             } else {
                 console.log(this.layouts[layout], 'Does not exist' );
             }
-            console.log(typeof data.modal_title);
-            console.log(data.what);
-            console.log(typeof data.what);
             if (typeof data.modal_title != 'undefined') {
                 $('.signin-modal__title').text(data.modal_title);
             }
         };
         Acme.modal.prototype.renderPreLayout = function(html) {
-            console.log('appending');
             $('#'+this.parentCont).find('#dialogContent').empty().append(html); 
         };
         Acme.modal.prototype.events = function() 
@@ -681,7 +672,6 @@
         };
         Acme.modal.prototype.handle = function(e) {
             var $elem = $(e.target);
-            console.log('in teh frameowkr handle')
             if ( !$elem.is('input') && !$elem.is('a') && !$elem.parent().is('a') ) {
                 e.preventDefault();
             }
@@ -694,12 +684,10 @@
                     this.closeWindow();
 
                 } else if ($elem.text().toLowerCase() === "okay" || $elem.data('role') == 'okay') {
-                    console.log('resolving');
                     this.dfd.resolve();
                     this.closeWindow();
                 }
             }
-            console.log('allala');
             return $elem;
         };
         Acme.modal.prototype.closeWindow = function() {

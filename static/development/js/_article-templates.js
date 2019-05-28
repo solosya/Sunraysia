@@ -216,11 +216,22 @@ Acme.templates.modal =
 //     <span data-id="{{imageid}}" class="carousel-tray__delete"></span> \
 // </div>';
 
+// window.templates.listingDeleteTmpl =  
+//     '<p>{{msg}}</p> \
+//     <div> \
+//         <form> \
+//             <button class="_btn _btn--red" data-role="{{role}}">DELETE</button> \
+//             <button class="_btn _btn--gray">CANCEL</button> \
+//         </form> \
+//     </div>';
+
+
+
 Acme.templates.listingDeleteTmpl =  
-    '<p>{{title}}</p> \
+    '<p>{{msg}}</p> \
     <div> \
         <form> \
-            <button class="c-button c-button--inline c-button--rounded c-button--blue-bordered u-margin-right-10" data-role="okay">DELETE</button> \
+            <button class="c-button c-button--inline c-button--rounded c-button--blue-bordered u-margin-right-10" data-role="{{role}}">DELETE</button> \
             <button class="c-button c-button--inline c-button--rounded c-button--blue-bordered" data-role="cancel">CANCEL</button> \
         </form> \
     </div>';

@@ -47,13 +47,13 @@
 
                 <div class="c-event-form">
                     <div class="">
-                        <form action="#" method="post" autocomplete="off">
+                        <form id="event-form" action="#" method="post" autocomplete="off">
                             <div class="row">
 
                                 {# NAME #}
                                 <div class="col-12 c-form__group u-margin-bottom-15">
                                     <label class="c-form__label" for="firstname">Name of event*</label>
-                                    <input id="event-name" class="c-form__input c-form__input--bordered articleExtendedData" name="event-name" placeholder="eg. Mildura Farm Festival" aria-required="true" type="text">
+                                    <input id="title" class="c-form__input c-form__input--bordered articleExtendedData" name="title" placeholder="eg. Mildura Farm Festival" aria-required="true" type="text">
                                     <div class="c-form__help-block"></div>
                                 </div>
 
@@ -66,7 +66,7 @@
 
                                 {# END DATE #}
                                 <div class="col-12 col-md-6  c-form__group u-margin-bottom-15">
-                                    <label class="c-form__label" for="end_date">Start date*</label>
+                                    <label class="c-form__label" for="end_date">End date*</label>
                                     <input type="text" class="c-form__input c-form__input--bordered articleExtendedData" name="end_date" id="end_date" value="" placeholder="">
                                     <div class="c-form__help-block"></div>
                                 </div>
@@ -75,7 +75,7 @@
                                 {# ADDRESS #}
                                 <div class="col-12 col-md-6 c-form__group u-margin-bottom-15">
                                     <label class="c-form__label" for="address">Street address*</label>
-                                    <input id="address" class="c-form__input c-form__input--bordered articleExtendedData" name="address" placeholder="Street address*" aria-required="true" type="text">
+                                    <input id="address1" class="c-form__input c-form__input--bordered articleExtendedData" name="address1" placeholder="Street address*" aria-required="true" type="text">
                                     <div class="c-form__help-block"></div>
                                 </div>
                                 
@@ -101,7 +101,7 @@
                                 {# CONTACT NAME #}
                                 <div class="col-12 col-md-6 c-form__group u-margin-bottom-15">
                                     <label class="c-form__label" for="contact-name">Contact name*</label>
-                                    <input id="contact-name" class="c-form__input c-form__input--bordered articleExtendedData" name="contactname" placeholder="eg. Mary Smith" aria-required="true" type="text">
+                                    <input id="contact_name" class="c-form__input c-form__input--bordered articleExtendedData" name="contactname" placeholder="eg. Mary Smith" aria-required="true" type="text">
                                     <div class="c-form__help-block"></div>
                                 </div>
 
@@ -109,11 +109,11 @@
                                 {# CONTACT NUMBER #}
                                 <div class="col-12 col-md-6 c-form__group u-margin-bottom-15">
                                     <label class="c-form__label" for="contact-number">Contact number*</label>
-                                    <input id="contact-number" class="c-form__input c-form__input--bordered articleExtendedData" name="contactnumber" placeholder="eg. 61 433 333 333" aria-required="true" type="text">
+                                    <input id="contactnumber" class="c-form__input c-form__input--bordered articleExtendedData" name="contactnumber" placeholder="eg. 61 433 333 333" aria-required="true" type="text">
                                     <div class="c-form__help-block"></div>
                                 </div>
 
-                                {# CONTACT EMAIL #}
+                                {# CONTACT E'MAIL #}
                                 <div class="col-12 col-md-6 c-form__group u-margin-bottom-15">
                                     <label class="c-form__label" for="contact-email">Email address*</label>
                                     <input id="contact-email" class="c-form__input c-form__input--bordered articleExtendedData" name="contactnumber" placeholder="eg. johnsmith@gmail.com" aria-required="true" type="text">
@@ -124,7 +124,7 @@
                                 {# DESCRIPTION #}
                                 <div class="col-12 c-form__group u-margin-bottom-15">
                                     <label class="c-form__label" for="contact-email">Event description*</label>
-                                    <textarea id="description"  name="description" class="c-form__input c-form__input--bordered c-event-form_description articleExtendedData" placeholder="Event description*" aria-required="true" type="text"></textarea>
+                                    <textarea id="content"  name="content" class="c-form__input c-form__input--bordered c-event-form_description articleExtendedData" placeholder="Event description*" aria-required="true" type="text"></textarea>
                                     <div class="c-form__help-block"></div>
                                 </div>
 
@@ -136,11 +136,15 @@
                                         <p class="c-upload-image__label" >Upload image</p>
                                     </div>
                                 </div>
-                                <div class="col-12 col-md-6 c-form__group u-margin-bottom-15">
-                                </div>
+                            </div>
 
 
+                            <div class="row">
+                                <div id="imageArray" class="col-12 col-md-6  u-margin-bottom-15"></div>
+                            </div>
 
+
+                            <div class="row">
                                 <div class="col-12 col-md-4 c-form__group u-margin-bottom-15">
                                     <p class="c-form__label" >Requirements</p>
                                     <ul>
@@ -186,7 +190,10 @@
     // defered script is loaded before this runs
     document.addEventListener("DOMContentLoaded", function(event) {
         Acme.cards = CardController();
-        Acme.eventForm = new Acme.EventForm([{{eventBlogId}}]);
+        Acme.eventForm = new Acme.EventForm({
+           blogId: [{{eventBlogId}}],
+           form: "event-form"
+        });
        {{userScript | raw}}
     });
 </script>
