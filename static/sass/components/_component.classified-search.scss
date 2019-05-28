@@ -49,7 +49,7 @@
                 right:5px;
                 color:$greyish;
                 position:absolute;
-                @include size(41px);
+                @include size(40px);
                 @include padding(9);
                 background-color:$white;
                 @include transform(translateY(-50%));
