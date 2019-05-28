@@ -104,7 +104,7 @@ gulp.task('scripts', function(){
 
         './static/development/js/sdk/cloudinary/jquery.cloudinary.js',
         './static/development/js/sdk/notifications.js',
-        './static/development/js/sdk/blog.js',
+        './static/development/js/sdk/feed.js',
         './static/development/js/sdk/article.js',
         // './static/development/js/sdk/search.js',
         './static/development/js/sdk/disqus.js',
