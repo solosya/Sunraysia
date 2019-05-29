@@ -226,6 +226,11 @@ Acme.templates.modal =
 //     </div>';
 
 
+Acme.templates.subscribeTerms =  
+    '<p class="password-reset-form__p u-margin-bottom-20">Please agree to the terms of use.</p> \
+    <div> \
+        <button class="c-button c-button--blue">Okay</button> \
+    </div>';
 
 Acme.templates.listingDeleteTmpl =  
     '<p>{{msg}}</p> \

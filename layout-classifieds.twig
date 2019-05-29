@@ -130,7 +130,7 @@
               ********************************************* #}
                 <div class="c-filter--search c-filter--search-xs form-group">
                     <div class="c-filter--search--field c-filter--search--field-xs">
-                        <span class="fa fa-search c-search-icon"></span>
+                        <span id="search-button-2" class="fa fa-search c-search-icon"></span>
                         <input type="text" class="form-control" name="searcg" id="search" placeholder="Search the classifieds">
                     </div>
                     {# <div class="c-filter--search--select c-filter--search--select-xs">
@@ -378,7 +378,7 @@
             card_class      : 'acme-col-12 acme-col-md-12 acme-col-lg-4 acme-card-1-mobile acme-card-1-tablet acme-card-1-desktop'
         }); 
 
-        $('#search-button').on('click', function(e) {
+        $('#search-button, #search-button-2').on('click', function(e) {
             e.preventDefault();
             Acme.search.options.search = $('#search').val();
             if (!Acme.search.options.search) {
@@ -387,8 +387,16 @@
             Acme.search.fetch();
         });
 
-
-
+        $('#search').keyup(function (e) {
+            var key = e.which;
+            if(key == 13) {
+                Acme.search.options.search = $(this).val();
+                if (!Acme.search.options.search) {
+                    return;
+                }
+                Acme.search.fetch();
+            }
+        }); 
 
 
 

@@ -17986,7 +17986,8 @@ function(a){"use strict";void 0===a.en&&(a.en={"mejs.plural-form":1,"mejs.downlo
         Acme.modal.prototype = new Acme.listen();
 
         Acme.modal.prototype.render = function(layout, title, data) {
-
+            console.log(layout);
+            console.log(title);
             var preRendered = false;
 
             if (typeof data === 'string') {
@@ -18006,6 +18007,7 @@ function(a){"use strict";void 0===a.en&&(a.en={"mejs.plural-form":1,"mejs.downlo
             $('body').addClass('u-noscroll').append(tmp);
 
             if (layout) {
+                console.log('rendering layout');
                 this.renderLayout(layout, this.data);
             }
 
@@ -18019,9 +18021,9 @@ function(a){"use strict";void 0===a.en&&(a.en={"mejs.plural-form":1,"mejs.downlo
         };
         Acme.modal.prototype.renderLayout = function(layout, data) {
             var data = data || {};
-
+            console.log(this.layouts);
             var layoutTemplate = Acme.templates[this.layouts[layout]];
-
+            console.log(layoutTemplate);
             if (layoutTemplate) {
                 var tmp = Handlebars.compile(Acme.templates[this.layouts[layout]]);
                 $('#'+this.parentCont).attr("title", layout); 
@@ -18371,6 +18373,11 @@ Acme.templates.modal =
 //     </div>';
 
 
+Acme.templates.subscribeTerms =  
+    '<p class="password-reset-form__p u-margin-bottom-20">Please agree to the terms of use.</p> \
+    <div> \
+        <button class="c-button c-button--blue">Okay</button> \
+    </div>';
 
 Acme.templates.listingDeleteTmpl =  
     '<p>{{msg}}</p> \

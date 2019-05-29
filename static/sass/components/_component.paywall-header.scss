@@ -1,0 +1,17 @@
+.c-paywall-header{
+
+    &__title {
+        @include font-size(40);
+        font-weight: $weightBold;
+        color: $blue;
+        text-align:center;
+    }
+
+    &__subtitle {
+        @include font-size(32);
+        font-weight:$weightLight;
+        text-align:center;
+        color: $black;
+        margin-top:5px;
+    }
+}
