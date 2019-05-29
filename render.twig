@@ -28,7 +28,7 @@
 
     {% set params = {
         articles        : feedArr,
-        link            : blogFeeds[ config.blogs[0] ].link,
+        link            : config.link is defined ? config.link : blogFeeds[ config.blogs[0] ].link,
         title           : config.title is defined ? config.title : '',
         dev             : dev,
         site            : site,
