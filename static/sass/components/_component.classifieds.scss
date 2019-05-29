@@ -97,6 +97,7 @@
     &__item {
         @include margin(0);
         @include padding(0);
+        position:relative;
         border-bottom:1px solid rgba($greyish, 0.5);
         
         &:first-child {
