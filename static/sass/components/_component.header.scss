@@ -179,8 +179,28 @@
         @include flex-direction(row, horizontal);
         @include align-items(flex-end);
         @include justify-content(flex-end);
+        @include font-size(12);
+        color:$blue;
+        font-weight: $weightMedium;
         margin-left:auto;
         
+        > a {
+            color:$blue;
+            &:first-child {
+
+                &:after {
+                    content: "";
+                    margin-left:6px;
+                    display:inline-block;
+                    height:11px;
+                    width:1px;
+                    background-color:$blue;
+                    position:relative;
+                    top:2px;
+                }
+            }
+        }
+
         @media #{$desktop-up} {
             display:none;
         }
