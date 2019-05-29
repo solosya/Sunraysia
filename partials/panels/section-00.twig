@@ -25,7 +25,7 @@
                     position: (articleCount+1),
                     imageSize: {width: 635, height: 290},
                     behaviour: 'lightbox',
-                    containerClass: "card-4-mobile card-2-tablet card-2-desktop"
+                    containerClass: "card-4-mobile card-2-tablet card-2-desktop card-2-desktop-lg"
                 }) | raw}}
                 {% set articleCount = (dev) ? articleCount : articleCount + 1 %}
             </div>
@@ -80,7 +80,7 @@
                         article: articles[articleCount], 
                         position: (articleCount+1),
                         imageSize: {width: 740, height: 360},
-                        containerClass: "card-1-mobile card-1-tablet card-1-desktop"
+                        containerClass: "card-1-mobile card-1-tablet card-1-desktop card-1-desktop-lg"
                     }) | raw}}
                     {% set articleCount = (dev) ? articleCount : articleCount + 1 %}
 

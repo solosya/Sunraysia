@@ -16,7 +16,7 @@
         {{this.render('../_single-article.twig', {
             article: articles[articleCount], 
             position: (articleCount+1),
-            containerClass: "card-4-mobile card-2-tablet card-2-desktop"
+            containerClass: "card-4-mobile card-2-tablet card-1-desktop card-2-desktop-lg"
         }) | raw}}
         {% set articleCount = (dev) ? articleCount : articleCount + 1 %}
         {% endif %}
@@ -29,7 +29,7 @@
         {{this.render('../_single-article.twig', {
             article: articles[articleCount], 
             position: (articleCount+1),
-            containerClass: "card-4-mobile card-2-tablet card-2-desktop"
+            containerClass: "card-4-mobile card-2-tablet card-1-desktop card-2-desktop-lg"
         }) | raw}}
         {% set articleCount = (dev) ? articleCount : articleCount + 1 %}
         {% endif %}
@@ -41,7 +41,7 @@
         {{this.render('../_single-article.twig', {
             article: articles[articleCount], 
             position: (articleCount+1),
-            containerClass: "card-4-mobile card-2-tablet card-2-desktop"
+            containerClass: "card-4-mobile card-2-tablet card-1-desktop card-2-desktop-lg"
         }) | raw}}
         {% set articleCount = (dev) ? articleCount : articleCount + 1 %}
         {% endif %}
@@ -53,7 +53,7 @@
         {{this.render('../_single-article.twig', {
             article: articles[articleCount], 
             position: (articleCount+1),
-            containerClass: "card-4-mobile card-2-tablet card-2-desktop"
+            containerClass: "card-4-mobile card-2-tablet card-1-desktop card-2-desktop-lg"
         }) | raw}}
         {% set articleCount = (dev) ? articleCount : articleCount + 1 %}
         {% endif %}
@@ -67,7 +67,7 @@
 {{this.render('/partials/_section-loadmore.twig', {
     sectionNumber: "03", 
     limit: 8,
-    cardClass: "col-12 col-md-6 col-lg-3 card-4-mobile card-2-tablet card-2-desktop",
+    cardClass: "col-12 col-md-6 col-lg-3 card-4-mobile card-2-tablet card-1-desktop card-2-desktop-lg",
     cardCount: 4,
 }) | raw}}
 
