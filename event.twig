@@ -17,10 +17,30 @@
 {% endif %}
 
 {% set startDate = _AppHelper.getDefaultTimezoneDateTime(event.startDate, 'l, jS F') %}
-{% set endDate = _AppHelper.getDefaultTimezoneDateTime(event.endDate, 'j F Y') %}
+{% set startTime = _AppHelper.getDefaultTimezoneDateTime(event.startDate, ' g:ia') %}
 
-{% set startTime = _AppHelper.getDefaultTimezoneDateTime(event.startDate, 'g:ia') %}
-{% set endTime = _AppHelper.getDefaultTimezoneDateTime(event.endDate, 'g:ia') %}
+{% set endDate = '' %}
+{% set endTime = '' %}
+{% if event.endDate %}
+    {% set endDate = _AppHelper.getDefaultTimezoneDateTime(event.endDate, 'j F Y') %}
+    {% set endTime = _AppHelper.getDefaultTimezoneDateTime(event.endDate, ' g:ia') %}
+    {% set difference = date(event.endDate).diff(date(event.startDate)) %}
+    {% set leftDays = difference.days %}
+{% endif %}
+
+{% set em = "<strong><em>" %}
+{% set emclose = "</em></strong>" %}
+
+{% set timeString = em ~ startDate ~ emclose ~ startTime  %}
+{% if endDate != "" and leftDays == 0 %}
+    {% set timeString = timeString ~ " - " ~ endTime  %}
+{% endif %}
+
+{% if endDate != "" and leftDays > 0 %}
+    {% set timeString = timeString ~ " to " ~ em ~ endDate ~ emclose ~ endTime  %}
+{% endif %}
+
+
 
 {% set date = date() %}
 {% set events = _Event.getEvents({"limit": 4, "start_date": date.date | split(" ")[0]}) %}
@@ -64,8 +84,7 @@
                                 <div class="c-eventdetail__info-item">
                                     <span class="c-eventdetail__info-icon c-eventdetail__info-icon--calandar"></span>
                                     <div>
-                                        <p class="c-eventdetail__info-text"><strong><em>{{ startDate }}</em></strong></p>
-                                        <p class="c-eventdetail__info-text c-eventdetail__time">{{ startTime }} - {{ endTime }}</p>
+                                        <p class="c-eventdetail__info-text">{{ timeString | raw}}</p>
                                     </div>
                                 </div>
                             </div>
