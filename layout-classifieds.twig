@@ -193,7 +193,7 @@
 
                         <div class="acme-row c-section-head">
                             <div class="acme-col-12">
-                                <a href="{{blogLink}}">
+                                <a href="#">
                                     <div class="c-section-head__title">{{blogTitle}}</div>
                                 </a> 
                                 <div class="c-section-head__rule"></div>
@@ -242,6 +242,7 @@
                                     title: pagesection,
                                     nomargin: true,
                                     wrapper: false,
+                                    link: blogData.url ~"?section=" ~blogData.title | lower
                                 },
                             } %}
 
