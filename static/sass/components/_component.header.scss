@@ -180,17 +180,18 @@
         @include align-items(flex-end);
         @include justify-content(flex-end);
         @include font-size(12);
+        position:relative;
         color:$blue;
         font-weight: $weightMedium;
         margin-left:auto;
         
         > a {
             color:$blue;
-            &:first-child {
+            &:last-child {
 
-                &:after {
+                &:before {
                     content: "";
-                    margin-left:6px;
+                    margin-right:6px;
                     display:inline-block;
                     height:11px;
                     width:1px;

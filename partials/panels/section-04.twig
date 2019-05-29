@@ -14,7 +14,6 @@
         {{this.render('../_single-article.twig', {
             article: articles[articleCount], 
             position: (articleCount+1),
-            imageSuppress: true,
             containerClass: "card-1-mobile card-1-tablet card-1-desktop"
         }) | raw}}
         {% set articleCount = (dev) ? articleCount : articleCount + 1 %}
@@ -34,7 +33,6 @@
         {{this.render('../_single-article.twig', {
             article: articles[articleCount], 
             position: (articleCount+1),
-            imageSuppress: true,
             containerClass: "card-1-mobile card-1-tablet card-1-desktop"
         }) | raw}}
         {% set articleCount = (dev) ? articleCount : articleCount + 1 %}
@@ -44,7 +42,6 @@
         {{this.render('../_single-article.twig', {
             article: articles[articleCount], 
             position: (articleCount+1),
-            imageSuppress: true,
             containerClass: "card-1-mobile card-1-tablet card-1-desktop"
         }) | raw}}
         {% set articleCount = (dev) ? articleCount : articleCount + 1 %}
