@@ -8,7 +8,7 @@
 {% set homeBlog     = blogData['title'] | lower %}
 {% set config       = _Network.getThemeConfig() %}
 {% set layout       = blogData.layout %}
-{% set dev          = _AppHelper.getApplicationEnv() == 'DEV' ? true : false %}
+{% set dev          = _AppHelper.getApplicationEnv() == 'DEV' ? false : false %}
 
 {% set bannerSpots  = [3,5] %}
 {% set blogFeeds    = {} %}
