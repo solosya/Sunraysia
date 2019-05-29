@@ -43,7 +43,7 @@
         }
         &__time {
             @include font-size(15);
-            font-weight: $weightBold;
+            font-weight: $weightMedium;
         }
 
         &.video {

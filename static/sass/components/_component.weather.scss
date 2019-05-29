@@ -15,7 +15,8 @@
         margin:0;
         font-family: $font-family-sans-serif;        
         @include font-size(13);
-		font-weight: $weightMedium;
+        font-weight: $weightMedium;
+        color:$blue;
     }
 
     &__date {
