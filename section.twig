@@ -60,7 +60,7 @@
                             article: articles[articleCount], 
                             position: (articleCount+1),
                             imageSize: {width: 740, height: 360},
-                            containerClass: "card-4-mobile card-2-tablet card-2-desktop"
+                            containerClass: "card-4-mobile card-2-tablet card-2-desktop card-2-desktop-lg"
                         }) | raw}}
                         {% set articleCount = (dev) ? articleCount : articleCount + 1 %}
                     {% endif %}
@@ -83,12 +83,11 @@
             
             <div class="col-12 col-lg-3">
             {% if articles[articleCount] %}                                                                
-
                 {{this.render('partials/_single-article.twig', {
                     article: articles[articleCount], 
                     position: (articleCount+1),
                     imageSize: {width: 360, height: 270},
-                    containerClass: "card-4-mobile card-3-tablet card-2-desktop"
+                    containerClass: "card-4-mobile card-3-tablet card-2-desktop card-2-desktop-lg"
                 }) | raw}}
                 {% set articleCount = (dev) ? articleCount : articleCount + 1 %}
             {% endif %}
@@ -148,7 +147,7 @@
                     article: articles[articleCount], 
                     position: (articleCount+1),
                     imageSize: {width: 360, height: 270},
-                    containerClass: "card-1-mobile card-1-tablet card-1-desktop"
+                    containerClass: "card-1-mobile card-1-tablet card-1-desktop card-1-desktop-lg"
                 }) | raw}}
                 {% set articleCount = (dev) ? articleCount : articleCount + 1 %}
                 </div>
@@ -171,7 +170,7 @@
                     article: articles[articleCount], 
                     position: (articleCount+1),
                     imageSize: {width: 360, height: 270},
-                    containerClass: "card-4-mobile card-2-tablet card-2-desktop"
+                    containerClass: "card-4-mobile card-2-tablet card-1-desktop card-2-desktop-lg"
                 }) | raw}}
                 {% set articleCount = (dev) ? articleCount : articleCount + 1 %}
                 </div>
@@ -184,7 +183,7 @@
                 {% if limit <= articleCount %}
                     {{ this.render('/partials/ajaxarticles_new.twig', {
                         name            : "section-load",
-                        label           : "+ Load more",
+                        label           : "",
                         buttonClass     : "u-display-none",
                     }) | raw }}
                 {% endif %}
@@ -211,11 +210,12 @@
         Acme.loadMore = new Acme.View.articleFeed({
             model           : Acme.cards,
             container       : 'loadmore',
+            label           : false,
             infinite        : true,
             limit           : 12,
             offset          : 12,
             name            : 'section-load', //name of the search button
-            card_class      : 'col-12 col-md-3 card-4-mobile card-2-tablet card-2-desktop',
+            card_class      : 'col-12 col-md-3 card-4-mobile card-2-tablet card-1-desktop card-2-desktop-lg',
             non_pinned      : {{articleCount}}
 
         });

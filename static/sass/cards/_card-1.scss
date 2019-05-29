@@ -65,7 +65,7 @@
                     margin-bottom: 33px;
                     display: block;
                     overflow: hidden;
-                    @include flex-height(61px);
+                    @include flex-height(57px);
 
                 }
 
@@ -81,7 +81,11 @@
         }
 
         &.social {
-
+            .c-cards-view {
+                &__description {
+                    max-height:80px;
+                }
+            }
             .social-icon {
                 @include size(45px);
 
@@ -144,7 +148,7 @@
         }
 
         &__heading {
-            @include flex-height(54px);
+            @include flex-height(75px);
             @include font-size(18);
             line-height:1.36;
         }
@@ -158,16 +162,27 @@
         @include card-name("c1 tablet");
         @include card-1-tablet-base();
     }
-
 }
+
+
 .card-1-desktop {
 
-    @media #{$desktop-up} {
+    @media #{$desktop} {
 
         @include card-name("c1 desktop");
         @include card-1-tablet-base();
     }
 }
+
+.card-1-desktop-lg {
+
+    @media #{$desktop-lg} {
+
+        @include card-name("c1 desktop -lg");
+        @include card-1-tablet-base();
+    }
+}
+
 
 
 

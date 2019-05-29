@@ -18719,7 +18719,7 @@ Acme.Feed = function() {};
 
 Acme.Feed.prototype.fetch = function()
 {
-    console.log('like, actually, like fetching and shit');
+
     var self = this;
     // self.elem.html("Please wait...");
     // blogfeed makes 2 sql calls.  
@@ -18730,7 +18730,7 @@ Acme.Feed.prototype.fetch = function()
     if (self.options.search != null) {
         self.options.blogid = this.options.blogid; // search takes an id instead of a guid
     }
-    console.log(self.options);
+
     return Ajax_LoadFeed(self.options).done(function(data) {
         if (data.success == 1) {
             console.log(data);
@@ -18747,7 +18747,6 @@ Acme.Feed.prototype.events = function()
         self.fetch();
     });
 
-    console.log(this.infinite, this.offset, this.limit);
     if (this.infinite && this.offset >= this.limit) {
         self.waypoint = new Waypoint({
             element: self.elem,
@@ -18777,8 +18776,9 @@ Acme.View.articleFeed = function(options)
     this.template   = options.cardTemplate;
     this.cardClass  = options.card_class;
     this.renderType = options.renderType || 'append';
-    this.before     = options.before || false;
-    this.after      = options.after || false;
+    this.before     = options.before     || false;
+    this.after      = options.after      || false;
+    this.button_label = options.label    || false;
     
     this.options    = {
         'nonPinnedOffset'   :   options.non_pinned || -1,
@@ -18816,8 +18816,12 @@ Acme.View.articleFeed.prototype.render = function(data)
         articles = data.users.users;
     }
 
-    var label      =   self.button_label  || "Load more",
-        ads_on     =   self.ads           || null;
+
+    var label = "";
+    if (typeof self.button_label != "undefined" || self.button_label != false ) {
+        label = self.button_label;
+    }
+    var ads_on =   self.ads || null;
 
     self.elem.html(label);
     self.lessElem.show();
@@ -18857,7 +18861,7 @@ Acme.View.articleFeed.prototype.render = function(data)
     
 
     // show or hide the load more button depending on article count
-    (articles.length < self.options.limit) 
+    (articles.length < self.options.limit && !this.infinite) 
         ? self.elem.css('display', 'none')
         : self.elem.show();
 

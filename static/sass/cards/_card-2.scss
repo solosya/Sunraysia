@@ -107,7 +107,7 @@
         }
         &__description {
             margin-top: 5px;
-            @include flex-height(61px);
+            @include flex-height(56px);
         }
 
 
@@ -152,13 +152,21 @@
 }
 .card-2-desktop {
 
-    @media #{$desktop-up} {
+    @media #{$desktop} {
 
         @include card-name("C2 desktop");
         @include card-2-tablet-base();
     }
 }
 
+
+.card-2-desktop-lg {
+
+    @media #{$desktop-lg} {
+        @include card-name("C2 desktop lg");
+        @include card-2-tablet-base();
+    }
+}
 
 
 
