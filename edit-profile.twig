@@ -167,6 +167,14 @@
 
                             <hr class="divide divide--dark" />
 
+
+                            <div class="">
+                                <label class="c-form__label c-account-form__label" for="">Payment method</label>
+                                <div class="c-account-form__static-text">credit card/**** **** **** {{ pwstats['card_last_4']}}</div>
+                            </div>
+
+                            <hr class="divide divide--dark" />
+
                             <a id="change-plan" href="#" class="c-button c-button--red">Change Subscription</a>
 
                             {% if pwstats['status'] == 'cancelled' %}
@@ -211,6 +219,8 @@
                                 {% set break = false %}
 
                                 {% for plan in plans if not break %}
+                                
+
                                     {# {% if pwstats['status'] != 'paid' and pwstats['status'] != 'trial' %} #}
                                     {% set selected = '' %}
                                     {% set userCount = plan.user_count %}
@@ -224,11 +234,11 @@
                                     
                                     <div class="c-plans__block c-plans__block-xs {% if selected == 'selected' %} selected {% else %}  j-setplan {% endif %}">
                                         <span class="c-plans__name c-plans__name--{{ selected }}">{{plan.name}}</span>
-                                        {# <span class="c-plans__usercount c-plans__usercount--{{ selected }}">{{userCount}} users</span> #}
+                                        <div class="c-plans__description">{{plan.description}}</div>
+
                                         <h3 class="c-plans__price">
                                             {{plan.currency|replace({"AUD": "$", "NZD": "$", "GBP": "£", "USD": "$", "EUR": "€"})}}{{planCost|number_format(0, '.', ',')}}<span>p/{{plan.period|replace({"week": "w", "month": "m", "year": "y"})}}</span>
                                         </h3>
-                                        <div class="c-plans__description">{{plan.description}}</div>
                                         
                                         {% set buttonClass = selected ? "c-button--red" : "c-button--lightgrey" %}
 
@@ -278,10 +288,6 @@
                                 </div>
                             </div>
                             
-                            <div class="">
-                                <label class="c-form__label c-account-form__label" for="">Payment method</label>
-                                <div class="c-account-form__static-text">credit card/**** **** **** 9999</div>
-                            </div>
                             
                             <div class=" no-margin-bottom u-margin-top-15">
                                 <button type="submit" id="btnContact" class="c-button c-button--lightgrey" name="contact-button">Update</button>

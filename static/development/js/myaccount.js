@@ -425,8 +425,7 @@ Acme.UserProfileController.prototype.pageEvents = function ()
             }
             Acme.SigninView.render("userPlan", "Are you sure you want to change plan?", {message: msg})
                 .done(function(r) {
-                    console.log(r);
-                    console.log('changing plan');
+
                     $('#dialog').parent().remove();
                     
                     $.ajax({

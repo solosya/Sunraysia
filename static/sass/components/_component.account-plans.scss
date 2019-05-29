@@ -28,6 +28,15 @@
         }
     }
 
+
+    &__description {
+        @include font-size(17);
+        color: $greyish;
+        max-height: 50px;
+        line-height: 1.59;
+        overflow:hidden;
+    }
+
     &__name {
         color:$black;
         @include font-size(22);
@@ -45,8 +54,8 @@
         line-height:1.5;
         color:$blue_sh1;
         font-weight:$weightBold;
-        margin-top:25px;
-        margin-bottom:50px;
+        margin-top:10px;
+        margin-bottom:34px;
         >span {
             @include font-size(30);
         }

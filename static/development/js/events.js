@@ -375,7 +375,7 @@ Acme.EventForm = function(options)
             var longitude = elem.data('longitude');
             var map;
             
-            //google.maps.event.addDomListener(window, 'load', initMap);
+            google.maps.event.addDomListener(window, 'load', initMap);
             function initMap() {
                 var mapLat;
                 var mapLong;

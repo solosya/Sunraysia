@@ -119,7 +119,6 @@
                                     </div>
                                 {% endif %}
 
-                                    {# <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2979.9859353299985!2d-71.92062298413556!3d41.67764717923861!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89e5d5ba3876b34b%3A0x3f44c23dd11ea16f!2sPlainfield+Town+Hall!5e0!3m2!1sen!2sin!4v1552889556452" width="100%" height="450" frameborder="0" style="border:0" allowfullscreen></iframe> #}
                                 </div>
                             </div>
                         </div>
@@ -133,6 +132,14 @@
             </div>
         </div>
     </div>
+
+
+    {# <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2979.9859353299985!2d-71.92062298413556!3d41.67764717923861!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89e5d5ba3876b34b%3A0x3f44c23dd11ea16f!2sPlainfield+Town+Hall!5e0!3m2!1sen!2sin!4v1552889556452" width="100%" height="450" frameborder="0" style="border:0" allowfullscreen></iframe> #}
+
+    <div id="addressMap"></div>
+
+
+
     {% set theKeywords = '' %}
     {% if article.keywords is defined and article.keywords != '' %}
         {% set theKeywords = article.keywords %}
@@ -145,22 +152,6 @@
 
 <script>
     document.addEventListener("DOMContentLoaded", function() {
-    Acme.eventMap = new Acme.GoogleMap();
+        Acme.eventMap = new Acme.GoogleMap();
+    });
 </script>
-
-
-
-                            {# show start date OR start and end data if different #}
-                            {# {% set difference = date(event.endDate).diff(date(event.startDate)) %}
-                            {% set leftDays = difference.days %}
-                            {% if leftDays > 0 %}
-                                <p class="date">{{ startDate }} - {{ endDate }}</p>
-                            {% else %}
-                                <p class="date">{{ startDate }}</p>
-                                <p class="time">{{ startTime }} - {{ endTime }} </p>
-                            {% endif %} #}
-
-
-
-
-
