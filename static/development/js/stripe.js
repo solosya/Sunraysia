@@ -64,13 +64,13 @@
             "password"          : ["notEmpty"],
             "email"             : ["notEmpty"], 
             "terms"             : ["isTrue"],
+            "subscription_choice":["notEmpty"]
         };
 
         this.validateFields = Object.keys(this.validateRules);
 
         this.events();
 
-        // this.data['trial'] = $('#trial').is(":checked");
         var trial = $('#trial').val();
         if (trial == 1) {
             this.data['trial'] = 'true';
@@ -83,7 +83,7 @@
     {
         this.clearInlineErrors();
         this.addInlineErrors();
-        console.log(this.data);
+
         if (checkTerms) {
             if (!this.data.terms) {
                 this.confirmView = new Acme.Confirm('modal', 'signin-modal', {'terms': 'subscribeTerms'});
@@ -165,6 +165,8 @@
             var elem = $(this);
             var plan = elem.data('planid');
             var name = elem.data('plan-name');
+            self.data.planid = plan;
+            self.data.subscription_choice = name;
             $('#planid').val(plan);
             $('#subscription_choice').val(name);
 
@@ -178,6 +180,8 @@
             elem.text('SELECTED');
             elem.removeClass('c-button--grey');
             elem.addClass('c-button--red');
+            self.validate();
+            console.log(self.errorFields);
         });
 
 

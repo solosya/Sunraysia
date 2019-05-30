@@ -214,14 +214,14 @@
                             <div class="col-md-6 u-margin-top-10">
                                 <div class="">
                                     <label  class="c-form__label" for="firstname">Email address*</label>
-                                    <input class="c-form__input c-form__input--bordered" type="email" id="email" placeholder="eg. johnsmith@gmail.com" name="email">
+                                    <input class="c-form__input c-form__input--bordered" type="email" id="email" placeholder="eg. johnsmith@gmail.com" name="email" required>
                                     <div class="c-form__help-block">Please fill out this field.</div>
                                 </div>
                             </div>
                             <div class="col-md-6 u-margin-top-10">
                                 <div class="">
                                     <label class="c-form__label" for="normalselect">Subscription</label>
-                                    <input id="subscription_choice" class="c-form__input c-form__input--bordered" type="text" id="" placeholder="Choose a plan from above" name="subscriptionaddress" readonly>
+                                    <input id="subscription_choice" class="c-form__input c-form__input--bordered" type="text" id="" placeholder="Choose a plan from above" name="subscription_choice" readonly>
                                     <div class="c-form__help-block">Please fill out this field.</div>
                                 </div>
                             </div>
@@ -289,7 +289,7 @@
                                         <div class="" style="width:100%">
                                             <div id="card-element"><!-- a Stripe Element will be inserted here. --></div>
                                             <!-- Used to display form errors -->
-                                            <div id="card-errors" class="card-errors" role="alert"></div>
+                                            <div id="card-errors" class="c-form__help-block" role="alert"></div>
                                         </div>
 
                                         <div class="form-group" style="margin-top:30px;">
