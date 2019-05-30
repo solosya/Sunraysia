@@ -183,8 +183,8 @@
                 {% if limit <= articleCount %}
                     {{ this.render('/partials/ajaxarticles_new.twig', {
                         name            : "section-load",
-                        label           : "wowwee",
-                        buttonClass     : "c-button",
+                        label           : "",
+                        buttonClass     : "u-display-none",
                     }) | raw }}
                 {% endif %}
 
@@ -210,6 +210,7 @@
         Acme.loadMore = new Acme.View.articleFeed({
             model           : Acme.cards,
             container       : 'loadmore',
+            infinite        : true,
             label           : false,
             limit           : 12,
             offset          : 12,

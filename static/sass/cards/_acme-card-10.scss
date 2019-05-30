@@ -1,6 +1,8 @@
 @mixin acme-card-10-base() {
     background: $white;
-
+    > a {
+        cursor: default;
+    }
     .acme-c-cards-view {
         @include flex-direction(column, vertical);
         box-shadow: none;
