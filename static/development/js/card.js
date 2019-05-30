@@ -163,7 +163,7 @@ Card.prototype.bindLightbox = function()
 {
     var isRequestSent = false;
     var self = this;
-    $(document).unbind().on('click', 'article.lightbox', function (e) {
+    $('article.lightbox').unbind().on('click', function (e) {
         e.preventDefault();
         var csrfToken = $('meta[name="csrf-token"]').attr("content");
 
