@@ -18740,7 +18740,6 @@ Acme.Feed.prototype.fetch = function()
 
     return Ajax_LoadFeed(self.options).done(function(data) {
         if (data.success == 1) {
-            console.log(data);
             self.render(data);
         }
     });
@@ -18830,7 +18829,7 @@ Acme.View.articleFeed.prototype.render = function(data)
         label = self.button_label;
     }
     var ads_on =   self.ads || null;
-
+    console.log(label);
     self.elem.html(label);
     self.lessElem.show();
 

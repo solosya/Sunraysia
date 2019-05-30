@@ -11,7 +11,7 @@
 
 
     <a  class = "load_less c-loadmore" 
-        href  = "#less-section-load-{{sectionNumber}}"
+        href  = "#loadmore_section_{{sectionNumber}}"
         id    = "less-section-load-{{sectionNumber}}"
         style = "display:none"
         data-section="loadmore_section_{{sectionNumber}}" 
@@ -29,6 +29,7 @@
             container       : 'loadmore_section_{{sectionNumber}}',
             offset          : 0,
             limit           : {{ limit }},
+            label           : "+ Load more",
             name            : 'section-load-{{sectionNumber}}',
             blogid          : "{{ blogData['guid'] }}",
             card_class      : "{{cardClass}}",
