@@ -196,12 +196,13 @@
 
 
         {% if recentArticles | length > 0 %}
+
             <div class="row c-related-articles u-desktop-margin-top-100">
                 <div class="col-12">
                     <h1 class="c-related-articles__header u-margin-bottom-30" >You might also like...</h1>
                 </div>
                 
-                <div class="col-12">
+                <div class="offset-lg-1 col-10">
                     <div class="row">
                         {% for i in 0..2 if recentArticles[i] %}
                             <div class="col">
