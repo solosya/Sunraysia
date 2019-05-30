@@ -2,19 +2,13 @@
 {% set cardIndex = 0 %}
 
 
-<div class="acme-row c-section-head u-margin-top-60">
-    <div class="acme-col-12">
+<div class="acme-row c-section-head u-margin-bottom-60">
+    <div class="acme-col-12 u-margin-bottom-15">
         <a href="{{link}}">
             <div class="c-section-head__title">{{title}}</div>
         </a> 
         <div class="c-section-head__rule"></div>
     </div>
-</div>
-
-
-
-
-<div class="acme-row">
 
     {% for i in 0..2 if articles[i] %}
         <div class="acme-col-12 acme-col-md-12 acme-col-lg-4">
