@@ -23,66 +23,56 @@
                     
                     <div class="c-placelisting c-placelisting-md">
                         <div class="row">
-                        <div class="col-lg-12">
-                            <div class="u-font-size-15 u-font-weight-medium">To place a listing, select the classifieds edition your ad should appear in - then fill out the required fields.</div>
-                            
-                            
-                            <div class="c-section-head u-margin-top-30">
-                                <h1 class="c-section-head__title c-section-head__title--light">Payment</h1>
-                                <div class="c-section-head__rule"></div>
-                            </div>
-
-                            
-                            <div class="c-placelisting__paydiscription u-font-size-15">Our friendly staff will contact you by phone with the cost of your advertisement. Payment is required before publication, and can be made by credit card over the phone, or in person.</div>
-                            
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <input type="text" class="c-form__input c-form__input--bordered u-pointer articleExtendedData" name="start_date" id="start_date" value="" placeholder="Start date*">
-                                    <div class="c-form__c-form__help-block"></div>
-                                </div>
-
-                                <div class="col-md-6">
-                                    <input type="text" class="c-form__input c-form__input--bordered u-pointer articleExtendedData" name="end_date" id="end_date" value="" placeholder="End date">
-                                    <div class="c-form__c-form__help-block"></div>
-                                </div>
-                            </div>
-
-                        </div>
-                        <div class="col-lg-12 u-margin-top-10">
-                            <div class="c-formrequirement">
-                                <div class="c-formrequirement__head">Please note </div>
-                                <ul class="c-formrequirement__list">
-                                    <li>1) Registration numbers are required for all relevant classifications (motor vehicles, caravans...)</li>
-                                    <li>2) IDs are required when placing a birth notice, wedding notice and engagement notice.</li>
-                                    <li>3) All trade ads must have the licence name and no. appear in the ad.</li>
-                                </ul>
-                                <ul class="c-formrequirement__list">
-                                    <li>Advertisements will only be published once you have agreed either verbally, via email or via fax to the quoted price and publication date(s). 
-                                    If you are placing an ad outside of normal business hours, your booking may not be attended to until the next working day.</li>
-                                </ul>
-                                </div>
+                            <div class="col-lg-12">
+                                <div class="u-font-size-15 u-font-weight-medium">To place a listing, select a date or date range you would like your ad to appear. If you would like a combination of dates please note this in the comments.</div>
                             </div>
                         </div>
-                        
-                        <!--Create listing form section start-->
+
                         <div class="row">
+                            <div class="col-md-6">
+                                <input type="text" class="c-form__input c-form__input--bordered u-pointer articleExtendedData" name="start_date" id="start_date" value="" placeholder="Start date*">
+                                <div class="c-form__c-form__help-block"></div>
+                            </div>
 
+                            <div class="col-md-6">
+                                <input type="text" class="c-form__input c-form__input--bordered u-pointer articleExtendedData" name="end_date" id="end_date" value="" placeholder="End date">
+                                <div class="c-form__c-form__help-block"></div>
+                            </div>
+                        </div>
 
-
-
-
-
-
-
-
-
+                        <div class="row">
+                            <div class="col-lg-12 u-margin-top-10">
+                                <div class="c-formrequirement">
+                                    <div class="c-formrequirement__head u-font-size-15">Please note: </div>
+                                    <p class="u-font-size-15">Deadlines: Monday edition – 10am, 3 days prior. Tuesday to Saturday editions – 10am, 1 day prior
+                                        Discounts apply for publishing on multiple days.</p>
+                                    <ul class="c-formrequirement__list u-margin-top-20">
+                                        <li class="u-font-size-15">1) Registration numbers are required for all relevant classifications (motor vehicles, caravans...)</li>
+                                        <li class="u-font-size-15">2) IDs are required when placing a birth notice, wedding notice and engagement notice.</li>
+                                        <li class="u-font-size-15">3) All trade ads must have the licence name and no. appear in the ad.</li>
+                                    </ul>
+                                    <ul class="c-formrequirement__list u-margin-top-20">
+                                        <li class="u-font-size-15">Advertisements will only be published once you have agreed either verbally, via email or via fax to the quoted price and publication date(s). 
+                                        If you are placing an ad outside of normal business hours, your booking may not be attended to until the next working day.</li>
+                                    </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--Create listing form section start-->
+                        
+                        
+                        
+                        
+                        
+                        <div class="row">
 
 
                             {# *******************************************************
                                                     LISTING
                             ******************************************************* #}
 
-                            <div class="col-lg-12 u-margin-top-50">
+                            <div class="col-lg-12">
                                 <div class="c-section-head">
                                     <h1 class="c-section-head__title c-section-head__title--light">Create listing</h1>
                                     <div class="c-section-head__rule"></div>
@@ -103,6 +93,7 @@
                                             Category Pulldown
                             ******************************************************* #}
                             <div class="col-lg-6">
+                                <label class="c-form__label" for="title">Select category*</label>
                                 <div id="categorySelect" class=""></div>
                                 <div class="c-form__help-block">Please fill out this field.</div>
                             </div>
@@ -111,6 +102,7 @@
                                             Classification Pulldown
                             ******************************************************* #}
                             <div class="col-lg-6">
+                                <label class="c-form__label" for="title">Select classification*</label>
                                 <div id="classificationSelect" class=""></div>
                                 <div class="c-form__help-block">Please fill out this field.</div>
                             </div>
@@ -121,35 +113,37 @@
 
 
 
-                            <div class="col-lg-6">
-
-
-                                <div class="row">
-                                    <div class="col-lg-12 u-margin-top-15">
-                                        <div class="c-form__group">
-                                            <label class="c-form__label" for="title">Title*</label>
-                                            <input id="title" type="title" class="c-form__input c-form__input--bordered"  placeholder="4WD for sale" name="title">
-                                            <div class="c-form__help-block">Please fill out this field.</div>
-                                        </div>
-                                    </div>
-                                    
-                                    <div class="col-lg-12 u-margin-top-10">
-                                        <div class="c-form__group">
-                                            <label class="c-form__label" for="description">Description*</label>
-                                            <textarea  rows="10" class="c-form__input c-form__input--bordered u-line-height-15 u-padding-10" id="description" placeholder="Nissan 4WD for sale $1000 ONO. Contact Pete on 0431 572 997" name="description"  ></textarea>
-                                            <div class="c-form__help-block">Please fill out this field.</div>
-                                        </div>
-                                    </div>
+                            <div class="col-12 u-margin-top-15">
+                                <div class="c-form__group">
+                                    <label class="c-form__label" for="title">Title*</label>
+                                    <input id="title" type="title" class="c-form__input c-form__input--bordered"  placeholder="4WD for sale" name="title">
+                                    <div class="c-form__help-block">Please fill out this field.</div>
                                 </div>
                             </div>
 
 
 
-                            <div class="col-lg-6"></div>
+                            <div class="col-lg-6  u-margin-top-10">
+                                <div class="c-form__group">
+                                    <label class="c-form__label" for="ad_details">Ad details*</label>
+                                    <textarea  rows="10" class="c-form__input c-form__input--bordered u-line-height-15 u-padding-10" id="ad_details" placeholder="Nissan 4WD for sale $1000 ONO. Contact Pete on 0431 572 997" name="description"  ></textarea>
+                                    <div class="c-form__help-block">Please fill out this field.</div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6  u-margin-top-10">
+                                <div class="c-form__group">
+                                    <label class="c-form__label" for="comment">Comment/special notes*</label>
+                                    <textarea  rows="10" class="c-form__input c-form__input--bordered u-line-height-15 u-padding-10" id="comment" placeholder="Please run every Friday for three weeks" name="comment"  ></textarea>
+                                    <div class="c-form__help-block">Please fill out this field.</div>
+                                </div>
+                            </div>
 
 
 
-                            <div class="col-lg-6 u-margin-top-15">
+
+
+                            <div class="col-lg-6 u-margin-top-10">
                                 <div class="c-form__group">
                                     <label class="c-form__label">Upload file</label>
                                     <a class="c-upload-image" id="uploadFileBtn" href="javascript:;">Upload image</a> 
@@ -166,19 +160,41 @@
                                 </div>
                             </div>
                             
+                        </div>
 
 
 
 
+                        <div class="row u-margin-top-50">
+                            
+                            <div class="col-12 ">
+                                <div class="c-section-head ">
+                                    <h1 class="c-section-head__title c-section-head__title--light">Payment</h1>
+                                    <div class="c-section-head__rule"></div>
+                                </div>
+                            
+                                <div class="c-placelisting__paydiscription u-font-size-15">Our friendly staff will contact you by phone with the cost of your advertisement. Payment is required before publication, and can be made by credit card over the phone, or in person.</div>
+                            
+                            </div>
+
+
+                            <div class="col-12 u-margin-top-10">
+                                <div class="c-viewprice">
+                                    <label class="c-form__label">Price</label>
+                                    <p>To view a base price estimate for this as a text-only listing, click Calculate. Images are an additional charge. Discounts apply for publishing on multiple days. We will contact you to confirm a final price once the listing has been submitted. </p>
+                                </div>
+
+                                <div class="c-approximatecost  u-margin-top-30">
+                                    <div class="c-approximatecost__content">The approximate cost of this listing is:  $<span id="ad_cost">0</span></div>
+                                </div>
+                            </div>
+
+                        </div>
 
 
 
 
-
-
-
-
-
+                        <div class="row">
 
                             {# *******************************************************
                                                     BILLING
@@ -229,14 +245,14 @@
                             </div>
                             <div class="col-lg-6">
                                 <div class="c-form__group u-margin-top-15">
-                                    <label class="c-form__label" for="suburb">Suburb*</label>
+                                    <label class="c-form__label" for="suburb">Suburb</label>
                                     <input type="text" class="c-form__input c-form__input--bordered" id="suburb" placeholder="Suburb" name="suburb">
                                     <div class="c-form__help-block">Please fill out this field.</div>
                                 </div>
                             </div>
                             <div class="col-lg-6 u-margin-top-15">
                                 <div class="c-form__group">
-                                    <label class="c-form__label" for="state">State*</label>
+                                    <label class="c-form__label" for="state">State</label>
                                     <input type="text" class="c-form__input c-form__input--bordered" id="state" placeholder="State" name="state">
                                     <div class="c-form__help-block">Please fill out this field.</div>
                                 </div>
@@ -258,15 +274,6 @@
                                 </div>
                             </div>
 
-                            <div class="col-lg-12 u-margin-top-60">
-                                <div class="c-viewprice"> <span>Price</span> To view a price estimate for this listing, click Calculate. We will contact you to confirm the final price once the listing has been submitted. </div>
-                            </div>
-                            <div  class="col-lg-12">
-                                <div class="c-approximatecost  u-margin-top-30">
-                                <button  class="c-button c-button-inline  c-button--wtbgred">Calculate</button>
-                                <div class="c-approximatecost__content">The approximate cost of this listing is:  $</div>
-                                </div>
-                            </div>
                             <div  class="col-lg-12 u-margin-top-60">
                                 <input name="" type="submit" class="c-button c-button-inline c-button-md   c-button--lightgrey" value="Submit listing">
                             </div>
@@ -278,7 +285,9 @@
                 </div>
                 <div class="col-lg-3">
                 <div class="o-body-container--right-layout article-left-img">
-                    <figure> <img src="https://images.unsplash.com/photo-1495107334309-fcf20504a5ab?ixlib=rb-1.2.1&w=1000&q=80" class="img-fluid" alt="dummy image"> </figure>
+                    {# <figure> 
+                        <img src="https://images.unsplash.com/photo-1495107334309-fcf20504a5ab?ixlib=rb-1.2.1&w=1000&q=80" class="img-fluid" alt="dummy image">
+                    </figure> #}
                 </div>
                 </div>
             </div>
@@ -479,7 +488,19 @@
 
             });
 
+            $('#ad_details').on('input', function(e) {
+                var elem = $(e.target);
+                var text = elem.val().trim();
+                var paras = text.split('\n');
 
+                var text = text.replace(/\s/g, "¡" );
+                var text = text.replace(/\n/g, "¡" );
+
+                var words = text.split('¡');
+                var wordCount = words.length;
+                var cost = wordCount * 1.38;
+                $('#ad_cost').text(cost.toFixed(2));
+            });
 
 
             $('#uploadFileBtn').uploadFile({

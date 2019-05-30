@@ -39,13 +39,13 @@
         {% endif %}
 
         <li class="c-classified-menu__item {{activeClass}}">
-            <a  class="c-classified-menu__item-link {{childrenClass}}"
 
+            <a  class="c-classified-menu__item-link {{childrenClass}}"
+                {% set pageType = "section" %}
                 {% if children %}
-                    href="?category={{name | lower}}"
-                {% else %}
-                    href="?section={{name | lower}}"
+                    {% set pageType = "category" %}
                 {% endif %}
+                href="?{{pageType}}={{name | replace({" " : '%20'}) | replace({"&":"%26"}) | lower}}"
 
                 {% if parentItem.target != "" %} 
                     target="{{parentItem.target}}"

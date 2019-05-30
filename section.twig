@@ -103,7 +103,7 @@
                     article: articles[articleCount], 
                     position: (articleCount+1),
                     imageSize: {width: 360, height: 270},
-                    containerClass: "card-1-mobile card-3-tablet card-1-desktop"
+                    containerClass: "card-1-mobile card-3-tablet card-1-desktop card-1-desktop-lg"
                 }) | raw}}
                 {% set articleCount = (dev) ? articleCount : articleCount + 1 %}
             {% endif %}
@@ -183,8 +183,8 @@
                 {% if limit <= articleCount %}
                     {{ this.render('/partials/ajaxarticles_new.twig', {
                         name            : "section-load",
-                        label           : "",
-                        buttonClass     : "u-display-none",
+                        label           : "wowwee",
+                        buttonClass     : "c-button",
                     }) | raw }}
                 {% endif %}
 
@@ -211,7 +211,6 @@
             model           : Acme.cards,
             container       : 'loadmore',
             label           : false,
-            infinite        : true,
             limit           : 12,
             offset          : 12,
             name            : 'section-load', //name of the search button

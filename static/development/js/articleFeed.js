@@ -35,6 +35,7 @@ Acme.Feed.prototype.events = function()
             element: self.elem,
             offset: '80%',
             handler: function (direction) {
+                console.log('starting fetch');
                 if (direction == 'down') {
                     self.fetch();
                 }

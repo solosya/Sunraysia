@@ -79,29 +79,29 @@
     }
 }
 
-.c-viewprice {
-    @include font-size(15);
-    color:$black;
-    line-height: 1.47;
-    @include padding-right(120);
-    span {
-        display: block;
-        @include margin-bottom(11);
-        @include font-size(16);
-        font-weight:$weightMedium;
-    }
+// .c-viewprice {
+//     @include font-size(15);
+//     color:$black;
+//     line-height: 1.47;
+//     @include padding-right(120);
+//     span {
+//         display: block;
+//         @include margin-bottom(11);
+//         @include font-size(16);
+//         font-weight:$weightMedium;
+//     }
 
-}
-.c-approximatecost {
-    @include flexbox();
-    @include align-items (center);
-    &__content {
-        @include font-size(15);
-        color:$greyish;
-        line-height: 1.47;
-        @include padding-left(15);
-    }
-}
+// }
+// .c-approximatecost {
+//     @include flexbox();
+//     @include align-items (center);
+//     &__content {
+//         @include font-size(15);
+//         color:$greyish;
+//         line-height: 1.47;
+//         @include padding-left(15);
+//     }
+// }
 
 
 .c-formrequirement {
@@ -115,7 +115,6 @@
     &__list {
         li {
             font-weight: $weightRegular; 
-            font-style: italic;
             line-height: 1.5;
         }
     }

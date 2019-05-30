@@ -16,7 +16,7 @@ Acme.Signin.prototype.handle = function(e) {
     var self = this;
 
     var $elem = this.parent.handle.call(this, e);
-    console.log('handling');
+
     if ( $elem.is('a') ) {
 
         if ($elem.hasClass('close')) {

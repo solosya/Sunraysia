@@ -18759,6 +18759,7 @@ Acme.Feed.prototype.events = function()
             element: self.elem,
             offset: '80%',
             handler: function (direction) {
+                console.log('starting fetch');
                 if (direction == 'down') {
                     self.fetch();
                 }
@@ -19177,7 +19178,7 @@ Card.prototype.bindLightbox = function()
 {
     var isRequestSent = false;
     var self = this;
-    $(document).unbind().on('click', 'article.lightbox', function (e) {
+    $(document).on('click', 'article.lightbox', function (e) {
         e.preventDefault();
         var csrfToken = $('meta[name="csrf-token"]').attr("content");
 
@@ -19260,6 +19261,7 @@ Card.prototype.bindLightbox = function()
 
 Card.prototype.initDraggable = function()
 {
+    console.log('creating draggables');
     $('.swap').draggable({
         helper: 'clone',
         revert: true,
@@ -19269,6 +19271,7 @@ Card.prototype.initDraggable = function()
         cursorAt: { left: 150, top: 50 },
         appendTo:'body',
         start: function( event, ui ) {
+            console.log('starting drag');
             ui.helper.attr('class', '');
             var postImage = $(ui.helper).data('article-image');
             var postText = $(ui.helper).data('article-text');
@@ -19287,11 +19290,12 @@ Card.prototype.initDraggable = function()
 Card.prototype.initDroppable = function()
 {
     var self = this;
+    console.log('creating droppables');
 
     $('.swap').droppable({
         hoverClass: "ui-state-hover",
         drop: function(event, ui) {
-            
+            console.log('dropped');
             function getElementAtPosition(elem, pos) {
                 return elem.find('a.card').eq(pos);
             }
@@ -19395,7 +19399,9 @@ Card.prototype.initDroppable = function()
 
 Card.prototype.events_refresh = function() 
 {
+    console.log('refreshing events');
     if (_appJsConfig.isUserLoggedIn === 1 && _appJsConfig.userHasBlogAccess === 1) {
+        console.log('refreshing drag and drop');
         this.initDroppable();
         this.initDraggable();        
         this.bindPinUnpinArticle();
@@ -19405,7 +19411,9 @@ Card.prototype.events_refresh = function()
 
 Card.prototype.events = function() 
 {
+    console.log('running events');
     if (_appJsConfig.isUserLoggedIn === 1 && _appJsConfig.userHasBlogAccess === 1) {
+        console.log('attached drag drop');
         this.initDroppable();
         this.initDraggable();        
         this.bindPinUnpinArticle();
@@ -21130,7 +21138,7 @@ Acme.Signin.prototype.handle = function(e) {
     var self = this;
 
     var $elem = this.parent.handle.call(this, e);
-    console.log('handling');
+
     if ( $elem.is('a') ) {
 
         if ($elem.hasClass('close')) {
