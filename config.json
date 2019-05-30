@@ -21,16 +21,7 @@
                     "name": "publishto",
                     "label": "Publish to...",
                     "type": "inputbox"
-                },
-    			{
-    				"label": "Paywall",
-    				"type": "radio",
-    				"name": "paywall",
-    				"options": {
-                        "on": "On",
-                        "off": "Off"
-    				}
-    			}
+                }
             ]
         },
         "article": {

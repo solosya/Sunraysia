@@ -16,11 +16,12 @@
 
 {% set showPaywall = false %}
 {% set ArticleContent = article.content %}
-
+{# <pre>
+{{dump(article)}}
+</pre> #}
 
 {% if   not _User.isAdminUser()     and
-        paywallSection == true      and
-        articleBlogData['showPaywall'] == true  %}
+        article.showPaywall == true %}
     {% set showPaywall = true %}
 {% endif %}
 
