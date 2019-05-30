@@ -93,7 +93,7 @@
                     <div class="c-news-feed__title">Most popular</div>
                     <ul class="row c-news-feed__list">
 
-                        {% for i in 0..2 if popularArticles[i] %}
+                        {% for i in 0..3 if popularArticles[i] %}
                                 <li class="col-sm-12">
                                     {{this.render('../_single-article.twig', {
                                         article: popularArticles[i], 
