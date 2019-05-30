@@ -21,7 +21,6 @@
 {% if   not _User.isAdminUser()     and
         paywallSection == true      and
         articleBlogData['showPaywall'] == true  %}
-        {{dump('turning paywall on')}}
     {% set showPaywall = true %}
 {% endif %}
 
