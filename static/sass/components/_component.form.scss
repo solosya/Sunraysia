@@ -155,7 +155,11 @@
         @include font-size(16);
         @include transition(all .3s ease-out);
         line-height:45px;
-
+		
+		&--inline {
+			display:inline;
+			width:auto;
+		}
 
         &--bordered {
             border: 1px solid $offwhite;
@@ -183,7 +187,11 @@
         color: $black;
         @include font-size(16);
         line-height:1.8;
-        font-weight:$weightBold;
+		font-weight:$weightBold;
+		
+		&--inline {
+			display:inline;
+		}
     }
 
     &__help-block {
