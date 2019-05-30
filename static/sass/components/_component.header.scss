@@ -212,8 +212,24 @@
 
     &__mobile-login-buttons {
         background-color: $blue;
-        height:36px; 
+        min-height:36px; 
     }
+
+    &__mobile-logins {
+        float:right;
+        margin-right:20px;
+    }
+    &__mobile-login {
+        @include font-size(12);
+        color:$offwhite;
+        line-height: 36px;
+    }
+    &__mobile-subscribe {
+        @include font-size(12);
+        color:$offwhite;
+        line-height: 36px;
+    }
+
 
     &__mobile-date {
         color:white;

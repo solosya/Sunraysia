@@ -9,10 +9,18 @@
     @include box-shadow(0 2px 10px 6px rgba(89, 88, 89, 0.1));
     
 
-    @media #{$desktop-down} {
+    @media #{$tablet} {
         clear:both;
         position:absolute;
-        top:30px;
+        top: 25px;
+    }
+
+
+
+    @media #{$mobile} {
+        clear:both;
+        position:relative;
+        top: 0;
     }
 
     &__name {

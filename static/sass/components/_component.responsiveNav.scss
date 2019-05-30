@@ -9,7 +9,7 @@
     left: 0;
     right: auto;
     text-align: left;
-    z-index: 99999999;
+    z-index: 100;
     visibility: hidden;
     // padding: 0px 0px 10px;
     -webkit-user-select: none;
@@ -172,9 +172,9 @@
                 border-color: $greyish;
             }
 
-            &:hover {
-                @include rotate(180);
-            }
+            // &:hover {
+            //     @include rotate(180);
+            // }
         }
 
 
