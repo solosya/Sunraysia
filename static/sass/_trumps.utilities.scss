@@ -1,12 +1,9 @@
 .u-section-header {
-    background-color:black;
-    height:53px;
 
     &__title {
-        @include font-size(28);
-        font-weight: $weightBold;
-        color:white;
-        line-height:53px;
+        @include font-size(30);
+        font-weight: $weightLight;
+        color:black;
     }
 }
 .u-section-background {
