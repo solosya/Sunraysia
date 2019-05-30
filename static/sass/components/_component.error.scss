@@ -9,6 +9,10 @@
         color: $black;
         @include font-size(36);
         font-weight: $weightRegular;
+
+        // @media #{$tablet} {
+        //     @include font-size(27);
+        // }
     }
 
     &__message {
@@ -17,11 +21,29 @@
         margin:auto;
         margin-top: 23px;
         font-weight: $weightLight;
+
+        // @media #{$tablet} {
+        //     @include font-size(17);
+        //     width:245px;
+        // }
+
+
     }
     &__button {
         display:block;
         color:$greyish;
         @include font-size(13);
     }
+
+    &__arrow {
+        display:inline-block;
+        background-image: url("../icons/side-arrow.svg");
+        background-repeat:no-repeat;
+        background-size:contain;
+        width:20px;
+        height: 8px;
+        margin-left: 5px;
+    }
+
 
 }
