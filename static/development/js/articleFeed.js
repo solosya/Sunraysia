@@ -161,6 +161,9 @@ Acme.View.articleFeed.prototype.render = function(data)
     $("div.lazyload").lazyload({
         effect: "fadeIn"
     });
+    $('.j-truncate').dotdotdot({
+        watch: true
+    });
 
     // self.elem.data('rendertype', '');
     this.feedModel.events();
