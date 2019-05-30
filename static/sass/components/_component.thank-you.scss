@@ -1,0 +1,22 @@
+.c-thank-you {
+
+    min-height:600px;
+
+    &__title {
+        @include font-size(32);
+        color:$blue;
+        margin-bottom:18px;
+    }
+
+    &__text {
+        @include font-size(15);
+        color:$greyish;
+        >a {
+            color:$greyish;
+        };
+    }
+
+    &__button {
+        margin-top:50px;
+    }
+}

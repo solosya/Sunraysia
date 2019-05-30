@@ -253,8 +253,7 @@
                                     </label>
                                 </div>
                             </div>
-                            <div class="col-lg-12 u-margin-top-20">
-                                <input name="submit" type="submit" class="c-button c-button-inline  c-button--lightgrey u-mt--20" value="Continue to payment"> </div>
+
                         </div>
                     </form>
                 </div>
@@ -263,12 +262,8 @@
                     <div class="row">
                         <div class="col-12">
                             <div class="c-section-header">Payment</div>
-                            <div class="c-totalpayvalue">
-                                <div class="c-totalpayvalue__title">Total</div>
-                                <div class="c-totalpayvalue__value">$29 AUD</div>
-                            </div>
-                            <div class="form-group fullwidth">
-                                <label class="control-label control-label-sm" for="creditcarddetails" style="font-weight:normal;">Please enter your credit or debit card details.</label>
+                            <div class="u-margin-top-30">
+                                {# <label class="control-label control-label-sm" for="creditcarddetails" style="font-weight:normal;">Please enter your credit or debit card details.</label> #}
                                 
                                 
                                 
@@ -278,11 +273,6 @@
                                             <label for="code-redeem">Gift code </label>
                                             <input type="text" class="articleExtendedData" name="code-redeem" id="code-redeem" value="" placeholder="0a1b-2c3d-4e5f">
                                         </div>
-                                        
-                                        <div class="form-group" style="margin-top:30px;">
-                                            <button type="submit" id="subscribe" class="c-button c-button--rounded c-button--blue">Subscribe</button>
-                                        </div>
-                                    </form>
 
                                 {% else %}
                                     <form action="/charge" method="post" id="payment-form" class="stripe-form">
@@ -292,12 +282,25 @@
                                             <div id="card-errors" class="c-form__help-block u-margin-top-10 u-font-size-14" role="alert" style="display:block"></div>
                                         </div>
 
-                                        <div class="form-group" style="margin-top:30px;">
-                                            <button type="submit" id="subscribe" class="c-button c-button--rounded c-button--blue">Subscribe</button>
-                                        </div>
-                                    </form>
                                 {% endif %}
-                                                
+
+
+                                    <div class="c-totalpayvalue u-margin-top-20">
+                                        <div class="c-totalpayvalue__title">Total</div>
+                                        <div class="c-totalpayvalue__value">$29 AUD</div>
+                                    </div>
+
+
+                                    <div class="form-group" style="margin-top:30px;">
+                                        <button type="submit" id="subscribe" class="c-button c-button--rounded c-button--blue">Subscribe</button>
+                                    </div>
+
+                                </form>
+
+
+
+
+
                             </div>
 
                         </div>

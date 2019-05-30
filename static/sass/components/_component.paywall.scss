@@ -61,6 +61,8 @@
     @include flexbox;
     @include justify-content(space-between);
     @include align-items(center);
+    border-top:1px solid $greyish;
+    padding-top: 15px;
     &__title {
         @include font-size(20);
         font-weight: $weightLight;

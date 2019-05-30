@@ -119,11 +119,12 @@
 
                             {% if pwstats['type'] == 'time' %}
                                     <div class="c-account-form__static-text">{{pwstats['name']}} at {{pwstats['currency']|replace({"AUD": "$", "NZD": "$", "GBP": "£", "USD": "$", "EUR": "€"})}}{{ pwstats['plan_value']/100}} per {{pwstats['period']}}</div>
-
                             {% else %} 
                                 <div class="c-account-form__static-text">
                                     <span>{{ pwstats['plan_value']/100}}/{{pwstats['total_articles']}}</span>
                                 </div>
+                           
+                                <hr class="divide divide--dark" />
 
                                 <label class="c-form__label c-account-form__label" for="">Articles Remaining</label>
                                 <div class="c-account-form__static-text">
@@ -175,7 +176,7 @@
 
                             <hr class="divide divide--dark" />
 
-                            <a id="change-plan" href="#" class="c-button c-button--red">Change Subscription</a>
+                            <a id="change-plan" href="#plans" class="c-button c-button--red">Change Subscription</a>
 
                             {% if pwstats['status'] == 'cancelled' %}
                                 <a id="cancelAccount" href="#" class="c-button c-button--red c-button--red--bordered">Restart Subscription</a>
@@ -315,7 +316,6 @@
 
 
        $("#change-plan").click(function(e) {
-            e.preventDefault();
             $("#plans").toggle();
         });
 
