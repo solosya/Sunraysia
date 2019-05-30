@@ -19911,7 +19911,7 @@ Acme.EventForm = function(options)
             var longitude = elem.data('longitude');
             var map;
             
-            //google.maps.event.addDomListener(window, 'load', initMap);
+            google.maps.event.addDomListener(window, 'load', initMap);
             function initMap() {
                 var mapLat;
                 var mapLong;
@@ -20658,8 +20658,7 @@ Acme.UserProfileController.prototype.pageEvents = function ()
             }
             Acme.SigninView.render("userPlan", "Are you sure you want to change plan?", {message: msg})
                 .done(function(r) {
-                    console.log(r);
-                    console.log('changing plan');
+
                     $('#dialog').parent().remove();
                     
                     $.ajax({
@@ -21306,13 +21305,13 @@ $('#signinBtn, #articleSigninBtn').on('click', function(e) {
             "password"          : ["notEmpty"],
             "email"             : ["notEmpty"], 
             "terms"             : ["isTrue"],
+            "subscription_choice":["notEmpty"]
         };
 
         this.validateFields = Object.keys(this.validateRules);
 
         this.events();
 
-        // this.data['trial'] = $('#trial').is(":checked");
         var trial = $('#trial').val();
         if (trial == 1) {
             this.data['trial'] = 'true';
@@ -21325,7 +21324,7 @@ $('#signinBtn, #articleSigninBtn').on('click', function(e) {
     {
         this.clearInlineErrors();
         this.addInlineErrors();
-        console.log(this.data);
+
         if (checkTerms) {
             if (!this.data.terms) {
                 this.confirmView = new Acme.Confirm('modal', 'signin-modal', {'terms': 'subscribeTerms'});
@@ -21407,6 +21406,8 @@ $('#signinBtn, #articleSigninBtn').on('click', function(e) {
             var elem = $(this);
             var plan = elem.data('planid');
             var name = elem.data('plan-name');
+            self.data.planid = plan;
+            self.data.subscription_choice = name;
             $('#planid').val(plan);
             $('#subscription_choice').val(name);
 
@@ -21420,6 +21421,8 @@ $('#signinBtn, #articleSigninBtn').on('click', function(e) {
             elem.text('SELECTED');
             elem.removeClass('c-button--grey');
             elem.addClass('c-button--red');
+            self.validate();
+            console.log(self.errorFields);
         });
 
 
