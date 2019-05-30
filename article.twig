@@ -37,10 +37,12 @@
 
 {% else %}
     {# Only grab these if article is not paywalled #}
-    {# {% set relatedArticles = _Article.getPopularArticles({ blogId: article.blog.id, limit: 3, excludeArticleIds : [article.id], interval: 168 }) %} #}
+    {# {% set recentArticles = _Article.getPopularArticles({ limit: 3, excludeArticleIds : [article.id], interval: 168, scope: 'network' }) %} #}
     {% set recentArticles = _Article.getRecentArticles({ limit: 3, excludeArticleIds : [article.id] }) %}
 {% endif %}
-
+{# <pre>
+{{dump(relatedArticles)}}
+</pre> #}
 {% set articleImg = false %}
 {% set featured = false %}
 
@@ -202,10 +204,11 @@
                     <h1 class="c-related-articles__header u-margin-bottom-30" >You might also like...</h1>
                 </div>
                 
-                <div class="offset-lg-1 col-10">
+                <div class="offset-lg-1 col-ls-10">
                     <div class="row">
+                        {% set classes = ["u-desktop-lg-padding-right-50", "u-desktop-lg-padding-right-30 u-desktop-lg-padding-left-30 u-article-divider-left", "d-none d-lg-block u-desktop-lg-padding-left-50 u-article-divider-left-2"] %}
                         {% for i in 0..2 if recentArticles[i] %}
-                            <div class="col">
+                            <div class="col-12 col-md-6 col-lg-4 {{classes[i]}}">
                                 {{this.render('partials/_single-article.twig', {
                                     article: recentArticles[i], 
                                     imageSize: {width: 300, height: 180},

@@ -322,10 +322,41 @@
     .u-desktop-padding-top-15 { padding-top: 15px; }
     .u-desktop-padding-top-10 { padding-top: 10px; }
 
+
+
+
     .u-desktop-margin-top-neg-100 { margin-top: -100px; }
 
     .u-desktop-indent-left-20 { margin-left: -20px; }
 }
+
+@media #{$desktop-lg} {
+
+    .u-desktop-lg-padding-left-60 { padding-left: 60px; }
+    .u-desktop-lg-padding-left-50 { padding-left: 50px; }
+    .u-desktop-lg-padding-left-45 { padding-left: 45px; }
+    .u-desktop-lg-padding-left-40 { padding-left: 40px; }
+    .u-desktop-lg-padding-left-30 { padding-left: 30px; }
+    .u-desktop-lg-padding-left-25 { padding-left: 25px; }
+    .u-desktop-lg-padding-left-20 { padding-left: 20px; }
+    .u-desktop-lg-padding-left-15 { padding-left: 15px; }
+    .u-desktop-lg-padding-left-10 { padding-left: 10px; }
+
+
+    .u-desktop-lg-padding-right-60 { padding-right: 60px; }
+    .u-desktop-lg-padding-right-50 { padding-right: 50px; }
+    .u-desktop-lg-padding-right-45 { padding-right: 45px; }
+    .u-desktop-lg-padding-right-40 { padding-right: 40px; }
+    .u-desktop-lg-padding-right-30 { padding-right: 30px; }
+    .u-desktop-lg-padding-right-25 { padding-right: 25px; }
+    .u-desktop-lg-padding-right-20 { padding-right: 20px; }
+    .u-desktop-lg-padding-right-15 { padding-right: 15px; }
+    .u-desktop-lg-padding-right-10 { padding-right: 10px; }
+
+}
+
+
+
 
 .u-font-weight-bold {font-weight: $weightBold;}
 .u-font-weight-medium {font-weight: $weightMedium;}
@@ -408,11 +439,33 @@
 // 	}
 // }
 
+@media #{$desktop-lg} {
 
+    .u-article-divider-left {
+        &:before {
+            content: "";
+            height: 94%;
+            width: 1px;
+            background-color: $offwhite;
+            display: inline-block;
+            position: absolute;
+            z-index: 1000;
+            left: -11px;    }
+    }
 
-
-
-
+    .u-article-divider-left-2 {
+        &:before {
+            content: "";
+            height: 94%;
+            width: 1px;
+            background-color: $offwhite;
+            display: inline-block;
+            position: absolute;
+            z-index: 1000;
+            left: 8px;
+        }
+    }
+}
 
 .divide {
     border: 0;
