@@ -24,7 +24,12 @@ with width taken up with borders on the side #}
 {% endif %}
 
 
-{% if ( media | length > 1 ) %}
+{# don't allow carousel if paywalled #}
+{% if showPaywall == true %}
+    {% set media = [media[0]] %}
+{% endif %} 
+
+{% if  media | length > 1 %}
     {% set owl = "owl-gallery-" ~ type %}
     {% set owlClass = 'owl-carousel owl-pub-theme owl-carousel__base'%}
 {% endif %}
