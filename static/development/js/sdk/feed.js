@@ -2,7 +2,7 @@
 
     Ajax_LoadFeed = function(options){
         var requestType = 'post';
-        var url = _appJsConfig.baseHttpPath + '/home/load-articles';
+        var url = _appJsConfig.appHostName + '/home/load-articles';
 
         var requestData = { 
             offset      : options.offset, 
@@ -39,14 +39,15 @@
             var url = _appJsConfig.appHostName + '/'+ options.loadtype;
             var requestType = 'get';
         }
-        
+        console.log(url);
+        console.log(requestData);
         return $.ajax({
             type: requestType,
             url: url,
             dataType: 'json',
             data: requestData
         }).done(function(r) {
-            // console.log(r);
+            console.log(r);
         });        
     };
 

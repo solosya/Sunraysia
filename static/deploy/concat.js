@@ -16147,7 +16147,7 @@ var extend = function(child, parent) { for (var key in parent) { if (hasProp.cal
 
     Ajax_LoadFeed = function(options){
         var requestType = 'post';
-        var url = _appJsConfig.baseHttpPath + '/home/load-articles';
+        var url = _appJsConfig.appHostName + '/home/load-articles';
 
         var requestData = { 
             offset      : options.offset, 
@@ -16184,14 +16184,15 @@ var extend = function(child, parent) { for (var key in parent) { if (hasProp.cal
             var url = _appJsConfig.appHostName + '/'+ options.loadtype;
             var requestType = 'get';
         }
-        
+        console.log(url);
+        console.log(requestData);
         return $.ajax({
             type: requestType,
             url: url,
             dataType: 'json',
             data: requestData
         }).done(function(r) {
-            // console.log(r);
+            console.log(r);
         });        
     };
 
@@ -18786,6 +18787,7 @@ Acme.View.articleFeed = function(options)
     this.before     = options.before     || false;
     this.after      = options.after      || false;
     this.button_label = options.label    || false;
+    this.cardType   = options.cardType   || "";
     
     this.options    = {
         'nonPinnedOffset'   :   options.non_pinned || -1,
@@ -18850,7 +18852,7 @@ Acme.View.articleFeed.prototype.render = function(data)
             html.push( self.feedModel.renderCard(articles[i], {
                 cardClass: self.cardClass,
                 template: self.template,
-                type: ""
+                type: this.cardType
             }));
         }
         if (self.before ) {

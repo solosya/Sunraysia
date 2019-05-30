@@ -1,3 +1,6 @@
+{% set cardTypes = cardType is defined ? cardType : "" %}
+
+
 {# please make sure sectionNumber, loadMoreClass and totalCards are set at the top of this file #}
 <div class="row" id="loadmore_section_{{sectionNumber}}"></div>
 
@@ -33,7 +36,8 @@
             name            : 'section-load-{{sectionNumber}}',
             blogid          : "{{ blogData['guid'] }}",
             card_class      : "{{cardClass}}",
-            non_pinned      : {{cardCount}}
+            non_pinned      : {{cardCount}},
+            cardType        : "{{cardTypes}}"
         });
 
         $('.load_less').on('click', function(e) {

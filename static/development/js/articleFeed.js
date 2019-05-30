@@ -62,6 +62,7 @@ Acme.View.articleFeed = function(options)
     this.before     = options.before     || false;
     this.after      = options.after      || false;
     this.button_label = options.label    || false;
+    this.cardType   = options.cardType   || "";
     
     this.options    = {
         'nonPinnedOffset'   :   options.non_pinned || -1,
@@ -126,7 +127,7 @@ Acme.View.articleFeed.prototype.render = function(data)
             html.push( self.feedModel.renderCard(articles[i], {
                 cardClass: self.cardClass,
                 template: self.template,
-                type: ""
+                type: this.cardType
             }));
         }
         if (self.before ) {

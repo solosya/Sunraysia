@@ -231,6 +231,7 @@
                     <div id="results" class="">
 
                         {% set bannerNo = 1 %}
+                        {% set pageSectionId = 1 %}
 
                         {% for pagesection in blogFeeds | keys %}
                             {% set params = {
@@ -244,11 +245,17 @@
                                     title: pagesection,
                                     nomargin: true,
                                     wrapper: false,
-                                    link: blogData.url ~"?section=" ~ pagesection | lower
+                                    link: blogData.url ~"?section=" ~ pagesection | lower,
+                                    template_params: {
+                                        loadmore: true,
+                                        loadmore_id: pageSectionId ~ ""
+                                    }
                                 },
                             } %}
 
                             {{this.render('render.twig', params) | raw}} 
+                            
+                            {% set pageSectionId = pageSection_id + 1 %}
 
                             {% if loop.index in bannerSpots %}
                                 {% if config['inventory']['adSpace']['banner'][bannerNo] is defined %}
