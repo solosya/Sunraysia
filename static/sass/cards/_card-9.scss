@@ -1,0 +1,236 @@
+@mixin card-9-base() {
+    @include card-name("C5 mobile");
+    margin-left: -20px;
+    margin-right: -20px;
+
+    .c-cards-view {
+
+        // height: 490px;
+
+
+        @include flex-direction(column, vertical);
+        align-items: stretch;
+
+
+        &__media {
+            // @include flex-height(290px);
+
+            &--video {
+                &:before {
+                    @include size(55px);
+                }
+            }
+        }
+
+        &__container {
+            text-align:center;
+            padding: 0 25px 15px 25px;
+            height: inherit;
+        }
+        &__category {
+            margin-top:16px;
+            margin-bottom:12px;
+
+        }
+
+        &__heading {
+            @include font-size(24);
+            @include flex-height(61px);
+        }
+
+        &__description {
+            margin-top:5px;
+            @include flex-height(39px);
+        }
+
+        &__author {
+            margin-top: 18px;
+        }
+        &__time {
+            font-weight: $weightMedium;
+        }
+
+
+
+        &.social {
+            .social-icon {
+                @include size(30px);
+
+                &:before {
+                    @include font-size(13);
+                    line-height: 32px;
+                }
+            }
+
+            &.without-image {
+                .card {
+                    &__container {
+                        @include calc(width, '100% - 30px');
+                        margin-left: 30px;
+                        padding: 0 20px;
+                        margin: 15px 0;
+                        height: inherit;
+                    }
+                }
+            }
+        }
+
+
+        &.without-image {
+            // background-color:white;
+
+            .c-cards-view {
+
+                &__container {
+                    width: 100%;
+                    margin-left: 0;
+                    padding: 98px 50px 50px 50px;
+                    height: inherit;
+                }
+                &__category {
+                    margin-top:0;
+                    margin-bottom:20px;
+                }
+                &__heading {
+                    margin-bottom:30px;
+                    @include flex-height(76px);
+                }
+                &__description {
+                    @include font-size(15);
+                    line-height:1.6;
+                    @include flex-height(132px);
+                    margin-bottom: 70px;
+                }
+                &__author {
+                    margin-top: 0;
+                }
+        
+            }
+        }
+    }
+}
+
+.card-9-mobile {
+    @media #{$mobile} {
+        @include card-9-base();
+    }
+}
+
+@mixin card-9-tablet-base() {
+
+    @include card-9-base();
+    margin-left: 0;
+    margin-right: 0;
+
+    .c-cards-view {
+
+        height: 650px;
+
+        &__media {
+            @include flex-height(650px);
+            &--video {
+                &:before {
+                    @include size(45px);
+                }
+            }
+            
+            img {
+                height: 100%;
+            }
+        }
+
+        &__container {
+            text-align:center;
+            padding: 0 100px 25px 100px;
+            margin: 0;
+        }
+
+        &__category {
+            margin-top:17px;
+            margin-bottom:8px;
+        }
+
+
+        &__heading {
+            @include font-size(30);
+            @include flex-height(76px);
+            
+        }
+
+
+        &__description {
+            max-height: 40px;
+            margin-top:0;
+        }
+
+        &__author {
+            margin-top:10px;
+        }
+
+
+    //     &__heading {
+    //         @include font-size(22);
+    //         @include flex-height(70px);
+    //     }
+
+
+    //     &.social {
+    //         .social-icon {
+    //             @include size(50px);
+
+    //             &:before {
+    //                 @include font-size(22);
+    //                 line-height: 52px;
+    //             }
+    //         }
+
+    //         &.without-image {
+    //             .c-cards-view {
+    //                 &__container {
+    //                     @include calc(width, '100% - 50px');
+    //                     margin-left: 50px;
+    //                 }
+    //             }
+    //         }
+    //     }
+
+    //     &.without-image {
+
+    //         .c-cards-view {
+
+    //             &__description {
+    //                 @include font-size(13);
+    //                 @include flex-height(42px);
+    //                 display:block;
+    //                 margin-top:10px;
+    //             }
+    //             &__author-name {
+    //                 font-style:normal;
+    //                 font-family: $font-family-sans-serif;
+    //                 font-weight: $weightMedium;
+    //             }
+    //         }
+    //     }
+    }
+}
+
+.card-9-tablet {
+    @media #{$tablet} {
+        @include card-9-tablet-base();
+        @include card-name("C5 tablet");
+    }
+}
+
+.card-9-desktop {
+    @media #{$desktop-up} {
+        @include card-9-tablet-base();
+        @include card-name("C5 desktop");
+
+        .c-cards-view {
+            &__container {
+                padding: 0 81px 25px 81px;
+                margin: 0;
+            }
+        }
+    }
+}
