@@ -13,7 +13,7 @@
         };
 
         if (options.blogid) {
-            requestData['blogguid'] = options.blogid;
+            requestData['blogGuid'] = options.blogid;
         }
 
         if (options.loadtype == 'user') {

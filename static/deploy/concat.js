@@ -16158,7 +16158,7 @@ var extend = function(child, parent) { for (var key in parent) { if (hasProp.cal
         };
 
         if (options.blogid) {
-            requestData['blogguid'] = options.blogid;
+            requestData['blogGuid'] = options.blogid;
         }
 
         if (options.loadtype == 'user') {
