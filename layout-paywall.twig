@@ -54,7 +54,7 @@
 {# {{this.registerJs("var signup = new Acme.Signup();")}} #}
  
 
-<main id="main" class="site-main" role="main">
+<main id="main" class="site-main u-margin-bottom-100" role="main">
 	<div id="stripekey" class="hidden" >{{networkData['stripe_publishable_key']}}</div>
 
     <div class="container">
@@ -72,15 +72,16 @@
 
 
     <div class="clearfix"></div>
-    <div class="c-payWall c-payWall-md u-margin-top-160">
+    <div class="c-payWall u-margin-top-160">
 
         {% if plans | length > 0 %}
         <div class="c-payWall--pricing c-payWall--pricing-md">
 
             <div class="container">
 
-                <div class="row justify-content-center">
-                    <div class="col-lg-10">
+                <div class="row ">
+                    
+                    <div class="offset-lg-1 col-lg-10" style="background:yello">
                         <div class="row">
 			                {% for plan in plans %}
                                 {% set val = plan.plan_value / 100 %}
@@ -116,55 +117,6 @@
                                 </div>
                             {% endfor %}
 
-                            {# <div class="col-12 col-lg-4 col-md-12 col-sm-12 col-xs-12">
-                                <div class="c-paywall-card">
-                                    
-                                    <h3 class="c-paywall-card__name c-paywall-card__name-xs">Subscription offer one</h3>
-                                    <p class="c-paywall-card__excerpt c-paywall-card__excerpt-xs">Spendisse ultria eces phlaretra id at nullneiair naeos 99c a day</p>
-                                    <div class="c-paywall-card__price c-paywall-card__price-lg">$29p/m</div>
-                                    
-                                    <div class="c-paywall-card__Graphic c-paywall-card__Graphic-lg">
-                                        <picture class="">
-                                            <img src   ="{{networkData.templatePath}}/static/images/device.png" 
-                                                srcset="{{networkData.templatePath}}/static/images/device.png 1x, {{networkData.templatePath}}/static/images/device@2x.png 2x, {{networkData.templatePath}}/static/images/device@3x.png 3x" class="img-fluid">
-                                        </picture>
-                                    </div>
-                                    
-                                    <ul class="c-paywall-card__Details c-paywall-card__Details-md">
-                                        <li>Amazing benefit number one here</li>
-                                        <li>Even more amazing benefit number two goes here</li>
-                                        <li>Yet another fabulous benefit to subscribing to Sunraysia Daily</li>
-                                        <li>Amazing benefit number one here</li>
-                                    </ul>
-
-                                    <button type="button" class="c-button c-button--grey c-button-block c-button-md j-plan-subscribe" data-planid="{{}}">Subscribe</button>
-                                </div>
-                            </div>
-                            
-                            <div class="col-12 col-lg-4 col-md-12 col-sm-12 col-xs-12">
-                                <div class="c-paywall-card">
-                                    
-                                    <h3 class="c-paywall-card__name c-paywall-card__name-xs">Subscription offer one</h3>
-                                    <p class="c-paywall-card__excerpt c-paywall-card__excerpt-xs ">Spendisse ultria eces phlaretra id at nullneiair naeos 99c a day</p>
-                                    <div class="c-paywall-card__price  c-paywall-card__price-lg">$29p/m</div>
-                                    
-                                    <div class="c-paywall-card__Graphic c-paywall-card__Graphic-lg">
-                                        <picture class="">
-                                            <img src   ="{{networkData.templatePath}}/static/images/device.png" 
-                                                srcset="{{networkData.templatePath}}/static/images/device.png 1x, {{networkData.templatePath}}/static/images/device@2x.png 2x, {{networkData.templatePath}}/static/images/device@3x.png 3x" class="img-fluid">
-                                        </picture>
-                                    </div>
-                                    
-                                    <ul class="c-paywall-card__Details c-paywall-card__Details-md">
-                                        <li>Amazing benefit number one here</li>
-                                        <li>Even more amazing benefit number two goes here</li>
-                                        <li>Yet another fabulous benefit to subscribing to Sunraysia Daily</li>
-                                        <li>Amazing benefit number one here</li>
-                                    </ul>
-
-                                    <button type="button" class="c-button c-button--grey c-button-block c-button-md j-plan-subscribe" data-planid="{{}}">Subscribe</button>
-                                </div>
-                            </div> #}
                         </div>
                     </div>
                 </div>
@@ -181,19 +133,19 @@
 
     <div class="clearfix"></div>
     <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-lg-10">
+        <div class="row ">
+            <div class="offset-lg-2 col-lg-8">
                 <!-- Coustomer detail form  Section start -->
                 <div class="c-paywallform">
                     <form id="subscribe-form" class="c-form">
                         <input type="hidden" class="" name="planid" id="planid" value="">
                         <input type="hidden" class="" name="trial" id="trial" value="">
 
-                        <div class="row">
+                        <div class="row u-margin-top-60">
                             <div class="col-12">
-                                <div class="c-section-header">Your details</div>
+                                <div class="c-section-header c-section-header--normal-case">Your details</div>
                             </div>
-                            <div class="col-12 u-mb--18">
+                            <div class="col-12">
                                 <div class="c-formnotice">Fields marked with an * are required.</div>
                             </div>
                         </div>
@@ -233,14 +185,14 @@
                                 <div class="">
                                     <label class="c-form__label" for="firstname">Password*</label>
                                     <input class="c-form__input c-form__input--bordered" type="text" id="password" placeholder="Password (must be at least five characters)" name="password" required>
-                                    <div class="c-form__help-block">Password (must be at least five characters)</div>
+                                    <div class="c-form__help-block">Password (must be at least six characters)</div>
                                 </div>
                             </div>
                             <div class="col-md-6 u-margin-top-10">
                                 <div class="">
                                     <label class="c-form__label" for="firstname">Confirm password*</label>
                                     <input class="c-form__input c-form__input--bordered" type="password" id="verifypassword" placeholder="Password (must be at least five characters)" name="verifypassword" required>
-                                    <div class="c-form__help-block">Password (must be at least five characters)</div>
+                                    <div class="c-form__help-block">Password (must be at least six characters)</div>
                                 </div>
                             </div>
                             
@@ -261,14 +213,22 @@
                     </form>
                 </div>
                 <!-- Totoal payment detail -->
-                <div class="c-paywallpayment u-margin-top-40">
+                <div class="c-paywallpayment u-margin-top-80">
                     <div class="row">
                         <div class="col-12">
-                            <div class="c-section-header">Payment</div>
+                            <div class="c-section-header c-section-header--normal-case">Payment</div>
                             <div class="u-margin-top-30">
                                 {# <label class="control-label control-label-sm" for="creditcarddetails" style="font-weight:normal;">Please enter your credit or debit card details.</label> #}
                                 
-                                
+                                <div class="c-payment__types">
+                                    <div class="c-payment__tab c-payment__tab--selected">
+                                        <div class="c-payment__credit-img"></div>
+                                        <p class="c-payment__credit-label">Credit Card</p>
+                                    </div>
+                                    <div class="c-payment__tab">
+                                        <div class="c-payment__paypal-img"></div>
+                                    </div>
+                                </div>
                                 
                                 {% if  code %}
                                     <form action="/charge" method="post" id="payment-form">
@@ -288,14 +248,14 @@
                                 {% endif %}
 
 
-                                    <div class="c-totalpayvalue u-margin-top-20">
+                                    <div class="c-totalpayvalue u-margin-top-40">
                                         <div class="c-totalpayvalue__title">Total</div>
                                         <div id="total_cost" class="c-totalpayvalue__value"></div>
                                     </div>
 
 
                                     <div class="form-group" style="margin-top:30px;">
-                                        <button type="submit" id="subscribe" class="c-button c-button--rounded c-button--blue">Subscribe</button>
+                                        <button type="submit" id="subscribe" class="c-button c-button c-button--grey u-float-right">COMPLETE PURCHASE</button>
                                     </div>
 
                                 </form>

@@ -1,0 +1,41 @@
+.c-payment {
+    &__types {
+        @include flexbox();
+        margin-top: -20px;
+        margin-bottom:30px;
+    }
+
+    &__tab {
+        border-right:1px solid $greyish;
+        padding: 10px 30px;
+        cursor:pointer;
+        opacity:.6;
+
+        &--selected {
+            opacity:1;
+        }
+    }
+
+    &__credit-img {
+        background-image: url('../icons/credit_card.svg');
+        background-repeat:no-repeat;
+        background-size:contain;
+        width:28px;
+        height:17px;
+        margin: auto;
+        margin-bottom:12px;
+    }
+    &__credit-label {
+        @include font-size(13);
+        color: $blue;
+        font-weight: $weightMedium;
+    }
+
+    &__paypal-img {
+        background-image: url('../icons/pay-pal-grey.svg');
+        background-repeat:no-repeat;
+        background-size:contain;
+        width:52px;
+        height:53px;
+    }
+}
