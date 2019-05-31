@@ -17,6 +17,7 @@
 
 {# else if a page section has articles from a single blog, no assembly required #}
 {% else %}
+            {# {% set out =  _AppHelper.log(config.blogs[0]) %} #}
 
     {% set feedArr = blogFeeds[config.blogs[0]].feed.articles %}
 
@@ -25,7 +26,9 @@
 
 {% if config.template != '' %}
 
-
+    {# <pre>
+    {{dump(blogFeeds[ config.blogs[0] ]['guid'])}}
+    </pre> #}
     {% set params = {
         articles        : feedArr,
         link            : config.link is defined ? config.link : blogFeeds[ config.blogs[0] ].link,
@@ -33,7 +36,7 @@
         dev             : dev,
         site            : site,
         networkData     : networkData,
-        blogData        : blogData,
+        blogData        : blogFeeds[ config.blogs[0] ],
         adslots         : config.adslots is defined ? config.adslots : []
     } %}
 

@@ -80,7 +80,10 @@
 
 
         {# FOR PRODUCTION #}
+        {# {% set out =  _AppHelper.log(key) %} #}
+
         {% if not dev and blog.title | lower == key | lower %}
+
         {# {% if blog.title | lower == key | lower %} #}
             {% set feed = _Blog.getBlogFeed({
                 'offset' : 0, 
@@ -89,10 +92,12 @@
                 })
             %}
 
+
             {% set blogFeeds = blogFeeds | merge({
                 (key) : {
                     'feed'      : feed,
-                    'link'      : blog.link
+                    'link'      : blog.link,
+                    'guid'      : blog.guid
                     }
                 }) %}
             {% set break = true %}
@@ -112,14 +117,16 @@
 
     {% set bannerNo = 1 %}
     {% for pagesection in panels | keys %}
-
        {% if panels[pagesection]['active'] is not defined or panels[pagesection]['active'] == true %}
             {% set panelConfig = panels[pagesection] %}
             
             {% if breaking.partial is defined and "00" in panels[pagesection]['template'] %}
                 {% set panelConfig = breaking.partial %}
             {% endif %}
-            
+
+            {# {% set out =  _AppHelper.log(blogFeeds) %} #}
+
+
             {% set params = {
                 'networkData' : networkData,
                 'blogFeeds'   : blogFeeds,

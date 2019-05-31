@@ -30,6 +30,7 @@
     {{this.render('/partials/_section-loadmore.twig', {
         sectionNumber: loadmore_id, 
         limit: 6,
+        blogId: blogData['guid'],
         cardClass: "acme-col-12 acme-col-md-12 acme-col-lg-4 acme-card-1-mobile acme-card-1-tablet acme-card-1-desktop",
         cardCount: 4,
         cardType: "acme-"
