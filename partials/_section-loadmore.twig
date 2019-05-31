@@ -40,11 +40,5 @@
             cardType        : "{{cardTypes}}"
         });
 
-        $('.load_less').on('click', function(e) {
-            var section = $(this).data('section');
-            $('#' + section).empty();
-            $(this).hide();
-            Acme.articleFeeds[section].options.nonPinnedOffset = {{cardCount}}
-        });
     });
 </script>

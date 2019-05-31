@@ -16184,8 +16184,8 @@ var extend = function(child, parent) { for (var key in parent) { if (hasProp.cal
             var url = _appJsConfig.appHostName + '/'+ options.loadtype;
             var requestType = 'get';
         }
-        console.log(url);
-        console.log(requestData);
+        // console.log(url);
+        // console.log(requestData);
         return $.ajax({
             type: requestType,
             url: url,
@@ -18754,6 +18754,25 @@ Acme.Feed.prototype.events = function()
         self.fetch();
     });
 
+
+    self.lessElem.on('click', function(e) {
+        var section = $(this).data('section');
+        $('#' + section).empty();
+        $(this).hide();
+        self.options.nonPinnedOffset = self.originalCount;
+        self.elem.show();
+    });
+
+
+
+    // $('.load_less').on('click', function(e) {
+    //     self.container.empty();
+    //     $(this).hide();
+    //     self.options.nonPinnedOffset = self.originalCount;
+    //     self.elem.show();
+    // });
+
+
     if (this.infinite && this.offset >= this.limit) {
         self.waypoint = new Waypoint({
             element: self.elem,
@@ -18788,7 +18807,10 @@ Acme.View.articleFeed = function(options)
     this.after      = options.after      || false;
     this.button_label = options.label    || false;
     this.cardType   = options.cardType   || "";
-    
+
+    // when clicking less, reset the original offset count
+    this.originalCount = options.non_pinned;
+
     this.options    = {
         'nonPinnedOffset'   :   options.non_pinned || -1,
         'loadtype'          :   options.loadtype || "home",
@@ -18831,7 +18853,7 @@ Acme.View.articleFeed.prototype.render = function(data)
         label = self.button_label;
     }
     var ads_on =   self.ads || null;
-    console.log(label);
+
     self.elem.html(label);
     self.lessElem.show();
 
@@ -18875,7 +18897,7 @@ Acme.View.articleFeed.prototype.render = function(data)
         : self.elem.show();
 
     // reset infinite load depending on article count
-    console.log(self.waypoint);
+    // console.log(self.waypoint);
     if (self.waypoint) {
         (articles.length < self.options.limit)
             ? self.waypoint.disable()
