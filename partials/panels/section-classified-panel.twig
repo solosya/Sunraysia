@@ -25,7 +25,7 @@
 </div>
 
 
-{% if articles | length > 3 %}
+{% if articles | length >= 3 %}
 
     {{this.render('/partials/_section-loadmore.twig', {
         sectionNumber: loadmore_id, 
