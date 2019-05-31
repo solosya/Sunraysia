@@ -1,16 +1,16 @@
 @mixin card-name($name) {
-	.acme-cards-view, .c-cards-view {
-		&:before {
-			content:$name;
-			position:absolute;
-			display:block;
-			color: white;
-			z-index: 12;
-			background: red;
-			padding: 3px;
-			font-size:13px;
-		}
-	}
+	// .acme-cards-view, .c-cards-view {
+	// 	&:before {
+	// 		content:$name;
+	// 		position:absolute;
+	// 		display:block;
+	// 		color: white;
+	// 		z-index: 12;
+	// 		background: red;
+	// 		padding: 3px;
+	// 		font-size:13px;
+	// 	}
+	// }
 }
 
 @mixin colourselect($class) {
