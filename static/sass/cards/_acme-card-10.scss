@@ -11,7 +11,7 @@
         &__media {
             // @include flex-width(100px);
             img {
-                height:100%;
+                max-height:100%;
             }
         }   
 
@@ -124,7 +124,7 @@
                 img {
                     min-width:none !important;
                     width:auto !important;
-                    object-fit:none;
+                    // object-fit:none;
                 }
             }   
 
