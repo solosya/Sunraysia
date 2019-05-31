@@ -18523,14 +18523,14 @@ Acme.templates.forgotFormTmpl =
 
 
 Acme.templates.userPlanMessage = 
-'<p class="{{name}}__message">{{message}}</p> \
-<form name="loginForm" id="loginForm" class="active u-margin-top-20" action="javascript:void(0);" method="post" accept-charset="UTF-8" autocomplete="off"> \
+'<p class="{{name}}__message centerText">{{message}}</p> \
+<form name="loginForm" id="loginForm" class="active u-margin-top-20 centerText" action="javascript:void(0);" method="post" accept-charset="UTF-8" autocomplete="off"> \
     <button id="cancelbutton" class="c-button c-button--blue-bordered" data-role="okay">OK</button> \
 </form>';
 
 Acme.templates.userPlanOkCancel = 
-'<p class="{{name}}__message">{{message}}</p> \
-<form name="loginForm" id="loginForm" class="active u-margin-top-20" action="javascript:void(0);" method="post" accept-charset="UTF-8" autocomplete="off"> \
+'<p class="{{name}}__message centerText">{{message}}</p> \
+<form name="loginForm" id="loginForm" class="active u-margin-top-20 centerText" action="javascript:void(0);" method="post" accept-charset="UTF-8" autocomplete="off"> \
     <button id="okaybutton" class="c-button c-button--inline c-button--blue-bordered" data-role="okay">Confirm</button> \
 </form>';
 
