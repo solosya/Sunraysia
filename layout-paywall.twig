@@ -108,7 +108,10 @@
                                         <button type="button" 
                                                 class="c-button c-button--grey c-button-block c-button-md j-plan-subscribe" 
                                                 data-plan-name="{{plan.name}}" 
-                                                data-planid="{{plan.guid}}">Subscribe</button>
+                                                data-planid="{{plan.guid}}"
+                                                data-cost="${{val}}"
+                                                
+                                        >Subscribe</button>
                                     </div>
                                 </div>
                             {% endfor %}
@@ -287,7 +290,7 @@
 
                                     <div class="c-totalpayvalue u-margin-top-20">
                                         <div class="c-totalpayvalue__title">Total</div>
-                                        <div class="c-totalpayvalue__value">$29 AUD</div>
+                                        <div id="total_cost" class="c-totalpayvalue__value"></div>
                                     </div>
 
 

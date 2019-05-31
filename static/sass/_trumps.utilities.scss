@@ -505,7 +505,10 @@
 }
 
 
-.u-noscroll {overflow:hidden}
+.u-noscroll {
+    overflow-y:hidden;
+    // position:absolute;
+}
 .clearfix {overflow:auto;overflow-x:hidden}
 .centerContent { display:inline; text-align: center;}
 .centerText {text-align: center;}

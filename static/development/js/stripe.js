@@ -93,16 +93,11 @@
     };
     SubscribeForm.prototype.submit = function(event) 
     {
-        console.log('submit');
-
         var self = this;
         event.preventDefault();
         var validated = self.validate();
         self.render(true);
-        console.log('validated??');
-        console.log(this.errorFields);
         if (!validated) return;
-        console.log('yep!');
 
 
         $('#card-errors').text('');
@@ -112,7 +107,6 @@
         }
 
         function submitForm() {
-            console.log('auth/paywall')
             formhandler(self.data, '/auth/paywall-signup').then(function(response) {
                 console.log(response);
                 if (response.success == 1) {
@@ -123,7 +117,6 @@
             });
         }
 
-        console.log('here now');
         if ($("#code-redeem").length > 0) {
             modal.render("spinner", "Authorising code");
             self.data['planid'] = $('#planid').val();
@@ -132,12 +125,10 @@
             submitForm();
 
         } else {
-            console.log('give me a spinne!');
 
             modal.render("spinner", "Your request is being processed.");
 
             var stripeCall = stripe.createToken(card).then(function(result) {
-                console.log(result);
                 if (result.error) {
                     modal.closeWindow();
                     // Inform the user if there was an error
@@ -165,10 +156,13 @@
             var elem = $(this);
             var plan = elem.data('planid');
             var name = elem.data('plan-name');
+            var cost = elem.data('cost');
+
             self.data.planid = plan;
             self.data.subscription_choice = name;
             $('#planid').val(plan);
             $('#subscription_choice').val(name);
+            $('#total_cost').text(cost);
 
             $('.j-plan-subscribe').each(function(i, e) {
                 var button = $(e);
