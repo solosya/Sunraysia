@@ -47,7 +47,7 @@
 {% set featured = false %}
 
 {% if article.media|length > 0 %}
-    {% set articleImg = _Media.getMediaUrl(article.media[0],1094, 515, {'crop': 'fill', 'gravity': 'faces'} ) %}
+    {% set articleImg = _Media.getMediaUrl(article.media[0],1094, 515, {'crop': 'fill', 'gravity': 'faces:auto'} ) %}
 
     {% set featured = article.media[0].type %}
 {% endif %}
