@@ -10,7 +10,16 @@ Acme.Signin = function(template, parent, layouts) {
 Acme.Signin.prototype = new Acme.modal();
 Acme.Signin.constructor = Acme.Signin;
 Acme.Signin.prototype.errorMsg = function(msg) {
-    $('.message').removeClass('hide');
+
+    var keys = Object.keys(msg);
+    var text = "";
+
+    for(var i = 0; i< keys.length; i++) {
+        text += msg[keys[i]].join(', ');
+    }
+
+    $('#signin_error').text(text)
+                      .show();
 };
 Acme.Signin.prototype.handle = function(e) {
     var self = this;
@@ -28,7 +37,7 @@ Acme.Signin.prototype.handle = function(e) {
     }
     if ($elem.is('button')) {
 
-        $('.message').addClass('hide');
+        $('#signin_error').hide();
         if ($elem.hasClass('j-signin')) {
             $elem.text('')
                  .addClass('spinner');
@@ -42,14 +51,14 @@ Acme.Signin.prototype.handle = function(e) {
             formData['rememberMe'] = 1;
 
             Acme.server.create(_appJsConfig.baseHttpPath + '/api/auth/login', formData).done(function(r) {
-                console.log(r);
+                // console.log(r);
                 if (r.success === 1) {
                     window.location.reload();
 
                 } else {
-                    $elem.text("Sign in")
+                    $elem.text("LOG IN")
                          .removeClass('spinner');
-                    self.errorMsg();
+                    self.errorMsg(r.error);
                     
                 }
             }).fail(function(r) { console.log(r);});

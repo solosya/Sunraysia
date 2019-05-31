@@ -342,6 +342,7 @@ Acme.templates.signinFormTmpl =
         \
         <input id="password" class="c-login-modal__input c-form__input c-form__input--bordered-bottom u-margin-top-10" name="password" placeholder="Password" aria-required="true" type="password"> \
         <div class="c-form__help-block">Please enter your email Password</div> \
+        <p id="signin_error" class="c-form__help-block u-font-size-14 u-margin-top-10">hellow</p> \
         <a href="javascript:;" class="c-login-modal__password-link" data-layout="forgot">Forgot password?</a> \
     </div> \
     \
