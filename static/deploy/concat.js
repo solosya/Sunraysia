@@ -18531,7 +18531,7 @@ Acme.templates.userPlanMessage =
 Acme.templates.userPlanOkCancel = 
 '<p class="{{name}}__message">{{message}}</p> \
 <form name="loginForm" id="loginForm" class="active u-margin-top-20" action="javascript:void(0);" method="post" accept-charset="UTF-8" autocomplete="off"> \
-    <button id="okaybutton" class="c-button c-button--inline c-button--blue-bordered" data-role="okay">Yes, cancel my subscription</button> \
+    <button id="okaybutton" class="c-button c-button--inline c-button--blue-bordered" data-role="okay">Confirm</button> \
 </form>';
 
 
@@ -20453,6 +20453,14 @@ Acme.UserProfileController.prototype.pageEvents = function ()
 {
     var self = this;
 
+    $('#profile-form input').on('change', function(e) {
+        $('#profile_update').prop("disabled", false)
+                            .removeClass('c-button--lightgrey')
+                            .addClass('c-button--red');
+    });
+
+
+
     $('#profile-form').submit( function(e) {
         e.preventDefault();
 
@@ -20606,7 +20614,7 @@ Acme.UserProfileController.prototype.pageEvents = function ()
         title = "Cancel your subscription";
         message = "Are you sure you want to cancel your subscription?"
         if ($(e.target).text() == 'Restart Subscription') {
-            message = "Do you want to reactivate your plan? You will be billed on the next payment date."
+            message = "Please confirm you wish to restart your subscription. You will be billed on the next payment date shown in My Account. "
             status = 'paid'
         }
         var requestData = { 
