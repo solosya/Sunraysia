@@ -12,7 +12,9 @@
 
         &__media {
             // @include flex-height(290px);
-
+            img {
+                max-height: 420px;
+            }
             &--video {
                 &:before {
                     @include size(55px);
