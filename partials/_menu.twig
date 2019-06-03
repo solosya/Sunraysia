@@ -6,7 +6,11 @@
     {% set children = parentItem.children is defined and parentItem.children | length > 0  %}
 
     <li class="dropdown">
-        <a  class="{{activeClass}} {{externalClass}} "
+
+        {% set clickableLinkClass = parentItem.link !="#" ? "" : "notlink" %}
+        {% set link = parentItem.link != "#" ? parentItem.link : "javascript:;" %}
+        
+        <a  class="{{activeClass}} {{externalClass}} {{clickableLinkClass}}"
             href="{{parentItem.link | raw}}"
             {% if parentItem.target != "" %} 
                 target="{{parentItem.target}}"

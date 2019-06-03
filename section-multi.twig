@@ -9,7 +9,6 @@
 {% set config       = _Network.getThemeConfig() %}
 {% set layout       = blogData.layout %}
 {% set dev          = _AppHelper.getApplicationEnv() == 'DEV' ? false : false %}
-
 {% set bannerSpots  = [3,5] %}
 {% set blogFeeds    = {} %}
 {% set panels       = [] %}
@@ -23,12 +22,12 @@
 
 {% if config['active'] is not defined or config['active'] == true %}
 
-    {% if config['page']['news']['sections'] is defined %}
-        {% set panels = config['page']['news']['sections'] %}
+    {% if config['page'][homeBlog]['sections'] is defined %}
+        {% set panels = config['page'][homeBlog]['sections'] %}
     {% endif %}
 
-    {% if config['page']['news']['blogFeeds'] is defined %}
-        {% set blogFeeds = config['page']['news']['blogFeeds'] %}
+    {% if config['page'][homeBlog]['blogFeeds'] is defined %}
+        {% set blogFeeds = config['page'][homeBlog]['blogFeeds'] %}
     {% endif %}
 
     {% if config['inventory'][blogData.title]['bannerSpots'] is defined %}
