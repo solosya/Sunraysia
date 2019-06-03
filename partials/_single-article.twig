@@ -95,7 +95,7 @@
 
     {% set params = {
         imageSuppress   : imageSuppress,
-        placeholder     : "https://placeholdit.imgix.net/~text?w=1&h=1",
+        placeholder     : "https://place-hold.it/1",
         imageMedium     : _Media.getMediaUrl(article.featuredMedia,768, 500, {'crop': 'fill', 'gravity': 'faces'} ),
         publishDate     : publishDate,
         videoClass      : article.featuredMedia['type'] == 'video' ? 'c-cards-view__media--video' : '',

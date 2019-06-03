@@ -294,10 +294,9 @@
 
 
 
-
-<div id="classified-menu-mobile-open" class="c-classified-menu__open">Categories</div>
+<div id="overlay" class="c-classified-menu__overlay"></div>
 <div id="classified-menu-mobile" class="c-classified-menu c-classified-menu-xs c-classified-menu--mobile">
-    <div id="classified-menu-mobile-close">close</div>
+    <div id="classified-menu-mobile-open" class="c-classified-menu__open">Categories</div>
     {{ this.render('/partials/_menu-classifieds.twig', {'menu': sideMenu}) | raw }}
 </div>
 
@@ -332,13 +331,11 @@
            ******************************************* #}
 
         $('#classified-menu-mobile-open').on('click', function() {
-            $('#classified-menu-mobile').addClass('active');
+            $('#classified-menu-mobile').toggleClass('active');
             $('body, html').toggleClass('u-noscroll');
+            $('#overlay').toggle();
         });
-        $('#classified-menu-mobile-close').on('click', function() {
-            $('#classified-menu-mobile').removeClass('active');
-            $('body, html').toggleClass('u-noscroll');
-        });
+
 
         $('#classified-menu, #classified-menu-mobile').on('click', '.c-classified-menu__arrow-container', function (event) {
             event.preventDefault();
