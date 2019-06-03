@@ -11,7 +11,7 @@
                 <img width="{{params.imgWidth}}" height="{{params.imgHeight}}" class="img-fluid" src="{{params.image}}">
             {% else %}  
             {# ADD LAZYLOAD  class="lazyload" src="{{params.placeholder}}" #}
-                <img width="{{params.imgWidth}}" height="{{params.imgHeight}}" class="img-fluid lazyload" src="{{params.image}}" data-original="{{params.articleImg}}">
+                <img width="{{params.imgWidth}}" height="{{params.imgHeight}}" class="img-fluid lazyload" src="{{params.placeholder}}" data-original="{{params.image}}">
             {% endif %}
             <div class="video-icon"></div>
 
