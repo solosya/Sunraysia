@@ -108,7 +108,7 @@
 
         function submitForm() {
             formhandler(self.data, '/auth/paywall-signup').then(function(response) {
-                console.log(response);
+
                 if (response.success == 1) {
                     // setTimeout('window.location.href = location.origin + "/auth/thank-you";', 2000);
                     window.location.href = location.origin + '/auth/thank-you';
@@ -175,12 +175,10 @@
             elem.removeClass('c-button--grey');
             elem.addClass('c-button--red');
             self.validate();
-            console.log(self.errorFields);
         });
 
 
         $('#subscribe-form input, #subscribe-form textarea').on("change", function(e) {
-            console.log('updating');
             e.stopPropagation();
             e.preventDefault();
             var data = {};
@@ -203,7 +201,6 @@
             self.updateData(data);
 
             var validated = self.validate([elemid]);
-            console.log(validated);
             self.render();
         });
 
@@ -211,15 +208,13 @@
 
         if (form != null) {
             form.addEventListener('submit', function(e) {
-
-                console.log('submitting');
                 self.submit(e);
             });
         }
 
 
     };
-    console.log('making subscribe form');
+
     Acme.subscribe = new SubscribeForm();
 
    

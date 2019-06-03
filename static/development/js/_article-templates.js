@@ -203,7 +203,7 @@ Acme.templates.modal =
         <div class="{{name}}__container" style="scrolling == unusable position:fixed element"> \
             <div class="{{name}}__header"> \
                 <h2 class="{{name}}__title">{{title}}</h2> \
-                <a class="{{name}}__close" href="#" data-behaviour="close"></a> \
+                <a class="{{name}}__close" href="javascript:;" data-behaviour="close"></a> \
             </div> \
             <div class="{{name}}__content-window" id="dialogContent" style="scrolling == unusable position:fixed element"></div> \
         </div> \
@@ -227,8 +227,8 @@ Acme.templates.modal =
 
 
 Acme.templates.subscribeTerms =  
-    '<p class="password-reset-form__p u-margin-bottom-20">Please agree to the terms of use.</p> \
-    <div> \
+    '<p class="password-reset-form__p u-margin-bottom-20 centerText">Please agree to the terms of use.</p> \
+    <div class="centerText"> \
         <button class="c-button c-button--blue">Okay</button> \
     </div>';
 

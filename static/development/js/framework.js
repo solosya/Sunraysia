@@ -643,9 +643,8 @@
         };
         Acme.modal.prototype.renderLayout = function(layout, data) {
             var data = data || {};
-            console.log(this.layouts);
             var layoutTemplate = Acme.templates[this.layouts[layout]];
-            console.log(layoutTemplate);
+
             if (layoutTemplate) {
                 var tmp = Handlebars.compile(Acme.templates[this.layouts[layout]]);
                 $('#'+this.parentCont).attr("title", layout); 
@@ -694,7 +693,7 @@
         };
         Acme.modal.prototype.closeWindow = function() {
             $('body').removeClass('u-noscroll');
-            $('html').removeClass('u-noscroll')
+            $('html').removeClass('u-noscroll');
             $('#'+this.parentCont).remove();
         };
     

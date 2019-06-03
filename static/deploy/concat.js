@@ -18022,9 +18022,8 @@ function(a){"use strict";void 0===a.en&&(a.en={"mejs.plural-form":1,"mejs.downlo
         };
         Acme.modal.prototype.renderLayout = function(layout, data) {
             var data = data || {};
-            console.log(this.layouts);
             var layoutTemplate = Acme.templates[this.layouts[layout]];
-            console.log(layoutTemplate);
+
             if (layoutTemplate) {
                 var tmp = Handlebars.compile(Acme.templates[this.layouts[layout]]);
                 $('#'+this.parentCont).attr("title", layout); 
@@ -18073,7 +18072,7 @@ function(a){"use strict";void 0===a.en&&(a.en={"mejs.plural-form":1,"mejs.downlo
         };
         Acme.modal.prototype.closeWindow = function() {
             $('body').removeClass('u-noscroll');
-            $('html').removeClass('u-noscroll')
+            $('html').removeClass('u-noscroll');
             $('#'+this.parentCont).remove();
         };
     
@@ -18351,7 +18350,7 @@ Acme.templates.modal =
         <div class="{{name}}__container" style="scrolling == unusable position:fixed element"> \
             <div class="{{name}}__header"> \
                 <h2 class="{{name}}__title">{{title}}</h2> \
-                <a class="{{name}}__close" href="#" data-behaviour="close"></a> \
+                <a class="{{name}}__close" href="javascript:;" data-behaviour="close"></a> \
             </div> \
             <div class="{{name}}__content-window" id="dialogContent" style="scrolling == unusable position:fixed element"></div> \
         </div> \
@@ -18375,8 +18374,8 @@ Acme.templates.modal =
 
 
 Acme.templates.subscribeTerms =  
-    '<p class="password-reset-form__p u-margin-bottom-20">Please agree to the terms of use.</p> \
-    <div> \
+    '<p class="password-reset-form__p u-margin-bottom-20 centerText">Please agree to the terms of use.</p> \
+    <div class="centerText"> \
         <button class="c-button c-button--blue">Okay</button> \
     </div>';
 
@@ -21384,7 +21383,7 @@ $('#signinBtn, #articleSigninBtn').on('click', function(e) {
 
         function submitForm() {
             formhandler(self.data, '/auth/paywall-signup').then(function(response) {
-                console.log(response);
+
                 if (response.success == 1) {
                     // setTimeout('window.location.href = location.origin + "/auth/thank-you";', 2000);
                     window.location.href = location.origin + '/auth/thank-you';
@@ -21451,12 +21450,10 @@ $('#signinBtn, #articleSigninBtn').on('click', function(e) {
             elem.removeClass('c-button--grey');
             elem.addClass('c-button--red');
             self.validate();
-            console.log(self.errorFields);
         });
 
 
         $('#subscribe-form input, #subscribe-form textarea').on("change", function(e) {
-            console.log('updating');
             e.stopPropagation();
             e.preventDefault();
             var data = {};
@@ -21479,7 +21476,6 @@ $('#signinBtn, #articleSigninBtn').on('click', function(e) {
             self.updateData(data);
 
             var validated = self.validate([elemid]);
-            console.log(validated);
             self.render();
         });
 
@@ -21487,15 +21483,13 @@ $('#signinBtn, #articleSigninBtn').on('click', function(e) {
 
         if (form != null) {
             form.addEventListener('submit', function(e) {
-
-                console.log('submitting');
                 self.submit(e);
             });
         }
 
 
     };
-    console.log('making subscribe form');
+
     Acme.subscribe = new SubscribeForm();
 
    
