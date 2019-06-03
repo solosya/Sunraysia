@@ -1,7 +1,7 @@
 {% import "quotes.twig" as quotes %}
 
 {% set imageSuppress = imageSuppress is defined and imageSuppress == true   ? true      : false   %}
-{% set lazyload      = lazyload      is defined and lazyload == false       ? false     : false    %}
+{% set lazyload      = lazyload      is defined and lazyload == false       ? false     : true    %}
 {% set template      = template      is defined and template != ''          ? template  : 'main'  %}
 {% set swap          = swap          is defined and swap == 'false'         ? ''        : 'swap'  %}
 {% set dev           = dev           is defined and dev == true             ? true      : false   %}

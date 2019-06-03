@@ -20735,6 +20735,10 @@ Acme.UserProfileController.prototype.listingEvents = function() {
     
 Acme.articleFeeds = {};
 
+$("img.lazyload").lazyload({
+    effect : "fadeIn"
+});
+
 
 $('document').ready(function() {
     var mobileView = 992;
@@ -20744,9 +20748,7 @@ $('document').ready(function() {
     var articleAd = $('#articleAdScroll');
     var headerMenu = $("#fixed-header");
     
-    $("img.lazyload").lazyload({
-        effect : "fadeIn"
-    });
+
 
 
 
