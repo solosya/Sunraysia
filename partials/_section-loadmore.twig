@@ -1,6 +1,5 @@
 {% set cardTypes = cardType is defined ? cardType : "" %}
 
-
 {# please make sure sectionNumber, loadMoreClass and totalCards are set at the top of this file #}
 <div class="row" id="loadmore_section_{{sectionNumber}}"></div>
 
@@ -36,9 +35,10 @@
             name            : 'section-load-{{sectionNumber}}',
             blogid          : "{{ blogId }}",
             card_class      : "{{cardClass}}",
+            before          : "{{before}}",
+            after           : "{{after}}",
             non_pinned      : {{cardCount}},
             cardType        : "{{cardTypes}}"
         });
-
     });
 </script>

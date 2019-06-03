@@ -69,7 +69,9 @@
         sectionNumber: "03", 
         limit: 8,
         blogId: blogData['guid'],
-        cardClass: "card-4-mobile card-2-tablet card-1-desktop card-2-desktop-lg col-12 col-md-6 col-lg-3 ",
+        before: '<div class="col-12 col-md-6 col-lg-3 ">',
+        after: "</div>",
+        cardClass: "card-4-mobile card-2-tablet card-1-desktop card-2-desktop-lg",
         cardCount: 4,
     }) | raw}}
 {% endif %}

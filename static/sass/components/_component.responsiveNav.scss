@@ -1,7 +1,7 @@
 /* Begin header style */
 
 .responsive-standalone {
-    top: 121px;
+    top: 0;
     width: 350px;
     height: $viewportSize;
     // display: none;
@@ -32,13 +32,12 @@
     }
 
     @media #{$mobile} {
-        top: 66px;
         width:100%;
 
     }
-    @media #{$tablet} {
-        top: 113px;
-    }
+    // @media #{$tablet} {
+    //     top: 113px;
+    // }
 
     &.navigation-active {
         visibility: visible;

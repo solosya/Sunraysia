@@ -90,7 +90,7 @@ $('document').ready(function() {
     
     $(".js-hamDevice").click(function(event) {
 		event.preventDefault();
-        $(this).toggleClass("active");
+        // $(this).toggleClass("active");
         $('body, html').toggleClass('u-noscroll');
 
         $('.responsive-standalone').toggleClass('navigation-active');

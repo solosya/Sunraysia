@@ -13,6 +13,10 @@
         outline:0;
     }
     
+
+
+
+
     &--tablet {
         @media #{$desktop-up} {
             display:none;
@@ -26,6 +30,9 @@
     }
 
 
+    &__container {
+        height:41px;
+    }
 
     span {
         left: 0;
@@ -92,6 +99,8 @@
     }
 
     &.active {
+        width: 50px;
+
         span {
             background: transparent;
 

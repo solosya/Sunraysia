@@ -153,12 +153,14 @@ Acme.View.articleFeed.prototype.render = function(data)
             }));
         }
         if (self.before ) {
-            html = [self.before].concat(html);
+            var beforeStr =  self.before.replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&quot;/g, '"');
+            html = [beforeStr].concat(html);
         }
         if (self.after) {
-            html = html.concat([self.after]);
+            var afterStr =  self.after.replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&quot;/g, '"');
+            html = html.concat([afterStr]);
         }
-    
+        console.log(html);
     }
 
     (self.renderType === "write")
