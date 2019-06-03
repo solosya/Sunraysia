@@ -1,7 +1,7 @@
 .c-paywall-card {
     @include flexbox;
     @include align-items(center);
-    @include justify-content(center);
+    // @include justify-content(center);
     background-color:$white;
     height:700px;
     @include padding(40 0);
@@ -9,21 +9,16 @@
     @include flex-direction(column, vertical);
     @include box-shadow(0 2px 10px 6px rgba(0, 0, 0, 0.05));
         
-    @include responsive(xs) {
-        @include flex-direction(row, horizontal);
-        
-        @include respond-to(md) {
-            @include flex-direction(column, vertical);
-        }
+    @media #{$mobile} {
+        height:auto;
+        @include padding(35 20);
+
     }
     
-    
-    @include responsive (lg) {
-        height:calc(100% - 0px);
-        @include margin-bottom(0);
-        @include padding-bottom(30);
-        @include justify-content(flex-start);
-        @include flex-direction(column, vertical);
+    @media #{$tablet} {
+        height:auto;
+        @include padding(25 25);
+        @include flex-direction(row, horizontal);
     }
     
    &__Header {
@@ -33,39 +28,32 @@
     
    &__name {
         color: $black;
-        @include font-size(18);
+        @include font-size(22);
         line-height: 1.1;
         font-weight: $weightBold;
         @include margin-bottom(5);
-        @include responsive (xs) {
-            @include font-size(22);
-        }
     }
     
    &__excerpt {
         color: $greyish;
-        @include font-size(14);
+        @include font-size(17);
         line-height: 1.59;
         @include margin-bottom(10);
         padding: 0 45px;
         font-weight: $weightRegular;
-        text-align: center;
-        @include responsive (xs) {
-            @include font-size(17);
-            @include margin-bottom(15);
-        }
+        @include flex-height(52px);
+        overflow:hidden;
+
+
     }
    &__price {
         color: $blue_sh1;
         @include font-size(30);
         line-height: 0.7;
         font-weight: $weightBold;
-        @include margin-bottom(0);
+        @include margin-top(20);
+        @include margin-bottom(20);
 
-        @include responsive (lg) {
-            @include font-size(40);
-            @include margin-bottom(20);
-        }
     }
     
    &__Graphic {
@@ -73,8 +61,13 @@
         @include padding(0 45);
         @include margin-bottom(10);
         
-        @include responsive (lg) {
+        @media #{$desktop} {
+            @include padding(0 64);
+        }
+
+        @media #{$desktop-up} {
             display:block;
+
         }
     }
     
@@ -84,13 +77,6 @@
         @include padding(0);
         @include margin-bottom(15);
         
-        @include responsive (md) {
-            @include flexbox;
-            height:calc(100% - 50px);
-            @include margin-bottom(10);
-            @include justify-content(flex-start);
-            @include flex-direction(column, vertical);
-        }
         
         li {
             color: $greyish;
@@ -117,6 +103,23 @@
         }
     }
     
+
+    &__panel {
+        @include flexbox;
+        @include align-items(center);
+        @include flex-direction(column, vertical);
+        @media #{$tablet} {
+            flex:0 0 50%;
+        }
+    }
+
+    &__subscribe {
+        @media #{$desktop-down} {
+            width: 100%;
+        }
+    }
+
+
    &__footer {
         width:100%;
         max-width:100%;
@@ -127,9 +130,6 @@
             @include opacity(0.6);
         }
         
-        @include responsive (lg) {
-            position:relative;
-        }
     }
     
     &.selected {
