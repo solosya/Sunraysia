@@ -32,6 +32,10 @@
     text-align:left;
     font-weight: $weightBold;
     margin-bottom:20px;
+
+    @media #{$mobile} {
+        margin-top: 15px;
+    }
 }
 .signin-modal__message {
     @include font-size(13);
@@ -46,6 +50,11 @@
     position: absolute;
     top: 0;
     right: 0;
+    @media #{$mobile} {
+        top: -11px;
+        right: -20px;
+    }
+
 }
 
 .signin-modal__content-window {
