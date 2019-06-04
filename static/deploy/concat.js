@@ -20777,10 +20777,14 @@ $('document').ready(function() {
 
     var scrollUpMenu = function() {
         var isMob = isMobile();
+        var top = headerMenu.find('.c-header__container');
+        // console.log(top);
         if ( scrollMetric[1] === 'up' && isScolledPast(400) && isMob === false ) {
             headerMenu.addClass('active');
+            top.addClass('active');
         } else {
             headerMenu.removeClass('active');
+            top.removeClass('active');
         }
     }
 

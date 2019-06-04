@@ -74,13 +74,17 @@
             @include flex-height(65px);
         }       
 
+        &.active {
+            @include flex-height(68px);
+        }
 
 
 
         &--fixed {
             position: fixed;
-            @include flex-height(70px);
-            top: -70px;
+            width:100%;
+            @include flex-height(113px);
+            top: -165px;
             z-index: 10000;
             background: white;
             @include transition(all 0.5s ease 0s);

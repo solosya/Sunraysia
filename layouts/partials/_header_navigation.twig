@@ -30,32 +30,41 @@
             {# *************************************************
                     Dropdown Fixed Header  (desktop only)
                 ***********************************************#}
-            <div id="fixed-header" class="col-12 c-header__container c-header__container--fixed">
-                <button class="c-hamMenu desktop js-hamDesktop" type="button">
-                    <span class="transition-med"></span><small>Menu</small>
-                </button>
+            <div  id="fixed-header"  class="col-12 c-header__container--fixed">
+                
+                <div class="c-header__container">
+                    {# <button class="c-hamMenu desktop js-hamDesktop" type="button">
+                        <span class="transition-med"></span><small>Menu</small>
+                    </button> #}
 
-                <div class="c-header__logo-container c-header__logo-container--fixed">
-                    <a href="{{networkData.defaultBlogUrl}}" class="c-header__logo">
-                    <img src="{{networkData.templatePath}}/static/images/logo.png" alt="Sunraysia Daily">
-                    </a>
+                    <div class="c-header__logo-container c-header__logo-container--fixed">
+                        <a href="{{networkData.defaultBlogUrl}}" class="c-header__logo">
+                        <img src="{{networkData.templatePath}}/static/images/logo.png" alt="Sunraysia Daily">
+                        </a>
+                    </div>
+
+                    <div class="c-header__login-buttons-desktop">
+                        {% if _User.isGuest() %}
+                            <a id="signinBtn" href="javascript:;" class="c-button c-button--blue-bordered u-margin-right-10">Log in</a>
+                            <a href="{{networkData.defaultBlogUrl}}/paywall" class="c-button c-button--blue">Subscribe</a>
+
+                        {% else %}
+                            <a id="user-menu-button-fixed" href="javascript:;" class="c-header__username">Hi {{user.firstname}}</a>
+                            <div id="user-menu-fixed" class="c-user-menu" style="display:none">
+                                <p class="c-user-menu__name">{{user.firstname}} {{user.lastname}}</p>
+                                <p class="c-user-menu__email">{{user.email}}</p>
+                                <hr class="divide divide--dark" />
+                                <a class="c-user-menu__link" href="{{networkData.defaultBlogUrl}}/user/edit-profile">My Account</a>
+                                <a class="c-user-menu__link" href="{{_AppHelper.getLogoffUrl()}}">Log out</a>
+                            </div>
+                        {% endif %}
+                    </div>
                 </div>
 
-                <div class="c-header__login-buttons-desktop">
-                    {% if _User.isGuest() %}
-                        <a id="signinBtn" href="javascript:;" class="c-button c-button--blue-bordered u-margin-right-10">Log in</a>
-                        <a href="{{networkData.defaultBlogUrl}}/paywall" class="c-button c-button--blue">Subscribe</a>
-
-                    {% else %}
-                        <a id="user-menu-button-fixed" href="javascript:;" class="c-header__username">Hi {{user.firstname}}</a>
-                        <div id="user-menu-fixed" class="c-user-menu" style="display:none">
-                            <p class="c-user-menu__name">{{user.firstname}} {{user.lastname}}</p>
-                            <p class="c-user-menu__email">{{user.email}}</p>
-                            <hr class="divide divide--dark" />
-                            <a class="c-user-menu__link" href="{{networkData.defaultBlogUrl}}/user/edit-profile">My Account</a>
-                            <a class="c-user-menu__link" href="{{_AppHelper.getLogoffUrl()}}">Log out</a>
-                        </div>
-                    {% endif %}
+                <div class="c-navigation c-navigation--fixed">
+                    <ul class="c-navigation__list">
+                        {{ this.render('../../partials/_menu.twig', {'menu': headermenu}) | raw }}
+                    </ul>
                 </div>
             </div>
             {# *************************************************
@@ -164,7 +173,7 @@
 {# *************************************************
              MEGA MENU!!!  (desktop only) 
     ***********************************************#}
-{{ this.render('../../partials/_mega-menu.twig', {'menu': headermenu}) | raw }}
+{# {{ this.render('../../partials/_mega-menu.twig', {'menu': headermenu}) | raw }} #}
 
 
 
