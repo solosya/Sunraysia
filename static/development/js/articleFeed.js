@@ -1,4 +1,9 @@
-Acme.Feed = function() {};
+Acme.Feed = function() {
+    this.domain = _appJsConfig.appHostName;
+    this.requestType = 'post';
+    this.csrf = $('meta[name="csrf-token"]').attr("content");
+    this.dataType = 'json';
+};
 
 Acme.Feed.prototype.fetch = function()
 {
@@ -10,16 +15,63 @@ Acme.Feed.prototype.fetch = function()
     //      nonPinnedOffset gets the rest
     //      They're combined to return full result
 
-    if (self.options.search != null) {
-        self.options.blogid = this.options.blogid; // search takes an id instead of a guid
+    if (this.options.search != null) {
+        this.options.blogid = this.options.blogid; // search takes an id instead of a guid
     }
 
-    return Ajax_LoadFeed(self.options).done(function(data) {
+
+    this.url = this.domain + '/home/load-articles';
+
+    this.requestData = { 
+        offset      : this.options.offset, 
+        limit       : this.options.limit, 
+        _csrf       : this.csrf, 
+        dateFormat  : 'SHORT',
+        existingNonPinnedCount: this.options.nonPinnedOffset
+    };
+
+    if (this.options.blogid) {
+        this.requestData['blogGuid'] = this.options.blogid;
+    }
+
+    if (this.options.loadtype == 'user') {
+        this.url = this.domain + '/api/'+options.loadtype+'/load-more-managed';
+        this.requestType = 'get';
+    }
+    
+    if (this.options.loadtype == 'user_articles') {
+        var urlArr = window.location.href.split('/');
+        var username = decodeURIComponent(urlArr[urlArr.length - 2]);
+        this.url = this.domain + '/profile/'+ username + '/posts';
+    }
+
+    if (this.options.search) {
+        var refinedSearch = this.options.search;
+        if (refinedSearch.indexOf(",listingquery") >= 0) {
+            refinedSearch = refinedSearch.replace(",listingquery","");
+            this.requestData['meta_info'] = refinedSearch;
+        } else{
+            this.requestData['s'] = refinedSearch;
+        }
+        this.url = this.domain + '/'+ this.options.loadtype;
+        this.requestType = 'get';
+    }
+
+    return $.ajax({
+        url      : this.url,
+        data     : this.requestData,
+        type     : this.requestType,
+        dataType : this.dataType,
+    }).done(function(data) {
         if (data.success == 1) {
             self.render(data);
         }
-    });
+    });       
+
 };
+
+
+
 
 Acme.Feed.prototype.events = function() 
 {
@@ -37,15 +89,6 @@ Acme.Feed.prototype.events = function()
         self.options.nonPinnedOffset = self.originalCount;
         self.elem.show();
     });
-
-
-
-    // $('.load_less').on('click', function(e) {
-    //     self.container.empty();
-    //     $(this).hide();
-    //     self.options.nonPinnedOffset = self.originalCount;
-    //     self.elem.show();
-    // });
 
 
     if (this.infinite && this.offset >= this.limit) {
@@ -69,7 +112,7 @@ Acme.Feed.prototype.events = function()
 
 Acme.View.articleFeed = function(options)
 {
-    this.feedModel  = options.model;
+    this.cardModel  = options.model;
     this.limit      = options.limit      || 10;
     this.offset     = options.offset     || 0;
     this.infinite   = options.infinite   || false;
@@ -146,7 +189,7 @@ Acme.View.articleFeed.prototype.render = function(data)
     } else {
         for (var i in articles) {
             articles[i].imageOptions = {'width': self.imgWidth, 'height': self.imgHeight};
-            html.push( self.feedModel.renderCard(articles[i], {
+            html.push( self.cardModel.renderCard(articles[i], {
                 cardClass: self.cardClass,
                 template: self.template,
                 type: this.cardType
@@ -160,7 +203,6 @@ Acme.View.articleFeed.prototype.render = function(data)
             var afterStr =  self.after.replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&quot;/g, '"');
             html = html.concat([afterStr]);
         }
-        console.log(html);
     }
 
     (self.renderType === "write")
@@ -183,15 +225,14 @@ Acme.View.articleFeed.prototype.render = function(data)
 
     // $(".card .content > p, .card h2, .card .content .author > p").dotdotdot();     
     // $('.video-player').videoPlayer();
-    $("div.lazyload").lazyload({
+    $(".lazyload").lazyload({
         effect: "fadeIn"
     });
     $('.j-truncate').dotdotdot({
         watch: true
     });
 
-    // self.elem.data('rendertype', '');
-    this.feedModel.events();
+    this.cardModel.events();
 };
 
 

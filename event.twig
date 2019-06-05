@@ -5,8 +5,7 @@
 {% set blogInfo = _Blog.getBlog() %}
 
 
-{{this.registerJsFile("https://maps.googleapis.com/maps/api/js?key={{key}}")}}
-
+{# {{this.registerJsFile("https://maps.googleapis.com/maps/api/js?key=838djd983kd93k3kkdkd93939")}} #}
 
 {% set networkData = _Network.getNetworkData() %}
 
@@ -150,8 +149,13 @@
 </div>
 
 
+
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap" type="text/javascript"></script>
+
 <script>
     document.addEventListener("DOMContentLoaded", function() {
-        Acme.eventMap = new Acme.GoogleMap();
+        function initMap() {
+            Acme.eventMap = new Acme.GoogleMap();
+        }
     });
 </script>

@@ -3,6 +3,7 @@
 {% set imageSuppress = imageSuppress is defined and imageSuppress == true   ? true      : false   %}
 {% set lazyload      = lazyload      is defined and lazyload == false       ? false     : true    %}
 {% set template      = template      is defined and template != ''          ? template  : 'main'  %}
+{% set gallery       = gallery       is defined and gallery != false        ? gallery   : false   %}
 {% set swap          = swap          is defined and swap == 'false'         ? ''        : 'swap'  %}
 {% set dev           = dev           is defined and dev == true             ? true      : false   %}
 {% set inline        = inline        is defined and inline != ''            ? inline    : ''      %}
@@ -59,7 +60,12 @@
         } 
     }) %} #}
 {# {% endif %} #}
-
+{% if gallery %}
+    {% set gallery = _Article.getMedia(article.guid) %}
+    <pre>
+    {{dump(gallery)}}
+    </pre>
+{% endif %}
 
 
 {% set isArticle = (article.articleId > 0 or (isArticle is defined and isArticle == 'true')) ? 0 : 1 %}
@@ -107,6 +113,7 @@
         category        : article.label,
         cardType        : cardType, 
         lazyload        : lazyload,
+        gallery         : gallery,
         content         : article.excerpt,
         author          : article.createdBy['displayName'],
         status          : article.status,
