@@ -461,10 +461,14 @@ Acme.GoogleMap = function() {
     this.latitude = this.mapContainer.data('latitude');
     this.longitude = this.mapContainer.data('longitude');
     this.map;
+
+    console.log(this.latitude, this.longitude);
+
     this.init();
 };
 Acme.GoogleMap.prototype.init = function()
 {
+    console.log('initing maps');
     var mapLat;
     var mapLong;
     if (this.latitude !== '' && this.longitude !== '') {
