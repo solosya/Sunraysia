@@ -45,7 +45,7 @@
 {% set events = _Event.getEvents({"limit": 4, "start_date": date.date | split(" ")[0]}) %}
 
 
-<div class="o-body-container o-body-container-md u-tablet-margin-top-40 u-desktop-margin-top-60">
+<div class="u-tablet-margin-top-40 u-desktop-margin-top-60">
 
     <div class="container"> 
         <div class="row">
@@ -110,16 +110,6 @@
 
 
 
-                            <div class="col-md-12">
-                                <div class="c-eventdetail__map">
-                                {% if event.latitude and event.longitude %}
-                                    <div class="event-map">
-                                        <div id="addressMap" data-latitude="{{event.latitude}}" data-longitude="{{event.longitude}}" style="width:100%;min-height:350px;background:rgba(0,0,0,.3)"></div>
-                                    </div>
-                                {% endif %}
-
-                                </div>
-                            </div>
                         </div>
                     </div>
                 </div>  
@@ -134,7 +124,12 @@
 
 
 
-    <div id="addressMap"></div>
+    {% if event.latitude and event.longitude %}
+        <div class="event-map u-margin-top-60">
+            <div id="addressMap" data-latitude="{{event.latitude}}" data-longitude="{{event.longitude}}" style="width:100%;min-height:500px;background:rgba(0,0,0,.3)"></div>
+        </div>
+    {% endif %}
+
 
 
 
