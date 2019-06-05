@@ -1,7 +1,6 @@
 {{ set(this, 'title', _Blog.getBlogTitle()) }}
 {% set networkData = _Network.getNetworkData() %}
 
-{# {{this.registerJs("Acme.CardController();")}} #}
 {% set blogData    = _Blog.getBlog() %}
 {% set limit = 50 %}
 {% set date = date() %}
@@ -11,11 +10,6 @@
 
 {% set firstCount = events | length %}
 
-{{this.registerJs("Acme.cards = CardController();")}}
-
-                                                     {# renders the card    fetch-limit      fetch-offset    infinite scroll #}
-                                                     {#            ↑             ↑                 ↑            ↑            #}
-{{this.registerJs("Acme.searchFeed = new Acme.View.articleFeed(Acme.cards, " ~ limit ~ ", " ~ firstCount ~ ", true);")}}
 
 
 
@@ -79,4 +73,27 @@
         </div>
         <div class="j-keyword-cont" data-keywords="{{blogData.keywords}}"></div>
     </main><!-- .site-main -->
+
+
+<script>
+    // main script is defered so event listener makes sure
+    // defered script is loaded before this runs
+    document.addEventListener("DOMContentLoaded", function() {
+
+
+        Acme.loadMore = new Acme.View.articleFeed({
+            model           : new Card(),
+            container       : 'loadmore',
+            infinite        : true,
+            label           : false,
+            limit           : 50,
+            offset          : 50,
+            name            : 'section-load', //name of the search button
+            card_class      : 'col-12 col-md-3 card-4-mobile card-2-tablet card-1-desktop card-2-desktop-lg',
+            non_pinned      : {{eventCount}}
+
+        });
+
+    });
+</script>
 

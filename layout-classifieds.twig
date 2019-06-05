@@ -368,9 +368,9 @@
         {# *******************************************
                             SEARCH
            ******************************************* #}
-        Acme.cards = CardController();
+
         Acme.search = new Acme.View.articleFeed({
-            model           : Acme.cards,
+            model           : new Card(),
             container       : 'results',
             limit           : {{limit}},
             offset          : 0,

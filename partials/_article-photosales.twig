@@ -3,28 +3,14 @@
 
 {% if params.hasMedia %}
 
-
+    
     {{this.render('gallery.twig', {
-        media: article.media,
-        showPaywall: showPaywall
+        media: params.gallery,
+        showPaywall: showPaywall,
+        imageClass: "c-cards-view__media",
+        showCaption: false,
     }) | raw}}
 
-
-
-    {# <figure class="{{params.cardType}}c-cards-view__media {{params.videoClass}}">
-        <picture>
-            <source media="(max-width: 767px) and (min-width: 501px)" srcset="{{params.imageMedium}}">
-            <source media="(max-width: 500px)" srcset="{{params.imageSmall}}">
-
-            {% if params.lazyload == false %}
-                <img width="{{params.imgWidth}}" height="{{params.imgHeight}}" class="img-fluid" src="{{params.image}}">
-            {% else %}  
-                <img width="{{params.imgWidth}}" height="{{params.imgHeight}}" class="img-fluid lazyload" src="{{params.placeholder}}" data-original="{{params.image}}">
-            {% endif %}
-            <div class="video-icon"></div>
-
-        </picture>
-    </figure> #}
     
 
 {% endif %}
@@ -47,5 +33,7 @@
             {# <div class="c-cards-view__author-name">{{ params.author }}</div> #}
             <div class="{{params.cardType}}c-cards-view__time">{{params.publishDate}}</div>
         </div>
+
+        <a href="{{params.url}}" class="c-cards-view__button c-button c-button--red u-mobile-margin-top-10">SHOP IMAGES</a>
     </div>
 </div>

@@ -189,7 +189,7 @@
     // main script is defered so event listener makes sure
     // defered script is loaded before this runs
     document.addEventListener("DOMContentLoaded", function(event) {
-        Acme.cards = CardController();
+
         Acme.eventForm = new Acme.EventForm({
            blogId: [{{eventBlogId}}],
            form: "event-form"

@@ -206,9 +206,8 @@
 
 
 
-        Acme.cards = CardController();
         Acme.loadMore = new Acme.View.articleFeed({
-            model           : Acme.cards,
+            model           : new Card(),
             container       : 'loadmore',
             infinite        : true,
             label           : false,

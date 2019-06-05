@@ -119,7 +119,7 @@
     // defered script is loaded before this runs
     document.addEventListener("DOMContentLoaded", function(event) {
 
-        Acme.cards = CardController();
+
         Acme.searchCollection = new Acme.searchCollectionClass([ {{blogData['id']}} ], {  
             'searchTerms': {
                 'contracttype': 'buy'
@@ -133,7 +133,7 @@
         );
 
         Acme.propertyFeed = new Acme.View.articleFeed({
-            model           : Acme.cards,
+            model           : new Card(),
             name            : 'article-load',           // name of the button element to click
             container       : 'property-listings',      // put the articles in this element
             limit           : 2,                        // how many articles?

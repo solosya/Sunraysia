@@ -291,6 +291,15 @@ $('document').ready(function() {
         ]
     });   
 
+    $("#owl-gallery-card").owlCarousel({
+        items: 1,
+        dots: true,
+        nav: false,
+        navText: [
+            "",
+            ""
+        ]
+    });   
 
 
     //this is used for the gallery template
@@ -308,13 +317,6 @@ $('document').ready(function() {
             ""
         ]
     });   
-
-
-
-
-
-
-    // adScroll();
 
 
 });

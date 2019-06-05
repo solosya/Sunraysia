@@ -27,7 +27,7 @@
     document.addEventListener("DOMContentLoaded", function() {
 
         Acme.articleFeeds["loadmore_section_{{sectionNumber}}"] = new Acme.View.articleFeed({
-            model           : CardController(),
+            model           : new Card(),
             container       : 'loadmore_section_{{sectionNumber}}',
             offset          : 0,
             limit           : {{ limit }},

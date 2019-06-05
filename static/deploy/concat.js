@@ -16143,59 +16143,6 @@ var extend = function(child, parent) { for (var key in parent) { if (hasProp.cal
     };
 
 }(jQuery));
-(function ($) {
-
-    Ajax_LoadFeed = function(options){
-        var requestType = 'post';
-        var url = _appJsConfig.appHostName + '/home/load-articles';
-
-        var requestData = { 
-            offset      : options.offset, 
-            limit       : options.limit, 
-            _csrf       : $('meta[name="csrf-token"]').attr("content"), 
-            dateFormat  : 'SHORT',
-            existingNonPinnedCount: options.nonPinnedOffset
-        };
-
-        if (options.blogid) {
-            requestData['blogGuid'] = options.blogid;
-        }
-
-        if (options.loadtype == 'user') {
-            url = _appJsConfig.appHostName + '/api/'+options.loadtype+'/load-more-managed';
-            var requestType = 'get';
-        }
-        
-        if (options.loadtype == 'user_articles') {
-            var url = window.location.href;
-            var urlArr = url.split('/');
-            var username = decodeURIComponent(urlArr[urlArr.length - 2]);
-            url = _appJsConfig.appHostName + '/profile/'+ username + '/posts';
-        }
-
-        if (options.search) {
-            var refinedSearch = options.search;
-            if (refinedSearch.indexOf(",listingquery") >= 0) {
-                refinedSearch = refinedSearch.replace(",listingquery","");
-                requestData['meta_info'] = refinedSearch;
-            } else{
-                requestData['s'] = refinedSearch;
-            }
-            var url = _appJsConfig.appHostName + '/'+ options.loadtype;
-            var requestType = 'get';
-        }
-
-        return $.ajax({
-            type: requestType,
-            url: url,
-            dataType: 'json',
-            data: requestData
-        }).done(function(r) {
-            console.log(r);
-        });        
-    };
-
-}(jQuery));
 (function($) {
 
     $.fn.Ajax_pinUnpinArticle = function(options){
@@ -16412,279 +16359,279 @@ var extend = function(child, parent) { for (var key in parent) { if (hasProp.cal
     };
 }(jQuery));
 
-(function ($) {
+// (function ($) {
 
-    $.fn.videoPlayer = function (options) {
+//     $.fn.videoPlayer = function (options) {
 
-        var defaults = {
-            type: "html",
-            scrolling: "no",
-            fitToView: false,
-            autoSize: false,
-            width: 650,
-            height: 460,
-            maxWidth: "90%",
-            aspectRatio: true,
-            startVolume: 0.8,
-            loop: false,
-            enableAutosize: true,
-            features: ['playpause', 'progress', 'current', 'duration', 'tracks', 'volume', 'fullscreen'],
-            alwaysShowControls: false,
-            iPadUseNativeControls: false,
-            iPhoneUseNativeControls: false,
-            AndroidUseNativeControls: false,
-            alwaysShowHours: false,
-            showTimecodeFrameCount: false,
-            framesPerSecond: 25,
-            enableKeyboard: true,
-            pauseOtherPlayers: true
-        };
-        var opts = $.extend({}, defaults, options);
-        return this.click(function (e) {
+//         var defaults = {
+//             type: "html",
+//             scrolling: "no",
+//             fitToView: false,
+//             autoSize: false,
+//             width: 650,
+//             height: 460,
+//             maxWidth: "90%",
+//             aspectRatio: true,
+//             startVolume: 0.8,
+//             loop: false,
+//             enableAutosize: true,
+//             features: ['playpause', 'progress', 'current', 'duration', 'tracks', 'volume', 'fullscreen'],
+//             alwaysShowControls: false,
+//             iPadUseNativeControls: false,
+//             iPhoneUseNativeControls: false,
+//             AndroidUseNativeControls: false,
+//             alwaysShowHours: false,
+//             showTimecodeFrameCount: false,
+//             framesPerSecond: 25,
+//             enableKeyboard: true,
+//             pauseOtherPlayers: true
+//         };
+//         var opts = $.extend({}, defaults, options);
+//         return this.click(function (e) {
 
-            e.preventDefault();
-            e.stopPropagation();
-            var elem = $(this);
-            var source = elem.data('source');
-            var poster = elem.data('poster');
-            var caption = elem.data('caption');
-            var url, content;
+//             e.preventDefault();
+//             e.stopPropagation();
+//             var elem = $(this);
+//             var source = elem.data('source');
+//             var poster = elem.data('poster');
+//             var caption = elem.data('caption');
+//             var url, content;
 
-            if (source.trim() !== 'undefined' && source.trim() !== "") {
-                var videoId = elem.data('video-id');
+//             if (source.trim() !== 'undefined' && source.trim() !== "") {
+//                 var videoId = elem.data('video-id');
 
-                if (source.trim() === 'youtube') {
-                    if (videoId !== "" && typeof videoId !== "undefined") {
-                        url = "https://www.youtube.com/watch?v=" + videoId;
-                    } else {
-                        url = $(elem).data('url');
-                    }
-                    content = "<video width='" + opts.width + "' height='" + opts.height + "' class='videoPlayer' controls='controls' preload='none'><source type='video/youtube' src='" + url + "' /></video>";
-                }
-                else if (source.trim() === 'vimeo') {
-                    if (videoId !== "" && typeof videoId !== "undefined") {
-                         url = "https://vimeo.com/" + videoId;
-                    } else {
-                        url = $(elem).data('url');
-                    }
-                    opts.features = [];
-                    content = "<video width='" + opts.width + "' height='" + opts.height + "' class='videoPlayer' controls='controls' preload='none'><source type='video/vimeo' src='" + url + "' /></video>";
-                }
-                else if (source.trim() === 'cloudinary' || source.trim() === 'instagram' || source.trim() === 'twitter' || source === 'facebook') {
-                    url = elem.data('url');
-                    content = "<video class ='videoPlayer' src='" + url + "' poster='" + poster + "' width='" + opts.width + "' height='" + opts.height + "' controls='controls' preload='none' ></video>";
-                }
-                else if (source.trim() === 'brightcove') {
-                    playerID = videoId.toString().split("::")[2];
-                    accountID = videoId.toString().split("::")[1];
-                    videoId = videoId.toString().split("::")[0];
+//                 if (source.trim() === 'youtube') {
+//                     if (videoId !== "" && typeof videoId !== "undefined") {
+//                         url = "https://www.youtube.com/watch?v=" + videoId;
+//                     } else {
+//                         url = $(elem).data('url');
+//                     }
+//                     content = "<video width='" + opts.width + "' height='" + opts.height + "' class='videoPlayer' controls='controls' preload='none'><source type='video/youtube' src='" + url + "' /></video>";
+//                 }
+//                 else if (source.trim() === 'vimeo') {
+//                     if (videoId !== "" && typeof videoId !== "undefined") {
+//                          url = "https://vimeo.com/" + videoId;
+//                     } else {
+//                         url = $(elem).data('url');
+//                     }
+//                     opts.features = [];
+//                     content = "<video width='" + opts.width + "' height='" + opts.height + "' class='videoPlayer' controls='controls' preload='none'><source type='video/vimeo' src='" + url + "' /></video>";
+//                 }
+//                 else if (source.trim() === 'cloudinary' || source.trim() === 'instagram' || source.trim() === 'twitter' || source === 'facebook') {
+//                     url = elem.data('url');
+//                     content = "<video class ='videoPlayer' src='" + url + "' poster='" + poster + "' width='" + opts.width + "' height='" + opts.height + "' controls='controls' preload='none' ></video>";
+//                 }
+//                 else if (source.trim() === 'brightcove') {
+//                     playerID = videoId.toString().split("::")[2];
+//                     accountID = videoId.toString().split("::")[1];
+//                     videoId = videoId.toString().split("::")[0];
                     
-                    if (playerID == '' || typeof playerID == "undefined") {playerID = 'default';}
-                    if (videoId !== "" && typeof videoId !== "undefined") {
-                         url = "https://players.brightcove.net/"+accountID+"/"+playerID+"_default/index.html?videoId=" + videoId;
-                    } else {
-                        url = $(elem).data('url');
-                    }
-                    opts.features = [];
-                    opts.width = (window.innerWidth/3)*2;
-                    opts.height = (opts.width * 9)/16;
+//                     if (playerID == '' || typeof playerID == "undefined") {playerID = 'default';}
+//                     if (videoId !== "" && typeof videoId !== "undefined") {
+//                          url = "https://players.brightcove.net/"+accountID+"/"+playerID+"_default/index.html?videoId=" + videoId;
+//                     } else {
+//                         url = $(elem).data('url');
+//                     }
+//                     opts.features = [];
+//                     opts.width = (window.innerWidth/3)*2;
+//                     opts.height = (opts.width * 9)/16;
 
-                    content = 
-                        '<div style="display: block; position: relative; max-width: 100%;"><div style="padding-top: 56.25%;">\
-                            <iframe src="//players.brightcove.net/'+accountID+'/'+playerID+'_default/index.html?videoId='+videoId+'" \
-                            allowfullscreen\
-                            webkitallowfullscreen\
-                            mozallowfullscreen\
-                            style="width: 100%; height: 100%; position: absolute; top: 0px; bottom: 0px; right: 0px; left: 0px;"></iframe>\
-                        </div></div>';
-                }
-            }
+//                     content = 
+//                         '<div style="display: block; position: relative; max-width: 100%;"><div style="padding-top: 56.25%;">\
+//                             <iframe src="//players.brightcove.net/'+accountID+'/'+playerID+'_default/index.html?videoId='+videoId+'" \
+//                             allowfullscreen\
+//                             webkitallowfullscreen\
+//                             mozallowfullscreen\
+//                             style="width: 100%; height: 100%; position: absolute; top: 0px; bottom: 0px; right: 0px; left: 0px;"></iframe>\
+//                         </div></div>';
+//                 }
+//             }
             
-            if (typeof url !== 'undefined' && url !== "") {
-                var _player, _isPlaying = false;
-                $.fancybox({
-                    type: opts.type,
-                    scrolling: opts.scrolling,
-                    fitToView: opts.fitToView,
-                    autoSize: opts.autoSize,
-                    maxWidth: opts.maxWidth,
-                    aspectRatio: opts.aspectRatio,
-                    helpers: {
-                        overlay: {
-                            locked: false
-                        }
-                    },
-                    beforeLoad: function () {
-                        this.content = content; //"<video class ='videoPlayer' src='" + url + "' poster='" + poster + "' width='" + opts.width + "' height='" + opts.height + "' controls='controls' preload='none' ></video>";
-                        this.title = caption;
-                        this.width = opts.width;
-                        this.height = opts.height;
-                    },
-                    afterShow: function () {
+//             if (typeof url !== 'undefined' && url !== "") {
+//                 var _player, _isPlaying = false;
+//                 $.fancybox({
+//                     type: opts.type,
+//                     scrolling: opts.scrolling,
+//                     fitToView: opts.fitToView,
+//                     autoSize: opts.autoSize,
+//                     maxWidth: opts.maxWidth,
+//                     aspectRatio: opts.aspectRatio,
+//                     helpers: {
+//                         overlay: {
+//                             locked: false
+//                         }
+//                     },
+//                     beforeLoad: function () {
+//                         this.content = content; //"<video class ='videoPlayer' src='" + url + "' poster='" + poster + "' width='" + opts.width + "' height='" + opts.height + "' controls='controls' preload='none' ></video>";
+//                         this.title = caption;
+//                         this.width = opts.width;
+//                         this.height = opts.height;
+//                     },
+//                     afterShow: function () {
 
 
-                        if (source.trim() !== 'brightcove'){
+//                         if (source.trim() !== 'brightcove'){
 
-                            new MediaElementPlayer('.videoPlayer', {
-                                defaultVideoWidth: this.width,
-                                defaultVideoHeight: this.height,
-                                startVolume: opts.startVolume,
-                                loop: opts.loop,
-                                enableAutosize: opts.enableAutosize,
-                                features: opts.features,
-                                alwaysShowControls: opts.alwaysShowControls,
-                                iPadUseNativeControls: opts.iPadUseNativeControls,
-                                iPhoneUseNativeControls: opts.iPhoneUseNativeControls,
-                                AndroidUseNativeControls: opts.AndroidUseNativeControls,
-                                alwaysShowHours: opts.alwaysShowHours,
-                                showTimecodeFrameCount: opts.showTimecodeFrameCount,
-                                framesPerSecond: opts.framesPerSecond,
-                                enableKeyboard: opts.enableKeyboard,
-                                pauseOtherPlayers: opts.pauseOtherPlayers,
-                                success: function (mediaElement, domObject) {
-                                    _player = mediaElement;
-                                    _player.load();
-                                    _player.play();
-                                    _player.addEventListener('playing', function () {
-                                        _isPlaying = true;
-                                    }, false);
-                                    if (source.trim() == 'vimeo') { alert();
-                                        $('.mejs-controls').remove();
-                                    }
-                                }
-                            });
-                        }
-                    },
-                    beforeClose: function () {
-                        if (_isPlaying && navigator.userAgent.match(/msie [6-8]/i)) {
-                            _player.remove();
-                            _isPlaying = false;
-                        }
-                    }
-                });
-            }
-        });
-    };
-}(jQuery));
-(function ($) {
+//                             new MediaElementPlayer('.videoPlayer', {
+//                                 defaultVideoWidth: this.width,
+//                                 defaultVideoHeight: this.height,
+//                                 startVolume: opts.startVolume,
+//                                 loop: opts.loop,
+//                                 enableAutosize: opts.enableAutosize,
+//                                 features: opts.features,
+//                                 alwaysShowControls: opts.alwaysShowControls,
+//                                 iPadUseNativeControls: opts.iPadUseNativeControls,
+//                                 iPhoneUseNativeControls: opts.iPhoneUseNativeControls,
+//                                 AndroidUseNativeControls: opts.AndroidUseNativeControls,
+//                                 alwaysShowHours: opts.alwaysShowHours,
+//                                 showTimecodeFrameCount: opts.showTimecodeFrameCount,
+//                                 framesPerSecond: opts.framesPerSecond,
+//                                 enableKeyboard: opts.enableKeyboard,
+//                                 pauseOtherPlayers: opts.pauseOtherPlayers,
+//                                 success: function (mediaElement, domObject) {
+//                                     _player = mediaElement;
+//                                     _player.load();
+//                                     _player.play();
+//                                     _player.addEventListener('playing', function () {
+//                                         _isPlaying = true;
+//                                     }, false);
+//                                     if (source.trim() == 'vimeo') { alert();
+//                                         $('.mejs-controls').remove();
+//                                     }
+//                                 }
+//                             });
+//                         }
+//                     },
+//                     beforeClose: function () {
+//                         if (_isPlaying && navigator.userAgent.match(/msie [6-8]/i)) {
+//                             _player.remove();
+//                             _isPlaying = false;
+//                         }
+//                     }
+//                 });
+//             }
+//         });
+//     };
+// }(jQuery));
+// (function ($) {
     
-    $.urlParam = function (name) {
-        var url = window.location.href;
-        var urlArr = url.split('/');
-        return urlArr[urlArr.length - 2];
-    };
+    // $.urlParam = function (name) {
+    //     var url = window.location.href;
+    //     var urlArr = url.split('/');
+    //     return urlArr[urlArr.length - 2];
+    // };
     
-    /*
-     *  Load Users Article on view user profile and user post
-     */
+    // /*
+    //  *  Load Users Article on view user profile and user post
+    //  */
  
-    $.fn.Ajax_LoadMoreUserArticles = function (options) {
-        var defaults = {
-            container: '#userArticleContainer',
-            onSuccess: function () {},
-            onError: function () {},
-            beforeSend: function () {},
-            onComplete: function () {}
-        };
+    // $.fn.Ajax_LoadMoreUserArticles = function (options) {
+    //     var defaults = {
+    //         container: '#userArticleContainer',
+    //         onSuccess: function () {},
+    //         onError: function () {},
+    //         beforeSend: function () {},
+    //         onComplete: function () {}
+    //     };
 
-        var opts = $.extend({}, defaults, options);
+    //     var opts = $.extend({}, defaults, options);
 
-        var username = decodeURIComponent($.urlParam());
-        var totalPosts = parseInt($(opts.container).data('total-count'));
-        var offset = parseInt($(opts.container).data('offset'));
-        if(username === '' || typeof username === 'undefined'){
-            return;
-        }
-        if(isNaN(totalPosts) || isNaN(offset)){
-            return;
-        }
+    //     var username = decodeURIComponent($.urlParam());
+    //     var totalPosts = parseInt($(opts.container).data('total-count'));
+    //     var offset = parseInt($(opts.container).data('offset'));
+    //     if(username === '' || typeof username === 'undefined'){
+    //         return;
+    //     }
+    //     if(isNaN(totalPosts) || isNaN(offset)){
+    //         return;
+    //     }
         
-        offset = offset + _appJsConfig.articleOffset; //Declared in _javascripts.php
-        if(offset > totalPosts){
-            return;
-        }
-        $(opts.container).data('offset', offset);
-        var csrfToken = $('meta[name="csrf-token"]').attr("content");
+    //     offset = offset + _appJsConfig.articleOffset; //Declared in _javascripts.php
+    //     if(offset > totalPosts){
+    //         return;
+    //     }
+    //     $(opts.container).data('offset', offset);
+    //     var csrfToken = $('meta[name="csrf-token"]').attr("content");
         
-        $.ajax({
-                type: 'POST',
-                url: _appJsConfig.baseHttpPath + '/profile/' + username + '/posts',
-                dataType: 'json',
-                data: {offset: offset, _csrf: csrfToken},
-                success: function(data, textStatus, jqXHR) {
-                    if (opts.onSuccess && typeof opts.onSuccess === 'function') {
-                        opts.onSuccess(data);
-                    }
-                },
-                error: function(jqXHR, textStatus, errorThrown){
-                    if (opts.onError && typeof opts.onError === 'function') {
-                        opts.onError(jqXHR.responseText);
-                    }
-                },
-                beforeSend: function(jqXHR, settings) { 
-                    if (opts.beforeSend && typeof opts.beforeSend === 'function') {
-                        opts.beforeSend();
-                    }
-                },
-                complete: function(jqXHR, textStatus) {
-                    if (opts.onComplete && typeof opts.onComplete === 'function') {
-                        opts.onComplete();
-                    }
-                }
-            }); 
-    };
+    //     $.ajax({
+    //             type: 'POST',
+    //             url: _appJsConfig.baseHttpPath + '/profile/' + username + '/posts',
+    //             dataType: 'json',
+    //             data: {offset: offset, _csrf: csrfToken},
+    //             success: function(data, textStatus, jqXHR) {
+    //                 if (opts.onSuccess && typeof opts.onSuccess === 'function') {
+    //                     opts.onSuccess(data);
+    //                 }
+    //             },
+    //             error: function(jqXHR, textStatus, errorThrown){
+    //                 if (opts.onError && typeof opts.onError === 'function') {
+    //                     opts.onError(jqXHR.responseText);
+    //                 }
+    //             },
+    //             beforeSend: function(jqXHR, settings) { 
+    //                 if (opts.beforeSend && typeof opts.beforeSend === 'function') {
+    //                     opts.beforeSend();
+    //                 }
+    //             },
+    //             complete: function(jqXHR, textStatus) {
+    //                 if (opts.onComplete && typeof opts.onComplete === 'function') {
+    //                     opts.onComplete();
+    //                 }
+    //             }
+    //         }); 
+    // };
     
-    /**
-     * My News Page Load More Articles
-     */
-    $.fn.Ajax_LoadMoreMyArticles = function (options) {
-        var defaults = {
-            containerClass: 'LoadMyArticles',
-            onSuccess: function () {},
-            onError: function () {},
-            beforeSend: function () {},
-            onComplete: function () {}
-        };
+    // /**
+    //  * My News Page Load More Articles
+    //  */
+    // $.fn.Ajax_LoadMoreMyArticles = function (options) {
+    //     var defaults = {
+    //         containerClass: 'LoadMyArticles',
+    //         onSuccess: function () {},
+    //         onError: function () {},
+    //         beforeSend: function () {},
+    //         onComplete: function () {}
+    //     };
 
-        var opts = $.extend({}, defaults, options);
+    //     var opts = $.extend({}, defaults, options);
 
-        var page = parseInt($('.' + opts.containerClass).data('page'));
-        if (isNaN(page) || page < 0) {
-           page = 1;
-        }
+    //     var page = parseInt($('.' + opts.containerClass).data('page'));
+    //     if (isNaN(page) || page < 0) {
+    //        page = 1;
+    //     }
 
-        $('.' + opts.containerClass).data('page', (page + 1));
-        var csrfToken = $('meta[name="csrf-token"]').attr("content");
+    //     $('.' + opts.containerClass).data('page', (page + 1));
+    //     var csrfToken = $('meta[name="csrf-token"]').attr("content");
 
-        $.ajax({
-            type: 'post',
-            url: _appJsConfig.baseHttpPath + '/user/load-articles',
-            dataType: 'json',
-            data: {page: page, limit: _appJsConfig.articleOffset, _csrf: csrfToken},
-            success: function (data, textStatus, jqXHR) {
-                if (opts.onSuccess && typeof opts.onSuccess === 'function') {
-                    opts.onSuccess(data, textStatus, jqXHR);
-                }
-            },
-            error: function (jqXHR, textStatus, errorThrown) {
+    //     $.ajax({
+    //         type: 'post',
+    //         url: _appJsConfig.baseHttpPath + '/user/load-articles',
+    //         dataType: 'json',
+    //         data: {page: page, limit: _appJsConfig.articleOffset, _csrf: csrfToken},
+    //         success: function (data, textStatus, jqXHR) {
+    //             if (opts.onSuccess && typeof opts.onSuccess === 'function') {
+    //                 opts.onSuccess(data, textStatus, jqXHR);
+    //             }
+    //         },
+    //         error: function (jqXHR, textStatus, errorThrown) {
 
-                if (opts.onError && typeof opts.onError === 'function') {
-                    opts.onError(jqXHR, textStatus, errorThrown);
-                }
-            },
-            beforeSend: function (jqXHR, settings) {
-                if (opts.beforeSend && typeof opts.beforeSend === 'function') {
-                    opts.beforeSend(jqXHR, settings);
-                }
-            },
-            complete: function (jqXHR, textStatus) {
-                if (opts.onComplete && typeof opts.onComplete === 'function') {
-                    opts.onComplete(jqXHR, textStatus);
-                }
-            }
-        });
-    };
-}(jQuery));
+    //             if (opts.onError && typeof opts.onError === 'function') {
+    //                 opts.onError(jqXHR, textStatus, errorThrown);
+    //             }
+    //         },
+    //         beforeSend: function (jqXHR, settings) {
+    //             if (opts.beforeSend && typeof opts.beforeSend === 'function') {
+    //                 opts.beforeSend(jqXHR, settings);
+    //             }
+    //         },
+    //         complete: function (jqXHR, textStatus) {
+    //             if (opts.onComplete && typeof opts.onComplete === 'function') {
+    //                 opts.onComplete(jqXHR, textStatus);
+    //             }
+    //         }
+    //     });
+    // };
+// }(jQuery));
 (function ($) {
     
     $.image = function (options) {
@@ -19065,9 +19012,6 @@ AuthController.ResetPassword = (function ($) {
     };
 
 }(jQuery));
-var CardController = function() {
-    return new Card();
-}
 
 var Card = function() {
     this.events();
@@ -19076,8 +19020,7 @@ var Card = function() {
 
 Card.prototype.renderCard = function(card, options)
 {
-    // console.log(options);
-    var self = this;
+
     options = options || {};
     var template = (options.template) ? Acme.templates[options.template] : Acme.templates.systemCardTemplate;
     card['containerClass'] = options.cardClass || "";
@@ -19093,7 +19036,7 @@ Card.prototype.renderCard = function(card, options)
     card['pinTitle'] = (card.isPinned == 1) ? 'Un-Pin Article' : 'Pin Article';
     card['pinText']  = (card.isPinned == 1) ? 'Un-Pin' : 'Pin';
     card['promotedClass'] = (card.isPromoted == 1)? 'ad_icon' : '';
-    // console.log(card);
+
     // mainly for screen to turn off lazyload and loading background img
     // card['imgClass'] = (card.lazyloadImage == false) ? '' : 'lazyload';
     // card['imgBackgroundStyle'] = (card.lazyloadImage == false) ? '' : 'style="background-image:url(https://placeholdit.imgix.net/~text?w=1&h=1)"';

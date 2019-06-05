@@ -1,5 +1,9 @@
 {% set type = type is defined ? type : "image" %}
 {% set galleryStyle = galleryStyle is defined ? galleryStyle  : "article" %}
+{% set imageClass = imageClass is defined ? imageClass  : "article-gallery__image article-gallery__image-" ~ galleryStyle %}
+{% set showCaption = showCaption is defined ? showCaption : true %}
+
+
 {% set owl      = '' %}
 {% set owlClass = '' %}
 
@@ -31,8 +35,11 @@ with width taken up with borders on the side #}
 
 {% if  media | length > 1 %}
     {% set owl = "owl-gallery-" ~ type %}
-    {% set owlClass = 'owl-carousel owl-pub-theme owl-carousel__base'%}
+    {% set owlClass = carouselClass is defined ? carouselClass : "owl-carousel owl-pub-theme owl-carousel__base" %}
 {% endif %}
+
+
+    {% set media = [media[0]] %}
 
 {# {% set defaultClass = default is defined and default == true ? "default" : "" %} #}
 
@@ -50,7 +57,7 @@ with width taken up with borders on the side #}
         {% set articleImg = _Media.getMediaUrl(image, imgWidth, imgHeight, {'crop': 'fill', 'gravity': gravity} ) %}
         
         
-        <figure class="article-gallery__image article-gallery__image-{{galleryStyle}}" data-hash="{{loop.index}}">
+        <figure class="{{imageClass}}" data-hash="{{loop.index}}">
                 
             {% if image.type == 'image' or image.type == 'doc' or ( image.type == 'video' and showPaywall == true ) %} 
 
@@ -110,10 +117,11 @@ with width taken up with borders on the side #}
 
             {% endif %}
 
-           
-            <figcaption class="article-gallery__caption" style="float:unset;">
-                <p class="">{{image.caption | raw }}</p>
-            </figcaption>
+            {% if showCaption == true %}
+                <figcaption class="article-gallery__caption" style="float:unset;">
+                    <p class="">{{image.caption | raw }}</p>
+                </figcaption>
+            {% endif %}
         </figure>
 
 

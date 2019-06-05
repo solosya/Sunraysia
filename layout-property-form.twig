@@ -5,12 +5,6 @@
 
 {% set jobsBlogId = blogData.additionalInfo['publishto'] %}
 
-{# {{this.registerJs("window.Acme.cards = CardController();")}}
-{{this.registerJs("Acme.propertyForm = new Acme.PropertyForm(["~jobsBlogId~"], 'Single Property Listing');")}}
-{{this.registerJs("Acme.listingView.init("~jobsBlogId~", 'property');")}}
-{{this.registerJs("Acme.listingCollection = new Acme.listingCollectionClass('listingCollection', "~jobsBlogId~");")}} #}
-
-
 
 
 {% set limit = 10 %}
@@ -207,7 +201,7 @@
     // main script is defered so event listener makes sure
     // defered script is loaded before this runs
     document.addEventListener("DOMContentLoaded", function(event) {
-        Acme.cards = CardController();
+
         Acme.propertyForm = new Acme.PropertyForm([{{jobsBlogId}}], 'Single Property Listing');
         Acme.listingView.init({{jobsBlogId}}, 'property');
         Acme.listingCollection = new Acme.listingCollectionClass('listingCollection', [{{jobsBlogId}}]);

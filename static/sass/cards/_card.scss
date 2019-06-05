@@ -5,7 +5,8 @@
     // @include calc(height, '100% - 40px');
     margin-bottom: 30px;
     position: relative;
-    @include box-shadow(0 2px 10px 6px rgba(89, 88, 89, 0.1));
+    @include box-shadow(0 0 6px 4px rgba(92, 92, 92, 0.1));
+
 
     &.draft {
         opacity: 0.3

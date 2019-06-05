@@ -1,13 +1,10 @@
 @mixin card-9-base() {
     @include card-name("C5 mobile");
-    margin-left: -20px;
-    margin-right: -20px;
+    // margin-left: -20px;
+    // margin-right: -20px;
 
     .c-cards-view {
         box-shadow:none;
-
-        // height: 490px;
-
 
         @include flex-direction(column, vertical);
         @include justify-content(center);
@@ -16,7 +13,10 @@
 
         &__media {
             // @include flex-height(290px);
-            width:100%;
+            img {
+                max-height: 420px;
+            }
+    
             &--video {
                 &:before {
                     @include size(55px);
@@ -24,17 +24,25 @@
             }
         }
 
+        &__photo-wrapper {
+            height:100%;
+            max-width:540px;
+            padding-right: 15px;
+            padding-left: 15px;
+            margin-right: auto;
+            margin-left: auto;
+            width:100%;
+        }
+
         &__container {
             text-align:left;
-            padding: 0 30px 25px 35px;
+            padding: 0;
             height: 100%;
             background:white;
-            
         }
         &__category {
-            margin-top:16px;
+            margin-top:0;
             margin-bottom:12px;
-
         }
 
         &__heading {
@@ -50,7 +58,6 @@
         &__author {
             display:none;
         }
-
     }
 }
 
@@ -68,8 +75,6 @@
 
     .c-cards-view {
 
-        // height: 650px;
-
         &__media {
             @include flex-height(400px);
             &--video {
@@ -80,32 +85,57 @@
             
             img {
                 height: 100%;
+                max-height: none;;
             }
         }
 
+      
+        &__photo-wrapper {
+            height:100%;
+            max-width:720px;
+            padding-right: 15px;
+            padding-left: 15px;
+            margin-right: auto;
+            margin-left: auto;
+            width:100%;
+        }
+
+
+
         &__container {
-            padding: 0 30px 25px 35px;
+            padding: 0;
             margin: 0;
         }
 
         &__category {
-            margin-top:40px;
+            margin:0;
             margin-bottom:8px;
         }
 
-
         &__heading {
             @include font-size(30);
-            @include flex-height(40px);
-            
+            height:auto;
+            max-height:none;
+            min-height: 38px;
+            width:70%;
         }
-
 
         &__description {
             @include font-size(13);
+            line-height: 1.46;
+            height: 40px;
             max-height: 40px;
-            margin-top:0;
+            margin-top:7px;
+            width:70%;
+
         }
+
+        &__button {
+            float: right;
+            position: relative;
+            top: -70px;
+        }
+
 
     }
 }
@@ -125,8 +155,13 @@
 
         @include flex-direction(row, horizontal);
         @include justify-content(center);
-
-
+       
+        height: 650px;
+        
+        &__media {
+            // width:100%;
+            // @include flex-height(650px);
+        }
 
         &__photo-wrapper {
             height:100%;
@@ -137,17 +172,36 @@
             margin-left: auto;
             width:100%;
             position:absolute;
+            z-index: 1000;
         }
-
-
 
         &__container {
             width:368px;
             position:absolute;
-            text-align:center;
-            padding: 0 81px 25px 81px;
+            text-align:left;
+            padding: 333px 35px 25px 35px;
             margin: 0;
         }
+
+        &__heading {
+            width:100%;
+            @include font-size(30);
+            @include flex-height(78px);
+        }
+        &__description {
+            width:100%;
+            height: 65px;
+            max-height: 65px;
+            margin-top:12px;
+        }
+
+        &__button {
+            float: none;
+            position: relative;
+            top: 0;
+        }
+
+
     }
 }
 
@@ -156,6 +210,7 @@
     @media #{$desktop} {
         @include card-9-desktop-base();
         @include card-name("c9 desktop");
+
     }
 }
 
