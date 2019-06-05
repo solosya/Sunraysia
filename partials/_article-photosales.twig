@@ -9,6 +9,7 @@
         showPaywall: showPaywall,
         imageClass: "c-cards-view__media",
         showCaption: false,
+        type: 'card'
     }) | raw}}
 
     
@@ -34,6 +35,6 @@
             <div class="{{params.cardType}}c-cards-view__time">{{params.publishDate}}</div>
         </div>
 
-        <a href="{{params.url}}" class="c-cards-view__button c-button c-button--red u-mobile-margin-top-10">SHOP IMAGES</a>
+        <button href="{{params.url}}" class="c-cards-view__button c-button c-button--red u-mobile-margin-top-10">SHOP IMAGES</button>
     </div>
 </div>

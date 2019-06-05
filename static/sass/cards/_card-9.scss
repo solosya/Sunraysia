@@ -159,8 +159,8 @@
         height: 650px;
         
         &__media {
-            // width:100%;
-            // @include flex-height(650px);
+            width:100%;
+            @include flex-height(650px);
         }
 
         &__photo-wrapper {
