@@ -92,6 +92,7 @@ Acme.Feed.prototype.events = function()
 
 
     if (this.infinite && this.offset >= this.limit) {
+        console.log(self.elem);
         self.waypoint = new Waypoint({
             element: self.elem,
             offset: '80%',

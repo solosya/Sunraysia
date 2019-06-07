@@ -18747,6 +18747,7 @@ Acme.Feed.prototype.events = function()
 
 
     if (this.infinite && this.offset >= this.limit) {
+        console.log(self.elem);
         self.waypoint = new Waypoint({
             element: self.elem,
             offset: '80%',
@@ -21012,6 +21013,15 @@ $('document').ready(function() {
         ]
     });   
 
+    $("#owl-gallery-card").owlCarousel({
+        items: 1,
+        dots: true,
+        nav: false,
+        navText: [
+            "",
+            ""
+        ]
+    });   
 
 
     //this is used for the gallery template
@@ -21029,13 +21039,6 @@ $('document').ready(function() {
             ""
         ]
     });   
-
-
-
-
-
-
-    // adScroll();
 
 
 });
