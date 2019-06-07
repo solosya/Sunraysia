@@ -12,6 +12,14 @@
         font-weight:$weightRegular;
         @include padding-bottom(25);
     }
+
+    &__cost {
+        margin-bottom:7px;
+        font-weight:$weightMedium;
+
+    }
+
+
     @include responsive(md) {
         padding-right:10%;  
     }
