@@ -17923,6 +17923,134 @@ function(a){"use strict";void 0===a.en&&(a.en={"mejs.plural-form":1,"mejs.downlo
 
 
 
+
+
+
+
+    /***                             ****
+        Base Class for all Forms
+    ***                              ****/
+    Acme.Form = function(validators, rules) {
+        this.errorField;
+        this.errorFields;
+        this.validators = validators || null;
+        this.validateRules = rules || {};
+    };
+        Acme.Form.prototype = new Acme._View();
+        Acme.Form.constructor = Acme.Form;
+        Acme.Form.prototype.clearInlineErrors = function()
+        {
+            if (this.errorField) {
+                this.errorField.removeClass('active');
+            }
+            for (var field in this.validateFields) {
+                var fieldname = this.validateFields[field].split('.').reverse()[0];
+                $('#'+fieldname).removeClass('formError');
+            }
+        };
+        Acme.Form.prototype.addInlineErrors = function()
+        {
+            if (this.errorFields.length > 0 && this.errorField) {
+                this.errorField.addClass('active');
+            }
+            for (var field in this.errorFields) {
+                $('#'+this.errorFields[field]).addClass('formError');
+            }
+        };
+
+        Acme.Form.prototype.validate = function( /* Array */ checkFields)  {
+            // checkFields is used to validate a single field, 
+            // otherwise itereate through all compulsory fields
+
+            // intersect used to clear the field we want to check 
+            // from errorFields.  if still an error it will add again.
+
+            function intersect(a, b) {
+                var t;
+                if (b.length > a.length) t = b, b = a, a = t; // indexOf to loop over shorter
+                return a.filter(function (e) {
+                    return b.indexOf(e) > -1;
+                });
+            }
+
+            var validated = true, fields = [];
+            if (checkFields && this.validateFields) {
+                var fields = intersect(this.validateFields, checkFields);
+                for (var j=0; j<fields.length;j++) {
+                    var fieldName = fields[j].split('.').reverse()[0];
+                    var index = this.errorFields.indexOf(fieldName);
+                    if (index === -1) break;
+                    this.errorFields.splice(index, 1);
+                }
+            } else {
+                var fields = this.validateFields || [];
+                this.errorFields = []; // reset and re-calcuate all fields
+            }
+            for (var i=0;i<fields.length; i++) {
+                var key = fields[i];
+                var keySplit = key.split('.');
+                var scope = this.data;
+                for(var j=0; j<keySplit.length; j++) {
+
+                    if (!scope[keySplit[j]]) {
+                        scope = false;
+                        break;
+                    }
+                    if(j == keySplit.length -1 ) {
+                        scope = scope[keySplit[j]];
+                        break;
+                    }
+                    scope = scope[keySplit[j]];
+                }
+
+                // DO THE VALIDATE!!!
+                var fieldValidators = this.validateRules[key];
+                if (fieldValidators.length > 0) {
+
+                    var fieldname = fields[i].split('.').reverse()[0];
+                    for (var k=0; k<fieldValidators.length; k++) {
+                        if ( !this.validators[ fieldValidators[k] ](scope) ) {
+                            this.errorFields.push(fieldname); 
+                            validated = false;
+                            break;
+                        }
+                    }
+                }
+            }
+            return validated;
+        };
+
+
+
+
+    Acme.Validators = {
+        'notEmpty' : function(input) {
+            return !input ? false : true;
+        },
+        'isNumeric' : function(n) {
+            if (!n) return true;
+            return !isNaN(parseFloat(n)) && isFinite(n);
+        },
+        'username' : function(text) {
+            return (text.length > 4);
+        },  
+        'isTrue' : function(data) {
+            return (data === 'true' || data === true) ? true : false;
+        }
+    };
+
+
+
+
+
+
+
+
+
+
+
+
+
     Acme.modal = function(template, name, layouts, data) {
         this.template = template || null;
         this.parentCont = name   || null;
@@ -18338,7 +18466,7 @@ Acme.templates.listingDeleteTmpl =
 
 Acme.templates.listingSavedTmpl =  
 '<p>Following approval it will be posted to the events page within 24 hours.</p> \
-<div class="u-margin-top-10> \
+<div class="u-margin-top-10"> \
     <form> \
         <button class="c-button c-button--inline c-button--rounded c-button--blue-bordered">Okay</button> \
     </form> \
@@ -19539,7 +19667,8 @@ Acme.Confirm = function(template, parent, layouts) {
 
 
 var ListingForm = function() {};
-ListingForm.prototype = new Acme._View();
+// ListingForm.prototype = new Acme._View();
+ListingForm.prototype = new Acme.Form(Acme.Validators);
 ListingForm.constructor = ListingForm;
     // ListingForm.prototype.init = function(blogId, layout) 
     // {
@@ -19561,9 +19690,11 @@ ListingForm.constructor = ListingForm;
     {
         "start_date" : function(data, topic) {
             this.data.start_date = data['start_date'];
+            this.validate(['start_date']);
         },
         "end_date" : function(data, topic) {
             this.data.end_date = data['end_date'];
+            this.validate(['end_date']);
         },
         "location" : function(data, topic) {
             this.data.latitude = data.location['latitude'];
@@ -19573,11 +19704,7 @@ ListingForm.constructor = ListingForm;
             return this.deleteImage(data);
         },
         "after" : function(data, topic) {
-            console.log(this.data);
-            this.errorFields;
-            this.validate();
             this.render();
-
         }
     };
     ListingForm.prototype.render = function() 
@@ -19588,34 +19715,13 @@ ListingForm.constructor = ListingForm;
 
         title.val(this.data.title);
         content.val(this.data.content);
-            console.log(this.errorFields);
-        this.clearErrorHightlights();
-        console.log('cleared highlights', this.errorFields);
-        this.addErrorHightlights();
 
-        if (this.data.id) {
-            $('#listingFormSubmit').text('UPDATE');
-        }
+        this.clearInlineErrors();
+        this.addInlineErrors();
+
+
         if (this.data.mediaData){
             this.renderImageThumbs(this.data.mediaData);
-        }
-    };
-    ListingForm.prototype.clearErrorHightlights = function()
-    {
-        $("#formerror").removeClass('active');
-        for (var field in this.compulsoryFields) {
-            var fieldname = this.compulsoryFields[field].split('.').reverse()[0];
-            $('#'+fieldname).removeClass('formError');
-        }
-    };
-    ListingForm.prototype.addErrorHightlights = function()
-    {
-        console.log(this.errorFields);
-        if (this.errorFields.length > 0) {
-            $("#formerror").addClass('active');
-        }
-        for (var field in this.errorFields) {
-            $('#'+this.errorFields[field]).addClass('formError');
         }
     };
     ListingForm.prototype.saveImage = function(r, data)
@@ -19686,8 +19792,9 @@ ListingForm.constructor = ListingForm;
     };
     ListingForm.prototype.submit = function()
     {
+        console.log('submitting');
         var validated = this.validate();
-        
+        console.log(validated);
         if (!validated) {
             console.log(this.errorFields);
             this.render();
@@ -19709,26 +19816,18 @@ ListingForm.constructor = ListingForm;
     {
         var self = this;
 
+
         $('#' + this.formId + ' input, textarea').on("change", function(e) {
             e.stopPropagation();
             e.preventDefault();
-            console.log('edited a field');
             var data = {};
             var elem = $(e.target);
             var elemid = elem.attr('name');
 
             data[elemid] = elem.val();
             self.updateData(data);
-
-            if (self.compulsoryFields.indexOf(elemid) > -1 ) {
-                if (elem.val() == '') {
-                    elem.addClass("formError");
-                } else {
-                    elem.removeClass("formError");
-                }
-            } 
-            self.validate();
-            console.log(self.errorFields);
+            self.validate([elemid]);
+            self.render();
         });
 
 
@@ -19760,7 +19859,6 @@ ListingForm.constructor = ListingForm;
         $('#imageArray').on('click', '.carousel-tray__delete', function(e) {
             var elem = $(e.target);
             var mediaId = elem.data('id');
-            console.log(elem, mediaId);
             Acme.PubSub.publish('update_state', {'confirmDeleteImage': {elem:elem, id:mediaId}});
         });
 
@@ -19778,61 +19876,6 @@ ListingForm.constructor = ListingForm;
             self.submit();
         });
     };
-    ListingForm.prototype.validate = function(checkFields) {
-        // checkFields is used to validate a single field, 
-        // otherwise itereate through all compulsory fields
-
-        // intersect used to clear the field we want to check 
-        // from errorFields.  if still an error it will add again.
-        function intersect(a, b) {
-            var t;
-            if (b.length > a.length) t = b, b = a, a = t; // indexOf to loop over shorter
-            return a.filter(function (e) {
-                return b.indexOf(e) > -1;
-            });
-        }
-
-        var validated = true, fields = [];
-
-        if (checkFields) {
-            var fields = intersect(this.compulsoryFields, checkFields);
-            for (var j=0; j<fields.length;j++) {
-                var fieldName = fields[j].split('.').reverse()[0];
-                var index = this.errorFields.indexOf(fieldName)
-                this.errorFields.splice(index, 1);
-            }
-        } else {
-            var fields = this.compulsoryFields;
-            this.errorFields = []; // reset and re-calcuate all fields
-        }
-
-
-        for (var i=0;i<fields.length; i++) {
-            var key = fields[i];
-            var keySplit = key.split('.');
-            var scope = this.data;
-            for(var j=0; j<keySplit.length; j++) {
-
-                if (!scope[keySplit[j]]) {
-                    scope = false;
-                    break;
-                }
-                if(j == keySplit.length -1 ) {
-                    scope = scope[keySplit[j]];
-                    break;
-                }
-                scope = scope[keySplit[j]];
-            }
-
-            if (!scope) {
-                var fieldname = fields[i].split('.').reverse()[0];
-                this.errorFields.push(fieldname); 
-                validated = false;
-            }
-        }
-        return validated;
-    };
-
 
 
 
@@ -19844,16 +19887,19 @@ Acme.EventForm = function(options)
 
     this.errorFields = [];
 
-    this.compulsoryFields = [
-        "title", 
-        "content",
-        "start_date",
-        "end_date",
-        "contactname",
-        "address1",
-        "suburb",
-        "state"
-    ];
+    this.validateRules = {
+        "title"         : ["notEmpty"], 
+        "content"       : ["notEmpty"], 
+        "start_date"    : ["notEmpty"], 
+        "end_date"      : ["notEmpty"], 
+        "address1"      : ["notEmpty"], 
+        "suburb"        : ["notEmpty"], 
+        "state"         : ["notEmpty"], 
+        "contactname"   : ["notEmpty"], 
+        "contactemail"  : ["notEmpty"]
+    };
+
+    this.validateFields = Object.keys(this.validateRules);
 
     this.formId = options.form;
 
@@ -19897,93 +19943,93 @@ Acme.EventForm = function(options)
                 if(data['start_date'] && e.date.hour() == 9 && e.date.minute() == 0) {
                         $('#end_date').data("DateTimePicker").minDate(e.date.hour(16).minute(59));
                     } else if (data['start_date']) {
-                         $('#end_date').data("DateTimePicker").minDate(e.date);
+                        $('#end_date').data("DateTimePicker").minDate(e.date);
                     }
                 Acme.PubSub.publish("update_state", data);
             }
         });
 
-        var EventPostGoogleMap = function () {
-            var marker, geocoder;
-            var elem = $('#addressMap');
-            var latitude = elem.data('latitude');
-            var longitude = elem.data('longitude');
-            var map;
+        // var EventPostGoogleMap = function () {
+        //     var marker, geocoder;
+        //     var elem = $('#addressMap');
+        //     var latitude = elem.data('latitude');
+        //     var longitude = elem.data('longitude');
+        //     var map;
             
-            google.maps.event.addDomListener(window, 'load', initMap);
-            function initMap() {
-                var mapLat;
-                var mapLong;
-                if (latitude !== '' && longitude !== '') {
-                    mapLat = latitude;
-                    mapLong = longitude;
+        //     google.maps.event.addDomListener(window, 'load', initMap);
+        //     function initMap() {
+        //         var mapLat;
+        //         var mapLong;
+        //         if (latitude !== '' && longitude !== '') {
+        //             mapLat = latitude;
+        //             mapLong = longitude;
 
-                    geocoder = new google.maps.Geocoder();
-                    map = new google.maps.Map(document.getElementById('addressMap'), {
-                        zoom: 10,
-                        center: {lat: mapLat, lng: mapLong}
-                    });
+        //             geocoder = new google.maps.Geocoder();
+        //             map = new google.maps.Map(document.getElementById('addressMap'), {
+        //                 zoom: 10,
+        //                 center: {lat: mapLat, lng: mapLong}
+        //             });
 
-                    //set current marker
-                    updateMarker = new google.maps.Marker({
-                        position: new google.maps.LatLng(latitude, longitude),
-                        map: map
-                    });
-                } 
-                else {
-                    //navigator.geolocation.getCurrentPosition(function (position) {});
-                    geocoder = new google.maps.Geocoder();
-                    map = new google.maps.Map(document.getElementById('addressMap'), {
-                        zoom: 1,
-                        center: {lat: 43.197167, lng: 56.425781}
-                    });
+        //             //set current marker
+        //             updateMarker = new google.maps.Marker({
+        //                 position: new google.maps.LatLng(latitude, longitude),
+        //                 map: map
+        //             });
+        //         } 
+        //         else {
+        //             //navigator.geolocation.getCurrentPosition(function (position) {});
+        //             geocoder = new google.maps.Geocoder();
+        //             map = new google.maps.Map(document.getElementById('addressMap'), {
+        //                 zoom: 1,
+        //                 center: {lat: 43.197167, lng: 56.425781}
+        //             });
                     
-                }
+        //         }
                 
-                pointLocation(geocoder, map, marker);
-            }
+        //         pointLocation(geocoder, map, marker);
+        //     }
             
-            initMap();
-        };
+        //     initMap();
+        // };
 
-        var pointLocation = function (geocoder, map, marker) {
-            $('#address1').on('change', function(e){
-                mapLocation($(this));
+        // var pointLocation = function (geocoder, map, marker) {
+        //     $('#address1').on('change', function(e){
+        //         mapLocation($(this));
 
-            });
+        //     });
             
-            function mapLocation(elem) {
-                var address = elem.val();
+        //     function mapLocation(elem) {
+        //         var address = elem.val();
 
-                geocoder.geocode({address: address}, function (results, status) {
+        //         geocoder.geocode({address: address}, function (results, status) {
                     
-                    if (status === google.maps.GeocoderStatus.OK) {
-                        map.setCenter(results[0].geometry.location);
-                        map.setZoom(10);
+        //             if (status === google.maps.GeocoderStatus.OK) {
+        //                 map.setCenter(results[0].geometry.location);
+        //                 map.setZoom(10);
 
-                        //clear the previous marker
-                        if (marker) {
-                            marker.setMap(null);
-                        }
-                        marker = new google.maps.Marker({
-                            map: map,
-                            position: results[0].geometry.location
-                        });
+        //                 //clear the previous marker
+        //                 if (marker) {
+        //                     marker.setMap(null);
+        //                 }
+        //                 marker = new google.maps.Marker({
+        //                     map: map,
+        //                     position: results[0].geometry.location
+        //                 });
                         
-                        // Set Lat and Long
-                        var latitude = results[0].geometry.location.lat();
-                        var longitude = results[0].geometry.location.lng();
-                        var data = {
-                            "location" : {
-                                "latitude": latitude,
-                                "longitude": longitude
-                            }
-                        };
-                        Acme.PubSub.publish("update_state", data);
-                    } 
-                });
-            } 
-        };
+        //                 // Set Lat and Long
+        //                 var latitude = results[0].geometry.location.lat();
+        //                 var longitude = results[0].geometry.location.lng();
+        //                 var data = {
+        //                     "location" : {
+        //                         "latitude": latitude,
+        //                         "longitude": longitude
+        //                     }
+        //                 };
+        //                 Acme.PubSub.publish("update_state", data);
+        //             } 
+        //         });
+        //     } 
+        // };
 
         // EventPostGoogleMap();
     }
@@ -20122,118 +20168,6 @@ Acme.confirmView = new Acme.Confirm('modal', 'signin', layouts);
 
 
 }(jQuery));
-/***                             ****
-    Base Class for all Forms
-***                              ****/
-Acme.Form = function(validators, rules) {
-    this.errorField;
-    this.errorFields;
-    this.validators = validators || null;
-    this.validateRules = rules || {};
-};
-    Acme.Form.prototype = new Acme._View();
-    Acme.Form.constructor = Acme.Form;
-    Acme.Form.prototype.clearInlineErrors = function()
-    {
-        if (this.errorField) {
-            this.errorField.removeClass('active');
-        }
-        for (var field in this.validateFields) {
-            var fieldname = this.validateFields[field].split('.').reverse()[0];
-            $('#'+fieldname).removeClass('formError');
-        }
-    };
-    Acme.Form.prototype.addInlineErrors = function()
-    {
-        if (this.errorFields.length > 0 && this.errorField) {
-            this.errorField.addClass('active');
-        }
-        for (var field in this.errorFields) {
-            $('#'+this.errorFields[field]).addClass('formError');
-        }
-    };
-
-    Acme.Form.prototype.validate = function( /* Array */ checkFields)  {
-        // checkFields is used to validate a single field, 
-        // otherwise itereate through all compulsory fields
-
-        // intersect used to clear the field we want to check 
-        // from errorFields.  if still an error it will add again.
-
-        function intersect(a, b) {
-            var t;
-            if (b.length > a.length) t = b, b = a, a = t; // indexOf to loop over shorter
-            return a.filter(function (e) {
-                return b.indexOf(e) > -1;
-            });
-        }
-
-        var validated = true, fields = [];
-        if (checkFields && this.validateFields) {
-            var fields = intersect(this.validateFields, checkFields);
-            for (var j=0; j<fields.length;j++) {
-                var fieldName = fields[j].split('.').reverse()[0];
-                var index = this.errorFields.indexOf(fieldName);
-                if (index === -1) break;
-                this.errorFields.splice(index, 1);
-            }
-        } else {
-            var fields = this.validateFields || [];
-            this.errorFields = []; // reset and re-calcuate all fields
-        }
-        for (var i=0;i<fields.length; i++) {
-            var key = fields[i];
-            var keySplit = key.split('.');
-            var scope = this.data;
-            for(var j=0; j<keySplit.length; j++) {
-
-                if (!scope[keySplit[j]]) {
-                    scope = false;
-                    break;
-                }
-                if(j == keySplit.length -1 ) {
-                    scope = scope[keySplit[j]];
-                    break;
-                }
-                scope = scope[keySplit[j]];
-            }
-
-            // DO THE VALIDATE!!!
-            var fieldValidators = this.validateRules[key];
-            if (fieldValidators.length > 0) {
-
-                var fieldname = fields[i].split('.').reverse()[0];
-                for (var k=0; k<fieldValidators.length; k++) {
-                    if ( !this.validators[ fieldValidators[k] ](scope) ) {
-                        this.errorFields.push(fieldname); 
-                        validated = false;
-                        break;
-                    }
-                }
-            }
-        }
-        return validated;
-    };
-
-
-
-
-Acme.Validators = {
-    'notEmpty' : function(input) {
-        return !input ? false : true;
-    },
-    'isNumeric' : function(n) {
-        if (!n) return true;
-        return !isNaN(parseFloat(n)) && isFinite(n);
-    },
-    'username' : function(text) {
-        return (text.length > 4);
-    },  
-    'isTrue' : function(data) {
-        return (data === 'true' || data === true) ? true : false;
-    }
-};
-
 
     
 Acme.UserProfileController = function()

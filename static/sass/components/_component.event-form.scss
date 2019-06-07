@@ -1,0 +1,20 @@
+.c-event-form {
+    
+
+    &__requirements {
+        p {
+            @include font-size(12);
+            font-weight:$weightBold;
+            color: $greyish;
+            margin-bottom:5px;
+
+        }
+
+        li {
+            @include font-size(12);
+            font-style:italic;
+            color: $greyish;
+            margin-bottom:4px;
+        }
+    }
+}
