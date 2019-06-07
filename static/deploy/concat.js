@@ -18465,12 +18465,11 @@ Acme.templates.listingDeleteTmpl =
 
 
 Acme.templates.listingSavedTmpl =  
-'<p>Following approval it will be posted to the events page within 24 hours.</p> \
-<div class="u-margin-top-10"> \
-    <form> \
-        <button class="c-button c-button--inline c-button--rounded c-button--blue-bordered">Okay</button> \
-    </form> \
+'<p class=" u-margin-bottom-30 u-margin-top-20 centerText">Following approval it will be posted to the events page within 24 hours.</p> \
+<div class="centerText"> \
+    <button class="c-button c-button--blue">Okay</button> \
 </div>';
+
 
 
 
