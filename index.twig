@@ -60,12 +60,12 @@
 {% if config['active'] is not defined or config['active'] == true %}
 
     {% if config['page']['index']['sections'] is defined %}
-        {% set pageSections = config['page']['index']['sections'] %}
-        {% set sectionOrder = pageSections | keys %}
+        {% set panels = config['page']['index']['sections'] %}
+        {% set sectionOrder = panels | keys %}
 
         {% set blogFeeds = {} %}
 
-        {% for i, panel in pageSections %}
+        {% for i, panel in panels %}
 
             {% if panel['articleOrder'] is defined %}
 
@@ -127,11 +127,6 @@
 
 
 
-
-
-{# <div class="clearfix"></div> #}
-
-
 <main id="main" class="site-main" role="main" data-layout="{{layoutTitle}}">
 
 
@@ -158,7 +153,6 @@
 
 
         {# FOR PRODUCTION #}
-        {# {% set out =  _AppHelper.log(key) %} #}
 
         {% if not dev and blog.title | lower == key | lower %}
 
@@ -195,6 +189,7 @@
 
     {% set bannerNo = 1 %}
     {% for pagesection in panels | keys %}
+
        {% if panels[pagesection]['active'] is not defined or panels[pagesection]['active'] == true %}
             {% set panelConfig = panels[pagesection] %}
             
@@ -202,7 +197,6 @@
                 {% set panelConfig = breaking.partial %}
             {% endif %}
 
-            {# {% set out =  _AppHelper.log(blogFeeds) %} #}
 
 
             {% set params = {

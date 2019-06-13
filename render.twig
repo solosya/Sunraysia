@@ -7,6 +7,7 @@
 
 {# If a page section has articles from multiple blogs, assemble here #}
 {% if config.articleOrder is defined and config.articleOrder | length > 0 %}
+
     {% for a in config.articleOrder %}
 
         {% set count = count | merge( { (a) : count[a] + 1 } ) %}
@@ -17,9 +18,14 @@
 
 {# else if a page section has articles from a single blog, no assembly required #}
 {% else %}
-            {# {% set out =  _AppHelper.log(config.blogs[0]) %} #}
 
-    {% set feedArr = blogFeeds[config.blogs[0]].feed.articles %}
+
+    {% if config.blogs is defined and blogFeeds[config.blogs[0]] is defined %}
+
+        {% set feedArr = blogFeeds[config.blogs[0]].feed.articles %}
+    {% else %}
+        {% set feedArr = blogFeeds[config.blog].feed.articles %}
+    {% endif %}
 
 {% endif %}
 
