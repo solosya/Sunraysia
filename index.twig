@@ -21,7 +21,7 @@
             CONFIG OPTIONS SET IN PLATFORM
 ******************************************************* #}
 
-{% if config['active'] is not defined or config['active'] == true %}
+{# {% if config['active'] is not defined or config['active'] == true %}
 
     {% if config['page']['index']['sections'] is defined %}
         {% set panels = config['page']['index']['sections'] %}
@@ -46,7 +46,85 @@
         {% endif %}
     {% endif %} 
 
+{% endif %} #}
+
+
+
+
+
+
+{# *******************************************************
+            CONFIG OPTIONS SET IN PLATFORM
+******************************************************* #}
+
+{% if config['active'] is not defined or config['active'] == true %}
+
+    {% if config['page']['index']['sections'] is defined %}
+        {% set pageSections = config['page']['index']['sections'] %}
+        {% set sectionOrder = pageSections | keys %}
+
+        {% set blogFeeds = {} %}
+
+        {% for i, panel in pageSections %}
+
+            {% if panel['articleOrder'] is defined %}
+
+                {# If a panel has multiple blogs we get the count of items to fetch from iterating
+                over the articleOrder array #}
+                {% for blogName in panel['articleOrder'] %}
+
+                    {% if blogFeeds[blogName] is not defined %}
+                        {% set blogFeeds = blogFeeds | merge({ (blogName): { "limit" : 1} }) %}
+                    {% else %}
+
+                        {% set count = blogFeeds[blogName].limit %}
+
+                        {% set blogFeeds = blogFeeds | merge({ (blogName): { "limit" : count + 1} }) %}
+                    {% endif %}
+                {% endfor %}
+
+
+
+            {# If a panel has a single blog we get the count of items to fetch from checking the articleCount key #}
+            {% else %}
+
+                {% set blogName = panel['blog'] %}
+
+                {% if panel['articleCount'] is defined %}
+
+                    {% set count = panel['articleCount'] %}
+                    
+                    {% if blogFeeds[blogName] is not defined or blogFeeds[blogName].limit < count %}
+                        {% set blogFeeds = blogFeeds | merge({ (blogName): { "limit" : count} }) %}
+                    {% endif %}
+
+                {% endif %}
+            {% endif %}
+
+        {% endfor %}
+        
+    {% endif %}
+
+
+
+    {% if layoutTitle == 'index_breaking_news' %}
+        {% if config['page']['index']['breaking-news'] is defined %}
+            {% set breaking = config['page']['index']['breaking-news'] %}
+            {% set blogFeeds = blogFeeds | merge({
+                (breaking.section) : { 
+                    "limit" : breaking.limit
+                    } 
+                }) %}
+        {% endif %}
+    {% endif %} 
+
 {% endif %}
+
+
+
+
+
+
 
 
 

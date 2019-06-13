@@ -291,19 +291,25 @@
     document.addEventListener("DOMContentLoaded", function() {
 
 
-        var ListingForm = function() {
+        var ClassifiedsForm = function(options) {
+
+            this.formId = options.form;
+
+
             this.subscriptions = Acme.PubSub.subscribe({
                 'Acme.classified_form.listener' : ['state_changed', 'update_state']
             });
 
-            this.container = $('#classifieds-form');
+            this.container = $('#' + this.formId);
             this.errorFields = [];
 
-            this.compulsoryFields = [
-                "title", 
-                "content",
-                "start_date",
-            ];
+            this.validateRules = {
+                "title"         : ["notEmpty"], 
+                "content"       : ["notEmpty"], 
+                "start_date"    : ["notEmpty"], 
+            };
+
+            this.validateFields = Object.keys(this.validateRules);
 
             this.menus = {};
 
@@ -315,10 +321,10 @@
             this.events();
 
         };
-        ListingForm.prototype = new Acme.Form();
-        ListingForm.constructor = ListingForm;
+        ClassifiedsForm.prototype = new Acme.Form();
+        ClassifiedsForm.constructor = ClassifiedsForm;
 
-        ListingForm.prototype.listeners = 
+        ClassifiedsForm.prototype.listeners = 
         {
             "start_date" : function(data, topic) {
                 this.data.start_date = data['start_date'];
@@ -381,7 +387,7 @@
             }
         };
 
-        ListingForm.prototype.addPullDowns = function(list)
+        ClassifiedsForm.prototype.addPullDowns = function(list)
         {
             this.menus.category = new Acme.listMenu({
                         'parent'        : $('#categorySelect'),
@@ -404,31 +410,13 @@
             this.menus.classification.disable();
 
         };
-        ListingForm.prototype.render = function() 
+        ClassifiedsForm.prototype.render = function() 
         {
-            this.clearErrorHightlights();
+            this.clearInlineErrors();
+            this.addInlineErrors();
+        };
 
-            this.addErrorHightlights();
-
-        };
-        ListingForm.prototype.clearErrorHightlights = function()
-        {
-            $("#formerror").removeClass('active');
-            for (var field in this.compulsoryFields) {
-                var fieldname = this.compulsoryFields[field].split('.').reverse()[0];
-                $('#'+fieldname).removeClass('formError');
-            }
-        };
-        ListingForm.prototype.addErrorHightlights = function()
-        {
-            if (this.errorFields.length > 0) {
-                $("#formerror").addClass('active');
-            }
-            for (var field in this.errorFields) {
-                $('#'+this.errorFields[field]).addClass('formError');
-            }
-        };
-        ListingForm.prototype.submit = function()
+        ClassifiedsForm.prototype.submit = function()
         {
             var self = this;
             var validated = this.validate();
@@ -454,10 +442,12 @@
                 console.log(r);
             });
         };
-        ListingForm.prototype.events = function() 
+        ClassifiedsForm.prototype.events = function() 
         {
             var self = this;
-            $('input, textarea').on("change", function(e) {
+
+
+            $('#' + this.formId + ' input, textarea').on("change", function(e) {
                 e.stopPropagation();
                 e.preventDefault();
                 var data = {};
@@ -466,17 +456,11 @@
 
                 data[elemid] = elem.val();
                 self.updateData(data);
-
-                if (self.compulsoryFields.indexOf(elemid) > -1 ) {
-
-                    if (elem.val() == '') {
-                        elem.addClass("formError");
-                    } else {
-                        elem.removeClass("formError");
-                    }
-                } 
-
+                self.validate([elemid]);
+                self.render();
             });
+
+
 
             $('#ad_details').on('input', function(e) {
                 var elem = $(e.target);
@@ -560,7 +544,11 @@
 
         };
 
-        Acme.classified_form = new ListingForm();
+
+
+        Acme.classified_form = new ClassifiedsForm({
+            form: "classifieds-form"
+        });
 
 
 
