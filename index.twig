@@ -17,41 +17,6 @@
 
 
 
-{# *******************************************************
-            CONFIG OPTIONS SET IN PLATFORM
-******************************************************* #}
-
-{# {% if config['active'] is not defined or config['active'] == true %}
-
-    {% if config['page']['index']['sections'] is defined %}
-        {% set panels = config['page']['index']['sections'] %}
-    {% endif %}
-
-    {% if config['page']['index']['blogFeeds'] is defined %}
-        {% set blogFeeds = config['page']['index']['blogFeeds'] %}
-    {% endif %}
-
-    {% if config['inventory'][blogData.title]['bannerSpots'] is defined %}
-        {% set bannerSpots = config['inventory'][blogData.title]['bannerSpots'] %}
-    {% endif %}
-
-    {% if layoutTitle == 'index_breaking_news' %}
-        {% if config['page']['index']['breaking-news'] is defined %}
-            {% set breaking = config['page']['index']['breaking-news'] %}
-            {% set blogFeeds = blogFeeds | merge({
-                (breaking.section) : { 
-                    "limit" : breaking.limit
-                    } 
-                }) %}
-        {% endif %}
-    {% endif %} 
-
-{% endif %} #}
-
-
-
-
-
 
 {# *******************************************************
             CONFIG OPTIONS SET IN PLATFORM
