@@ -63,9 +63,9 @@
 
 
 
-{# {% if gallery %}
+{% if gallery %}
     {% set gallery = _Article.getMedia(article.guid) %}
-{% endif %} #}
+{% endif %}
 
 
 {% set isArticle = (article.articleId > 0 or (isArticle is defined and isArticle == 'true')) ? 0 : 1 %}
