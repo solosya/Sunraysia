@@ -430,10 +430,7 @@
                 right: 0;
                 margin: 0 auto;
                 padding: 30px 15px 5px;
-                background: -moz-linear-gradient(to bottom, transparent 0, rgba(255, 255, 255, 0.66) 40%, #fff 100%);
-                background: -webkit-linear-gradient(to bottom, transparent 0, rgba(255, 255, 255, 0.66) 40%, #fff 100%);
-                background: linear-gradient(to bottom, transparent 0, rgba(255, 255, 255, 0.66) 40%, #fff 100%);
-
+                @include linear-gradient(180deg, transparent,  0, rgba(255, 255, 255, 0.66) 40%, #fff 100%);
                 position: absolute;
                 top: -110px;
                 height: 110px;
@@ -476,9 +473,7 @@
                     right: -50px;
                     margin: 0 auto;
                     padding: 30px 15px 5px;
-                    background: -moz-linear-gradient(to bottom, transparent 0, rgba(255, 255, 255, 0.66) 40%, #fff 100%);
-                    background: -webkit-linear-gradient(to bottom, transparent 0, rgba(255, 255, 255, 0.66) 40%, #fff 100%);
-                    background: linear-gradient(to bottom, transparent 0, rgba(255, 255, 255, 0.66) 40%, #fff 100%);
+                    @include linear-gradient(180deg, transparent,  0, rgba(255, 255, 255, 0.66) 40%, #fff 100%);
 
                     position: absolute;
                     top: -110px;

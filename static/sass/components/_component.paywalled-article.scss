@@ -1,11 +1,32 @@
 .c-paywalled-article {
     height: 260px;
     padding-top: 56px;
-    background-image: linear-gradient(82deg, #c51515, #4c76c9);
-    
+    @include linear-gradient(82deg, #c51515, #4c76c9);
+    @media #{$mobile} {
+        @include linear-gradient(180deg, #c51515, #4c76c9);
+    }
+
+    @media #{$tablet} {
+        height: 235px;
+        padding-top: 35px;
+    }
+
+    @media #{$mobile} {
+        height:auto;
+        padding: 30px;
+        padding-top: 37px;
+    }
+
+
     &__container {
         @include flexbox();
         @include flex-direction(row, horizontal);
+        width:100%;
+        @media #{$mobile} {
+            @include flex-direction(column, vertical);
+        }
+    
+
     }
 
 
@@ -15,10 +36,31 @@
         font-weight: $weightBold;
         text-transform: uppercase;
         margin-bottom: 7px;
+
+        @media #{$tablet} {
+            margin-bottom: 20px;
+        }
+
+        @media #{$mobile} {
+            margin-bottom: 17px;
+        }
+
     }
 
     &__text {
-        min-width: 720px;
+        @media #{$desktop-lg} {
+            max-width: 590px;
+            margin-right: 180px;
+        }
+        @media #{$desktop} {
+            max-width: 590px;
+            margin-right: 135px;
+        }
+        @media #{$tablet} {
+            max-width: 430px;
+            margin-right: 50px;
+        }
+
     }
 
     
@@ -28,19 +70,43 @@
         line-height: 1.10;
         font-weight: $weightBold;
         margin-bottom: 15px;
+
+        @media #{$tablet} {
+            @include font-size(28);
+        }
+
+        @media #{$mobile} {
+            @include font-size(24);
+            line-height:1.4;
+        }
+    
+
+
     }
     &__subscriptions {
         @include font-size(18);
         color: $white;
         line-height: 1.13;
+        font-weight:$weightLight;
+
+        @media #{$mobile} {
+            display:block;
+            margin-bottom:20px;
+            font-weight:$weightLight;
+        }
+
+
     }
 
 
     &__action {
         width:220px;
         padding-top:27px;
-        // @include flexbox();
-        // @include margin-bottom(30);
+
+        @media #{$mobile} {
+            width:100%;
+        }
+
     }
 
     &__period {
@@ -61,4 +127,10 @@
             font-family: $primaryFont;
         }
     }
+
+    &__button {
+            width:100%;
+        
+    }
+
 }

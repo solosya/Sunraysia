@@ -24,7 +24,6 @@
 
 {% set articleCount = _AppHelper.getApplicationEnv() == 'DEV' ? 0 : 0 %}
 
-<!-- 3 is job, 4 is property, 5 is event -->
 {% set dev = _AppHelper.getApplicationEnv() == 'DEV' ? false : false %}
 
 <main id="main" class="o-body-container o-body-container-md u-margin-top-60" role="main">
@@ -176,14 +175,17 @@
 
                             <hr class="divide divide--dark" />
 
-                            <a id="change-plan" href="#plans" class="c-button c-button--red">Change Subscription</a>
+                            <div class="c-current-plan__spacer"></div>
 
-                            {% if pwstats['status'] == 'cancelled' %}
-                                <a id="cancelAccount" href="#" class="c-button c-button--red c-button--red--bordered">Restart Subscription</a>
-                            {% else %} 
-                                <a id="cancelAccount" href="#" class="c-button c-button--red c-button--red--bordered">Cancel subscription</a>
-                            {% endif %} 
+                            <div class="c-current-plan__subscription-buttons">
+                                <a id="change-plan" href="#plans" class="c-button c-button--red">Change Subscription</a>
 
+                                {% if pwstats['status'] == 'cancelled' %}
+                                    <a id="cancelAccount" href="#" class="c-button c-button--red--bordered">Restart Subscription</a>
+                                {% else %} 
+                                    <a id="cancelAccount" href="#" class="c-button c-button--red--bordered">Cancel subscription</a>
+                                {% endif %} 
+                            </div>
 
 
                         </div>
@@ -298,6 +300,12 @@
                     </div>
                  </div>
             </div>
+
+
+
+
+            {# ad go here #}
+            <div class="offset-lg-1 col-lg-3"></div>
         </div>
     </div>
 

@@ -19782,15 +19782,18 @@ ListingForm.constructor = ListingForm;
             }
         }
         $('#imageArray').empty();
-        this.clearErrorHightlights();
+
         this.data = {
             'id': 0,
             'blogs': this.blogId,
             'media_ids': ''
         };
-    };
+        $('#'+this.formId)[0].reset();
+        this.clearInlineErrors();
+};
     ListingForm.prototype.submit = function()
     {
+        var self = this;
         console.log('submitting');
         var validated = this.validate();
         console.log(validated);
@@ -19803,9 +19806,8 @@ ListingForm.constructor = ListingForm;
         this.data.theme_layout_name = this.layout;
 
         Acme.server.create('/api/article/create', this.data).done(function(r) {
-            $('#listingFormClear').click();
+            self.clear();
             Acme.PubSub.publish('update_state', {'confirm': r});
-            Acme.PubSub.publish('update_state', {'userArticles': ''});
         }).fail(function(r) {
             Acme.PubSub.publish('update_state', {'confirm': r});
             console.log(r);
@@ -19874,6 +19876,11 @@ ListingForm.constructor = ListingForm;
             e.preventDefault();
             self.submit();
         });
+        $('#cancel').on('click', function(e) {
+            self.clear();
+        });
+
+
     };
 
 
@@ -20143,6 +20150,7 @@ Acme.confirmView = new Acme.Confirm('modal', 'signin', layouts);
     Acme.confirmView.listeners = 
     {
         "confirm" : function(data, topic) {
+            console.log(data);
             this.render("listing", "Thank you for submitting your event.");
         },
         "confirmDelete" : function(data, topic) {

@@ -18,7 +18,7 @@
     <div class="container">
         <div class="row">
 
-            <div class="offset-md-1 col-md-7">
+            <div class="col-12 col-lg-8 offset-xl-1 col-xl-7">
                 <div class="c-search">
                     <div class="c-search__head">
                         {% set resultString = firstCount < 2 ? 'result' : 'results' %}
@@ -31,9 +31,9 @@
                             {{this.render('partials/_single-article.twig', {
                                 article: article, 
                                 imageSuppress: 'true',
-                                containerClass: "card-5-mobile card-8-tablet card-8-desktop"
+                                containerClass: "card-8-mobile card-8-tablet card-8-desktop"
                             }) | raw}}
-                            <hr class="d-none d-md-block divide u-margin-top-20 u-margin-bottom-20 u-margin-right-100" />
+                            <hr class="d-md-block divide u-margin-top-20 u-margin-bottom-20 u-desktop-margin-right-100" />
                         {% endfor %}
 
                     </div>
@@ -77,7 +77,7 @@
             loadtype        : 'api/search',
             searchterm      : "{{search}}",
             name            : 'search-load', //name of the search button
-            card_class      : 'card-5-mobile card-8-tablet card-8-desktop'
+            card_class      : 'card-8-mobile card-8-tablet card-8-desktop'
         });
     });
 </script>

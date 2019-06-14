@@ -299,6 +299,7 @@
     .u-desktop-margin-top-15 { margin-top: 15px; }
     .u-desktop-margin-top-10 { margin-top: 10px; }
 
+    .u-desktop-margin-right-100 { margin-right: 100px; }
 
     .u-desktop-padding-bottom-60 { padding-bottom: 60px; }
     .u-desktop-padding-bottom-50 { padding-bottom: 50px; }
@@ -467,7 +468,7 @@
 .divide {
     border: 0;
     border-top: 1px solid $offwhite;
-
+    width:100%;
     &--dark {
         border-color: rgba( $greyish, 0.5);
     }

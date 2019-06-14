@@ -2,4 +2,33 @@
     height: 100%;
     background-color: $offwhite;
     padding: 29px 34px;
+    @include flexbox();
+    @include flex-direction(column, vertical);
+
+
+
+    &__spacer {
+        flex-grow:2;
+    }
+    &__subscription-buttons {
+        @include flexbox();
+        @include flex-direction(row, horizontal);
+        > a {
+            margin-top: 7px;
+            @media #{$desktop-lg} {
+
+                &:first-child {
+                    margin-right: 10px;
+                }
+            }
+
+        }
+
+        @media #{$desktop-lg-down} {
+            @include flex-direction(column, vertical);
+        }
+    }
+
+
+
 }

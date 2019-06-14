@@ -40,7 +40,7 @@
     {% if url.query.category is defined and url.query.category != "" %}
 
         {% set currentPage = url.query.category | replace({'%20': " "}) | replace({"%26":"&"}) %}
-
+        
         {# if category view, we need to get the sections within this category to display
         as panels.  We get them from the sidemenu #}
         {% set break = false %}

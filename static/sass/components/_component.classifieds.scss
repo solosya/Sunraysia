@@ -97,7 +97,11 @@
         @include padding(0);
         position:relative;
         border-bottom:1px solid rgba($greyish, 0.5);
-        padding-left:30px;
+
+        @media #{$mobile} {
+            padding-left:30px;
+        }
+
 
         &:first-child {
             border-top:1px solid rgba($greyish, 0.5);

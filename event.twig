@@ -5,7 +5,6 @@
 {% set blogInfo = _Blog.getBlog() %}
 
 
-{# {{this.registerJsFile("https://maps.googleapis.com/maps/api/js?key=838djd983kd93k3kkdkd93939")}} #}
 
 {% set networkData = _Network.getNetworkData() %}
 
@@ -55,13 +54,21 @@
                 <div class="c-eventdetail">
 
                     {% if eventImage %} 
-                        <figure class="c-eventdetail__media"> 
-                            <img src="{{eventImage}}" class="img-fluid o-media--image" alt="Article Info">
-                        </figure>
+
+                        <div class="gallery-container relative">
+                            {% if event.media|length > 0 %}
+                                {{this.render('partials/gallery.twig', {
+                                    media: event.media,
+                                    showPaywall: showPaywall
+                                }) | raw}}
+                            {% endif %}
+                        </div> 
+
                     {% endif %}
                     
                     
                     <div class="c-eventdetail__head">
+
 
                         <a href="{{ networkData.defaultBlogUrl }}/@events">
                             <div class="c-eventdetail__category">

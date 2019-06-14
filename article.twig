@@ -15,9 +15,7 @@
 
 {% set showPaywall = false %}
 {% set ArticleContent = article.content %}
-{# <pre>
-{{dump(article)}}
-</pre> #}
+
 
 {% if   not _User.isAdminUser()     and
         article.showPaywall == true %}
@@ -25,7 +23,7 @@
 {% endif %}
 
 
-{# {% set showPaywall = true %} #}
+{% set showPaywall = true %}
 
 
 {% if showPaywall == true %}
@@ -39,9 +37,7 @@
     {# {% set recentArticles = _Article.getPopularArticles({ limit: 3, excludeArticleIds : [article.id], interval: 168, scope: 'network' }) %} #}
     {% set recentArticles = _Article.getRecentArticles({ limit: 3, excludeArticleIds : [article.id] }) %}
 {% endif %}
-{# <pre>
-{{dump(relatedArticles)}}
-</pre> #}
+
 {% set articleImg = false %}
 {% set featured = false %}
 
@@ -93,7 +89,8 @@
 
                             <div class="c-article__posted-by">
                                 <div class="c-article__author">
-                                    <a class="c-article__author-name" href="{{_AppHelper.getUserProfileUrl(article.createdBy['username'])}}/posts">{{ article.createdBy['displayName'] }}</a>
+                                {# "{{_AppHelper.getUserProfileUrl(article.createdBy['username'])}}/posts" #}
+                                    <a class="c-article__author-name" href="javascript:;">{{ article.createdBy['displayName'] }}</a>
 
                                     {% if article['createdBy']['coauthors'] %}
                                         {% for author in article['createdBy']['coauthors'] %}
@@ -152,7 +149,7 @@
             <div class="c-paywalled-article">
                 <div class="container">
                     <div class="row">
-                        <div class="c-paywalled-article__container offset-lg-1">
+                        <div class="c-paywalled-article__container offset-xl-1">
                             <div class="c-paywalled-article__text">
                                 <h3 class="c-paywalled-article__publication">Sunraysia Daily</h3>
                                 <h1 class="c-paywalled-article__title">See how the story develops.<br />
@@ -161,8 +158,8 @@
                             </div>
 
                             <div class="c-paywalled-article__action">
-                                <a href="{{networkData.defaultBlogUrl}}/paywall" class="c-button c-button-block  c-button--red u-margin-bottom-5">Subscribe</a>
-                                <a id="articleSigninBtn" href="#" class="c-button c-button-block  c-button--wtbg  c-button--wtbg-bordered c-button--boderwidth1">Log in</a>
+                                <a href="{{networkData.defaultBlogUrl}}/paywall" class="c-paywalled-article__button c-button c-button-block  c-button--red u-margin-bottom-5">Subscribe</a>
+                                <a id="articleSigninBtn" href="#" class="c-paywalled-article__button c-button c-button-block  c-button--wtbg  c-button--wtbg-bordered c-button--boderwidth1">Log in</a>
                             </div>
                         </div>
                     </div>

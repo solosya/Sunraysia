@@ -46,7 +46,7 @@
                 {% for i in 0..5 if userArticles[i] %}
                     {{this.render('partials/_single-article.twig', {
                         article: userArticles[i], 
-                        imageSize: {width:190, height:160},
+                        imageSize: {width:620, height:290},
                         containerClass: 'card-5-mobile card-5-tablet card-5-desktop'
                     }) | raw}}
                 {% endfor %}
