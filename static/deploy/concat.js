@@ -21661,7 +21661,6 @@ Acme.Token.prototype.removeToken = function()
 
                         }
 
-                        $('#header-date').text(data.date);
                         $('#mobile-date').text(data.date);
 
 

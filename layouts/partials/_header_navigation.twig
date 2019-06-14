@@ -1,6 +1,8 @@
 {% set headermenu = _Menu.get({'menuType': 'header', "menuGroupName":"header-main"}) %}
 
 {% set user = _User.getUser() %}
+{% set theDate = _AppHelper.getCurrentTimestampBasedOnTimezone() %}
+{% set theDate = _AppHelper.getDefaultTimezoneDateTime(theDate, "l j F Y") %}
 
 
 <header class="c-header u-desktop-margin-bottom-50">
@@ -95,7 +97,9 @@
                     <a href="{{networkData.defaultBlogUrl}}" class="c-header__logo">
                         <img src="{{networkData.templatePath}}/static/images/logo.png" class="image-fluid" alt="Sunraysia Daily" />
                     </a>
-                    <p id="header-date" class="c-header__date"></p>
+
+
+                    <p id="header-date" class="c-header__date"> {{theDate}} </p>
                 </div>
 
 
