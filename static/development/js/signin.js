@@ -50,7 +50,7 @@ Acme.Signin.prototype.handle = function(e) {
             // rememberMe sets flag to store login for 30 days in cookie
             formData['rememberMe'] = 1;
 
-            Acme.server.create(_appJsConfig.baseHttpPath + '/api/auth/login', formData).done(function(r) {
+            Acme.server.create(_appJsConfig.appHostName + '/api/auth/login', formData).done(function(r) {
                 // console.log(r);
                 if (r.success === 1) {
                     window.location.reload();
@@ -73,7 +73,7 @@ Acme.Signin.prototype.handle = function(e) {
             $.each($('#forgotForm').serializeArray(), function () {
                 formData[this.name] = this.value;
             });
-            Acme.server.create(_appJsConfig.baseHttpPath + '/api/auth/forgot-password', formData).done(function(r) {
+            Acme.server.create(_appJsConfig.appHostName + '/api/auth/forgot-password', formData).done(function(r) {
                 if (r.success === 1) {
                     location.reload();
                 } else {

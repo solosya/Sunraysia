@@ -222,6 +222,8 @@
 
     var formhandler = function(formdata, path) {
         var csrfToken = $('meta[name="csrf-token"]').attr("content");
+        // formdata['_csrf'] = csrfToken;
+        // console.log(formdata);
 
         return $.ajax({
             url: _appJsConfig.appHostName + path,
