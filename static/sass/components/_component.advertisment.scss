@@ -12,7 +12,10 @@
 }
 
 .advertisment__mrec {
-    margin-bottom: 30px;
+    &-1,&-2,&-3,&-4{
+        margin-bottom: 30px;
+        width: 100%;
+    }
 }
 
 .advertisment__hpage {
