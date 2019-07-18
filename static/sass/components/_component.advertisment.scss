@@ -1,43 +1,46 @@
 .advertisment {
     width: max-content;
     margin: auto;
-}
 
-.advertisment__head {
-    margin-top:30px;
-}
 
-.advertisment__banner {
-
-}
-
-.advertisment__mrec {
-    &-1,&-2,&-3,&-4{
-        margin-bottom: 30px;
-        width: 100%;
+    &__head {
+        margin-top:30px;
     }
-}
 
-.advertisment__hpage {
-    
-}
+    &__banner {
+        &-1,&-2,&-3,&-4,&-5{
+            margin-top: 30px;
+        }
+    }
 
-.advertisment__side-fix {
-    
-}
+    &__mrec {
+        &-1,&-2,&-3,&-4{
+            margin-bottom: 30px;
+            width: 100%;
+        }
+    }
 
-.advertisment__base-fix {
-    
-}
+    &__hpage {
+        
+    }
 
-.advertisment__desktop {
-    
-}
+    &__side-fix {
+        
+    }
 
-.advertisment__tablet {
-    
-}
+    &__base-fix {
+        
+    }
 
-.advertisment__mobile {
-    
+    &__desktop {
+        
+    }
+
+    &__tablet {
+        
+    }
+
+    &__mobile {
+        
+    }
 }
