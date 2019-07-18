@@ -15,7 +15,7 @@
 
     <div class="col-12 col-lg-9">
         <div class="row">
-            <div class= "col-12 col-md-4 order-lg-1">
+            <div class= "col-12 col-md-4">
                 {% if articles[articleCount] %}                                                                
                 {{this.render('../_single-article.twig', {
                     article: articles[articleCount], 
@@ -27,7 +27,7 @@
                 {% endif %}
             </div>
 
-            <div class= "col-12 col-md-8 order-lg-2">
+            <div class= "col-12 col-md-8">
                 {% if articles[articleCount] %}                                                                
                 {{this.render('../_single-article.twig', {
                     article: articles[articleCount], 
