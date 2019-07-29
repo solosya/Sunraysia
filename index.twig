@@ -83,6 +83,10 @@
         {% endif %}
     {% endif %} 
 
+    {% if config['inventory'][homeBlog]['bannerSpots'] is defined %}
+        {% set bannerSpots = config['inventory'][homeBlog]['bannerSpots'] %}
+    {% endif %}
+
 {% endif %}
 
 

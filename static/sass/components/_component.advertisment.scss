@@ -1,40 +1,46 @@
 .advertisment {
-    width: min-content;
+    width: max-content;
     margin: auto;
-}
 
-.advertisment__head {
-    margin-top:30px;
-}
 
-.advertisment__banner {
+    &__head {
+        margin-top:30px;
+    }
 
-}
+    &__banner {
+        &-1,&-2,&-3,&-4,&-5{
+            margin-top: 30px;
+        }
+    }
 
-.advertisment__mrec {
-    margin-bottom: 30px;
-}
+    &__mrec {
+        &-1,&-2,&-3,&-4{
+            margin-bottom: 30px;
+            width: 100%;
+        }
+    }
 
-.advertisment__hpage {
-    
-}
+    &__hpage {
+        
+    }
 
-.advertisment__side-fix {
-    
-}
+    &__side-fix {
+        
+    }
 
-.advertisment__base-fix {
-    
-}
+    &__base-fix {
+        
+    }
 
-.advertisment__desktop {
-    
-}
+    &__desktop {
+        
+    }
 
-.advertisment__tablet {
-    
-}
+    &__tablet {
+        
+    }
 
-.advertisment__mobile {
-    
+    &__mobile {
+        
+    }
 }
