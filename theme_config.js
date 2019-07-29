@@ -78,6 +78,17 @@
           "articleCount": 4
         }
       ]
+    },
+    "photos" : {
+        "active": true,
+        "sections": [
+            {
+                "title": "Gallery",
+                "blog": "Photo Sales",
+                "articleCount": 4,
+                "template": "panel1",
+            },
+        ]
     }
   }
 }]

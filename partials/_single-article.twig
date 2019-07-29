@@ -101,6 +101,7 @@
 
     {% set params = {
         imageSuppress   : imageSuppress,
+        displayOrder    : article.displayOrder,
         placeholder     : "https://place-hold.it/1",
         imageMedium     : _Media.getMediaUrl(article.featuredMedia,768, 500, {'crop': 'fill', 'gravity': 'faces'} ),
         publishDate     : publishDate,
@@ -111,6 +112,7 @@
         hasMedia        : ((article.hasMedia == 'TRUE' or article.hasPreviewMedia == 'TRUE') and imageSuppress == false) ? true : false,
         imgWidth        : imgWidth,
         category        : article.label,
+        pinnedAt        : article.pinnedAt
         cardType        : cardType, 
         lazyload        : lazyload,
         gallery         : gallery,
@@ -179,7 +181,7 @@
         data-social         = "{{params.social}}"
         data-article-image  = "{{params.image}}" 
         data-article-text   = "{{Helper.htmlToText(params.title, -1) | raw | escape('html')}}"
-        title               = "{{totalstring}}">
+        title               = "{{totalstring}} Display: {{params.displayOrder}} - {{params.pinnedAt}}">
 
         {% if dev %}
             <div class="article_number">{{position}}</div>
