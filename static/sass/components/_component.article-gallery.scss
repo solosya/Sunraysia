@@ -8,14 +8,8 @@
             margin-bottom: 25px;
         }
         
-        @media #{$tablet} {
-            height:390px;
-        }
-        @media #{$desktop-up} {
-            height:470px;
-            // .external-article-video{
-            //     height: 641px !important;
-            // }
+        @media #{$tablet-up} {
+            height:400px;
         }
     }
 
