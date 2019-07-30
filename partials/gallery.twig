@@ -13,7 +13,7 @@
 with width taken up with borders on the side #}
 {% if galleryStyle == "gallery" %} 
     {% set imgWidth = 0 %}
-    {% set imgHeight = 515 %}
+    {% set imgHeight = 500 %}
     {% set gravity = 'auto' %}
     {% set mobImgHeight = 250 %} 
 {% elseif galleryStyle == "property" %}
@@ -23,7 +23,7 @@ with width taken up with borders on the side #}
     {% set mobImgHeight = 250 %}
 {% endif %}
 
-{% set cloudinaryParams = {'crop': 'fill', 'gravity': gravity} %}
+{% set cloudinaryParams = {'quality': '100', 'crop': 'fill', 'gravity': gravity} %}
 
 
 {% if showPaywall is defined and showPaywall == true %}
