@@ -90,7 +90,7 @@
         }
     }
     &__thumbs {
-        max-height:500px;
+        max-height:515px;
         @include flexbox();
         @include flex-direction(column, vertical);
         overflow-x: hidden;
@@ -99,7 +99,7 @@
         .owl-thumb-item {
             margin-bottom:12px;
             object-fit: cover;
-            height: 115px;
+            height: 120px;
             &.active {
                 border:4px solid #B9B9B9;
             }
