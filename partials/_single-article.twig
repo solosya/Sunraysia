@@ -98,7 +98,7 @@
 
     {% set redirUrl = article.url %}
     {% if url is defined and url != '' %}
-        {% redirUrl = url %}
+        {% set redirUrl = url %}
     {% endif %}
 
 
