@@ -14,43 +14,92 @@
 
 
 
-<main id="main" class="gallery" role="main">
+{% set showPaywall = false %}
+{% if   not _User.isAdminUser()     and
+        blogInfo['showPaywall'] == true  %}
+    
+    {% set showPaywall = true %}
 
-    <article class="article-main">
+{% endif %}
+{% set ArticleContent = article.content %}
 
-        <div class="gallery-row">
 
-            <div class="container" style="padding-bottom:100px;">
+<main id="main" class="article-gallery u-margin-bottom-100" role="main">
+
+    <div class="container u-margin-top-30">
+        <div class="row">
+            <div class="col-12 col-lg-10 col-xl-8">
+
                 <div class="row">
-                    <div class="col-md-9">
-                        <div class="page-content" style="margin:0;">
-                            <div class="content-block-top" style="margin:0;">
-                                <a href="{{blogInfo.url}}"><p class="category">{{article.label}}</p></a><br>{# <time datetime="{{publishedDate}}">{{article.publishedDate}}</time> #}
-                                <h1 class="gallery-title">{{ quotes.smarten(article.title) }}</h1>
-                            </div>
-                        </div>
+                    <div class="col-12">
 
                         {{this.render('partials/gallery.twig', {
                             media: article.media,
                             type: 'article',
                             default: true,
-                            galleryStyle: 'gallery'
-
+                            galleryStyle: 'article',
+                            showPaywall: showPaywall
                         }) | raw}}
-
-                        <div id="owl-thumbs" class="owl-thumbs" data-slider-id="1">
-                            {% for image in article.media %}
-                                {% set articleImg = _Media.getMediaUrl(image,152, 95, {'crop': 'fill', 'gravity':'faces'} ) %}
-                                <img id="owl-{{loop.index}}" src="{{articleImg}}" class="owl-thumb-item">
-                            {% endfor %}
-                        </div>
+                    </div>
+                    <div class="col-12">
+                        <a href="{{blogInfo.url}}"><p class="article-gallery__category">{{article.label}}</p></a>
+                        <h1 class="article-gallery__title">{{ quotes.smarten(article.title) }}</h1>
+                        <time class="article-gallery__date" datetime="{{publishedDate}}">{{article.publishedDate}}</time>
 
                     </div>
                 </div>
+
+                <div class="row">
+                    <div class="col-12">
+
+                        <div class="c-article__container c-article__container-sm u-margin-top-40">
+                                {{ ArticleContent | _resizeImages({'width': 600}) | raw }}
+                        </div>
+                        {% if showPaywall == true %}
+                            <div class="c-article__paywalled-view">
+                                <div class="c-paywalled-article">
+                                    <div class="container">
+                                        <div class="row">
+                                            <div class="c-paywalled-article__container offset-xl-1">
+                                                <div class="c-paywalled-article__text">
+                                                    <h3 class="c-paywalled-article__publication">Sunraysia Daily</h3>
+                                                    <h1 class="c-paywalled-article__title">See how the story develops.<br />
+                                                        Subscribe now to Sunraysia Daily.</h1>
+                                                    <a class="c-paywalled-article__subscriptions" href="{{networkData.defaultBlogUrl}}/paywall">Click here to view subscription options</a>
+                                                </div>
+
+                                                <div class="c-paywalled-article__action">
+                                                    <a href="{{networkData.defaultBlogUrl}}/paywall" class="c-paywalled-article__button c-button c-button-block  c-button--red u-margin-bottom-5">Subscribe</a>
+                                                    <a id="articleSigninBtn" href="#" class="c-paywalled-article__button c-button c-button-block  c-button--wtbg  c-button--wtbg-bordered c-button--boderwidth1">Log in</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
             </div>
+
+            <div class="d-none d-lg-block col-md-2">
+
+            {% if showPaywall != true %}
+                <div id="owl-thumbs" class="owl-thumbs article-gallery__thumbs" data-slider-id="1">
+                    {% for image in article.media %}
+                        {% set articleImg = _Media.getMediaUrl(image,152, 95, {'crop': 'fill', 'gravity':'faces'} ) %}
+                        <img id="owl-{{loop.index}}" src="{{articleImg}}" class="owl-thumb-item">
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+            </div>
+        
         </div>
 
-    </article>
+        
+    </div>
+
     {% set theKeywords = '' %}
     {% if article.keywords is defined and article.keywords != '' %}
         {% set theKeywords = article.keywords %}
