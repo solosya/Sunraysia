@@ -1,11 +1,15 @@
 {% set type = type is defined ? type : "image" %}
 {% set galleryStyle = galleryStyle is defined ? galleryStyle  : "article" %}
+{% set imageClass = imageClass is defined ? imageClass  : "article-gallery__image article-gallery__image-" ~ galleryStyle %}
+{% set showCaption = showCaption is defined ? showCaption : true %}
+
+
 {% set owl      = '' %}
 {% set owlClass = '' %}
 
-{% set imgWidth  = imageSize.width  is defined ? imageSize.width  : 745 %}
-{% set imgHeight = imageSize.height is defined ? imageSize.height : 470 %}
-{% set gravity   = 'faces' %}
+{% set imgWidth  = imageSize.width  is defined ? imageSize.width  : 970 %}
+{% set imgHeight = imageSize.height is defined ? imageSize.height : 440 %}
+{% set gravity   = 'faces:auto' %}
 {% set mobImgHeight = imageSize.height is defined ? imageSize.height : 250 %}
 
 
@@ -23,19 +27,19 @@ with width taken up with borders on the side #}
     {% set mobImgHeight = 250 %}
 {% endif %}
 
-{% set cloudinaryParams = {'crop': 'fill', 'gravity': gravity} %}
 
-
-{% if showPaywall is defined and showPaywall == true %}
+{# don't allow carousel if paywalled #}
+{% if showPaywall == true %}
     {% set media = [media[0]] %}
 {% endif %} 
 
-
-
-{% if ( media | length > 1 ) %}
+{% if  media | length > 1 %}
     {% set owl = "owl-gallery-" ~ type %}
-    {% set owlClass = 'owl-carousel owl-pub-theme owl-carousel__base'%}
+    {% set owlClass = carouselClass is defined ? carouselClass : "owl-carousel owl-pub-theme owl-carousel__base" %}
 {% endif %}
+
+
+    {# {% set media = [media[0]] %} #}
 
 {# {% set defaultClass = default is defined and default == true ? "default" : "" %} #}
 
@@ -45,27 +49,18 @@ with width taken up with borders on the side #}
 
 
 
-{# <div id="{{owl}}" class="o-media js-media o-media-sm article-gallery owl-gallery-{{type}} {{owlClass}} {{defaultClass}}" data-slider-id="1" data-default="{{default}}"> #}
-<div id="{{owl}}" class="article-gallery owl-gallery-{{type}} {{owlClass}}" data-slider-id="1" data-default="{{default}}">
+<div id="{{owl}}" class="article-gallery owl-gallery-{{type}} {{owlClass}}" data-slider-id="1">
     {% for image in media %}
 
-        {% if watermark is defined and watermark != false %}
-
-            {% set wmHeight = (image.width * (watermark.height / 100))|number_format(0,'','') %}
-            {% set wmWidth = (image.width  * (watermark.width / 100))|number_format(0,'','')  %}
-            {% set cloudinaryParams = cloudinaryParams | merge(
-                {'watermark' : {'x':watermark.x,'y':watermark.y, 'width':wmWidth, 'height':wmHeight }}
-            ) %}
-        {% endif %}
-
-        {% set articleImgSmall  = _Media.getMediaUrl(image,  0,        250,      cloudinaryParams ) %}
-        {% set articleImgMedium = _Media.getMediaUrl(image,  0,        500,      cloudinaryParams ) %}
-        {% set articleImg       = _Media.getMediaUrl(image, imgWidth, imgHeight, cloudinaryParams ) %}
-
-
-        <figure class="article-gallery__image article-gallery__image-{{galleryStyle}}" data-hash="{{loop.index}}">
+        {% set articleImgSmall = _Media.getMediaUrl(image,0, 250, {'crop': 'fill', 'gravity': gravity} ) %}
+        {% set articleImgMedium = _Media.getMediaUrl(image,0, 500, {'crop': 'fill', 'gravity': gravity} ) %}
+        {% set articleImg = _Media.getMediaUrl(image, imgWidth, imgHeight, {'crop': 'fill', 'gravity': gravity} ) %}
+        
+        
+        <figure class="{{imageClass}}" data-hash="{{loop.index}}">
                 
-            {% if image.type == 'image' or image.type == 'doc'%} 
+            {% if image.type == 'image' or image.type == 'doc' or ( image.type == 'video' and showPaywall == true ) %} 
+
                 <div class="article-gallery__img-container article-gallery__img-container-{{galleryStyle}}">
                     <picture>
                         <source media="(max-width: 728px) and (min-width: 501px)" srcset="{{articleImgMedium}}">
@@ -76,7 +71,7 @@ with width taken up with borders on the side #}
             {% endif %}                
             
             
-            {% if image.type == 'video' %} 
+            {% if image.type == 'video'  and showPaywall != true %} 
                 
                 {% set mediaUrl = "" %}
                 
@@ -122,20 +117,11 @@ with width taken up with borders on the side #}
 
             {% endif %}
 
-            {# <div id="owl-thumbs" class="owl-thumbs" data-slider-id="1">
-                {% for thumb in media %}
-                    {% set articleImg = _Media.getMediaUrl(thumb,152, 95, {'crop': 'fill', 'gravity':'faces'} ) %}
-                    <img id="owl-{{loop.index}}" src="{{articleImg}}" class="owl-thumb-item">
-                {% endfor %}
-            </div>
- #}
-
-
-
-            <figcaption class="article-gallery__caption" style="float:unset;">
-                <p class="">{{image.caption | raw }}</p>
-            </figcaption>
-
+            {% if showCaption == true %}
+                <figcaption class="article-gallery__caption" style="float:unset;">
+                    <p class="">{{image.caption | raw }}</p>
+                </figcaption>
+            {% endif %}
         </figure>
 
 
