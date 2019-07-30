@@ -96,7 +96,7 @@
         {% set articleTitle = quotes.smarten(article.titlePreview) %}
     {% endif %}
 
-    {% redirUrl = article.url %}
+    {% set redirUrl = article.url %}
     {% if url is defined and url != '' %}
         {% redirUrl = url %}
     {% endif %}
