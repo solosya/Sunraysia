@@ -1,16 +1,18 @@
 @mixin card-feature-pub-base() {
-    margin-left: -20px;
-    margin-right: -20px;
     .c-cards-view {
         @include flex-direction(column, vertical);
         padding-top: 25px;
         position: relative;
         box-shadow: none;
         &__media {
-
+            @include flex-height(205px);
+            @include flex-width(149px);
+            
             position: absolute;
             left: 0;
-
+            img {
+                height: 100%;
+            }
         }
 
         &__container {
@@ -58,11 +60,7 @@
         height: 290px;
 
         &__media {
-            @include flex-height(205px);
-            @include flex-width(149px);
-            img {
-                height: 100%;
-            }
+            
 
         }
 
