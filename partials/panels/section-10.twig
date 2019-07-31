@@ -1,0 +1,51 @@
+{% set articleCount = 0 %}
+{% set cardIndex = 0 %}
+{{this.render('../_section-header.twig', {
+    number: "10 - FEATURE PuBS",
+    title: title,
+    link: link,
+}) | raw }}
+
+
+<div class="row c-cards">
+    <div class="col-12 col-md-6 col-lg-3">
+        {{this.render('../_single-article.twig', {
+            article: articles[articleCount], 
+            position: (articleCount+1),
+            containerClass: "card-feature-pub-mobile card-feature-pub-tablet card-feature-pub-desktop card-feature-pub-desktop-lg",
+            url: altUrls[0] is defined ? networkData.defaultBlogUrl ~ altUrls[0] : ''
+        }) | raw}}
+        {% set articleCount = (dev) ? articleCount : articleCount + 1 %}
+    </div>
+
+
+    <div class="col-12 col-md-6 col-lg-3">
+        {{this.render('../_single-article.twig', {
+            article: articles[articleCount], 
+            position: (articleCount+1),
+            containerClass: "card-feature-pub-mobile card-feature-pub-tablet card-feature-pub-desktop card-feature-pub-desktop-lg",
+            url: altUrls[1] is defined ? networkData.defaultBlogUrl ~ altUrls[1] : ''
+        }) | raw}}
+        {% set articleCount = (dev) ? articleCount : articleCount + 1 %}
+    </div>
+
+    <div class="col-12 col-md-6 col-lg-3">
+        {{this.render('../_single-article.twig', {
+            article: articles[articleCount], 
+            position: (articleCount+1),
+            containerClass: "card-feature-pub-mobile card-feature-pub-tablet card-feature-pub-desktop card-feature-pub-desktop-lg",
+            url: altUrls[2] is defined ? networkData.defaultBlogUrl ~ altUrls[2] : ''
+        }) | raw}}
+        {% set articleCount = (dev) ? articleCount : articleCount + 1 %}
+    </div>
+
+    <div class="col-12 col-md-6 col-lg-3">
+        {{this.render('../_single-article.twig', {
+            article: articles[articleCount], 
+            position: (articleCount+1),
+            containerClass: "card-feature-pub-mobile card-feature-pub-tablet card-feature-pub-desktop card-feature-pub-desktop-lg",
+            url: altUrls[3] is defined ? networkData.defaultBlogUrl ~ altUrls[3] : ''
+        }) | raw}}
+        {% set articleCount = (dev) ? articleCount : articleCount + 1 %}
+    </div>
+</div>

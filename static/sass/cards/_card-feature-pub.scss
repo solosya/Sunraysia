@@ -1,0 +1,117 @@
+@mixin card-feature-pub-base() {
+    margin-left: -20px;
+    margin-right: -20px;
+    .c-cards-view {
+        @include flex-direction(column, vertical);
+        padding-top: 25px;
+        position: relative;
+        box-shadow: none;
+        &__media {
+
+            position: absolute;
+            left: 0;
+
+        }
+
+        &__container {
+            margin-left:   160px; 
+        }
+
+        &__category {
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+
+        &__heading {
+            @include flex-height(55px);
+            @include font-size(18);
+        }
+        &__description {
+            color: black;
+            @include flex-height(35px);
+            @include font-size(11);
+        }
+
+        &__author {
+            display:none;
+        }
+
+    }
+}
+
+.card-feature-pub-mobile {
+    @media #{$mobile} {
+        @include card-feature-pub-base();
+        @include card-name("class-sect mobile");
+
+    }
+}
+
+
+@mixin card-feature-pub-tablet-base {
+    @include card-feature-pub-base();
+    margin-left: 0;
+    margin-right: 0;
+    
+    .c-cards-view {
+        height: 290px;
+
+        &__media {
+            @include flex-height(205px);
+            @include flex-width(149px);
+            img {
+                height: 100%;
+            }
+
+        }
+
+        &__category {
+            margin-bottom: 9px;
+        }
+
+        &__heading {
+            @include flex-height(60px);
+            @include font-size(22);
+            line-height:1.36;
+        }
+        &__description {
+            color: black;
+            @include flex-height(60px);
+            @include font-size(13);
+        }
+
+    }
+
+}
+
+.card-feature-pub-tablet {
+    @media #{$tablet} {
+        @include card-name("c1 tablet");
+        @include card-feature-pub-tablet-base();
+    }
+}
+
+
+.card-feature-pub-desktop {
+
+    @media #{$desktop} {
+
+        @include card-name("c1 desktop");
+        @include card-feature-pub-tablet-base();
+    }
+}
+
+.card-feature-pub-desktop-lg {
+
+    @media #{$desktop-lg} {
+
+        @include card-name("c1 desktop -lg");
+        @include card-feature-pub-tablet-base();
+    }
+}
+
+
+
+
+
