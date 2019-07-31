@@ -26,7 +26,7 @@
         }
 
         &__heading {
-            @include flex-height(55px);
+            @include flex-height(70px);
             @include font-size(18);
         }
         &__description {
@@ -69,7 +69,7 @@
         }
 
         &__heading {
-            @include flex-height(60px);
+            @include flex-height(90px);
             @include font-size(22);
             line-height:1.36;
         }
