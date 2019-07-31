@@ -4,6 +4,7 @@
         padding-top: 25px;
         position: relative;
         box-shadow: none;
+        height: 250px;
         &__media {
             @include flex-height(205px);
             @include flex-width(149px);
