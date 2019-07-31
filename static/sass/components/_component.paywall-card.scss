@@ -3,7 +3,7 @@
     @include align-items(center);
     // @include justify-content(center);
     background-color:$white;
-    height:700px;
+    //height:700px;
     @include padding(40 0);
     @include margin-bottom(30);
     @include flex-direction(column, vertical);
@@ -84,7 +84,7 @@
             @include font-size(15);
             line-height: 1.47;
             @include padding(10 15 10 50);
-            border-bottom: 1px solid rgba($greyish,0.3);
+            //border-bottom: 1px solid rgba($greyish,0.3);
             
             &:last-child {
                 border-bottom: 0px none;

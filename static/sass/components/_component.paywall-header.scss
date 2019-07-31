@@ -1,9 +1,13 @@
 .c-paywall-header{
-
+    position: absolute;
+    display: block;
+    text-align: center;
+    width: 100%;
+    z-index: 5;
     &__title {
         @include font-size(40);
         font-weight: $weightBold;
-        color: $blue;
+        color: $white;
         text-align:center;
     }
 
@@ -11,7 +15,7 @@
         @include font-size(32);
         font-weight:$weightLight;
         text-align:center;
-        color: $black;
+        color: $white;
         margin-top:5px;
     }
 }

@@ -72,7 +72,7 @@
 
 
     <div class="clearfix"></div>
-    <div class="c-payWall u-margin-top-160">
+    <div class="c-payWall">
 
         {% if plans | length > 0 %}
         <div class="c-payWall--pricing c-payWall--pricing-md">
@@ -82,34 +82,30 @@
                 <div class="row ">
                     
                     <div class="offset-lg-1 col-lg-10" style="background:yello">
-                        <div class="row">
+                        <div class="row justify-content-md-center">
+                            
 			                {% for plan in plans %}
+                               
+
                                 {% set val = plan.plan_value / 100 %}
-                                <div class="col-12 col-xl-4 col-lg-6 col-md-12 col-sm-12 col-xs-12">
+                                <div class="col-12 col-md-6 col-lg-3">
                                     <div class="c-paywall-card">
                                         
                                         <div class="c-paywall-card__panel">
                                             <h3 class="c-paywall-card__name c-paywall-card__name-xs">{{plan.name}}</h3>
-                                            <p class="c-paywall-card__excerpt c-paywall-card__excerpt-xs">{{plan.description}}</p>
+                                            {# <p class="c-paywall-card__excerpt c-paywall-card__excerpt-xs">{{plan.description}}</p> #}
                                             <div class="c-paywall-card__price c-paywall-card__price-lg">${{val}} per {{plan.period}}</div>
                                         </div>
 
 
-                                        <div class="c-paywall-card__Graphic c-paywall-card__Graphic-lg">
-                                            <picture class="">
-                                                <img src   ="{{networkData.templatePath}}/static/images/device.png" 
-                                                    srcset="{{networkData.templatePath}}/static/images/device.png 1x, {{networkData.templatePath}}/static/images/device@2x.png 2x, {{networkData.templatePath}}/static/images/device@3x.png 3x" class="img-fluid">
-                                            </picture>
-                                        </div>
-                                        
+                                                                           
 
                                         <div class="c-paywall-card__panel">
 
                                             <ul class="c-paywall-card__Details c-paywall-card__Details-md">
-                                                <li>Amazing benefit number one here</li>
-                                                <li>Even more amazing benefit number two goes here</li>
-                                                <li>Yet another fabulous benefit to subscribing to Sunraysia Daily</li>
-                                                <li class="d-sm-none">Amazing benefit number one here</li>
+                                                <li>Amazing benefit</li>
+                                                <li>More amazing benefit</li>
+                                                <li>Another fabulous benefit</li>
                                             </ul>
 
                                             <button type="button" 
@@ -119,6 +115,17 @@
                                                     data-cost="${{val}}"
                                                     
                                             >Subscribe</button>
+
+                                            {% if plan.trial_status == "1" %}
+                                                <button type="button" 
+                                                    class="c-button c-button--blue c-button-block c-button-md j-plan-subscribe c-paywall-card__subscribe" 
+                                                    data-plan-name="{{plan.name}}" 
+                                                    data-planid="{{plan.guid}}"
+                                                    data-cost="${{val}}"
+                                                    
+                                                >Free trial</button>
+                                            {% endif %}
+
                                         </div>
                                     </div>
                                 </div>
@@ -141,7 +148,7 @@
     <div class="clearfix"></div>
     <div class="container">
         <div class="row ">
-            <div class="offset-lg-2 col-lg-8">
+            <div class="col-12 col-lg-8">
                 <!-- Coustomer detail form  Section start -->
                 <div class="c-paywallform">
                     <form id="subscribe-form" class="c-form">
@@ -277,6 +284,12 @@
                     </div>
                 </div>
                 <!-- Totoal payment detail -->
+            </div>
+            <div class="col-12 col-lg-4 d-none d-lg-block c-paywall-card__Graphic c-paywall-card__Graphic-lg">
+                <picture class="">
+                    <img src   ="{{networkData.templatePath}}/static/images/device.png" 
+                        srcset="{{networkData.templatePath}}/static/images/device.png 1x, {{networkData.templatePath}}/static/images/device@2x.png 2x, {{networkData.templatePath}}/static/images/device@3x.png 3x" class="img-fluid">
+                </picture>
             </div>
         </div>
     </div>
