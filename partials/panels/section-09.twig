@@ -1,7 +1,5 @@
 {% set articleCount = 0 %}
 {% set cardIndex = 0 %}
-
-{# {{dump(link)}} #}
 {{this.render('../_section-header.twig', {
     number: "09 - CLASSIFIeDS",
     title: title,
@@ -15,7 +13,7 @@
             article: articles[articleCount], 
             position: (articleCount+1),
             containerClass: "card-classified-section-mobile card-classified-section-tablet card-classified-section-desktop card-classified-section-desktop-lg",
-            url: networkData.defaultBlogUrl ~ '/automotive'
+            url: altUrls[0] is defined ? networkData.defaultBlogUrl ~ altUrls[0] : ''
         }) | raw}}
         {% set articleCount = (dev) ? articleCount : articleCount + 1 %}
     </div>
@@ -26,7 +24,7 @@
             article: articles[articleCount], 
             position: (articleCount+1),
             containerClass: "card-classified-section-mobile card-classified-section-tablet card-classified-section-desktop card-classified-section-desktop-lg",
-            url: networkData.defaultBlogUrl ~ '/announcements'
+            url: altUrls[1] is defined ? networkData.defaultBlogUrl ~ altUrls[1] : ''
         }) | raw}}
         {% set articleCount = (dev) ? articleCount : articleCount + 1 %}
     </div>
@@ -36,7 +34,7 @@
             article: articles[articleCount], 
             position: (articleCount+1),
             containerClass: "card-classified-section-mobile card-classified-section-tablet card-classified-section-desktop card-classified-section-desktop-lg",
-            url: networkData.defaultBlogUrl ~ '/jobs'
+            url: altUrls[2] is defined ? networkData.defaultBlogUrl ~ altUrls[2] : ''
         }) | raw}}
         {% set articleCount = (dev) ? articleCount : articleCount + 1 %}
     </div>
@@ -46,7 +44,7 @@
             article: articles[articleCount], 
             position: (articleCount+1),
             containerClass: "card-classified-section-mobile card-classified-section-tablet card-classified-section-desktop card-classified-section-desktop-lg",
-            url: networkData.defaultBlogUrl ~ '/buy--sell'
+            url: altUrls[3] is defined ? networkData.defaultBlogUrl ~ altUrls[3] : ''
         }) | raw}}
         {% set articleCount = (dev) ? articleCount : articleCount + 1 %}
     </div>
