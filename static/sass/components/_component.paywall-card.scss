@@ -93,10 +93,11 @@
             &:before {
                 top: 12px;
                 left: 25px;
+                height: 12px;
+                width: 16px;
+                background-image: url(../icons/tick.svg);
                 color: $blue;
-                content:'\f00c';
-                font-family: 'Font Awesome 5 Free';
-                font-weight: 900;
+                content:'';
                 position: absolute;
                 @include font-size(15);
             }
