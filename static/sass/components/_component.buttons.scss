@@ -15,6 +15,7 @@
     text-align: center;
     height: 40px;
     outline:0;
+    font-weight: $weightBold;
     // @include flexbox();
     // @include align-items(center);
     // @include justify-content(center);
@@ -50,7 +51,7 @@
         color: $white;
         border-color: $blue;
         background-color: $blue;
-
+        font-weight: $weightBold;
         &:hover {
             color: $white;
             border-color: $blue_sh1;
