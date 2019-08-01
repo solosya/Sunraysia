@@ -41,16 +41,16 @@
         </div>
         <div class="row">
 
-            <div id="loadmore_section" class="col-md-6">
-
-                {% for i in 0..5 if userArticles[i] %}
-                    {{this.render('partials/_single-article.twig', {
-                        article: userArticles[i], 
-                        imageSize: {width:620, height:290},
-                        containerClass: 'card-5-mobile card-5-tablet card-5-desktop'
-                    }) | raw}}
-                {% endfor %}
-
+            <div id="loadmore_section" class="col-12">
+                <div class="row">
+                    {% for i in 0..5 if userArticles[i] %}
+                        {{this.render('partials/_single-article.twig', {
+                            article: userArticles[i], 
+                            imageSize: {width:1240, height:580},
+                            containerClass: 'col-12 col-md-6 card-5-mobile card-5-tablet card-5-desktop'
+                        }) | raw}}
+                    {% endfor %}
+                </div>
 
             </div>
 
@@ -87,9 +87,11 @@
             container       : 'loadmore_section',
             offset          : 6,
             limit           : {{limit}},
+            before: '<div class="col-12"><div class="row">',
+            after: "</div></div>",
             loadtype        : 'user_articles',
             name            : 'user-load',
-            card_class      : 'card-5-mobile card-5-tablet card-5-desktop',
+            card_class      : 'col-12 col-md-6 card-5-mobile card-5-tablet card-5-desktop'
         });
 
     });
