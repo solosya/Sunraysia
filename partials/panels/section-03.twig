@@ -49,17 +49,48 @@
 
     </div>
 
-    <div class="col-12 col-md-6 col-lg-3">
-        {% if articles[articleCount] %}                                                                
-        {{this.render('../_single-article.twig', {
-            article: articles[articleCount], 
-            position: (articleCount+1),
-            containerClass: "card-4-mobile card-2-tablet card-1-desktop card-2-desktop-lg"
-        }) | raw}}
-        {% set articleCount = (dev) ? articleCount : articleCount + 1 %}
-        {% endif %}
 
-    </div>
+    {% set cta = _CallToAction.getKeywordBasedCTA('sun_life')%}
+    {% if cta is defined and cta|length > 0 %}
+        {% if cta.id is defined and cta.id is not empty %}           
+            {% if(cta.media['id'] is defined and cta.media['id'] is not empty) %}
+                {% set ctaBackgroundImage = _Media.getMediaUrl(cta.media,560,834,{'crop': 'fill'}) %}
+            {% endif %}
+        {% endif %}
+    {% endif %}
+
+
+    
+    {% if title == 'Sunraysia Life' and ctaBackgroundImage is defined %}
+        <div class="col-12 col-md-6 col-lg-3">       
+            <div class="card-4-mobile card-2-tablet card-1-desktop card-2-desktop-lg"> 
+                <article class="c-cards-view">
+                    <figure class="c-cards-view__media " style="padding: 10px;height: 85%;min-height: 85%;max-height: 85%;">
+                        <picture>  
+                            <img class="img-fluid lazyload" src="{{ctaBackgroundImage}}" style="" width="0" height="0">
+                        </picture>
+                    </figure>
+
+                    <div class="c-cards-view__container" style="padding: 15px;">
+                        <h2 class="c-cards-view__heading js-c-cards-view-heading j-truncate" style="overflow-wrap: break-word;height: min-content;min-height: unset;max-height: unset;">{{cta.title}}</h2>
+                        <a href="{{cta.button['url']}}"><div class="c-cta__viewmore"><p>View now</p></div></a>
+                    </div>
+                </article>
+            </div>
+        </div>
+    {% else %}
+        <div class="col-12 col-md-6 col-lg-3">
+            {% if articles[articleCount] %}                                                                
+            {{this.render('../_single-article.twig', {
+                article: articles[articleCount], 
+                position: (articleCount+1),
+                containerClass: "card-4-mobile card-2-tablet card-1-desktop card-2-desktop-lg"
+            }) | raw}}
+            {% set articleCount = (dev) ? articleCount : articleCount + 1 %}
+            {% endif %}
+
+        </div>
+    {% endif %}
 
 </div>
 

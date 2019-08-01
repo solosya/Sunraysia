@@ -1,0 +1,28 @@
+.c-cta {
+    &__viewmore{
+        >p{
+            padding-right:35px;
+            float: right;
+            position: relative;
+            font-size: rem(12);
+            font-weight: $weightMedium;
+            line-height: 1.33;
+            letter-spacing: 0.57px;
+            color: $greyish;
+            padding-right: 35px;
+            margin-top: -21px;
+            text-decoration: underline;
+            &:after{
+                content:'';
+                width: 25px;
+                height: 8px;
+                position: absolute;
+                right: 0;
+                background-image: url(../icons/side-arrow.svg);
+                bottom: 4px;
+                background-repeat: no-repeat;
+            }
+        }
+    }
+   
+}
