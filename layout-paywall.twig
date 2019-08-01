@@ -111,18 +111,18 @@
                                                     data-plan-name="{{plan.name}}" 
                                                     data-planid="{{plan.guid}}"
                                                     data-cost="${{val}}"
-                                                    
+                                                    {% if plan.trial_status == "1" %}
+                                                        data-trial=1
+                                                    {% else %}
+                                                        data-trial=0
+                                                    {% endif %}
                                             >Subscribe</button>
-
                                             {% if plan.trial_status == "1" %}
-                                                <button type="button" 
-                                                    class="c-button c-button--blue c-button-block c-button-md j-plan-subscribe c-paywall-card__subscribe u-margin-top-30" 
-                                                    data-plan-name="{{plan.name}}" 
-                                                    data-planid="{{plan.guid}}"
-                                                    data-cost="${{val}}"
-                                                    
-                                                >Free trial</button>
+                                                <div class="c-button" style="color:#4573cd;background-color:#fff;cursor:unset;">Includes {{plan.trial_period}}-day trial</div>
+                                            {% else %}
+                                                <div class="c-button" style="color:#fff;background-color:#fff;cursor:unset;"></div>
                                             {% endif %}
+
 
                                         </div>
                                     </div>
@@ -134,7 +134,7 @@
                 </div>
             </div>
         </div>
-
+        <div id="trial" value=0></div>
         {% endif %}
     </div>
 

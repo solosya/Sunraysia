@@ -21124,7 +21124,7 @@ Acme.Signin.prototype.handle = function(e) {
             // rememberMe sets flag to store login for 30 days in cookie
             formData['rememberMe'] = 1;
 
-            Acme.server.create(_appJsConfig.baseHttpPath + '/api/auth/login', formData).done(function(r) {
+            Acme.server.create(_appJsConfig.appHostName + '/api/auth/login', formData).done(function(r) {
                 // console.log(r);
                 if (r.success === 1) {
                     window.location.reload();
@@ -21147,7 +21147,7 @@ Acme.Signin.prototype.handle = function(e) {
             $.each($('#forgotForm').serializeArray(), function () {
                 formData[this.name] = this.value;
             });
-            Acme.server.create(_appJsConfig.baseHttpPath + '/api/auth/forgot-password', formData).done(function(r) {
+            Acme.server.create(_appJsConfig.appHostName + '/api/auth/forgot-password', formData).done(function(r) {
                 if (r.success === 1) {
                     location.reload();
                 } else {
@@ -21367,12 +21367,14 @@ $('#signinBtn, #articleSigninBtn').on('click', function(e) {
             var plan = elem.data('planid');
             var name = elem.data('plan-name');
             var cost = elem.data('cost');
-
+            var trial = elem.data('trial');
             self.data.planid = plan;
             self.data.subscription_choice = name;
             $('#planid').val(plan);
+            $('#trial').val(trial);
             $('#subscription_choice').val(name);
             $('#total_cost').text(cost);
+
 
             $('.j-plan-subscribe').each(function(i, e) {
                 var button = $(e);
@@ -21432,6 +21434,8 @@ $('#signinBtn, #articleSigninBtn').on('click', function(e) {
 
     var formhandler = function(formdata, path) {
         var csrfToken = $('meta[name="csrf-token"]').attr("content");
+        // formdata['_csrf'] = csrfToken;
+        // console.log(formdata);
 
         return $.ajax({
             url: _appJsConfig.appHostName + path,

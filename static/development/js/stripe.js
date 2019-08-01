@@ -157,12 +157,14 @@
             var plan = elem.data('planid');
             var name = elem.data('plan-name');
             var cost = elem.data('cost');
-
+            var trial = elem.data('trial');
             self.data.planid = plan;
             self.data.subscription_choice = name;
             $('#planid').val(plan);
+            $('#trial').val(trial);
             $('#subscription_choice').val(name);
             $('#total_cost').text(cost);
+
 
             $('.j-plan-subscribe').each(function(i, e) {
                 var button = $(e);
