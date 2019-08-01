@@ -4,6 +4,9 @@
     text-align: center;
     width: 100%;
     z-index: 5;
+    @media #{$mobile}{
+        margin-left: -15px;
+    }
     &__title {
         @include font-size(40);
         font-weight: $weightBold;

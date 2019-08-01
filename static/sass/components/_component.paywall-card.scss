@@ -5,7 +5,7 @@
     background-color:$white;
     //height:700px;
     @include padding(40 0);
-    @include margin-bottom(30);
+    @include margin-top(45);
     @include flex-direction(column, vertical);
     @include box-shadow(0 2px 10px 6px rgba(0, 0, 0, 0.05));
         
@@ -15,11 +15,11 @@
 
     }
     
-    @media #{$tablet} {
-        height:auto;
-        @include padding(25 25);
-        @include flex-direction(row, horizontal);
-    }
+    // @media #{$tablet} {
+    //     height:auto;
+    //     @include padding(25 25);
+    //     @include flex-direction(row, horizontal);
+    // }
     
    &__Header {
         text-align: center;
@@ -61,7 +61,7 @@
         @include padding(0 45);
         @include margin-bottom(10);
         
-        @media #{$desktop} {
+        @media #{$tablet-up} {
             @include padding(0 64);
         }
 
@@ -108,9 +108,9 @@
         @include flexbox;
         @include align-items(center);
         @include flex-direction(column, vertical);
-        @media #{$tablet} {
-            flex:0 0 50%;
-        }
+        // @media #{$tablet} {
+        //     flex:0 0 50%;
+        // }
     }
 
     &__subscribe {

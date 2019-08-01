@@ -77,12 +77,12 @@
         {% if plans | length > 0 %}
         <div class="c-payWall--pricing c-payWall--pricing-md">
 
-            <div class="container">
+            <div class="container u-margin-top-100">
 
-                <div class="row ">
+                <div class="row u-margin-top-100 u-tablet-margin-top-40">
                     
                     <div class="offset-lg-1 col-lg-10" style="background:yello">
-                        <div class="row justify-content-md-center">
+                        <div class="row c-payWall--pricing__planbox justify-content-md-center">
                             
 			                {% for plan in plans %}
                                
@@ -103,9 +103,7 @@
                                         <div class="c-paywall-card__panel">
 
                                             <ul class="c-paywall-card__Details c-paywall-card__Details-md">
-                                                <li>Amazing benefit</li>
-                                                <li>More amazing benefit</li>
-                                                <li>Another fabulous benefit</li>
+                                                <li>{{(plan.description|replace({'.': '</li><li>'}))|raw}}</li>
                                             </ul>
 
                                             <button type="button" 
@@ -147,7 +145,7 @@
 
     <div class="clearfix"></div>
     <div class="container">
-        <div class="row ">
+        <div class="row u-margin-top-30">
             <div class="col-12 col-lg-8">
                 <!-- Coustomer detail form  Section start -->
                 <div class="c-paywallform">
@@ -155,7 +153,7 @@
                         <input type="hidden" class="" name="planid" id="planid" value="">
                         <input type="hidden" class="" name="trial" id="trial" value="">
 
-                        <div class="row u-margin-top-60">
+                        <div class="row u-margin-top-60 u-mobile-margin-top-80">
                             <div class="col-12">
                                 <div class="c-section-header c-section-header--normal-case">Your details</div>
                             </div>
