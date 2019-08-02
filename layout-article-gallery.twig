@@ -23,6 +23,11 @@
 {% endif %}
 {% set ArticleContent = article.content %}
 
+{% set watermark = false %}
+{% if config['watermark']['settings'] is defined and config['watermark']['sections'][articleBlog|lower] is defined %}
+    {% set watermark = config['watermark']['settings'] %}
+{% endif %}
+
 
 <main id="main" class="article-gallery u-margin-bottom-100" role="main">
 
@@ -38,6 +43,7 @@
                             type: 'article',
                             default: true,
                             galleryStyle: 'gallery',
+                            watermark: watermark,
                             showPaywall: showPaywall
                         }) | raw}}
                     </div>
