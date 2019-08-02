@@ -157,14 +157,14 @@
     
     &--grey {
         color: $white;
-        border-color: $greyish;
-        background-color: $greyish;
+        border-color: $darkergrey;
+        background-color: $darkergrey;
         font-weight: $weightRegular;
 
         &:hover {
             color: $white;
-            border-color: darken($greyish,7.5%);
-            background-color: darken($greyish,7.5%);
+            border-color: darken($darkergrey,7.5%);
+            background-color: darken($darkergrey,7.5%);
         }
 
         &-bordered {

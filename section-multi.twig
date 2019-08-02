@@ -31,17 +31,13 @@
         {% set blogFeeds = config['page'][homeBlog]['blogFeeds'] %}
     {% endif %}
 
-    {% if config['inventory'][blogData.title]['bannerSpots'] is defined %}
-        {% set bannerSpots = config['inventory'][blogData.title]['bannerSpots'] %}
-    {% endif %}
-
-    {% if config['inventory'][blogData.title]['adSpace'] is defined %}
-        {% set bannerSlots = config['inventory'][blogData.title]['adSpace'] %}
+    {% if config['inventory'][homeBlog]['bannerSpots'] is defined %}
+        {% set bannerSpots = config['inventory'][homeBlog]['bannerSpots'] %}
     {% endif %}
 
 {% endif %}
-
-
+{{_AppHelper.printArray(homeBlog)}}
+{{_AppHelper.printArray(config['inventory'][homeBlog]['bannerSpots'])}}
 
 
 {# *******************************************************

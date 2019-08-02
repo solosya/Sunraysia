@@ -1,4 +1,8 @@
 .c-eventdetail {
+
+    &__head{
+        margin-top: 30px;
+    }
     &__media {
         @include margin-bottom(30);
         height:376px;
