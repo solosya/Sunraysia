@@ -47,7 +47,11 @@
                 </div>
             {% endfor %}
 
-            <div class="col-12 col-md-6 col-lg-3"> AD TO GO HERE</div>
+            <div class="col-12 col-md-6 col-lg-3"> 
+                {% if config['inventory']['adSpace']['side-fix'][0] is defined %}
+                    <div class="j-adslot" id="{{config['inventory']['adSpace']['side-fix'][0]}}" data-adshape="side-fix"></div>
+                {% endif %}
+            </div>
 
 
 
