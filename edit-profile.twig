@@ -1,4 +1,5 @@
 {{ set(this, 'title', 'My Account') }}
+{% set log = _AppHelper.log('printing my account!!') %}
 
 
 {% set networkData = _Network.getNetworkData() %}
@@ -14,6 +15,40 @@
 
 {% set userLimit = 10 %}
 {% set user = _User.getUser() %}
+{# {% set log = _AppHelper.log(user) %} #}
+
+{% set purchases = [] %}
+{% set orders = _Order.getUserOrders({userId: user['id']}) %}
+{% set orderCount = (dev) ? 0 : 0 %}
+{% set log = _AppHelper.log(orders | length) %}
+
+{% if orders | length > 0 %}
+
+    {% for i in 0..9 if orders[orderCount] %}
+
+        {% set items = orders[orderCount]['items'] %}
+
+        {% for item in items %}
+
+            {% set photo = _Media.get({'id':item['media_id']}) %}
+
+            {% if photo %}
+                {% set purchases = purchases | merge(photo) %}
+            {% endif %}
+
+
+        {% endfor %}
+        {% set orderCount = (dev) ? orderCount : orderCount + 1 %}
+
+    {% endfor %}
+
+{% endif %}
+
+{# {% set log = _AppHelper.log(purchases) %} #}
+
+
+
+{# {% set log = _AppHelper.log(orders) %} #}
 
 
 {# {% if user %} 
@@ -298,7 +333,45 @@
                         </form>
 
                     </div>
-                 </div>
+                </div>
+
+
+
+
+
+
+                {% set hasOrders =  purchases | length > 0 %}
+
+                    <div class="row u-margin-top-60">
+                        <div class="col-12">
+
+                            <h2 class="c-myAccount__head">Photo purchases</h2>
+
+                            <div class="row">
+
+                                    <div id="" class="col-md-12">
+                                        {% for purchase in purchases %}
+                                            <p>{{purchase.caption}}</p>
+
+
+
+                                            {# {{this.render('partials/_single-article.twig', {
+                                                article: propListingsArr[orderCount], 
+                                                template: 'user-property',
+                                                containerClass: "card-profile-property card-profile-property-tablet card-profile-property-mobile",
+                                                networkData: networkData
+                                            }) | raw}} #}
+
+                                        {% endfor %}
+                                    </div>
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
             </div>
 
 
@@ -319,11 +392,10 @@
     // main script is defered so event listener makes sure
     // defered script is loaded before this runs
     document.addEventListener("DOMContentLoaded", function(event) {
-       
 
 
 
-       $("#change-plan").click(function(e) {
+        $("#change-plan").click(function(e) {
             $("#plans").toggle();
         });
 
