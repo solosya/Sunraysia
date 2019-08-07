@@ -1,5 +1,4 @@
 {{ set(this, 'title', 'My Account') }}
-{% set log = _AppHelper.log('printing my account!!') %}
 
 
 {% set networkData = _Network.getNetworkData() %}
@@ -15,40 +14,11 @@
 
 {% set userLimit = 10 %}
 {% set user = _User.getUser() %}
-{# {% set log = _AppHelper.log(user) %} #}
 
-{% set purchases = [] %}
-{% set orders = _Order.getUserOrders({userId: user['id']}) %}
+
+{% set purchases = _Order.getUserOrders({userId: user['id']}) %}
 {% set orderCount = (dev) ? 0 : 0 %}
-{% set log = _AppHelper.log(orders | length) %}
 
-{% if orders | length > 0 %}
-
-    {% for i in 0..9 if orders[orderCount] %}
-
-        {% set items = orders[orderCount]['items'] %}
-
-        {% for item in items %}
-
-            {% set photo = _Media.get({'id':item['media_id']}) %}
-
-            {% if photo %}
-                {% set purchases = purchases | merge(photo) %}
-            {% endif %}
-
-
-        {% endfor %}
-        {% set orderCount = (dev) ? orderCount : orderCount + 1 %}
-
-    {% endfor %}
-
-{% endif %}
-
-{# {% set log = _AppHelper.log(purchases) %} #}
-
-
-
-{# {% set log = _AppHelper.log(orders) %} #}
 
 
 {# {% if user %} 
@@ -340,8 +310,8 @@
 
 
 
-                {% set hasOrders =  purchases | length > 0 %}
 
+                {% if purchases | length > 0 %}
                     <div class="row u-margin-top-60">
                         <div class="col-12">
 
@@ -349,33 +319,43 @@
 
                             <div class="row">
 
-                                    <div id="" class="col-md-12">
-                                        {% for purchase in purchases %}
-                                            <p>{{purchase.caption}}</p>
+                                <div id="" class="col-md-12">
+                                    {% for purchase in purchases %}
+
+                                        {% for item in purchase['items'] %}
+                                            {% set photo = item['photo'] %}
+
+                                            {% set url = _Media.getMediaUrl({
+                                                "id": photo['cloudinary_public_id'],
+                                                "cloudName" : photo['cloudinary_cloud_name'],
+                                                "path" : photo['path']
+                                            },95, 63, {'crop': 'fill', 'gravity': 'faces'} ) %}
+                                            {% set filesize = (photo.filesize / 1000) | number_format(0, '.', ',') %}
 
 
-
-                                            {# {{this.render('partials/_single-article.twig', {
-                                                article: propListingsArr[orderCount], 
-                                                template: 'user-property',
-                                                containerClass: "card-profile-property card-profile-property-tablet card-profile-property-mobile",
-                                                networkData: networkData
-                                            }) | raw}} #}
+                                            <div class="purchase">
+                                                <img class="purchase__image" src="{{url}}" />
+                                                <p class="purchase__caption">{{photo.caption}}</p>
+                                                <p class="purchase__filesize">{{filesize}}MB</p>
+                                                <a class="purchase__download" href="{{photo.path}}" target="_blank"><span class="arrow arrow-down"></span></a>
+                                            </div>
 
                                         {% endfor %}
-                                    </div>
 
 
+                                    {% endfor %}
+                                </div>
                             </div>
                         </div>
                     </div>
+                {% endif %}
+
+
+
+
+
                 </div>
-
-
             </div>
-
-
-
 
             {# ad go here #}
             <div class="offset-lg-1 col-lg-3"></div>

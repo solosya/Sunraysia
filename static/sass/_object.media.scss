@@ -1,0 +1,9 @@
+.media {}
+.media, .media__body {overflow:hidden; _overflow:visible; zoom:1;}
+.media__img {float:left; margin-right: 10px;display:block;}
+.media__img\@sm {
+    @media #{$mobile} {
+        float:none;
+        margin: auto;
+    }
+}

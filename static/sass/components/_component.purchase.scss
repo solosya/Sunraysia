@@ -1,0 +1,31 @@
+.purchase {
+    display: flex;
+    border-bottom: 1px solid $grey_sh1;
+    padding: 13px 0;
+    align-items: center;
+
+    &__image {
+        margin-right: 30px;
+    }
+
+    &__caption {
+        padding-right: 70px;
+        max-height: 48px;
+    }
+
+    &__filesize {
+        min-width:70px;
+        flex-shrink: 0;
+        // background:pink;
+    }
+
+    &__download {
+        min-width:70px;
+
+        flex-shrink: 0;
+        // background:yellow;
+        >span {
+            float:right;   
+        }
+    }
+}
