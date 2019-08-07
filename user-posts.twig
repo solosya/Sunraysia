@@ -1,7 +1,7 @@
 {{ set(this, 'title', 'User Profile') }}
 
 {% set networkData = _Network.getNetworkData() %}
-{% set limit = 10 %}
+{% set limit = 12 %}
 
 {% set firstCount = userArticles | length %}
 
@@ -22,20 +22,13 @@
                         
                         <div class="c-author__details c-author__details-xs">
                             <h3 class="c-author__name c-author__name-xs c-author__name-md">{{Html.encode(user.firstname)}} <br> {{Html.encode(user.lastname)}}</h3>
-                            <ul class="c-author__social">
-                                <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-                                <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-                                <li><a href="#"><i class="fa fa-instagram"></i></a></li>
-                                <li><a href="#"><i class="fa fa-youtube-play"></i></a></li>
-                            </ul>
+                            <p class="c-author__text">{{Html.decode(user.bio) | raw}}</p>
                         </div>
 
                     </div>
 
 
-                    <div class="c-author-right c-author-right-md">
-                        <p class="c-author__text c-author__text-md">{{Html.decode(user.bio) | raw}}</p>
-                    </div>
+                    
                 </div>
             </div>
         </div>
@@ -43,11 +36,11 @@
 
             <div id="loadmore_section" class="col-12">
                 <div class="row">
-                    {% for i in 0..5 if userArticles[i] %}
+                    {% for i in 0..11 if userArticles[i] %}
                         {{this.render('partials/_single-article.twig', {
                             article: userArticles[i], 
                             imageSize: {width:1240, height:580},
-                            containerClass: 'col-12 col-md-6 card-5-mobile card-5-tablet card-5-desktop'
+                            containerClass: 'col-12 col-md-4 col-lg-3 card-1-mobile card-1-tablet card-1-desktop card-1-desktop-lg'
                         }) | raw}}
                     {% endfor %}
                 </div>
@@ -91,7 +84,7 @@
             after: "</div>",
             loadtype        : 'user_articles',
             name            : 'user-load',
-            card_class      : 'col-12 col-md-6 card-5-mobile card-5-tablet card-5-desktop'
+            card_class      : 'col-12 col-md-4 col-lg-3 card-1-mobile card-1-tablet card-1-desktop card-1-desktop-lg'
         });
 
     });
