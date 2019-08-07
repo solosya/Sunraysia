@@ -96,8 +96,6 @@
         @include margin-bottom(25);
         
         @include responsive(md) {
-            width:calc(100% - 540px);
-            max-width:calc(100% - 540px);
             @include padding-right(75);
         }
     }
@@ -141,6 +139,12 @@
             width:calc(100% - 145px);
             max-width:calc(100% - 145px);
             @include flex(0 0 calc(100% - 145px));
+        }
+        @media #{$mobile}{
+            width:calc(100%);
+            max-width:calc(100%);
+            @include flex(0 0 calc(100%));
+
         }
     }
 }
