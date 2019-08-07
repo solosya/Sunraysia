@@ -15,9 +15,8 @@
 {% set userLimit = 10 %}
 {% set user = _User.getUser() %}
 
-
-{% set purchases = _Order.getUserOrders({userId: user['id']}) %}
-{% set orderCount = (dev) ? 0 : 0 %}
+{% set purchases = [] %}
+{# {% set purchases = _Order.getUserOrders({userId: user['id']}) %} #}
 
 
 
