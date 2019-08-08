@@ -7,7 +7,11 @@
         "event" : {
            "enabled" : true
         },
-        "blog" : {            
+        "blog" : {
+            "routes": {
+                "allowOverride": true,
+                "comment": "allowing override is for single page apps that hand their own routing"
+            },
             "endUserAccess" : [
 
                                   "jobs",     "prop",      "events",
