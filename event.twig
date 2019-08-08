@@ -59,7 +59,7 @@
                             {% if event.media|length > 0 %}
                                 {{this.render('partials/gallery.twig', {
                                     media: event.media,
-                                    galleryStyle: 'gallery',
+                                    galleryStyle: 'property',
                                     showPaywall: showPaywall
                                 }) | raw}}
                             {% endif %}
