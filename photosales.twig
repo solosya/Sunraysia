@@ -3,12 +3,13 @@
 {% set networkData  = _Network.getNetworkData() %}
 {% set config       = _Network.getThemeConfig() %}
 
-<main id="photo-sales" role="main"></main>
-
 {% set env = 'prod' %}
 {% if config['env'] is defined %}
     {% set env = config['env'] %}
 {% endif %}
+
+<main id="photo-sales" role="main" data-env="{{env}}"></main>
+
 
 
 
