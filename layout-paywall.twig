@@ -90,9 +90,8 @@
                                 {% set val = plan.plan_value / 100 %}
                                 <div class="col-12 col-md-6 col-lg-3">
                                     <div class="c-paywall-card">
-                                        
                                         <div class="c-paywall-card__panel">
-                                            <h3 class="c-paywall-card__name c-paywall-card__name-xs">{{plan.name}}</h3>
+                                            <h3 class="c-paywall-card__name c-paywall-card__name-xs">{{plan.plan_name}}</h3>
                                             {# <p class="c-paywall-card__excerpt c-paywall-card__excerpt-xs">{{plan.description}}</p> #}
                                             <div class="c-paywall-card__price c-paywall-card__price-lg">${{val}} per {{plan.period}}</div>
                                         </div>
@@ -108,7 +107,7 @@
 
                                             <button type="button" 
                                                     class="c-button c-button--grey c-button-block c-button-md j-plan-subscribe c-paywall-card__subscribe" 
-                                                    data-plan-name="{{plan.name}}" 
+                                                    data-plan-name="{{plan.plan_name}}" 
                                                     data-planid="{{plan.guid}}"
                                                     data-cost="${{val}}"
                                                     {% if plan.trial_status == "1" %}
