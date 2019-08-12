@@ -96,7 +96,7 @@
                             <div class="c-article__posted-by">
                                 <div class="c-article__author">
                                 {# "{{_AppHelper.getUserProfileUrl(article.createdBy['username'])}}/posts" #}
-                                    <a class="c-article__author-name" href="javascript:;">{{ article.createdBy['displayName'] }}</a>
+                                    <a class="c-article__author-name" href="{{_AppHelper.getUserProfileUrl(article.createdBy['username'])}}/posts">{{ article.createdBy['displayName'] }}</a>
 
                                     {% if article['createdBy']['coauthors'] %}
                                         {% for author in article['createdBy']['coauthors'] %}
