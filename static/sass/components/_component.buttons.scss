@@ -245,6 +245,10 @@
             }
         }
     }
+
+    &--2line{
+        padding: 2px 14px;
+    }
     
     &:disabled {
         @include opacity(.5);

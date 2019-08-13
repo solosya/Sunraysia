@@ -182,12 +182,12 @@
                             <div class="c-current-plan__spacer"></div>
 
                             <div class="c-current-plan__subscription-buttons">
-                                <a id="change-plan" href="#plans" class="c-button c-button--red">Change Subscription</a>
+                                <a id="change-plan" href="#plans" class="c-button c-button--red c-button--2line">Change Subscription</a>
 
                                 {% if pwstats['status'] == 'cancelled' %}
-                                    <a id="cancelAccount" href="#" class="c-button c-button--red--bordered">Restart Subscription</a>
+                                    <a id="cancelAccount" href="#" class="c-button c-button--red--bordered c-button--2line">Restart Subscription</a>
                                 {% else %} 
-                                    <a id="cancelAccount" href="#" class="c-button c-button--red--bordered">Cancel subscription</a>
+                                    <a id="cancelAccount" href="#" class="c-button c-button--red--bordered c-button--2line">Cancel subscription</a>
                                 {% endif %} 
                             </div>
 
