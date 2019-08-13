@@ -247,7 +247,9 @@
     }
 
     &--2line{
-        padding: 2px 14px;
+        @media #{$desktop-up}{
+            padding: 2px 14px;
+        }
     }
     
     &:disabled {
