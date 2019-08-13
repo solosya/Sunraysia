@@ -57,6 +57,7 @@
             font-family: $base-font-family;
             float: left;
             margin-bottom: 20px;
+            width: 100%;
             @media #{$mobile}{
                 margin-bottom: 15px;
             }

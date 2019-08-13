@@ -5,7 +5,7 @@
 
 
 
-{% set limit = 17 %}
+{% set limit = 18 %}
 
 {% set articlesArr = _Blog.getBlogFeed({'limit': limit, 'offset': 0}) %}
 {% set articles = articlesArr.articles %}
@@ -33,7 +33,7 @@
 
         <div class="row">
 
-            {% for i in 0..2 if articles[i] %}
+            {% for i in 0..3 if articles[i] %}
                 <div class="col-12 col-md-6 col-lg-3">
                     {% if articles[articleCount] %}                                                                
                         {{this.render('partials/_single-article.twig', {
@@ -61,7 +61,7 @@
 
         <div class="row">
 
-            {% for i in 0..2 if articles[i] %}
+            {% for i in 0..3 if articles[i] %}
                 <div class="col-12 col-md-6 col-lg-3">
                     {% if articles[articleCount] %}                                                                
                         {{this.render('partials/_single-article.twig', {
@@ -78,9 +78,60 @@
 
         </div>
 
+        <div id="loadmore" class="row">
+            {% for i in 0..9 if articles[articleCount] %}
+                <div class="col-12 col-md-6 col-lg-3">
+                {{this.render('partials/_single-article.twig', {
+                    article: articles[articleCount], 
+                    position: (articleCount+1),
+                    imageSize: {width: 300, height: 228},
+                    containerClass: "card-4-mobile card-2-tablet card-1-desktop card-1-desktop-lg"
+                }) | raw}}
+                {% set articleCount = (dev) ? articleCount : articleCount + 1 %}
+                </div>
+            {% endfor %}
+        </div>
+
+
+        <div class="row">
+            <div class="col-12">
+                {% if limit <= articleCount %}
+                    {{ this.render('/partials/ajaxarticles_new.twig', {
+                        name            : "section-load",
+                        label           : "",
+                        buttonClass     : "u-display-none",
+                    }) | raw }}
+                {% endif %}
+
+                </div>
+        </div>
+
 
 
 
     </div>
 </main>
 
+
+<script>
+    // main script is defered so event listener makes sure
+    // defered script is loaded before this runs
+    document.addEventListener("DOMContentLoaded", function() {
+
+
+
+        Acme.loadMore = new Acme.View.articleFeed({
+            model           : new Card(),
+            container       : 'loadmore',
+            infinite        : true,
+            label           : false,
+            limit           : 12,
+            offset          : 12,
+            name            : 'section-load', //name of the search button
+            card_class      : 'col-12 col-md-3 card-4-mobile card-2-tablet card-1-desktop card-1-desktop-lg',
+            non_pinned      : {{articleCount}}
+
+        });
+
+    });
+</script>
