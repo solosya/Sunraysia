@@ -153,6 +153,7 @@
         var self = this;
 
         $('.j-plan-subscribe').on("click", function(e) {
+            console.log('subscribe button');
             var elem = $(this);
             var plan = elem.data('planid');
             var name = elem.data('plan-name');
@@ -160,11 +161,11 @@
             var trial = elem.data('trial');
             self.data.planid = plan;
             self.data.subscription_choice = name;
+            console.log(plan, name, cost, trial);
             $('#planid').val(plan);
             $('#trial').val(trial);
             $('#subscription_choice').val(name);
             $('#total_cost').text(cost);
-
 
             $('.j-plan-subscribe').each(function(i, e) {
                 var button = $(e);
