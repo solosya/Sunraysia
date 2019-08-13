@@ -5,7 +5,7 @@
 
 
 
-{% set limit = 14 %}
+{% set limit = 12 %}
 
 {% set articlesArr = _Blog.getBlogFeed({'limit': limit, 'offset': 0}) %}
 {% set articles = articlesArr.articles %}
@@ -79,7 +79,7 @@
         </div>
 
         <div id="loadmore" class="row">
-            {% for i in 0..7 if articles[articleCount] %}
+            {% for i in 0..5 if articles[articleCount] %}
                 <div class="col-12 col-md-6 col-lg-3">
                 {{this.render('partials/_single-article.twig', {
                     article: articles[articleCount], 
