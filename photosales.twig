@@ -8,12 +8,20 @@
 {# {% set log = _AppHelper.log(networkData['stripe_publishable_key']) %} #}
 
 {% set env = 'prod' %}
+
 {% if config['env'] is defined %}
     {% set env = config['env'] %}
 {% endif %}
 
-<main id="photo-sales" role="main" data-env="{{env}}"></main>
 
+{% set themeId = 'lVWIoKHyF5Dt' %}
+{% if env == 'uat' %}
+    {% set themeId = '4IAtb6AbAuFQDlF' %}
+{% endif %}
+
+
+
+<main id="photo-sales" role="main" data-env="{{env}}"></main>
 
 
 
@@ -24,12 +32,17 @@
     window.pageTitle    = "{{blogData['title']}}";
 </script>
 
+
+
+
 {% if env == 'prod' or env == 'uat' %}
-    <link rel="stylesheet" href="https://d3pbdxdl8c65wb.cloudfront.net/themes/4IAtb6AbAuFQDlF/static/css/main.chunk.css?ver={{photoVersion}}" type="text/css" media="all">
-    <link rel="stylesheet" href="https://d3pbdxdl8c65wb.cloudfront.net/themes/4IAtb6AbAuFQDlF/static/css/1.chunk.css?ver={{photoVersion}}" type="text/css" media="all">
-    <script defer type="text/javascript" src='https://d3pbdxdl8c65wb.cloudfront.net/themes/4IAtb6AbAuFQDlF/static/js/1.chunk.js?ver="{{photoVersion}}'></script>
-    <script defer type="text/javascript" src='https://d3pbdxdl8c65wb.cloudfront.net/themes/4IAtb6AbAuFQDlF/static/js/main.chunk.js?ver="{{photoVersion}}'></script>
+    <link rel="stylesheet" href="https://d3pbdxdl8c65wb.cloudfront.net/themes/{{themeId}}/static/css/main.chunk.css?ver={{photoVersion}}" type="text/css" media="all">
+    <link rel="stylesheet" href="https://d3pbdxdl8c65wb.cloudfront.net/themes/{{themeId}}/static/css/1.chunk.css?ver={{photoVersion}}" type="text/css" media="all">
+    <script defer type="text/javascript" src='https://d3pbdxdl8c65wb.cloudfront.net/themes/{{themeId}}/static/js/1.chunk.js?ver="{{photoVersion}}'></script>
+    <script defer type="text/javascript" src='https://d3pbdxdl8c65wb.cloudfront.net/themes/{{themeId}}/static/js/main.chunk.js?ver="{{photoVersion}}'></script>
 {% endif %}
+
+
 
 {% if env == 'dev'%}
     <link rel="stylesheet" href="{{networkData.templatePath}}/../photosales/static/css/main.chunk.css" type="text/css" media="all">
