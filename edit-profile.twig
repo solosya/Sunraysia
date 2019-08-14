@@ -240,12 +240,20 @@
                                     {% endif %}
                                     
                                     <div class="c-plans__block c-plans__block-xs {% if selected == 'selected' %} selected {% else %}  j-setplan {% endif %}">
-                                        <span class="c-plans__name c-plans__name--{{ selected }}">{{plan.plan_name}}</span>
-                                        <div class="c-plans__description">{{plan.description}}</div>
+                                        <div class="c-paywall-card__panel">
+                                            <h3 class="c-paywall-card__name c-paywall-card__name-xs">{{plan.plan_name}}</h3>
+                                            {# <p class="c-paywall-card__excerpt c-paywall-card__excerpt-xs">{{plan.description}}</p> #}
+                                            <div class="c-paywall-card__price c-paywall-card__price-lg">${{planCost}}</div>
+                                        </div>
 
-                                        <h3 class="c-plans__price">
-                                            {{plan.currency|replace({"AUD": "$", "NZD": "$", "GBP": "£", "USD": "$", "EUR": "€"})}}{{planCost|number_format(0, '.', ',')}}
-                                        </h3>
+
+                                                                           
+
+                                        <div class="c-paywall-card__panel">
+                                            <ul class="c-paywall-card__Details c-paywall-card__Details-md">
+                                                <li>{{(plan.description|replace({'.': '</li><li>'}))|raw}}</li>
+                                            </ul>
+                                        </div>
                                         
                                         {% set buttonClass = selected ? "c-button--red" : "c-button--lightgrey" %}
 
