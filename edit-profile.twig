@@ -121,7 +121,7 @@
                             {# <div class="d-none">{{_AppHelper.printArray(pwstats)}}</div> #}
                             {% if pwstats['type'] == 'time' %}
                                     <div class="c-account-form__static-text">{{pwstats['name']}} at {{pwstats['currency']|replace({"AUD": "$", "NZD": "$", "GBP": "£", "USD": "$", "EUR": "€"})}}{{ pwstats['plan_value']/100}}</div>
-                            {% elseif pwstats['type'] == 'articles' %} 
+                            {% elseif pwstats['type'] == 'article' %} 
                                 <div class="c-account-form__static-text">
                                     <span>{{pwstats['total_articles']}} articles for ${{ pwstats['plan_value']/100}}.</span>
                                 </div>
@@ -156,13 +156,14 @@
                                    
                                 {# NEXT PAYMENT #}
                                 
-                                <hr class="divide divide--dark" />
+                                
 
                                 {% if pwstats['type'] == 'time' %}
                                     <div class="c-form__group no-margin-bottom u-margin-top-15">
                                         <label class="c-form__label c-account-form__label" for="">Next payment</label>
                                         <div class="c-account-form__static-text">{{ pwstats['expiry_date']}}</div>
                                     </div>
+                                    <hr class="divide divide--dark" />
                                 {% endif %} 
 
 
@@ -217,9 +218,10 @@
                                         <label class="c-form__label c-account-form__label" for="">Next payment</label>
                                         <div class="c-account-form__static-text">{{ pwstats['expiry_date']}}</div>
                                     </div>
+                                    <hr class="divide divide--dark" />
                                 {% endif %} 
 
-                                <hr class="divide divide--dark" />
+                                
 
 
                                 <div class="">
