@@ -118,19 +118,19 @@
                     <div class="col-12 col-md-6 u-mobile-margin-top-40">
                         <div class="c-current-plan">
                             <label class="c-form__label c-account-form__label" for="">Current plan</label>
-                            <div class="d-none">{{_AppHelper.printArray(pwstats)}}</div>
+                            {# <div class="d-none">{{_AppHelper.printArray(pwstats)}}</div> #}
                             {% if pwstats['type'] == 'time' %}
                                     <div class="c-account-form__static-text">{{pwstats['name']}} at {{pwstats['currency']|replace({"AUD": "$", "NZD": "$", "GBP": "£", "USD": "$", "EUR": "€"})}}{{ pwstats['plan_value']/100}}</div>
-                            {% elseif pwstats['type'] == 'articles' %} 
+                            {% elseif pwstats['type'] == 'article' %} 
                                 <div class="c-account-form__static-text">
-                                    <span>{{ pwstats['plan_value']/100}}/{{pwstats['total_articles']}}</span>
+                                    <span>{{pwstats['total_articles']}} articles for ${{ pwstats['plan_value']/100}}.</span>
                                 </div>
                            
                                 <hr class="divide divide--dark" />
 
                                 <label class="c-form__label c-account-form__label" for="">Articles Remaining</label>
                                 <div class="c-account-form__static-text">
-                                    <span>{{ pwstats['article_count']}}</span>
+                                    <span>{{ pwstats['article_count']}}/{{pwstats['total_articles']}}</span>
                                 </div>
                             {% else %}
                                 <div class="c-account-form__static-text">Free access to Sunraysia Life.</div>
@@ -140,42 +140,36 @@
 
                             {% if pwstats['status'] == 'cancelled' %}
                                 {# STATUS #}
-                                <div class="c-form__group u-margin-top-15 {% if pwstats['status'] == 'cancelled' %} u-margin-bottom-30 {% endif %}">
+                                <div class="c-form__group u-margin-top-15 u-margin-bottom-30">
                                     <label class="c-form__label c-account-form__label" for="">Status</label>
 
                                     <!-- Use this for Paid -->
                                     <div class="c-account-form__static-text">
                                         <span class="c-account-form__static-text-{{pwstats['status']}}">{{ pwstats['status'] | capitalize }}</span>
-                                    {% if pwstats['status'] == 'cancelled' %}
-                                            <p class="c-account-form__cancel-msg">Your account will be removed 30 days after the most recent payment date.</p>
-                                    {% endif %} 
+                                        <p class="c-account-form__cancel-msg">Your account may be removed after 30 days.</p>
                                     </div>
 
                                 </div>
                                     
                                 <hr class="divide divide--dark" />
 
-                                    {# USERS #}
-                                    {# <div class="c-form__group u-margin-top-15">
-                                        <label class="c-form__label c-account-form__label" for="">Users</label>
-                                        <div class="c-account-form__static-text">{{ pwstats['user_count'] }}</div>
-                                    </div> #}
-
-
+                                   
                                 {# NEXT PAYMENT #}
-                                {% if pwstats['status'] != 'free' %}
+                                
+                                
+
+                                {% if pwstats['type'] == 'time' %}
                                     <div class="c-form__group no-margin-bottom u-margin-top-15">
                                         <label class="c-form__label c-account-form__label" for="">Next payment</label>
                                         <div class="c-account-form__static-text">{{ pwstats['expiry_date']}}</div>
                                     </div>
+                                    <hr class="divide divide--dark" />
                                 {% endif %} 
 
-                                <hr class="divide divide--dark" />
 
-
-                                <div class="">
-                                    {{_AppHelper.printArray(pwstats)}}
-                                </div>
+                                <ul class="c-paywall-card__Details c-paywall-card__Details-md">
+                                    <li>{{(pwstats.description|replace({'.': '</li><li>'}))|raw}}</li>
+                                </ul>
 
                                 <hr class="divide divide--dark" />
 
@@ -188,13 +182,24 @@
                                 </div>
                             {% else %}
                                 {# STATUS #}
-                                <div class="c-form__group u-margin-top-15 {% if pwstats['status'] == 'cancelled' %} u-margin-bottom-30 {% endif %}">
+                                <div class="c-form__group u-margin-top-15">
                                     <label class="c-form__label c-account-form__label" for="">Status</label>
 
                                     <!-- Use this for Paid -->
-                                    <div class="c-account-form__static-text">
-                                        <span class="c-account-form__static-text-{{pwstats['status']}}">{{ pwstats['status'] | capitalize }}</span>
-                                    </div>
+                                    {% if pwstats['type'] == 'time' %}
+                                        <div class="c-account-form__static-text">
+                                            <span class="c-account-form__static-text-{{pwstats['status']}}">{{ pwstats['status'] | capitalize }}</span>
+                                        </div>
+                                    {% elseif pwstats['type'] == 'article' %}
+                                        <div class="c-account-form__static-text">
+                                            <span class="c-account-form__static-text-{{pwstats['status']}}">{{ pwstats['status'] | capitalize }}</span>
+                                        </div>
+                                    {% else %}
+                                        <div class="c-account-form__static-text">
+                                            <span class="c-account-form__static-text-{{pwstats['status']}}">Free account</span>
+                                        </div>
+                                    {% endif %}
+                                
 
                                 </div>
                                     
@@ -208,14 +213,15 @@
 
 
                                 {# NEXT PAYMENT #}
-                                {% if pwstats['status'] != 'free' %}
+                                {% if pwstats['type'] == 'time' %}
                                     <div class="c-form__group no-margin-bottom u-margin-top-15">
                                         <label class="c-form__label c-account-form__label" for="">Next payment</label>
                                         <div class="c-account-form__static-text">{{ pwstats['expiry_date']}}</div>
                                     </div>
+                                    <hr class="divide divide--dark" />
                                 {% endif %} 
 
-                                <hr class="divide divide--dark" />
+                                
 
 
                                 <div class="">
