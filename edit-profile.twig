@@ -121,7 +121,7 @@
                             <label class="c-form__label c-account-form__label" for="">Current plan</label>
 
                             {% if pwstats['type'] == 'time' %}
-                                    <div class="c-account-form__static-text">{{pwstats['name']}} at {{pwstats['currency']|replace({"AUD": "$", "NZD": "$", "GBP": "£", "USD": "$", "EUR": "€"})}}{{ pwstats['plan_value']/100}} per {{pwstats['period']}}</div>
+                                    <div class="c-account-form__static-text">{{pwstats['name']}} at {{pwstats['currency']|replace({"AUD": "$", "NZD": "$", "GBP": "£", "USD": "$", "EUR": "€"})}}{{ pwstats['plan_value']/100}}</div>
                             {% else %} 
                                 <div class="c-account-form__static-text">
                                     <span>{{ pwstats['plan_value']/100}}/{{pwstats['total_articles']}}</span>
