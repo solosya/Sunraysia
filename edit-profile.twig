@@ -244,7 +244,7 @@
                                         <div class="c-plans__description">{{plan.description}}</div>
 
                                         <h3 class="c-plans__price">
-                                            {{plan.currency|replace({"AUD": "$", "NZD": "$", "GBP": "£", "USD": "$", "EUR": "€"})}}{{planCost|number_format(0, '.', ',')}}<span>p/{{plan.period|replace({"week": "w", "month": "m", "year": "y"})}}</span>
+                                            {{plan.currency|replace({"AUD": "$", "NZD": "$", "GBP": "£", "USD": "$", "EUR": "€"})}}{{planCost|number_format(0, '.', ',')}}
                                         </h3>
                                         
                                         {% set buttonClass = selected ? "c-button--red" : "c-button--lightgrey" %}
