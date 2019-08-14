@@ -20,7 +20,7 @@
 {% set isAdmin = _User.isAdminUser() %}
 
 {% if   not _User.isAdminUser()         and
-        paywallSection == true          and
+        blogData['paywallType'] != 'article' and
         blogData['showPaywall'] == true and
         'article' not in pageClass %}
     
@@ -175,7 +175,7 @@
 
 
     {% if showPaywall %}
-        {{ this.render('/paywall.twig', {networkData: networkData}) | raw }}
+        {{ this.render('/layout-paywall.twig', {networkData: networkData}) | raw }}
     {% else %}
         {{ content | raw }}
     {% endif %}

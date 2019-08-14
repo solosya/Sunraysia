@@ -75,6 +75,10 @@
         if (trial == 1) {
             this.data['trial'] = 'true';
         }
+        var signup = $('#signup').val();
+        if (signup == 1) {
+            this.data['signup'] = 'true';
+        }
 
     };
     SubscribeForm.prototype = new Acme.Form(Acme.Validators);
@@ -117,11 +121,19 @@
             });
         }
 
-        if ($("#code-redeem").length > 0) {
+        console.log($('#signup').val());
+        if ($("#code-redeem").length > 0 || $('#signup').val() == 1) {
+            console.log('signup');
+            self.data['username'] = Math.floor(100000000 + Math.random() * 9000000000000000);
             modal.render("spinner", "Authorising code");
             self.data['planid'] = $('#planid').val();
             self.data['giftcode'] = $('#code-redeem').val();
             self.data['stripetoken'] = null;
+            self.data['redirect'] = false;
+            if ( $('#signup').val() == 1 ) {
+                self.data['signuponly'] = 1;
+            }
+            
             submitForm();
 
         } else {
@@ -159,11 +171,13 @@
             var name = elem.data('plan-name');
             var cost = elem.data('cost');
             var trial = elem.data('trial');
+            var signup = elem.data('signup');
             self.data.planid = plan;
             self.data.subscription_choice = name;
-            console.log(plan, name, cost, trial);
+            console.log(plan, name, cost, trial, signup);
             $('#planid').val(plan);
             $('#trial').val(trial);
+            $('#signup').val(signup);
             $('#subscription_choice').val(name);
             $('#total_cost').text(cost);
 
@@ -177,6 +191,20 @@
             elem.text('SELECTED');
             elem.removeClass('c-button--grey');
             elem.addClass('c-button--red');
+
+            if (signup == true) {
+                $('#payment-head').addClass('hidden');
+                $('#payment-types').addClass('hidden');
+                $('#stripe-form').addClass('hidden');
+                $('#payment-total').addClass('hidden');
+            } else {
+                $('#payment-head').removeClass('hidden');
+                $('#payment-types').removeClass('hidden');
+                $('#stripe-form').removeClass('hidden');
+                $('#payment-total').removeClass('hidden');
+   
+            }
+
             self.validate();
         });
 
@@ -225,8 +253,8 @@
 
     var formhandler = function(formdata, path) {
         var csrfToken = $('meta[name="csrf-token"]').attr("content");
-        // formdata['_csrf'] = csrfToken;
-        // console.log(formdata);
+        formdata['_csrf'] = csrfToken;
+        console.log(formdata);
 
         return $.ajax({
             url: _appJsConfig.appHostName + path,
