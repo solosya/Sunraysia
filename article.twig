@@ -22,6 +22,9 @@
     {% set showPaywall = true %}
 {% endif %}
 
+{# {% if not _User.isGuest()%}
+    {% set pwstats = _User.getPaywallStats(false) %}
+{% endif %} #}
 
 {# {% set showPaywall = true %} #}
 
@@ -70,10 +73,10 @@
     {% set watermark = config['watermark']['settings'] %}
 {% endif %}
 
-
-
+{% set log = _AppHelper.log(article) %}
 
 <main id="main" class="u-margin-top-60 u-margin-bottom-60" role="main">
+
     <div class="container">
         <div class="row">
             <div class="col-12 col-lg-7 col-xl-6 offset-xl-1">
