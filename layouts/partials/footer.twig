@@ -1,14 +1,19 @@
 {% set link = _Blog.getHomeBlogSettings() %}
 {% set footerMenu = _Menu.get({'menuType': 'header', 'menuGroupName': 'footer'}) %}
 
+{% set altLogo = networkData.templatePath~'/static/images/logo-white.png'%}
+{% if networkData.secondaryLogoMedia | length > 0 %}
+    {% set altLogo = _Media.getMediaUrl(networkData.secondaryLogoMedia, 650, 144, {'crop': 'fit'} )%}
+{% endif %}
+
 <footer class="c-footer c-footer-sm">
     <div class="container">
 
         <div class="c-footer__container">
             <div class="row">
                 <div class="col-12 col-md-5">
-                    <a href="javascript:;" class="c-footer__logo u-tablet-margin-bottom-20 u-desktop-margin-bottom-20">
-                        <img src="{{networkData.templatePath}}/static/images/logo-white.png" alt="Sunraysia Daily">
+                    <a href="{{networkData.defaultBlogUrl}}" class="c-footer__logo u-tablet-margin-bottom-20 u-desktop-margin-bottom-20">
+                        <img src="{{altLogo}}" alt="{{networkData.title}}">
                     </a>
                 </div>
             </div>

@@ -20396,6 +20396,10 @@ Acme.UserProfileController.prototype.pageEvents = function ()
             errorText += "Email cannot be empty. ";
         }
 
+        if ($('#password').val() !== $('#verifypassword').val() ) {
+            errorText += "Password and verify password fields do not match. ";
+        }
+
         $("#account-form__errorText").html(errorText);
         $('#error-container').show();
         
@@ -20480,6 +20484,7 @@ Acme.UserProfileController.prototype.pageEvents = function ()
                 $('#userError').text(errorText);
                 return;
             }
+            
             
             
             $(this).addClass('spinner').addClass('c-button--spinner');
