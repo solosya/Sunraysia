@@ -18567,7 +18567,6 @@ Acme.templates.signinFormTmpl =
     </div> \
     \
     <div class="c-form__buttons"> \
-        <a href="'+_appJsConfig.appHostName +'/paywall" class="c-button c-button--blue-bordered u-margin-right-10">Sign up</a> \
         <button id="signinBtn" type="submit" class="c-button c-button--blue j-signin">Log in</button> \
     </div> \
     \
@@ -20397,6 +20396,10 @@ Acme.UserProfileController.prototype.pageEvents = function ()
             errorText += "Email cannot be empty. ";
         }
 
+        if ($('#password').val() !== $('#verifypassword').val() ) {
+            errorText += "Password and verify password fields do not match. ";
+        }
+
         $("#account-form__errorText").html(errorText);
         $('#error-container').show();
         
@@ -20481,6 +20484,7 @@ Acme.UserProfileController.prototype.pageEvents = function ()
                 $('#userError').text(errorText);
                 return;
             }
+            
             
             
             $(this).addClass('spinner').addClass('c-button--spinner');

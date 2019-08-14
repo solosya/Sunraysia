@@ -93,7 +93,7 @@
                                         <div class="c-paywall-card__panel">
                                             <h3 class="c-paywall-card__name c-paywall-card__name-xs">{{plan.plan_name}}</h3>
                                             {# <p class="c-paywall-card__excerpt c-paywall-card__excerpt-xs">{{plan.description}}</p> #}
-                                            <div class="c-paywall-card__price c-paywall-card__price-lg">${{val}} per {{plan.period}}</div>
+                                            <div class="c-paywall-card__price c-paywall-card__price-lg">${{val}}</div>
                                         </div>
 
 
@@ -115,6 +115,11 @@
                                                     {% else %}
                                                         data-trial=0
                                                     {% endif %}
+                                                    {% if plan.type == "signup" %}
+                                                        data-signup=1
+                                                    {% else %}
+                                                        data-signup=0
+                                                    {% endif %}
                                             >Subscribe</button>
                                             {% if plan.trial_status == "1" %}
                                                 <div class="c-button" style="color:#c51515;background-color:#fff;cursor:unset;">Includes {{plan.trial_period}}-day trial</div>
@@ -134,6 +139,7 @@
             </div>
         </div>
         <div id="trial" value=0></div>
+        <div id="signup" value=0></div>
         {% endif %}
     </div>
 
@@ -227,11 +233,11 @@
                 <div class="c-paywallpayment u-margin-top-80">
                     <div class="row">
                         <div class="col-12">
-                            <div class="c-section-header c-section-header--normal-case">Payment</div>
+                            <div id='payment-head' class="c-section-header c-section-header--normal-case">Payment</div>
                             <div class="u-margin-top-30">
                                 {# <label class="control-label control-label-sm" for="creditcarddetails" style="font-weight:normal;">Please enter your credit or debit card details.</label> #}
                                 
-                                <div class="c-payment__types">
+                                <div id='payment-types' class="c-payment__types">
                                     <div class="c-payment__tab c-payment__tab--selected">
                                         <div class="c-payment__credit-img"></div>
                                         <p class="c-payment__credit-label">Credit Card</p>
@@ -249,8 +255,8 @@
                                         </div>
 
                                 {% else %}
-                                    <form action="/charge" method="post" id="payment-form" class="stripe-form">
-                                        <div class="" style="width:100%">
+                                    <form  action="/charge" method="post" id="payment-form" class="stripe-form">
+                                        <div id="stripe-form" class="" style="width:100%">
                                             <div id="card-element"><!-- a Stripe Element will be inserted here. --></div>
                                             <!-- Used to display form errors -->
                                             <div id="card-errors" class="c-form__help-block u-margin-top-10 u-font-size-14" role="alert" style="display:block"></div>
@@ -259,7 +265,7 @@
                                 {% endif %}
 
 
-                                    <div class="c-totalpayvalue u-margin-top-40">
+                                    <div id='payment-total' class="c-totalpayvalue u-margin-top-40">
                                         <div class="c-totalpayvalue__title">Total</div>
                                         <div id="total_cost" class="c-totalpayvalue__value"></div>
                                     </div>

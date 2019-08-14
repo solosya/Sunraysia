@@ -20,7 +20,7 @@
 {% set isAdmin = _User.isAdminUser() %}
 
 {% if   not _User.isAdminUser()         and
-        paywallSection == true          and
+        blogData['paywallType'] != 'article' and
         blogData['showPaywall'] == true and
         'article' not in pageClass %}
     
@@ -81,7 +81,7 @@
 
 
     {% if _AppHelper.getApplicationEnv() == 'PROD'%}
-        <link rel="stylesheet" href="{{networkData.templatePath}}/static/deploy/concat.min.css?v=jb4c0810" type="text/css" media="all">
+        <link rel="stylesheet" href="{{networkData.templatePath}}/static/deploy/concat.min.css?v=008060b3" type="text/css" media="all">
     {% else %}
 
         <link rel='stylesheet' href='{{networkData.templatePath}}/static/deploy/concat.css' type='text/css' media='all' />
@@ -175,7 +175,7 @@
 
 
     {% if showPaywall %}
-        {{ this.render('/paywall.twig', {networkData: networkData}) | raw }}
+        {{ this.render('/layout-paywall.twig', {networkData: networkData}) | raw }}
     {% else %}
         {{ content | raw }}
     {% endif %}

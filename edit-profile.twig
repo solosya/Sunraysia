@@ -82,11 +82,11 @@
 
 
                                 {# Number #}
-                                <div class="c-form__group u-margin-top-15">
+                                {# <div class="c-form__group u-margin-top-15">
                                     <label class="c-form__label c-account-form__label" for="organisation">Contact number</label>
                                     <input id="contact-number" class="c-form__input c-form__input--bordered c-account-form__input" name="contact-number" value="{{user.contactnumber}}"  type="text">
                                     <div class="c-form__help-block"></div>
-                                </div>
+                                </div> #}
 
 
                                 {# PASSWORD #}
@@ -121,7 +121,7 @@
                             <label class="c-form__label c-account-form__label" for="">Current plan</label>
 
                             {% if pwstats['type'] == 'time' %}
-                                    <div class="c-account-form__static-text">{{pwstats['name']}} at {{pwstats['currency']|replace({"AUD": "$", "NZD": "$", "GBP": "£", "USD": "$", "EUR": "€"})}}{{ pwstats['plan_value']/100}} per {{pwstats['period']}}</div>
+                                    <div class="c-account-form__static-text">{{pwstats['name']}} at {{pwstats['currency']|replace({"AUD": "$", "NZD": "$", "GBP": "£", "USD": "$", "EUR": "€"})}}{{ pwstats['plan_value']/100}}</div>
                             {% else %} 
                                 <div class="c-account-form__static-text">
                                     <span>{{ pwstats['plan_value']/100}}/{{pwstats['total_articles']}}</span>
@@ -240,12 +240,20 @@
                                     {% endif %}
                                     
                                     <div class="c-plans__block c-plans__block-xs {% if selected == 'selected' %} selected {% else %}  j-setplan {% endif %}">
-                                        <span class="c-plans__name c-plans__name--{{ selected }}">{{plan.plan_name}}</span>
-                                        <div class="c-plans__description">{{plan.description}}</div>
+                                        <div class="c-paywall-card__panel">
+                                            <h3 class="c-paywall-card__name c-paywall-card__name-xs">{{plan.plan_name}}</h3>
+                                            {# <p class="c-paywall-card__excerpt c-paywall-card__excerpt-xs">{{plan.description}}</p> #}
+                                            <div class="c-paywall-card__price c-paywall-card__price-lg">${{planCost}}</div>
+                                        </div>
 
-                                        <h3 class="c-plans__price">
-                                            {{plan.currency|replace({"AUD": "$", "NZD": "$", "GBP": "£", "USD": "$", "EUR": "€"})}}{{planCost|number_format(0, '.', ',')}}<span>p/{{plan.period|replace({"week": "w", "month": "m", "year": "y"})}}</span>
-                                        </h3>
+
+                                                                           
+
+                                        <div class="c-paywall-card__panel">
+                                            <ul class="c-paywall-card__Details c-paywall-card__Details-md">
+                                                <li>{{(plan.description|replace({'.': '</li><li>'}))|raw}}</li>
+                                            </ul>
+                                        </div>
                                         
                                         {% set buttonClass = selected ? "c-button--red" : "c-button--lightgrey" %}
 

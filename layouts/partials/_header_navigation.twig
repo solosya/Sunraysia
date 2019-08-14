@@ -4,6 +4,11 @@
 {% set theDate = _AppHelper.getCurrentTimestampBasedOnTimezone() %}
 {% set theDate = _AppHelper.getDefaultTimezoneDateTime(theDate, "l j F Y") %}
 
+{% set logo = networkData.templatePath~'/static/images/logo.png'%}
+{% if networkData.logoMedia | length > 0 %}
+    {% set logo = _Media.getMediaUrl(networkData.logoMedia, 650, 144, {'crop': 'fit'} )%}
+{% endif %}
+
 
 <header class="c-header u-mobile-margin-bottom-20 u-tablet-margin-bottom-30 u-desktop-margin-bottom-50">
     
@@ -41,7 +46,7 @@
 
                     <div class="c-header__logo-container c-header__logo-container--fixed">
                         <a href="{{networkData.defaultBlogUrl}}" class="c-header__logo">
-                        <img src="{{networkData.templatePath}}/static/images/logo.png" alt="Sunraysia Daily">
+                        <img src="{{logo}}" alt="{{networkData.title}}">
                         </a>
                     </div>
 
@@ -95,7 +100,7 @@
 
                 <div class="c-header__logo-container">
                     <a href="{{networkData.defaultBlogUrl}}" class="c-header__logo">
-                        <img src="{{networkData.templatePath}}/static/images/logo.png" class="image-fluid" alt="Sunraysia Daily" />
+                        <img src="{{logo}}" class="image-fluid" alt="{{networkData.title}}" />
                     </a>
 
 

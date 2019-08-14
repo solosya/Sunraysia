@@ -346,7 +346,6 @@ Acme.templates.signinFormTmpl =
     </div> \
     \
     <div class="c-form__buttons"> \
-        <a href="'+_appJsConfig.appHostName +'/paywall" class="c-button c-button--blue-bordered u-margin-right-10">Sign up</a> \
         <button id="signinBtn" type="submit" class="c-button c-button--blue j-signin">Log in</button> \
     </div> \
     \
