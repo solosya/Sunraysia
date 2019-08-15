@@ -11,23 +11,50 @@
 {% set config       = _Network.getThemeConfig() %}
 {% set articleBlog = article.blog.title | lower %}
 {% set relatedArticles = [] %}
-
+{% set articleBlogInfo = _Blog.getBlog({'guid':article.blog['guid']}) %}
 
 {% set showPaywall = false %}
 {% set ArticleContent = article.content %}
-
-
-{% if   not _User.isAdminUser()     and
-        article.showPaywall == true %}
-    {% set showPaywall = true %}
+{% set pwstats = {} %}
+{% if not _User.isGuest() %}
+    {% set pwstats = _User.getPaywallStats(false) %}
 {% endif %}
 
-{# {% if not _User.isGuest()%}
-    {% set pwstats = _User.getPaywallStats(false) %}
-{% endif %} #}
+
+{% set paywallType = "" %}
+{% if  not      _User.isAdminUser() and
+                articleBlogInfo['showPaywall'] == true 
+                %}
+    {% set showPaywall = true %}
+
+    {# DETERMINE IF PAYWALL IS 'PAID' OR 'FREE' #}
+    {% if articleBlogInfo['paywall_allow_signup_plans'] == true %}
+        {# TURN FREE PAYWALL OFF FOR LOGGED IN USERS AND SET FREE PAYWALL TO SHOW #}
+        
+        {% if not _User.isGuest() %}
+            {% set showPaywall = false %}
+        {% else %}
+            {% set paywallType = "signup" %}
+        {% endif %}
+    {% else %}
+        {# DETERMINE WHICH PAYWALL TO SHOW #}
+        {% if not _User.isGuest() %}
+
+            {% if pwstats['type'] == 'article' %}
+                {% set paywallType = "topup" %}
+            {% elseif pwstats['type'] == 'time' %}
+                {% set paywallType = "renew" %}
+            {% else %}
+                {% set paywallType = "upgrade" %}
+            {% endif %}
+
+        {% else %}
+            {% set paywallType = "subscribe" %}
+        {% endif %}
+    {% endif %}
+{% endif %}
 
 {# {% set showPaywall = true %} #}
-
 
 {% if showPaywall == true %}
     {% set storySplit = ArticleContent | split('<p>')  %}
@@ -149,32 +176,7 @@
 
 
     {% if showPaywall == true %}
-                        </div><!-- close main -->
-                    </div><!-- close article -->
-                </div><!-- close col -->
-            </div><!-- close row -->
-        </div><!-- close container -->
-        <div class="c-article__paywalled-view">
-            <div class="c-paywalled-article">
-                <div class="container">
-                    <div class="row">
-                        <div class="c-paywalled-article__container offset-xl-1">
-                            <div class="c-paywalled-article__text">
-                                <h3 class="c-paywalled-article__publication">Sunraysia Daily</h3>
-                                <h1 class="c-paywalled-article__title">See how the story develops.<br />
-                                    Subscribe now to Sunraysia Daily.</h1>
-                                <a class="c-paywalled-article__subscriptions" href="{{networkData.defaultBlogUrl}}/paywall">Click here to view subscription options</a>
-                            </div>
-
-                            <div class="c-paywalled-article__action">
-                                <a href="{{networkData.defaultBlogUrl}}/paywall" class="c-paywalled-article__button c-button c-button-block  c-button--red u-margin-bottom-5">Subscribe</a>
-                                <a id="articleSigninBtn" href="#" class="c-paywalled-article__button c-button c-button-block  c-button--wtbg  c-button--wtbg-bordered c-button--boderwidth1">Log in</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+        {{this.render("partials/article/paywall.twig", {networkData: networkData, paywallType: paywallType }) | raw}}
     {% endif %}
 
                     </div>
