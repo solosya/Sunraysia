@@ -28,6 +28,66 @@
                 }
             ]
         },
+        "Classifieds": {
+            "extendedAttributes": [
+                {
+                    "label" : "Contact Name",
+                    "name": "contactName",
+                    "type": "inputbox",
+                    "placeholder" : "Enter Contact Name",
+                    "required": false
+                },
+                {
+                    "label" : "Address 1",
+                    "name": "address1",
+                    "type": "inputbox",
+                    "placeholder" : "Enter Address 1",
+                    "required": false
+                },
+                {
+                    "label" : "Address 2",
+                    "name": "address2",
+                    "type": "inputbox",
+                    "placeholder" : "Enter Address 2",
+                    "required": false
+                },
+                {
+                    "label" : "City",
+                    "name": "city",
+                    "type": "inputbox",
+                    "placeholder" : "Enter City",
+                    "required": false
+                },
+                {
+                    "label" : "State",
+                    "name": "state",
+                    "type": "inputbox",
+                    "placeholder" : "Enter State",
+                    "required": false
+                },
+                {
+                    "label" : "Postcode",
+                    "name": "postalCode",
+                    "type": "inputbox",
+                    "placeholder" : "Enter Postcode",
+                    "required": false
+                },
+                {
+                    "label" : "Phone",
+                    "name": "phone",
+                    "type": "inputbox",
+                    "placeholder" : "Enter Phone",
+                    "required": false
+                },
+                {
+                    "label" : "Email Address",
+                    "name": "email",
+                    "type": "inputbox",
+                    "placeholder" : "Enter Email",
+                    "required": false
+                }
+            ]
+        },
         "article": {
     		"extendedAttributes": [
                 {
