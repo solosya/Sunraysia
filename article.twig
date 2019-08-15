@@ -55,7 +55,6 @@
 {% endif %}
 
 {# {% set showPaywall = true %} #}
-{{_AppHelper.printArray(blogInfo)}}
 
 {% if showPaywall == true %}
     {% set storySplit = ArticleContent | split('<p>')  %}
