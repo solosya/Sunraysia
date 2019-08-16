@@ -3,6 +3,7 @@
 Acme.UserProfileController = function()
 {
     this.csrfToken      = $('meta[name="csrf-token"]').attr("content");
+    console.log(this.csrfToken);
     this.mailChimpUser  = false;
    
 
@@ -441,7 +442,8 @@ Acme.UserProfileController.prototype.pageEvents = function ()
                 .done(function(r) {
 
                     $('#dialog').parent().remove();
-                    
+                    requestData._csrf = $('meta[name="csrf-token"]').attr("content");
+                    console.log(requestData);
                     $.ajax({
                         type: 'post',
                         url: _appJsConfig.baseHttpPath + '/user/change-paywall-plan',
