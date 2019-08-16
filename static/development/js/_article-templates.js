@@ -350,7 +350,8 @@ Acme.templates.signinFormTmpl =
     </div> \
     \
     <div class="c-login-modal__subaction"> \
-        <span>Trouble logging in? <a href="'+_appJsConfig.appHostName +'/faq" target="_blank">Read our FAQs</a></span> \
+        <span>Trouble logging in? <a href="'+_appJsConfig.appHostName +'/faq" target="_blank">Read our FAQs</a></span>\
+        <a href="javascript:;" class="c-login-modal__password-link text-center" data-layout="forgot">Set a PR password</a> \
     </div> \
 </form>';
 

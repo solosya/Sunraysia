@@ -23,12 +23,13 @@
 
 {% set paywallType = "" %}
 {% if  not      _User.isAdminUser() and
-                articleBlogInfo['showPaywall'] == true 
+                articleBlogInfo['showPaywall'] == true and
+                article['premiumContent'] == true
                 %}
     {% set showPaywall = true %}
 
     {# DETERMINE IF PAYWALL IS 'PAID' OR 'FREE' #}
-    {% if articleBlogInfo['paywall_allow_signup_plans'] == true %}
+    {% if articleBlogInfo['paywallAllowSignupOnly'] == true %}
         {# TURN FREE PAYWALL OFF FOR LOGGED IN USERS AND SET FREE PAYWALL TO SHOW #}
         
         {% if not _User.isGuest() %}
@@ -53,6 +54,8 @@
         {% endif %}
     {% endif %}
 {% endif %}
+
+{# {{_AppHelper.printArray(article)}} #}
 
 {# {% set showPaywall = true %} #}
 

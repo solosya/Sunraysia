@@ -18571,7 +18571,8 @@ Acme.templates.signinFormTmpl =
     </div> \
     \
     <div class="c-login-modal__subaction"> \
-        <span>Trouble logging in? <a href="'+_appJsConfig.appHostName +'/faq" target="_blank">Read our FAQs</a></span> \
+        <span>Trouble logging in? <a href="'+_appJsConfig.appHostName +'/faq" target="_blank">Read our FAQs</a></span>\
+        <a href="javascript:;" class="c-login-modal__password-link text-center" data-layout="forgot">Set a PR password</a> \
     </div> \
 </form>';
 
@@ -18812,7 +18813,7 @@ Acme.Feed.prototype.fetch = function()
     };
 
     if (this.options.blogid) {
-        this.requestData['blogGuid'] = this.options.blogid;
+        this.requestData['blogguid'] = this.options.blogid;
     }
 
     if (this.options.loadtype == 'user') {
@@ -20532,6 +20533,7 @@ Acme.UserProfileController.prototype.pageEvents = function ()
         title = "Cancel your subscription";
         message = "Are you sure you want to cancel your subscription?"
         if ($(e.target).text() == 'Restart Subscription') {
+            title = "Restart your subscription";
             message = "Please confirm you wish to restart your subscription. You will be billed on the next payment date shown in My Account. "
             status = 'paid'
         }

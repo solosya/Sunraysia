@@ -2,8 +2,26 @@
     height: 260px;
     padding-top: 56px;
     @include linear-gradient(82deg, #c51515, #4c76c9);
+    
     @media #{$mobile} {
         @include linear-gradient(180deg, #c51515, #4c76c9);
+    }
+    &__signup{
+        @include linear-gradient(82deg, #4573cd, #4c76c9);
+        @media #{$mobile} {
+            @include linear-gradient(180deg, #4573cd, #4c76c9);
+        }
+    }
+
+    &__signup{
+        @include linear-gradient(82deg, #4573cd, #4c76c9);
+        @media #{$mobile} {
+            @include linear-gradient(180deg, #4573cd, #4c76c9);
+        }
+    }
+    &__topup{
+        background: #e7e7e7;
+        border-bottom: 28px solid $error;
     }
 
     @media #{$tablet} {
@@ -30,12 +48,16 @@
     }
 
 
+
     &__publication {
         @include font-size(14);
         color: $white;
         font-weight: $weightBold;
         text-transform: uppercase;
         margin-bottom: 7px;
+        &--topup{
+            color: $greyish;
+        }
 
         @media #{$tablet} {
             margin-bottom: 20px;
@@ -60,6 +82,12 @@
             max-width: 430px;
             margin-right: 50px;
         }
+        &--topup{
+                max-width: 700px;
+                
+            
+            
+        }
 
     }
 
@@ -79,8 +107,16 @@
             @include font-size(24);
             line-height:1.4;
         }
-    
-
+        &--topup{
+            color: $error;
+        }
+        &--underline{
+            text-decoration: underline;
+            color: inherit;
+            &:hover{
+                color: $error;
+            }
+        }
 
     }
     &__subscriptions {
@@ -94,7 +130,16 @@
             margin-bottom:20px;
             font-weight:$weightLight;
         }
-
+        &--topup{
+            color: $black;
+        }
+        &--underline{
+            text-decoration: underline;
+            color: inherit;
+            &:hover{
+                color: $error;
+            }
+        }
 
     }
 

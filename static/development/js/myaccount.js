@@ -3,6 +3,7 @@
 Acme.UserProfileController = function()
 {
     this.csrfToken      = $('meta[name="csrf-token"]').attr("content");
+    console.log(this.csrfToken);
     this.mailChimpUser  = false;
    
 
@@ -356,6 +357,7 @@ Acme.UserProfileController.prototype.pageEvents = function ()
         title = "Cancel your subscription";
         message = "Are you sure you want to cancel your subscription?"
         if ($(e.target).text() == 'Restart Subscription') {
+            title = "Restart your subscription";
             message = "Please confirm you wish to restart your subscription. You will be billed on the next payment date shown in My Account. "
             status = 'paid'
         }
@@ -440,7 +442,8 @@ Acme.UserProfileController.prototype.pageEvents = function ()
                 .done(function(r) {
 
                     $('#dialog').parent().remove();
-                    
+                    requestData._csrf = $('meta[name="csrf-token"]').attr("content");
+                    console.log(requestData);
                     $.ajax({
                         type: 'post',
                         url: _appJsConfig.baseHttpPath + '/user/change-paywall-plan',
