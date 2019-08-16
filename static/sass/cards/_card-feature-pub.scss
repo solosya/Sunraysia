@@ -33,7 +33,7 @@
         &__description {
             color: $greyish;
             @include flex-height(35px);
-            @include font-size(13);
+            font-size: rem(13);
             line-height: 1.46;
   
         }
@@ -73,13 +73,13 @@
 
         &__heading {
             @include flex-height(90px);
-            @include font-size(22);
+            font-size: rem(22);
             line-height:1.36;
         }
         &__description {
-            color: black;
+            // color: black;
             @include flex-height(60px);
-            @include font-size(13);
+            // @include font-size(13);
         }
 
     }
