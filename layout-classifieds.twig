@@ -372,9 +372,9 @@
         Acme.search = new Acme.View.articleFeed({
             model           : new Card(),
             container       : 'results',
-            limit           : {{limit}},
+            limit           : 48,
             offset          : 0,
-            blogid          : {{blogData.guid}},
+            blogid          : '{{blogData.guid}}',
             loadtype        : 'api/search',
             searchterm      : "{{search}}",
             name            : 'fd', //name of the loadmore button
