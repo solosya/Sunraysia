@@ -104,9 +104,9 @@
         if (!validated) return;
 
 
-        $('#card-errors').text('');
+        $('#signupErros').text('');
         if ( $('#password').val() !== $('#verifypassword').val() ) {
-            $('#card-errors').text('Password fields do not match.');
+            $('#signupErros').text('Password fields do not match.');
             return;
         }
 
@@ -144,7 +144,7 @@
                 if (result.error) {
                     modal.closeWindow();
                     // Inform the user if there was an error
-                    var errorElement = document.getElementById('card-errors');
+                    var errorElement = document.getElementById('signupErros');
                     errorElement.textContent = result.error.message;
                 } else {
                     // Send the token to your server
@@ -193,16 +193,15 @@
             elem.addClass('c-button--red');
 
             if (signup == true) {
-                $('#payment-head').addClass('hidden');
-                $('#payment-types').addClass('hidden');
-                $('#stripe-form').addClass('hidden');
-                $('#payment-total').addClass('hidden');
+                $('#payment-head').hide();
+                $('#payment-types').hide();
+                $('#stripe-form').hide();
+                $('#payment-total').hide();
             } else {
-                $('#payment-head').removeClass('hidden');
-                $('#payment-types').removeClass('hidden');
-                $('#stripe-form').removeClass('hidden');
-                $('#payment-total').removeClass('hidden');
-   
+                $('#payment-head').show();
+                $('#payment-types').show();
+                $('#stripe-form').show();
+                $('#payment-total').show();
             }
 
             self.validate();
@@ -264,7 +263,7 @@
             success: function(data) {
 
                 if(data.success) {
-                    $('#card-errors').text('Completed successfully.');
+                    $('#signupErrors').text('Completed successfully.');
                 } else {
                     modal.closeWindow();
 
@@ -272,7 +271,7 @@
                     for (var key in data.error) {
                         text = text + data.error[key] + " ";
                     } 
-                    $('#card-errors').text(text);
+                    $('#signupErrors').text(text);
                 }   
             },
             error: function(data) {
