@@ -316,10 +316,13 @@
                                         <input type="hidden" id="planusercount" value="{{userCount}}">
                                         <input type="hidden" id="plancost"      value="{{plan.plan_value}}">
                                         <input type="hidden" id="planperiod"    value="{{plan.period}}">
+                                        <input type="hidden" id="planperiodcount" value="{{plan.period_count}}">
                                         <input type="hidden" id="currentcost"   value="{{pwstats['plan_value']}}">
                                         <input type="hidden" id="currentperiod" value="{{pwstats['period']}}">
+                                        <input type="hidden" id="currentperiodcount" value="{{pwstats['period_count']}}">
                                         <input type="hidden" id="currentusers"  value="{{managedUserCount}}">
                                         <input type="hidden" id="expdate"       value="{{pwstats['expiry_date']}}">
+                                        <input type="hidden" id="plantype"       value="{{plan['type']}}">
                                         <input type="hidden" id="_csrf"         value="{{_AppHelper.getCsrfToken()}}"> 
                                     </div>
                                     {# {% set break = true %} #}

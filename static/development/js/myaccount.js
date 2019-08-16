@@ -415,12 +415,18 @@ Acme.UserProfileController.prototype.pageEvents = function ()
             var oldcost = listelem.find('#currentcost').val();
             var newdays = listelem.find('#planperiod').val();
             var olddays = listelem.find('#currentperiod').val();
+            var newcount = listelem.find('#planperiodcount').val();
+            var oldcount = listelem.find('#currentperiodcount').val();
+            if (newdays == 'day')   {newdays = 1;}
             if (newdays == 'week')  {newdays = 7;}
             if (newdays == 'month') {newdays = 30;}
             if (newdays == 'year')  {newdays = 365;}
+            if (olddays == 'day')   {olddays = 1;}
             if (olddays == 'week')  {olddays = 7;}
             if (olddays == 'month') {olddays = 30;}
             if (olddays == 'year')  {olddays = 365;}
+            olddays = olddays * oldcount;
+            newdays = newdays * newcount;
             var newplandailycost = newcost/newdays;
             var plandailycost = oldcost/olddays;
             var expDate = listelem.find('#expdate').val();
@@ -430,11 +436,22 @@ Acme.UserProfileController.prototype.pageEvents = function ()
             var secondDate = new Date(expDate.split('-')[0],expDate.split('-')[1]-1,expDate.split('-')[2]);
 
             var diffDays = Math.round(Math.abs((firstDate.getTime() - secondDate.getTime())/(oneDay)));
+            var cost = Math.round((newplandailycost-plandailycost) * diffDays);
+
+            if ($('#plantype').val == 'article') {
+                cost = newcost;
+            }
+            if ($('#plantype').val == 'signup') {
+                cost = 0;
+            }
+            if (expDate = '2525-05-25') {
+                cost = newcost;
+            }
 
             var msg = "";
             if ($('#planstatus').text() != 'Trial') {
                 if ((newplandailycost-plandailycost) * diffDays >= 0) {
-                    msg = " This will cost $" + Math.round((newplandailycost-plandailycost) * diffDays);
+                    msg = " This will cost $" +cost;
                     msg = msg.replace(/(.+)(\d\d)$/g, "$1.$2");
                 }
             }
@@ -455,7 +472,7 @@ Acme.UserProfileController.prototype.pageEvents = function ()
                                 window.location.reload();
                             } else {
                                 $('#dialog').parent().remove();
-                                Acme.SigninView.render("userPlan", data.error);
+                                Acme.SigninView.render("userPlan", "Error", {message: data.error});
                             }
                         },
                         error: function (jqXHR, textStatus, errorThrown) {
