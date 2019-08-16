@@ -356,6 +356,7 @@ Acme.UserProfileController.prototype.pageEvents = function ()
         title = "Cancel your subscription";
         message = "Are you sure you want to cancel your subscription?"
         if ($(e.target).text() == 'Restart Subscription') {
+            title = "Restart your subscription";
             message = "Please confirm you wish to restart your subscription. You will be billed on the next payment date shown in My Account. "
             status = 'paid'
         }

@@ -14,6 +14,7 @@
             position: (articleCount+1),
             containerClass: "card-feature-pub-mobile card-feature-pub-tablet card-feature-pub-desktop card-feature-pub-desktop-lg",
             imageSize: {width: 149, height: 205},
+            template: 'feature',
             url: altUrls[0] is defined ? networkData.defaultBlogUrl ~ altUrls[0] : ''
         }) | raw}}
         {% set articleCount = (dev) ? articleCount : articleCount + 1 %}
@@ -26,6 +27,7 @@
             position: (articleCount+1),
             containerClass: "card-feature-pub-mobile card-feature-pub-tablet card-feature-pub-desktop card-feature-pub-desktop-lg",
             imageSize: {width: 149, height: 205},
+            template: 'feature',
             url: altUrls[1] is defined ? networkData.defaultBlogUrl ~ altUrls[1] : ''
         }) | raw}}
         {% set articleCount = (dev) ? articleCount : articleCount + 1 %}
@@ -37,6 +39,7 @@
             position: (articleCount+1),
             containerClass: "card-feature-pub-mobile card-feature-pub-tablet card-feature-pub-desktop card-feature-pub-desktop-lg",
             imageSize: {width: 149, height: 205},
+            template: 'feature',
             url: altUrls[2] is defined ? networkData.defaultBlogUrl ~ altUrls[2] : ''
         }) | raw}}
         {% set articleCount = (dev) ? articleCount : articleCount + 1 %}
@@ -46,6 +49,7 @@
         {{this.render('../_single-article.twig', {
             article: articles[articleCount], 
             position: (articleCount+1),
+            template: 'feature',
             containerClass: "card-feature-pub-mobile card-feature-pub-tablet card-feature-pub-desktop card-feature-pub-desktop-lg",
             imageSize: {width: 149, height: 205},
             url: altUrls[3] is defined ? networkData.defaultBlogUrl ~ altUrls[3] : ''
