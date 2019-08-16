@@ -20180,6 +20180,7 @@ Acme.confirmView = new Acme.Confirm('modal', 'signin', layouts);
 Acme.UserProfileController = function()
 {
     this.csrfToken      = $('meta[name="csrf-token"]').attr("content");
+    console.log(this.csrfToken);
     this.mailChimpUser  = false;
    
 
@@ -20591,12 +20592,18 @@ Acme.UserProfileController.prototype.pageEvents = function ()
             var oldcost = listelem.find('#currentcost').val();
             var newdays = listelem.find('#planperiod').val();
             var olddays = listelem.find('#currentperiod').val();
+            var newcount = listelem.find('#planperiodcount').val();
+            var oldcount = listelem.find('#currentperiodcount').val();
+            if (newdays == 'day')   {newdays = 1;}
             if (newdays == 'week')  {newdays = 7;}
             if (newdays == 'month') {newdays = 30;}
             if (newdays == 'year')  {newdays = 365;}
+            if (olddays == 'day')   {olddays = 1;}
             if (olddays == 'week')  {olddays = 7;}
             if (olddays == 'month') {olddays = 30;}
             if (olddays == 'year')  {olddays = 365;}
+            olddays = olddays * oldcount;
+            newdays = newdays * newcount;
             var newplandailycost = newcost/newdays;
             var plandailycost = oldcost/olddays;
             var expDate = listelem.find('#expdate').val();
@@ -20606,11 +20613,22 @@ Acme.UserProfileController.prototype.pageEvents = function ()
             var secondDate = new Date(expDate.split('-')[0],expDate.split('-')[1]-1,expDate.split('-')[2]);
 
             var diffDays = Math.round(Math.abs((firstDate.getTime() - secondDate.getTime())/(oneDay)));
+            var cost = Math.round((newplandailycost-plandailycost) * diffDays);
+
+            if ($('#plantype').val == 'article') {
+                cost = newcost;
+            }
+            if ($('#plantype').val == 'signup') {
+                cost = 0;
+            }
+            if (expDate = '2525-05-25') {
+                cost = newcost;
+            }
 
             var msg = "";
             if ($('#planstatus').text() != 'Trial') {
                 if ((newplandailycost-plandailycost) * diffDays >= 0) {
-                    msg = " This will cost $" + Math.round((newplandailycost-plandailycost) * diffDays);
+                    msg = " This will cost $" +cost;
                     msg = msg.replace(/(.+)(\d\d)$/g, "$1.$2");
                 }
             }
@@ -20618,7 +20636,8 @@ Acme.UserProfileController.prototype.pageEvents = function ()
                 .done(function(r) {
 
                     $('#dialog').parent().remove();
-                    
+                    requestData._csrf = $('meta[name="csrf-token"]').attr("content");
+                    console.log(requestData);
                     $.ajax({
                         type: 'post',
                         url: _appJsConfig.baseHttpPath + '/user/change-paywall-plan',
@@ -20630,7 +20649,7 @@ Acme.UserProfileController.prototype.pageEvents = function ()
                                 window.location.reload();
                             } else {
                                 $('#dialog').parent().remove();
-                                Acme.SigninView.render("userPlan", data.error);
+                                Acme.SigninView.render("userPlan", "Error", {message: data.error});
                             }
                         },
                         error: function (jqXHR, textStatus, errorThrown) {
@@ -21320,9 +21339,9 @@ $('#signinBtn, #articleSigninBtn').on('click', function(e) {
         if (!validated) return;
 
 
-        $('#card-errors').text('');
+        $('#signupErros').text('');
         if ( $('#password').val() !== $('#verifypassword').val() ) {
-            $('#card-errors').text('Password fields do not match.');
+            $('#signupErros').text('Password fields do not match.');
             return;
         }
 
@@ -21360,7 +21379,7 @@ $('#signinBtn, #articleSigninBtn').on('click', function(e) {
                 if (result.error) {
                     modal.closeWindow();
                     // Inform the user if there was an error
-                    var errorElement = document.getElementById('card-errors');
+                    var errorElement = document.getElementById('signupErros');
                     errorElement.textContent = result.error.message;
                 } else {
                     // Send the token to your server
@@ -21409,16 +21428,15 @@ $('#signinBtn, #articleSigninBtn').on('click', function(e) {
             elem.addClass('c-button--red');
 
             if (signup == true) {
-                $('#payment-head').addClass('hidden');
-                $('#payment-types').addClass('hidden');
-                $('#stripe-form').addClass('hidden');
-                $('#payment-total').addClass('hidden');
+                $('#payment-head').hide();
+                $('#payment-types').hide();
+                $('#stripe-form').hide();
+                $('#payment-total').hide();
             } else {
-                $('#payment-head').removeClass('hidden');
-                $('#payment-types').removeClass('hidden');
-                $('#stripe-form').removeClass('hidden');
-                $('#payment-total').removeClass('hidden');
-   
+                $('#payment-head').show();
+                $('#payment-types').show();
+                $('#stripe-form').show();
+                $('#payment-total').show();
             }
 
             self.validate();
@@ -21480,7 +21498,7 @@ $('#signinBtn, #articleSigninBtn').on('click', function(e) {
             success: function(data) {
 
                 if(data.success) {
-                    $('#card-errors').text('Completed successfully.');
+                    $('#signupErrors').text('Completed successfully.');
                 } else {
                     modal.closeWindow();
 
@@ -21488,7 +21506,7 @@ $('#signinBtn, #articleSigninBtn').on('click', function(e) {
                     for (var key in data.error) {
                         text = text + data.error[key] + " ";
                     } 
-                    $('#card-errors').text(text);
+                    $('#signupErrors').text(text);
                 }   
             },
             error: function(data) {
