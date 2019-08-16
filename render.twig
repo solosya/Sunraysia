@@ -5,6 +5,7 @@
 {% set feedArr = [] %}
 
 {% set blogLink = "" %}
+{% set thisBlog = {} %}
 
 {# If a page section has articles from multiple blogs, assemble here #}
 {% if config.articleOrder is defined and config.articleOrder | length > 0 %}
@@ -24,24 +25,24 @@
 
 
     {% if config.blogs is defined and blogFeeds[config.blogs[0]] is defined %}
-
-        {% set feedArr = blogFeeds[config.blogs[0]].feed.articles %}
-        {% set blogLink = blogFeeds[section.blogs[0]].link %}
+        {% set thisBlog = blogFeeds[ config.blogs[0] ] %}
+        {% set feedArr = thisBlog.feed.articles %}
+        {% set blogLink = thisBlog.link %}
 
     {% else %}
-        {% set feedArr = blogFeeds[config.blog].feed.articles %}
-        {% set blogLink = blogFeeds[section.blog].link %}
+        {% set thisBlog = blogFeeds[ config.blog ] %}
+        {% set feedArr = thisBlog.feed.articles %}
+        {% set blogLink = thisBlog.link %}
 
     {% endif %}
 
 {% endif %}
 
 
+{# {{_AppHelper.printArray(thisBlog.guid)}} #}
 {% if config.template != '' %}
 
-    {# <pre>
-    {{dump(blogFeeds[ config.blogs[0] ]['guid'])}}
-    </pre> #}
+    
     {% set params = {
         articles        : feedArr,
         link            : config.link is defined ? config.link : blogLink,
@@ -49,7 +50,7 @@
         dev             : dev,
         site            : site,
         networkData     : networkData,
-        blogData        : blogFeeds[ config.blogs[0] ],
+        blogData        : thisBlog,
         adslots         : config.adslots is defined ? config.adslots : [],
         altUrls         : config.alturls is defined ? config.alturls : []
     } %}

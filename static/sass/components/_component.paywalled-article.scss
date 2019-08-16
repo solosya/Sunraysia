@@ -110,7 +110,13 @@
         &--topup{
             color: $error;
         }
-
+        &--underline{
+            text-decoration: underline;
+            color: inherit;
+            &:hover{
+                color: $error;
+            }
+        }
 
     }
     &__subscriptions {
