@@ -133,7 +133,7 @@
                                     <span>{{ pwstats['article_count']}}/{{pwstats['total_articles']}}</span>
                                 </div>
                             {% else %}
-                                <div class="c-account-form__static-text">Free access to Sunraysia Life.</div>
+                                <div class="c-account-form__static-text">Free limited access.</div>
                             {% endif %} 
 
                             <hr class="divide divide--dark" />
@@ -176,7 +176,7 @@
                                 <div class="c-current-plan__spacer"></div>
 
                                 <div class="c-current-plan__subscription-buttons">
-                                    <a id="change-plan" href="#plans" class="c-button c-button--red c-button--2line">Change Subscription</a>                                    
+                                    <a id="change-plan" href="#plans" class="c-button c-button--red c-button--2line">Choose Subscription</a>                                    
                                     <a id="cancelAccount" href="#" class="c-button c-button--red--bordered c-button--2line">Restart Subscription</a>
                                     
                                 </div>
@@ -234,7 +234,7 @@
                                 <div class="c-current-plan__spacer"></div>
 
                                 <div class="c-current-plan__subscription-buttons">
-                                    <a id="change-plan" href="#plans" class="c-button c-button--red c-button--2line">Change Subscription</a>
+                                    <a id="change-plan" href="#plans" class="c-button c-button--red c-button--2line">Choose Subscription</a>
                                     <a id="cancelAccount" href="#" class="c-button c-button--red--bordered c-button--2line">Cancel subscription</a>
                                 </div>
 
@@ -256,7 +256,7 @@
 
                 <div id="plans" class="row u-margin-top-60" style="display:none">
                     <div class="col-12">
-                        <h2 class="c-myAccount__head">Change subscription</h2>
+                        <h2 class="c-myAccount__head">Choose subscription</h2>
                         {% if pwstats['userManager'] == true or pwstats['user_role']['IsSystemAdmin'] %}
 
                             {% set totalPlanUserCount       = pwstats['user_count'] %}
@@ -344,7 +344,7 @@
 
                         <form id="update-card-form" action="/update" method="post">
                             <div class="">
-                                <h2 class="c-myAccount__head">Change credit card details</h2>
+                                <h2 class="c-myAccount__head">Credit card details</h2>
 
                                 <div class="three-column">
                                     <div id="card-element">
