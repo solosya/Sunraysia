@@ -18813,7 +18813,7 @@ Acme.Feed.prototype.fetch = function()
     };
 
     if (this.options.blogid) {
-        this.requestData['blogguid'] = this.options.blogid;
+        this.requestData['blogGuid'] = this.options.blogid;
     }
 
     if (this.options.loadtype == 'user') {
@@ -20632,7 +20632,7 @@ Acme.UserProfileController.prototype.pageEvents = function ()
                     msg = msg.replace(/(.+)(\d\d)$/g, "$1.$2");
                 }
             }
-            Acme.SigninView.render("userPlan", "Are you sure you want to change plan?", {message: msg})
+            Acme.SigninView.render("userPlan", "Please confirm your plan.", {message: msg})
                 .done(function(r) {
 
                     $('#dialog').parent().remove();
