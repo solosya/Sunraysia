@@ -87,10 +87,12 @@
             @include align-items(center);
             @include justify-content(flex-start);
             @include flex-direction(row, horizontal);
-            
+            position: relative;
             @include responsive(sm) {
                 @include margin-bottom(0);
             }
+
+            cursor: pointer;
             
             label {
                 color:$greyish;
@@ -99,6 +101,61 @@
                 @include margin-right(10);
                 @include margin-bottom(0);
                 font-weight:$weightRegular;
+            }
+        }
+        &__dropdown{
+            display: none;
+            border:1px solid $black_sh3;
+            border-radius: 4px;
+            background: $white;
+            top: 0;
+            max-height: 500px;
+            overflow-y: scroll;
+            &:focus {
+                border-color: $blue;
+            }
+            position: absolute;
+            z-index: 10;
+            cursor: pointer;
+            &--active{
+                display: block;
+            }
+            &--field{
+                &:after{
+                    content: "";
+                    width: 14px;
+                    height: 7px;
+                    display: block;
+                    float: right;
+                    margin-top: 10px;
+                    margin-left: 10px;
+                    background-repeat: no-repeat;
+                    background-size: contain;
+                    background-image: url("../icons/arrow.svg");
+                }
+            }
+            &--item{
+                @include padding(10);
+                &:hover{
+                    background: $blue;
+                    color: $white;
+                }
+                &:first-child{
+                    &:after{
+                        content: "";
+                        width: 14px;
+                        height: 7px;
+                        display: block;
+                        float: right;
+                        margin-top: 5px;
+                        margin-left: 10px;
+                        background-repeat: no-repeat;
+                        background-size: contain;
+                        background-image: url("../icons/arrow.svg");
+                        @include transform(rotate(180deg));
+                    }
+                }    
+
             }
         }
     }

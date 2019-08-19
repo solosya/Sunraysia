@@ -126,25 +126,27 @@
 
                 </div>
 
-
+            {# {{_AppHelper.printarray(sideMenu)}} #}
            {# *********************************************
                         Filter and search
               ********************************************* #}
                 <div class="c-filter--search c-filter--search-xs form-group">
                     <div class="c-filter--search--field c-filter--search--field-xs">
-                        <span id="search-button-2" class="fa fa-search c-search-icon"></span>
+                        {# <span id="search-button-2" class="fa fa-search c-search-icon"></span> #}
                         <input type="text" class="form-control" name="searcg" id="search" placeholder="Search the classifieds">
                     </div>
-                    {# <div class="c-filter--search--select c-filter--search--select-xs">
-                        <div class="selectdropdown" style="width:100%">
-                            <select class="form-control">
-                                <option>Option one</option>
-                                <option>Option Two</option>
-                                <option>Option Three</option>
-                                <option>Option Four</option>
-                            </select>
+                    <div class="c-filter--search--select c-filter--search--select-xs">
+                        <div class="form-control c-filter--search__dropdown--field" id="classySearchSelect" data-guid="{{blogData.id}}">All</div>
+                        <div id="classySearchDropdown" class="c-filter--search__dropdown " style="width:100%">
+                           <div class="c-filter--search__dropdown--item j-searchSection" id="classySearchSelect" data-guid="{{blogData.id}}">All</div>
+                           {% for item in sideMenu %}
+                                <div class="c-filter--search__dropdown--item j-searchSection" data-guid="{{item.id}}">{{item.blogTitle}}</div>
+                                {% for subitem in item.children %}
+                                    <div class="c-filter--search__dropdown--item j-searchSection" data-guid="{{subitem.id}}">{{item.blogTitle}} | {{subitem.blogTitle}}</div>
+                                {% endfor %}
+                           {% endfor %}
                         </div>
-                    </div> #}
+                    </div>
                     <div class="c-filter--search--button">
                         <button id="search-button" type="submit" class="c-button c-button--red">Search</button>
                     </div>
@@ -363,6 +365,17 @@
             }
         });
 
+        var blogGuid = $('#classySearchSelect').data('guid');
+        $('#classySearchSelect').click(function(){
+            $('#classySearchDropdown').addClass('c-filter--search__dropdown--active');
+        });
+        $('.j-searchSection').click(function(){
+            blogGuid = $(this).data('guid');
+            $('#classySearchSelect').data('guid', $(this).data('guid'));
+            $('#classySearchSelect').text($(this).text());
+            $('#classySearchDropdown').removeClass('c-filter--search__dropdown--active');
+        })
+
 
 
         {# *******************************************
@@ -374,7 +387,7 @@
             container       : 'results',
             limit           : 12,
             offset          : 0,
-            blogid          : '{{blogData.guid}}',
+            blogid          : blogGuid,
             loadtype        : 'api/search',
             searchterm      : "{{search}}",
             name            : 'fd', //name of the loadmore button
