@@ -40,6 +40,12 @@
     <link rel="stylesheet" href="https://d3pbdxdl8c65wb.cloudfront.net/themes/{{themeId}}/static/css/main.chunk.css?ver={{photoVersion}}" type="text/css" media="all">
     <link rel="stylesheet" href="https://d3pbdxdl8c65wb.cloudfront.net/themes/{{themeId}}/static/css/1.chunk.css?ver={{photoVersion}}" type="text/css" media="all">
     <script defer type="text/javascript" src='https://d3pbdxdl8c65wb.cloudfront.net/themes/{{themeId}}/static/js/1.chunk.js?ver="{{photoVersion}}'></script>
+    
+    {# {% if _User.isAdminUser() %} #}
+        {# <link rel="stylesheet" href="https://d3pbdxdl8c65wb.cloudfront.net/themes/{{themeId}}/static/css/Admin.chunk.css?ver={{photoVersion}}" type="text/css" media="all">
+        <script defer type="text/javascript" src='https://d3pbdxdl8c65wb.cloudfront.net/themes/{{themeId}}/static/js/Admin.chunk.js?ver="{{photoVersion}}'></script> #}
+    {# {% endif %} #}
+
     <script defer type="text/javascript" src='https://d3pbdxdl8c65wb.cloudfront.net/themes/{{themeId}}/static/js/main.chunk.js?ver="{{photoVersion}}'></script>
 {% endif %}
 
@@ -47,7 +53,12 @@
 
 {% if env == 'dev'%}
     <link rel="stylesheet" href="{{networkData.templatePath}}/../photosales/static/css/main.chunk.css" type="text/css" media="all">
-    <link rel="stylesheet" href="{{networkData.templatePath}}/../photosales/static/css/1.chunk.css" type="text/css" media="all">
-    <script defer type="text/javascript" src="{{networkData.templatePath}}/../photosales/static/js/1.chunk.js"></script>
-    <script defer type="text/javascript" src="{{networkData.templatePath}}/../photosales/static/js/main.chunk.js"></script>
+    {# <link rel="stylesheet" href="{{networkData.templatePath}}/../photosales/static/css/1.chunk.css" type="text/css" media="all"> #}
+    <link rel="stylesheet" href="{{networkData.templatePath}}/../photosales/static/css/2.chunk.css" type="text/css" media="all">
+    <script  type="text/javascript" src="{{networkData.templatePath}}/../photosales/static/js/2.chunk.js"></script>
+    <script  type="text/javascript" src="{{networkData.templatePath}}/../photosales/static/js/Admin.chunk.js"></script>
+    <script  type="text/javascript" src="{{networkData.templatePath}}/../photosales/static/js/main.chunk.js"></script>
+    <script>
+    alert('hi there!!');
+    </script>
 {% endif %}

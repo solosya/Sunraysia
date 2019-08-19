@@ -57,11 +57,11 @@
                             </div>
                         </div>
                         <!--Create listing form section start-->
-                        
-                        
-                        
-                        
-                        
+
+
+
+
+
                         <div class="row">
 
 
@@ -76,16 +76,14 @@
                                 </div>
                                 <div class="c-formnotice u-font-size-15">Fields marked with an * are required.</div>
                             </div>
-                        
-                        
-                        
-                        
-                        
-                        
 
 
-                            
-                            
+
+
+
+
+
+
                             {# *******************************************************
                                             Category Pulldown
                             ******************************************************* #}
@@ -123,7 +121,7 @@
                             <div class="col-lg-6  u-margin-top-10">
                                 <div class="c-form__group">
                                     <label class="c-form__label" for="ad_details">Ad details*</label>
-                                    <textarea  rows="10" class="c-form__input c-form__input--bordered u-line-height-15 u-padding-10" id="ad_details" placeholder="Nissan 4WD for sale $1000 ONO. Contact Pete on ..." name="description"  ></textarea>
+                                    <textarea id="content" rows="10" class="c-form__input c-form__input--bordered u-line-height-15 u-padding-10" id="ad_details" placeholder="Nissan 4WD for sale $1000 ONO. Contact Pete on ..." name="description"  ></textarea>
                                     <div class="c-form__help-block">Please fill out this field.</div>
                                 </div>
                             </div>
@@ -171,7 +169,7 @@
                                 </div>
                             
                                 <div class="c-placelisting__paydiscription u-font-size-15">Our friendly staff will contact you by phone with the cost of your advertisement. Payment is required before publication, and can be made by credit card over the phone, or in person.</div>
-                                <p class="c-placelisting__cost">The estimated cost of this listing is:  $<span id="ad_cost">0</span>.</p>
+                                <p class="c-placelisting__cost">The estimated cost of this listing per day is:  $<span id="ad_cost">0</span>.</p>
                                 <p>This is an approximate cost only. Images are an additional charge. Discounts apply for publishing on multiple days.</p>
 
                             </div>
@@ -306,7 +304,13 @@
             this.validateRules = {
                 "title"         : ["notEmpty"], 
                 "content"       : ["notEmpty"], 
-                "start_date"    : ["notEmpty"], 
+                "start_date"    : ["notEmpty"],
+                "firstname"     : ["notEmpty"],
+                "lastname"      : ["notEmpty"],
+                "email_address" : ["notEmpty"],
+                "phone_number"  : ["notEmpty"],
+                "street_address": ["notEmpty"],
+                "postcode"      : ["notEmpty"],
             };
 
             this.validateFields = Object.keys(this.validateRules);
@@ -472,7 +476,7 @@
 
                 var words = text.split('¡');
                 var wordCount = words.length;
-                var cost = wordCount * 1.38;
+                var cost = wordCount * 1.53;
                 $('#ad_cost').text(cost.toFixed(2));
             });
 
