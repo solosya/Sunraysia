@@ -2,7 +2,7 @@
 
 {% set user = _User.getUser() %}
 {% set theDate = _AppHelper.getCurrentTimestampBasedOnTimezone() %}
-{% set theDate = _AppHelper.getDefaultTimezoneDateTime(theDate, "l j F Y") %}
+{% set theDate = _AppHelper.getDefaultTimezoneDateTime(theDate, "l, F j, Y") %}
 
 {% set logo = networkData.templatePath~'/static/images/logo.png'%}
 {% if networkData.logoMedia | length > 0 %}
