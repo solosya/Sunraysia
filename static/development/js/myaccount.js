@@ -460,7 +460,7 @@ Acme.UserProfileController.prototype.pageEvents = function ()
 
                     $('#dialog').parent().remove();
                     requestData._csrf = $('meta[name="csrf-token"]').attr("content");
-                    console.log(requestData);
+
                     $.ajax({
                         type: 'post',
                         url: _appJsConfig.baseHttpPath + '/user/change-paywall-plan',

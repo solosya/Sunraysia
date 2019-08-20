@@ -1,4 +1,4 @@
-<div class="container-fluid no-padding o-body-container  o-body-container-md" data-ver="4">
+<div class="container-fluid no-padding o-body-container  o-body-container-md" data-ver="5">
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-lg-12"> 
@@ -260,7 +260,8 @@
                             </div> #}
 
                             <div  class="col-lg-12 u-margin-top-60">
-                                <input name="" type="submit" class="c-button c-button-inline c-button-md c-button--lightgrey" value="Submit listing">
+                                <button id="classifieds_submit" name="" type="submit" class="c-button c-button-block c-button-md c-button--lightgrey" style="position:relative">Submit listing</button>
+                                <p id="form-errors" class="u-font-size-15 u-font-weight-medium u-margin-top-10" style="color: #c51515;display:none">There were some errors in the form.  Check the highlighted fields above.</p>
                             </div>
                         </div>
                         <!--Create listing form section end--> 
@@ -318,8 +319,10 @@
             this.menus = {};
 
             this.data = {
-                attachment : "https://cdn.filepicker.io/api/file/g7dl1GXQAm2qtSqse6Ts"
+                attachment : ""
             };
+
+               // attachment : "https://cdn.filepicker.io/api/file/g7dl1GXQAm2qtSqse6Ts"
 
             this.addPullDowns();
             this.events();
@@ -423,13 +426,16 @@
         ClassifiedsForm.prototype.submit = function()
         {
             var self = this;
-
+            var submitButton = $('#classifieds_submit');
+            var errorField = $('#form-errors');
+            errorField.hide();
             var validated = this.validate();
             if (!validated) {
-                console.log(this.errorFields);
+                errorField.show();
                 this.render();
                 return;
             }
+            submitButton.addClass('spinner').addClass('c-button--spinner').text('');
 
             var formText = "";
             Object.keys(this.data).forEach(function(el) {
@@ -445,8 +451,17 @@
             }
 
             Acme.server.create('/api/contact/send-email', formData).done(function(r) {
-                console.log(r);
+
+                if (r.success === '1' || r.success === 1) {
+                    $().General_ShowNotification({message: 'Classified sent, thanks!'});
+                    setTimeout( function() {
+                        window.location.reload(false);
+                    }, 3000)
+                } else {
+                    submitButton.removeClass('spinner').removeClass('c-button--spinner').text('SUBMIT LISTING');
+                }
             }).fail(function(r) {
+                submitButton.removeClass('spinner').removeClass('c-button--spinner').text('SUBMIT LISTING');
                 console.log(r);
             });
         };
@@ -487,7 +502,6 @@
 
             $('#uploadFileBtn').uploadFile({
                 onSuccess: function(data, obj){
-                    console.log(data, obj);
                     self.updateData({attachment: data.url});
                 }
             });
