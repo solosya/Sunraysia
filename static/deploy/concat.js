@@ -17933,7 +17933,7 @@ function(a){"use strict";void 0===a.en&&(a.en={"mejs.plural-form":1,"mejs.downlo
     Acme.Form = function(validators, rules) {
         this.errorField;
         this.errorFields;
-        this.validators = validators || null;
+        this.validators = validators || Acme.Validators;
         this.validateRules = rules || {};
     };
         Acme.Form.prototype = new Acme._View();
