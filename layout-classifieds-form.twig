@@ -331,6 +331,7 @@
         ClassifiedsForm.prototype.listeners = 
         {
             "start_date" : function(data, topic) {
+                console.log('setting start date');
                 this.data.start_date = data['start_date'];
             },
             "start_date_range" : function(data, topic) {
@@ -423,8 +424,10 @@
         ClassifiedsForm.prototype.submit = function()
         {
             var self = this;
+            console.log(self.data);
             var validated = this.validate();
             if (!validated) {
+                console.log(this.errorFields);
                 this.render();
                 return;
             }
@@ -514,16 +517,18 @@
 
                 var data = {};
                 data[e.target.id] = e.date.format('YYYY-MM-DD HH:mm');
-                if(data['start_date'] || data['end_date']) {
-                    if(data['start_date'] && e.date.hour() == 9 && e.date.minute() == 0) {
-                        $('#end_date').data("DateTimePicker").minDate(e.date.hour(16).minute(59));
-                    } else if (data['start_date']) {
-                        $('#end_date').data("DateTimePicker").minDate(e.date);
+                console.log(data);
+                if(data['start_date_range'] || data['end_date_range']) {
+                    if(data['start_date_range'] && e.date.hour() == 9 && e.date.minute() == 0) {
+                        $('#end_date_range').data("DateTimePicker").minDate(e.date.hour(16).minute(59));
+                    } else if (data['start_date_range']) {
+                        $('#end_date_range').data("DateTimePicker").minDate(e.date);
                     }
-                    self.updateData(data);
 
-                    {# Acme.PubSub.publish("update_state", data); #}
                 }
+                self.updateData(data);
+
+                {# Acme.PubSub.publish("update_state", data); #}
             });
 
 
