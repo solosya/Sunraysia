@@ -31,7 +31,7 @@ Acme.Feed.prototype.fetch = function()
     };
 
     if (this.options.blogid) {
-        this.requestData['blogGuid'] = String(this.options.blogid);
+        this.requestData['blogguid'] = this.options.blogid;
     }
 
     if (this.options.loadtype == 'user') {
