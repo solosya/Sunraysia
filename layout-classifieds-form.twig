@@ -250,17 +250,17 @@
                                 </div>
                             </div>
 
-                            <div class="col-lg-12  u-margin-top-30">
+                            {# <div class="col-lg-12  u-margin-top-30">
                                 <div class="c-form__group">
                                     <label>
                                         <input id="terms" name="terms" type="checkbox" class="validate[required]">
                                         <span><!-- fake radio --></span> <span class="u-font-size-15">I have read and accept the <a href="javascript:;">Advertising Terms.</a><span>
                                     </label>
                                 </div>
-                            </div>
+                            </div> #}
 
                             <div  class="col-lg-12 u-margin-top-60">
-                                <input name="" type="submit" class="c-button c-button-inline c-button-md   c-button--lightgrey" value="Submit listing">
+                                <input name="" type="submit" class="c-button c-button-inline c-button-md c-button--lightgrey" value="Submit listing">
                             </div>
                         </div>
                         <!--Create listing form section end--> 
@@ -331,7 +331,6 @@
         ClassifiedsForm.prototype.listeners = 
         {
             "start_date" : function(data, topic) {
-                console.log('setting start date');
                 this.data.start_date = data['start_date'];
             },
             "start_date_range" : function(data, topic) {
@@ -424,7 +423,7 @@
         ClassifiedsForm.prototype.submit = function()
         {
             var self = this;
-            console.log(self.data);
+
             var validated = this.validate();
             if (!validated) {
                 console.log(this.errorFields);
@@ -438,8 +437,9 @@
             });
 
             var formData = {
-                name: "frank",
-                email: "test@what.no",
+                name: self.data.firstname,
+                email: self.data.email_address,
+                emailGroup: "Listings",
                 message: formText,
             }
 
