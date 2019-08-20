@@ -136,13 +136,13 @@
                         <input type="text" class="form-control" name="searcg" id="search" placeholder="Search the classifieds">
                     </div>
                     <div class="c-filter--search--select c-filter--search--select-xs">
-                        <div class="form-control c-filter--search__dropdown--field" id="classySearchSelect" data-guid="{{blogData.id}}">All</div>
+                        <div class="form-control c-filter--search__dropdown--field" id="classySearchSelect" data-guid="{{blogData.guid}}">All</div>
                         <div id="classySearchDropdown" class="c-filter--search__dropdown " style="width:100%">
-                           <div class="c-filter--search__dropdown--item j-searchSection" id="classySearchSelect" data-guid="{{blogData.id}}">All</div>
+                           <div class="c-filter--search__dropdown--item j-searchSection" id="classySearchSelect" data-guid="{{blogData.guid}}">All</div>
                            {% for item in sideMenu %}
-                                <div class="c-filter--search__dropdown--item j-searchSection" data-guid="{{item.id}}">{{item.blogTitle}}</div>
+                                <div class="c-filter--search__dropdown--item j-searchSection" data-guid="{{item.guid}}">{{item.blogTitle}}</div>
                                 {% for subitem in item.children %}
-                                    <div class="c-filter--search__dropdown--item j-searchSection" data-guid="{{subitem.id}}">{{item.blogTitle}} | {{subitem.blogTitle}}</div>
+                                    <div class="c-filter--search__dropdown--item j-searchSection" data-guid="{{subitem.guid}}">{{item.blogTitle}} | {{subitem.blogTitle}}</div>
                                 {% endfor %}
                            {% endfor %}
                         </div>
@@ -382,24 +382,25 @@
                             SEARCH
            ******************************************* #}
 
-        Acme.search = new Acme.View.articleFeed({
-            model           : new Card(),
-            container       : 'results',
-            limit           : 12,
-            offset          : 0,
-            blogid          : blogGuid,
-            loadtype        : 'api/search',
-            searchterm      : "{{search}}",
-            name            : 'fd', //name of the loadmore button
-            renderType      : 'write',
-            before          : '<div class="acme-row">',
-            after           : '</div>',
-            cardType        : "acme-",
-            card_class      : 'acme-col-12 acme-col-md-12 acme-col-lg-4 acme-card-1-mobile acme-card-1-tablet acme-card-1-desktop'
-        }); 
+        
 
         $('#search-button, #search-button-2').on('click', function(e) {
             e.preventDefault();
+            Acme.search = new Acme.View.articleFeed({
+                model           : new Card(),
+                container       : 'results',
+                limit           : 12,
+                offset          : 0,
+                blogid          : blogGuid,
+                loadtype        : 'api/search',
+                searchterm      : "{{search}}",
+                name            : 'fd', //name of the loadmore button
+                renderType      : 'write',
+                before          : '<div class="acme-row">',
+                after           : '</div>',
+                cardType        : "acme-",
+                card_class      : 'acme-col-12 acme-col-md-12 acme-col-lg-4 acme-card-1-mobile acme-card-1-tablet acme-card-1-desktop'
+            }); 
             Acme.search.options.search = $('#search').val();
             if (!Acme.search.options.search) {
                 return;
