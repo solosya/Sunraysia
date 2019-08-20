@@ -433,13 +433,14 @@
 
             var formText = "";
             Object.keys(this.data).forEach(function(el) {
-                formText += el + ": " + self.data[el] + '\r\n';
+                formText += "<p><strong>" + el + ":</strong> " + self.data[el] + "\r\n</p>";
             });
 
             var formData = {
                 name: self.data.firstname,
                 email: self.data.email_address,
                 emailGroup: "Listings",
+                sendToNetworkAdmins: 0,
                 message: formText,
             }
 
@@ -517,7 +518,7 @@
 
                 var data = {};
                 data[e.target.id] = e.date.format('YYYY-MM-DD HH:mm');
-                console.log(data);
+
                 if(data['start_date_range'] || data['end_date_range']) {
                     if(data['start_date_range'] && e.date.hour() == 9 && e.date.minute() == 0) {
                         $('#end_date_range').data("DateTimePicker").minDate(e.date.hour(16).minute(59));
@@ -534,7 +535,7 @@
 
 
             Acme.server.fetch(_appJsConfig.appHostName + '/api/menu/get-menu?name=classifieds').done(function(r) {
-                console.log(r);
+
                 self.categories = r;
                 self.categoryList = self.categories.map(function(item, i) {
                     return {
