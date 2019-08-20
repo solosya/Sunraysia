@@ -18813,7 +18813,7 @@ Acme.Feed.prototype.fetch = function()
     };
 
     if (this.options.blogid) {
-        this.requestData['blogGuid'] = this.options.blogid;
+        this.requestData['blogguid'] = this.options.blogid;
     }
 
     if (this.options.loadtype == 'user') {
@@ -18838,7 +18838,7 @@ Acme.Feed.prototype.fetch = function()
         this.url = this.domain + '/'+ this.options.loadtype;
         this.requestType = 'get';
     }
-
+    console.log(this.requestData);
     return $.ajax({
         url      : this.url,
         data     : this.requestData,
@@ -18846,6 +18846,7 @@ Acme.Feed.prototype.fetch = function()
         dataType : this.dataType,
     }).done(function(data) {
         if (data.success == 1) {
+            console.log(data);
             self.render(data);
         }
     });       
