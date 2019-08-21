@@ -205,13 +205,13 @@ Card.prototype.bindLightbox = function()
                     };
             
                     Acme.LightBox = new Acme.lightBox('modal', 'lightbox-modal', layouts);
-                    console.log(data);
+                    // console.log(data);
                     var article = self.renderCard(data, {
                         cardClass : "acme-card-10-mobile acme-card-10-tablet acme-card-10-desktop",
                         type : "acme-",
                         imageOriginal: true,
                     });
-                    console.log(article);
+                    // console.log(article);
                     Acme.LightBox.render(null, "Classifieds", article);
 
 
@@ -252,7 +252,6 @@ Card.prototype.initDraggable = function()
         cursorAt: { left: 150, top: 50 },
         appendTo:'body',
         start: function( event, ui ) {
-            console.log('starting drag');
             ui.helper.attr('class', '');
             var postImage = $(ui.helper).data('article-image');
             var postText = $(ui.helper).data('article-text');

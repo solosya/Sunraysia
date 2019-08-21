@@ -303,7 +303,8 @@
     // defered script is loaded before this runs
     document.addEventListener("DOMContentLoaded", function() {
 
-
+        new Card();
+        
         Acme.lightBox = function(template, parent, layouts) {
             this.template = template;
             this.parentCont = parent;
