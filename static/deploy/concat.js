@@ -18781,7 +18781,11 @@ Acme.templates.create_user =
 
 // }
 Acme.Feed = function() {
-    this.domain = _appJsConfig.appHostName;
+    if (typeof blogLoadmore != 'undefined' && blogLoadmore == true ){
+        this.domain = _appJsConfig.baseHttpPath;
+    } else {
+        this.domain = _appJsConfig.appHostName;
+    }
     this.requestType = 'post';
     this.csrf = $('meta[name="csrf-token"]').attr("content");
     this.dataType = 'json';
@@ -18838,7 +18842,7 @@ Acme.Feed.prototype.fetch = function()
         this.url = this.domain + '/'+ this.options.loadtype;
         this.requestType = 'get';
     }
-    console.log(this.requestData);
+    
     return $.ajax({
         url      : this.url,
         data     : this.requestData,
@@ -18846,7 +18850,6 @@ Acme.Feed.prototype.fetch = function()
         dataType : this.dataType,
     }).done(function(data) {
         if (data.success == 1) {
-            console.log(data);
             self.render(data);
         }
     });       
@@ -18875,12 +18878,11 @@ Acme.Feed.prototype.events = function()
 
 
     if (this.infinite && this.offset >= this.limit) {
-        console.log(self.elem);
         self.waypoint = new Waypoint({
             element: self.elem,
             offset: '80%',
             handler: function (direction) {
-                console.log('starting fetch');
+                
                 if (direction == 'down') {
                     self.fetch();
                 }
@@ -18909,7 +18911,7 @@ Acme.View.articleFeed = function(options)
     this.after      = options.after      || false;
     this.button_label = options.label    || false;
     this.cardType   = options.cardType   || "";
-
+    
     // when clicking less, reset the original offset count
     this.originalCount = options.non_pinned;
 
@@ -20638,7 +20640,7 @@ Acme.UserProfileController.prototype.pageEvents = function ()
 
                     $('#dialog').parent().remove();
                     requestData._csrf = $('meta[name="csrf-token"]').attr("content");
-                    console.log(requestData);
+
                     $.ajax({
                         type: 'post',
                         url: _appJsConfig.baseHttpPath + '/user/change-paywall-plan',

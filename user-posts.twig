@@ -72,7 +72,8 @@
 
 <script>
     // main script is defered so event listener makes sure
-    // defered script is loaded before this runs
+    // defered script is loaded before this runs'
+    //var blogLoadmore = true;
     document.addEventListener("DOMContentLoaded", function(event) {
 
         Acme.loadMore = new Acme.View.articleFeed({
@@ -80,8 +81,8 @@
             container       : 'loadmore_section',
             offset          : 6,
             limit           : {{limit}},
-            before: '<div class="row">',
-            after: "</div>",
+            before          : '<div class="row">',
+            after           : "</div>",
             loadtype        : 'user_articles',
             name            : 'user-load',
             card_class      : 'col-12 col-md-4 col-lg-3 card-1-mobile card-1-tablet card-1-desktop card-1-desktop-lg u-mobile-no-margin-sides u-mobile-margin-bottom-30'
