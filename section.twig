@@ -218,6 +218,7 @@
 <script>
     // main script is defered so event listener makes sure
     // defered script is loaded before this runs
+
     document.addEventListener("DOMContentLoaded", function() {
         Acme.loadMore = new Acme.View.articleFeed({
             model           : new Card(),
@@ -227,6 +228,7 @@
             limit           : 12,
             offset          : 12,
             blogid          : '{{blogData['guid']}}',
+            blogName        : '{{blogData['title'] | lower}}',
             name            : 'section-load', //name of the search button
             card_class      : 'col-12 col-md-3 card-4-mobile card-2-tablet card-1-desktop card-2-desktop-lg',
             non_pinned      : {{articleCount}}
