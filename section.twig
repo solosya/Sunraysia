@@ -195,8 +195,8 @@
                 {% if limit <= articleCount %}
                     {{ this.render('/partials/ajaxarticles_new.twig', {
                         name            : "section-load",
-                        label           : "load more",
-                        buttonClass     : "",
+                        label           : "",
+                        buttonClass     : "u-display-none",
                     }) | raw }}
                 {% endif %}
 
@@ -219,7 +219,7 @@
             model           : new Card(),
             container       : 'loadmore',
             infinite        : true,
-            label           : "+ Load more",
+            label           : false,
             limit           : 12,
             offset          : 12,
             blogId          : '{{blogData['guid']}}',
