@@ -18781,11 +18781,7 @@ Acme.templates.create_user =
 
 // }
 Acme.Feed = function() {
-    if (typeof blogLoadmore != 'undefined' && blogLoadmore == true ){
-        this.domain = _appJsConfig.baseHttpPath;
-    } else {
-        this.domain = _appJsConfig.appHostName;
-    }
+    this.domain = _appJsConfig.appHostName;
     this.requestType = 'post';
     this.csrf = $('meta[name="csrf-token"]').attr("content");
     this.dataType = 'json';
@@ -18833,6 +18829,9 @@ Acme.Feed.prototype.fetch = function()
 
     if (this.options.search) {
         var refinedSearch = this.options.search;
+        if (this.options.blogid) {
+            this.requestData['blogguid'] = this.options.blogid;
+        }
         if (refinedSearch.indexOf(",listingquery") >= 0) {
             refinedSearch = refinedSearch.replace(",listingquery","");
             this.requestData['meta_info'] = refinedSearch;
@@ -18842,7 +18841,6 @@ Acme.Feed.prototype.fetch = function()
         this.url = this.domain + '/'+ this.options.loadtype;
         this.requestType = 'get';
     }
-    
     return $.ajax({
         url      : this.url,
         data     : this.requestData,
