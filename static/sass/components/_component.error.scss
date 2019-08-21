@@ -6,28 +6,43 @@
     padding-top:60px;
 
     &__title {
-        color: $black;
-        @include font-size(36);
-        font-weight: $weightRegular;
-
+        color: $blue_sh1;
+        @include font-size(60);
+        font-weight: $weightBold;
+        text-align: center;
         // @media #{$tablet} {
         //     @include font-size(27);
         // }
     }
+    &__toppanel{
+        height: 128px;
+    }
+    &__bottompanel{
+        height: 500px;
+        background-color:  $offwhite;
+    }
 
     &__message {
         @include font-size(21);
-        width:345px;
         margin:auto;
-        margin-top: 23px;
-        font-weight: $weightLight;
-
+        margin-top: 50px;
+        margin-bottom: 25px;
+        font-weight: $weightMedium;
+        color: $black;
+        text-align: center;
         // @media #{$tablet} {
         //     @include font-size(17);
         //     width:245px;
         // }
 
 
+    }
+    &__messagelow{
+        font-size: rem(18);
+        line-height: 1.67;
+        text-align: center;
+        color: $greyish;
+        text-decoration: none;
     }
     &__button {
         display:block;

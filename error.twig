@@ -14,25 +14,37 @@
 {% set networkData = _Network.getNetworkData() %}
 {% set config      = _Network.getThemeConfig() %}
 
-<div class="container u-margin-top-60">
+<div class="container  u-margin-bottom-60 c-error__toppanel">
     
     <div class="row">
         <div class="col-12">
 
-            <div class="c-error u-margin-bottom-60">
+            <div class="c-error">
                 <h1 class="c-error__title">Oops!</h1>
-                <p class="c-error__message"> The page you are looking for could not be found.</p>
-                <a class="c-error__button u-margin-top-50" href="/">HOMEPAGE <span class="c-error__arrow"></span></a>
             </div>
         
         </div>
+    </div>
+</div>
+<div class=" c-error__bottompanel">
+    <div class="container">
+        
+        <div class="row">
+            <div class="col-12">
+
+                <div class="c-error u-margin-bottom-60">
+                    <p class="c-error__message">Sorry, that page does not exist or has been moved. </p>
+                    <p class="c-error__messagelow">
+                        Please use the menus or the search tool to find what you are looking for. <br /><br />
+                        For further help, contact <a href="online@sunraysiadaily.com.au">online@sunraysiadaily.com.au</a> 
+                    </p>
+                </div>
+            
+            </div>
 
 
 
-        <div class="col-12 col-md-3">
-            {% if config['inventory']['adSpace']['side-fix'][0] is defined %}
-                <div class="j-adslot" id="{{config['inventory']['adSpace']['side-fix'][0]}}" data-adshape="side-fix"></div>
-            {% endif %}
+            
         </div>
     </div>
 </div>
