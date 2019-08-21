@@ -18813,7 +18813,7 @@ Acme.Feed.prototype.fetch = function()
     };
 
     if (this.options.blogid) {
-        this.requestData['blogguid'] = this.options.blogid;
+        this.requestData['blogGuid'] = this.options.blogid;
     }
 
     if (this.options.loadtype == 'user') {
@@ -20638,7 +20638,7 @@ Acme.UserProfileController.prototype.pageEvents = function ()
 
                     $('#dialog').parent().remove();
                     requestData._csrf = $('meta[name="csrf-token"]').attr("content");
-                    console.log(requestData);
+
                     $.ajax({
                         type: 'post',
                         url: _appJsConfig.baseHttpPath + '/user/change-paywall-plan',
