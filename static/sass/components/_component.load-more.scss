@@ -3,7 +3,7 @@
     @include font-size(18);
     font-weight:$weightBold;
     @include transition(all 0.3s ease);
-    
+    float: right;
     .icon {
         color:$greyish;
         @include margin-right(4);
@@ -15,5 +15,8 @@
         .icon {
             color:$blue_sh1;
         }
+    }
+    &.load_less{
+        float: left;
     }
 }
