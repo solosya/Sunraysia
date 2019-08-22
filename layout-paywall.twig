@@ -88,12 +88,15 @@
                                
 
                                 {% set val = plan.plan_value / 100 %}
+                                {% if val == 0 %}
+                                    {% set val = "FREE" %}
+                                {% endif %}
                                 <div class="col-12 col-md-6 col-lg-3">
                                     <div class="c-paywall-card">
                                         <div class="c-paywall-card__panel">
                                             <h3 class="c-paywall-card__name c-paywall-card__name-xs">{{plan.plan_name}}</h3>
                                             {# <p class="c-paywall-card__excerpt c-paywall-card__excerpt-xs">{{plan.description}}</p> #}
-                                            <div class="c-paywall-card__price c-paywall-card__price-lg">${{val}}</div>
+                                            <div class="c-paywall-card__price c-paywall-card__price-lg">{% if val != 0 %}${% endif %}{{val}}</div>
                                         </div>
 
 

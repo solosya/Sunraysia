@@ -282,6 +282,9 @@
                                     {% if planCost == 19.89 %}
                                         {% set planCost = 19.90 %}
                                     {% endif %}
+                                    {% if planCost == 0 %}
+                                        {% set planCost = "FREE" %}
+                                    {% endif %}
                                     {% if plan.guid == pwstats['plan_guid'] %}
                                         {% set selected = 'selected' %}
                                     {% endif %}
@@ -290,7 +293,7 @@
                                         <div class="c-paywall-card__panel">
                                             <h3 class="c-paywall-card__name c-paywall-card__name-xs">{{plan.plan_name}}</h3>
                                             {# <p class="c-paywall-card__excerpt c-paywall-card__excerpt-xs">{{plan.description}}</p> #}
-                                            <div class="c-paywall-card__price c-paywall-card__price-lg">${{planCost}}</div>
+                                            <div class="c-paywall-card__price c-paywall-card__price-lg">{% if planCost != 0 %}${% endif %}{{planCost}}</div>
                                         </div>
 
 
