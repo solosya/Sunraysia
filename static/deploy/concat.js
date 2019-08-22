@@ -19305,6 +19305,16 @@ Card.prototype.bindLightbox = function()
     $('article.lightbox').unbind().on('click', function (e) {
         e.preventDefault();
         var csrfToken = $('meta[name="csrf-token"]').attr("content");
+        
+        
+        var layouts = {
+            "classifieds" : 'systemCardTemplate',
+        };
+
+        Acme.LightBox = new Acme.lightBox('modal', 'lightbox-modal', layouts);
+        
+        Acme.LightBox.render(null, "Classifieds", {});
+        Acme.LightBox.renderPreLayout('<div class="spinner" style="position:relative;height:70px;margin-top:30px;margin-bottom:30px"></div>');
 
         var isSocial = $(this).parent().data('social');
         var action = 'POST';
@@ -19320,6 +19330,8 @@ Card.prototype.bindLightbox = function()
             var payload = {articleId: articleId, _csrf: csrfToken}
             action = 'GET';
         }
+
+
         if (!isRequestSent) {
 
             $.ajax({
@@ -19343,19 +19355,14 @@ Card.prototype.bindLightbox = function()
                     data.templatePath = _appJsConfig.templatePath;
 
 
-                    var layouts = {
-                        "classifieds" : 'systemCardTemplate',
-                    };
-            
-                    Acme.LightBox = new Acme.lightBox('modal', 'lightbox-modal', layouts);
-                    console.log(data);
+
                     var article = self.renderCard(data, {
                         cardClass : "acme-card-10-mobile acme-card-10-tablet acme-card-10-desktop",
                         type : "acme-",
                         imageOriginal: true,
                     });
-                    console.log(article);
-                    Acme.LightBox.render(null, "Classifieds", article);
+
+                    Acme.LightBox.renderPreLayout(article);
 
 
                     // var articleTemplate = Handlebars.compile(Acme.templates.socialPopup);
@@ -19395,7 +19402,6 @@ Card.prototype.initDraggable = function()
         cursorAt: { left: 150, top: 50 },
         appendTo:'body',
         start: function( event, ui ) {
-            console.log('starting drag');
             ui.helper.attr('class', '');
             var postImage = $(ui.helper).data('article-image');
             var postText = $(ui.helper).data('article-text');

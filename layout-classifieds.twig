@@ -305,6 +305,10 @@
 
         new Card();
         
+        var layouts = {
+            "classifieds" : 'systemCardTemplate',
+        };
+
         Acme.lightBox = function(template, parent, layouts) {
             this.template = template;
             this.parentCont = parent;
@@ -316,12 +320,8 @@
         Acme.lightBox.prototype.handle = function(e) {
             var self = this;
             var $elem = this.parent.handle.call(this, e);
-            console.log('handling from subclass');
         };
 
-        var layouts = {
-            "classifieds" : 'systemCardTemplate',
-        };
 
 
         {# *******************************************
@@ -367,6 +367,8 @@
         $('#classySearchSelect').click(function(){
             $('#classySearchDropdown').addClass('c-filter--search__dropdown--active');
         });
+
+
         $('.j-searchSection').click(function(){
             blogGuid = $(this).data('guid');
             $('#classySearchSelect').data('guid', $(this).data('guid'));
@@ -395,8 +397,6 @@
                             SEARCH
            ******************************************* #}
 
-        
-
         $('#search-button, #search-button-2').on('click', function(e) {
             if (blogGuid != ""){
                 e.preventDefault();
@@ -422,31 +422,8 @@
             }
         }); 
 
-
-
-
-        {# Acme.LightBox = new Acme.lightBox('modal', 'signin-modal', layouts); #}
-
-        {# $(document).unbind().on('click', 'article.lightbox', function (e) {
-            e.preventDefault();
-            var csrfToken = $('meta[name="csrf-token"]').attr("content");
-            Acme.LightBox.render("classifieds", "Log in", );
-
-        }); #}
-
-
     
     });
-
-
-
-
-
-
-
-
-
-
 
 
 </script>
