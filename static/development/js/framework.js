@@ -736,8 +736,6 @@
         Acme.modal.prototype = new Acme.listen();
 
         Acme.modal.prototype.render = function(layout, title, data) {
-            console.log(layout);
-            console.log(title);
             var preRendered = false;
 
             if (typeof data === 'string') {
@@ -749,15 +747,16 @@
             if (title) {
                 this.data['title'] = title;
             }
+
+
             this.data['name'] = this.parentCont;
             var tmp = Handlebars.compile(Acme.templates[this.template]);
             var tmp = tmp(this.data);
 
             $('html').addClass('u-noscroll')
             $('body').addClass('u-noscroll').append(tmp);
-
+console.log(layout);
             if (layout) {
-                console.log('rendering layout');
                 this.renderLayout(layout, this.data);
             }
 

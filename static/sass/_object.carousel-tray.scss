@@ -9,15 +9,10 @@
 .carousel-tray__item {
     position:relative;
     list-style: none;
-    margin-right:15px;
-    height:375px;
-    width:100%;
-    margin-bottom: 7px;
+    height:275px;
+    width:90%;
+    margin-bottom: 20px;
 
-    &:hover {
-        // border: 2px solid white;
-        cursor: move;
-    }
 }
 
 .carousel-tray__img {
@@ -29,7 +24,7 @@
 .carousel-tray__delete {
     display:block;
     position:absolute;
-    top:0;
+    top:-9px;
     right:0;
     width:28px;
     height:28px;

@@ -146,13 +146,13 @@ Acme.templates.spinner =
 
 
 
-Acme.templates.carousel_item = 
-'<li class="carousel-tray__item swap-images"> \
-    <div data-id="{{imageid}}" class="carousel-tray__delete"> \
-        <span class="o-close"></span> \
-    </div> \
-    <img class="carousel-tray__img" src="{{imagePath}}" /> \
-</li>';
+// Acme.templates.carousel_item = 
+// '<li class="carousel-tray__item swap-images"> \
+//     <div data-id="{{imageid}}" class="carousel-tray__delete"> \
+//         <span class="o-close"></span> \
+//     </div> \
+//     <img class="carousel-tray__img" src="{{imagePath}}" /> \
+// </li>';
 
 Acme.templates.swappingHelper = 
 '<div class="SwappingHelper" style="display:none"> \
@@ -233,9 +233,9 @@ Acme.templates.subscribeTerms =
     </div>';
 
 Acme.templates.listingDeleteTmpl =  
-    '<p>{{msg}}</p> \
-    <div> \
-        <form> \
+    '<p style="margin-top:10px;">{{msg}}</p> \
+    <div style="display:flex"> \
+        <form style="margin:auto; margin-top:20px;"> \
             <button class="c-button c-button--inline c-button--rounded c-button--blue-bordered u-margin-right-10" data-role="{{role}}">DELETE</button> \
             <button class="c-button c-button--inline c-button--rounded c-button--blue-bordered" data-role="cancel">CANCEL</button> \
         </form> \

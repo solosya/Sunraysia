@@ -18061,8 +18061,6 @@ function(a){"use strict";void 0===a.en&&(a.en={"mejs.plural-form":1,"mejs.downlo
         Acme.modal.prototype = new Acme.listen();
 
         Acme.modal.prototype.render = function(layout, title, data) {
-            console.log(layout);
-            console.log(title);
             var preRendered = false;
 
             if (typeof data === 'string') {
@@ -18074,15 +18072,16 @@ function(a){"use strict";void 0===a.en&&(a.en={"mejs.plural-form":1,"mejs.downlo
             if (title) {
                 this.data['title'] = title;
             }
+
+
             this.data['name'] = this.parentCont;
             var tmp = Handlebars.compile(Acme.templates[this.template]);
             var tmp = tmp(this.data);
 
             $('html').addClass('u-noscroll')
             $('body').addClass('u-noscroll').append(tmp);
-
+console.log(layout);
             if (layout) {
-                console.log('rendering layout');
                 this.renderLayout(layout, this.data);
             }
 
@@ -18367,13 +18366,13 @@ Acme.templates.spinner =
 
 
 
-Acme.templates.carousel_item = 
-'<li class="carousel-tray__item swap-images"> \
-    <div data-id="{{imageid}}" class="carousel-tray__delete"> \
-        <span class="o-close"></span> \
-    </div> \
-    <img class="carousel-tray__img" src="{{imagePath}}" /> \
-</li>';
+// Acme.templates.carousel_item = 
+// '<li class="carousel-tray__item swap-images"> \
+//     <div data-id="{{imageid}}" class="carousel-tray__delete"> \
+//         <span class="o-close"></span> \
+//     </div> \
+//     <img class="carousel-tray__img" src="{{imagePath}}" /> \
+// </li>';
 
 Acme.templates.swappingHelper = 
 '<div class="SwappingHelper" style="display:none"> \
@@ -18454,9 +18453,9 @@ Acme.templates.subscribeTerms =
     </div>';
 
 Acme.templates.listingDeleteTmpl =  
-    '<p>{{msg}}</p> \
-    <div> \
-        <form> \
+    '<p style="margin-top:10px;">{{msg}}</p> \
+    <div style="display:flex"> \
+        <form style="margin:auto; margin-top:20px;"> \
             <button class="c-button c-button--inline c-button--rounded c-button--blue-bordered u-margin-right-10" data-role="{{role}}">DELETE</button> \
             <button class="c-button c-button--inline c-button--rounded c-button--blue-bordered" data-role="cancel">CANCEL</button> \
         </form> \
@@ -19566,6 +19565,7 @@ Acme.Confirm = function(template, parent, layouts) {
         $('.message').toggleClass('hide');
     };
     Acme.Confirm.prototype.handle = function(e) {
+
         var self = this;
         this.parent.handle.call(this, e);
         var $elem = $(e.target);
@@ -19583,7 +19583,7 @@ Acme.Confirm = function(template, parent, layouts) {
                 $.each($('#loginForm').serializeArray(), function () {
                     formData[this.name] = this.value;
                 });
-                console.log(_appJsConfig.baseHttpPath + '/api/auth/login');
+
                 Acme.server.create(_appJsConfig.baseHttpPath + '/api/auth/login', formData).done(function(r) {
                     if (r.success === 1) {
                         window.location.href = location.origin;
@@ -19594,27 +19594,7 @@ Acme.Confirm = function(template, parent, layouts) {
             }
 
 
-            if ($elem.hasClass('register')) {
-                e.preventDefault();
-                var formData = {};
-                $.each($('#registerForm').serializeArray(), function () {
-                    formData[this.name] = this.value;
-                });
-
-                if (formData['email'] !== '' && formData['name'] !== ''){
-                    $.get( 'https://submit.pagemasters.com.au/ubt/submit.php?email='+encodeURI(formData['email'])+'&name='+encodeURI(formData['name']) );
-                    $elem.addClass('spinner');
-                    function close() {
-                        self.closeWindow();
-                    };
-                    setTimeout(close, 2000);
-
-                } else {
-                    alert ("Please fill out all fields.");
-                }
-            }
-
-
+            
             if ($elem.hasClass('forgot')) {
                 e.preventDefault();
                 var formData = {};
@@ -19649,17 +19629,6 @@ Acme.Confirm = function(template, parent, layouts) {
                 $elem.addClass("spinner");
                 Acme.PubSub.publish("update_state", {'delete listing': "" });
             }
-
-            if ($elem.data('role') === 'deleteImage') {
-                // console.log('you want to delete an image???');
-                // console.log(self.data);
-                Acme.PubSub.publish("update_state", {'delete image': self.data });
-
-                // $elem.addClass("spinner");
-                // Acme.PubSub.publish("update_state", {'delete listing': "" });
-            }
-
-
         }
         if ($elem.hasClass('layout')) {
             var layout = $elem.data('layout');

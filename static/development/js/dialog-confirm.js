@@ -16,6 +16,7 @@ Acme.Confirm = function(template, parent, layouts) {
         $('.message').toggleClass('hide');
     };
     Acme.Confirm.prototype.handle = function(e) {
+
         var self = this;
         this.parent.handle.call(this, e);
         var $elem = $(e.target);
@@ -33,7 +34,7 @@ Acme.Confirm = function(template, parent, layouts) {
                 $.each($('#loginForm').serializeArray(), function () {
                     formData[this.name] = this.value;
                 });
-                console.log(_appJsConfig.baseHttpPath + '/api/auth/login');
+
                 Acme.server.create(_appJsConfig.baseHttpPath + '/api/auth/login', formData).done(function(r) {
                     if (r.success === 1) {
                         window.location.href = location.origin;
@@ -44,27 +45,7 @@ Acme.Confirm = function(template, parent, layouts) {
             }
 
 
-            if ($elem.hasClass('register')) {
-                e.preventDefault();
-                var formData = {};
-                $.each($('#registerForm').serializeArray(), function () {
-                    formData[this.name] = this.value;
-                });
-
-                if (formData['email'] !== '' && formData['name'] !== ''){
-                    $.get( 'https://submit.pagemasters.com.au/ubt/submit.php?email='+encodeURI(formData['email'])+'&name='+encodeURI(formData['name']) );
-                    $elem.addClass('spinner');
-                    function close() {
-                        self.closeWindow();
-                    };
-                    setTimeout(close, 2000);
-
-                } else {
-                    alert ("Please fill out all fields.");
-                }
-            }
-
-
+            
             if ($elem.hasClass('forgot')) {
                 e.preventDefault();
                 var formData = {};
@@ -99,17 +80,6 @@ Acme.Confirm = function(template, parent, layouts) {
                 $elem.addClass("spinner");
                 Acme.PubSub.publish("update_state", {'delete listing': "" });
             }
-
-            if ($elem.data('role') === 'deleteImage') {
-                // console.log('you want to delete an image???');
-                // console.log(self.data);
-                Acme.PubSub.publish("update_state", {'delete image': self.data });
-
-                // $elem.addClass("spinner");
-                // Acme.PubSub.publish("update_state", {'delete listing': "" });
-            }
-
-
         }
         if ($elem.hasClass('layout')) {
             var layout = $elem.data('layout');
