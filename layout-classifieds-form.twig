@@ -522,7 +522,15 @@
 
             var formText = "";
             Object.keys(this.data).forEach(function(el) {
-                formText += "<p><strong>" + el + ":</strong> " + self.data[el] + "</p>";
+                var data = self.data[el];
+
+                if (el === 'attachments') {
+                    data = '<br />' + data.map(function(img) { 
+                        return '<a href="'+img+'">'+img+'</a>';
+                    }).join('<br />');
+                }
+
+                formText += "<p><strong>" + el + ":</strong> " + data + "</p>";
             });
 
             var formData = {
