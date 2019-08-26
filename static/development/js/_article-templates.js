@@ -47,14 +47,14 @@ var cardTemplateTop =
 '<div class="{{containerClass}} "> \
     <a  href="{{url}}" \
         class="swap" \
-        data-id="{{id}}" \
-        data-guid="{{guid}}" \
+        data-id="{{params.id}}" \
+        data-guid="{{params.guid}}" \
         data-position="{{position}}" \
         data-social={{params.social}} \
         data-article-image="{{{image}}}" \
         data-article-text="{{params.title}}"> \
         \
-        <article class="{{cardType}}c-cards-view {{# ifCond params.social "==" 1}} social {{/ifCond}} {{params.category}} {{hasMediaClass}} {{status}}">';
+        <article class="{{cardType}}c-cards-view {{# ifCond params.social "==" 1}} social {{/ifCond}} {{params.category}} {{hasMediaClass}} {{status}} {{lightbox}}">';
 
 var cardTemplateBottom = 
         '</article>\

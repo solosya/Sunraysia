@@ -11,6 +11,7 @@ Card.prototype.renderCard = function(card, options)
     var template = (options.template) ? Acme.templates[options.template] : Acme.templates.systemCardTemplate;
     card['containerClass'] = options.cardClass || "";
     card['cardType'] = options.type || "";
+    card['lightbox'] = options.lightbox || "";
 
 
     
