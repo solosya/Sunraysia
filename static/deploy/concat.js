@@ -18267,14 +18267,14 @@ var cardTemplateTop =
 '<div class="{{containerClass}} "> \
     <a  href="{{url}}" \
         class="swap" \
-        data-id="{{id}}" \
-        data-guid="{{guid}}" \
+        data-id="{{params.id}}" \
+        data-guid="{{params.guid}}" \
         data-position="{{position}}" \
         data-social={{params.social}} \
         data-article-image="{{{image}}}" \
         data-article-text="{{params.title}}"> \
         \
-        <article class="{{cardType}}c-cards-view {{# ifCond params.social "==" 1}} social {{/ifCond}} {{params.category}} {{hasMediaClass}} {{status}}">';
+        <article class="{{cardType}}c-cards-view {{# ifCond params.social "==" 1}} social {{/ifCond}} {{params.category}} {{hasMediaClass}} {{status}} {{lightbox}}">';
 
 var cardTemplateBottom = 
         '</article>\
@@ -18908,7 +18908,8 @@ Acme.View.articleFeed = function(options)
     this.after      = options.after      || false;
     this.button_label = options.label    || false;
     this.cardType   = options.cardType   || "";
-    
+    this.lightbox   = options.lightbox   || null;
+
     // when clicking less, reset the original offset count
     this.originalCount = options.non_pinned;
 
@@ -18975,7 +18976,8 @@ Acme.View.articleFeed.prototype.render = function(data)
             html.push( self.cardModel.renderCard(articles[i], {
                 cardClass: self.cardClass,
                 template: self.template,
-                type: this.cardType
+                type: self.cardType,
+                lightbox: self.lightbox || null
             }));
         }
         if (self.before ) {
@@ -19153,6 +19155,7 @@ Card.prototype.renderCard = function(card, options)
     var template = (options.template) ? Acme.templates[options.template] : Acme.templates.systemCardTemplate;
     card['containerClass'] = options.cardClass || "";
     card['cardType'] = options.type || "";
+    card['lightbox'] = options.lightbox || "";
 
 
     
