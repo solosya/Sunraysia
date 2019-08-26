@@ -26,7 +26,8 @@
     // defered script is loaded before this runs
     document.addEventListener("DOMContentLoaded", function() {
 
-        Acme.articleFeeds["loadmore_section_{{sectionNumber}}"] = new Acme.View.articleFeed({
+
+        var params = {
             model           : new Card(),
             container       : 'loadmore_section_{{sectionNumber}}',
             offset          : 0,
@@ -39,6 +40,8 @@
             after           : "{{after}}",
             non_pinned      : {{cardCount}},
             cardType        : "{{cardTypes}}"
-        });
+        };
+
+        Acme.articleFeeds["loadmore_section_{{sectionNumber}}"] = new Acme.View.articleFeed(params);
     });
 </script>
