@@ -213,6 +213,47 @@
                                 {% set articleCount = (dev) ? articleCount : articleCount + 1 %}
                             </div>
                         {% endfor %}
+
+                        </div>
+
+
+                        <div id="classified_more" class="acme-row"> </div>
+
+                        <div class="acme-row"> 
+                            <div class="acme-col-12">
+
+                                {{ this.render('/partials/ajaxarticles_new.twig', {
+                                    name            : "section-load",
+                                    label           : "",
+                                    buttonClass     : "u-display-none",
+                                }) | raw }}
+
+
+                                <script>
+                                    // main script is defered so event listener makes sure
+                                    // defered script is loaded before this runs
+
+                                    document.addEventListener("DOMContentLoaded", function() {
+
+                                        var params = {
+                                            model           : new Card(),
+                                            container       : 'classified_more',
+                                            infinite        : true,
+                                            label           : "",
+                                            limit           : {{limit}},
+                                            offset          : {{limit}},
+                                            blogid          : "{{blogFeeds[blogTitle]['guid']}}",
+                                            cardType        : "acme-",
+                                            name            : 'section-load', //name of the search button
+                                            card_class      : 'col-12 acme-col-lg-4 acme-card-1-mobile acme-card-1-tablet acme-card-1-desktop',
+                                            non_pinned      : {{articleCount}}
+                                        };
+
+                                        Acme.loadMore = new Acme.View.articleFeed(params);
+
+                                    });
+                                </script>
+                            </div>
                         </div>
                     </div>
 
@@ -324,9 +365,6 @@
 
 
 
-        {# *******************************************
-                            SEARCH
-           ******************************************* #}
 
         $('#classified-menu-mobile-open').on('click', function() {
             $('#classified-menu-mobile').toggleClass('active');
@@ -393,9 +431,9 @@
 
 
 
-        {# *******************************************
-                            SEARCH
-           ******************************************* #}
+        // *******************************************
+        //                    SEARCH
+        // *******************************************
 
         $('#search-button, #search-button-2').on('click', function(e) {
             if (blogGuid != ""){
