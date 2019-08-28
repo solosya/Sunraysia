@@ -15,11 +15,12 @@ Acme.Feed.prototype.fetch = function()
     //      nonPinnedOffset gets the rest
     //      They're combined to return full result
 
-    if (this.options.search != null) {
-        this.options.blogid = this.options.blogid; // search takes an id instead of a guid
-    }
+    // if (this.options.search != null) {
+    //     this.options.blogid = this.options.blogid; // search takes an id instead of a guid
+    // }
 
-
+    console.log('seraching');
+    console.log(this.options);
     this.url = this.domain + '/home/load-articles';
 
     this.requestData = { 
@@ -33,6 +34,12 @@ Acme.Feed.prototype.fetch = function()
     if (this.options.blogid) {
         this.requestData['blogGuid'] = this.options.blogid;
     }
+
+    if (this.options.type) {
+        this.requestData['type'] = this.options.type;
+    }
+
+
 
     if (this.options.loadtype == 'user') {
         this.url = this.domain + '/api/'+options.loadtype+'/load-more-managed';
@@ -133,12 +140,13 @@ Acme.View.articleFeed = function(options)
     this.originalCount = options.non_pinned;
 
     this.options    = {
-        'nonPinnedOffset'   :   options.non_pinned || -1,
-        'loadtype'          :   options.loadtype || "home",
-        'offset'            :   options.offset || 0,
+        'nonPinnedOffset'   :   options.non_pinned  || -1,
+        'search'            :   options.searchterm  || null,
+        'loadtype'          :   options.loadtype    || "home",
+        'offset'            :   options.offset      || 0,
         'blogid'            :   options.blogid,
-        'search'            :   options.searchterm    || null,
         'limit'             :   options.limit,
+        'type'              :   options.type        || null
         // 'page'              :   self.elem.data('page') || 1, // page is used for user articles
     };
 

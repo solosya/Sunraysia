@@ -10,6 +10,7 @@
                 var elem = adslots[i];
                 var self = $("#"+elem.id);
                 self.removeClass("j-adslot");
+                self.addClass("j-adslot-filled");
                 var keysArray = [elem.id,deviceSize];
                 if ($(".j-keyword-cont").length > 0) {
                     var keywordCont = $(".j-keyword-cont")[0];

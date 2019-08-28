@@ -244,7 +244,7 @@
     {% elseif blogInfo.keywords is defined and blogInfo.keywords != '' %}
         {% set theKeywords = blogInfo.keywords %}
     {% endif %}
-    <div class="j-keyword-cont" data-keywords="{{theKeywords}}"></div>
+    <div class="j-keyword-cont" data-keywords="{{theKeywords}}" data-pageName="{{articleBlog}}" data-pageType="article" data-pageTags=""></div>
 </main>
 
 
