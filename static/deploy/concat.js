@@ -19197,7 +19197,11 @@ Card.prototype.renderCard = function(card, options)
     //     width = card.imageOptions.width || width;
     //     height = card.imageOptions.height || height;
     // }
-
+    var articleContent = card.excerpt;
+    if (typeof options.content != "undefined" && options.content === "full") {
+        articleContent = '<div class="acme-c-cards-view__articleContent">' + card.content + '</div>';
+    }
+    
     var articleId = parseInt(card.articleId);
 
     if (card.social) {
@@ -19226,7 +19230,7 @@ Card.prototype.renderCard = function(card, options)
             image       : $.image({media:card['featuredMedia'], mediaOptions:{width: width ,height:height, crop: 'limit'} }),
             category    : card.label,
             title       : card.title,
-            content     : card.excerpt,
+            content     : articleContent,
             author      : card.createdBy.displayName,
             publishDate : card.publishDate,
             videoClass  : card.featuredMedia['type'] == 'video' ? 'c-cards-view__media--video' : '',
@@ -19370,6 +19374,7 @@ Card.prototype.bindLightbox = function()
                     var article = self.renderCard(data, {
                         cardClass : "acme-card-10-mobile acme-card-10-tablet acme-card-10-desktop",
                         type : "acme-",
+                        content: "full",
                         imageOriginal: true,
                     });
 
