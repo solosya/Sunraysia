@@ -113,12 +113,12 @@
 
 
 
-    <!-- Google Tag Manager -->
-    {% if networkData.thirdPartyIntegrations['googleTagManager'] | length > 0 %}
+    <!-- Google Tag Manager  MOVED TO END -->
+    {# <script async='async' src='https://www.googletagservices.com/tag/js/gpt.js'></script> #}
+     {# {% if networkData.thirdPartyIntegrations['googleTagManager'] | length > 0 %}
         {{networkData.thirdPartyIntegrations['googleTagManager']['script'] | raw}}
-    {% endif %}
-
-
+    {% endif %} #}
+    
     {{ this.render('partials/_user-styles.twig', {networkData: networkData} ) | raw }}
 
     {% set googleAnalyitcsId = ''%}
@@ -144,11 +144,6 @@
 
 
 
-
-    {# {{ this.render('partials/ads.twig', {
-        networkData: networkData,
-        blogData: blogData
-    }) | raw }} #}
 
 
 
@@ -227,3 +222,10 @@
 
 {{ this.endPage() }}
 </html>
+
+<!-- GOOGLE TAG MANAGER -->
+
+{% if networkData.thirdPartyIntegrations['googleTagManager'] | length > 0 %}
+    {{networkData.thirdPartyIntegrations['googleTagManager']['script'] | raw}}
+{% endif %}
+    
