@@ -55,15 +55,15 @@
     {% endif %}
 {% endif %}
 
-{# {{_AppHelper.printArray(article)}} #}
 
-{# {% set showPaywall = true %} #}
+
+
 
 {% if showPaywall == true %}
     {% set storySplit = ArticleContent | split('<p>')  %}
     {% set para2_words = storySplit[2] | split(' ') | slice(0, 10) %}
     {% set para2 = para2_words | join(' ') ~ '</p>'  %}
-    {% set ArticleContent = '<p>' ~ [storySplit[1], para2] | join('<p>') %}
+    {% set ArticleContent = '<p>' ~ [storySplit[1], storySplit[2]] | join('<p>') %}
 
 {% else %}
     {# Only grab these if article is not paywalled #}
@@ -178,9 +178,9 @@
 
 
 
-    {% if showPaywall == true %}
-        {{this.render("partials/article/paywall.twig", {networkData: networkData, paywallType: paywallType }) | raw}}
-    {% endif %}
+                        {% if showPaywall == true %}
+                            {{this.render("partials/article/paywall.twig", {networkData: networkData, paywallType: paywallType }) | raw}}
+                        {% endif %}
 
                     </div>
 
