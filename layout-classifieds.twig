@@ -539,26 +539,27 @@
         var self = this;
         
     
+        {% if fullPage == true %}
 
-        //section page load more
-        var params = {
-            model           : cardController,
-            container       : 'classified_more',
-            infinite        : true,
-            label           : "",
-            limit           : {{limit}},
-            offset          : {{limit}},
-            blogid          : "{{blogFeeds[blogTitle]['guid']}}",
-            cardType        : "acme-",
-            lightbox        : "{{contentType}}",
-            name            : 'section-load', //name of the search button
-            card_class      : 'col-12 acme-col-lg-4 acme-card-1-mobile acme-card-1-tablet acme-card-1-desktop',
-            non_pinned      : {{articleCount}}
-        };
+            //section page load more
+            var params = {
+                model           : cardController,
+                container       : 'classified_more',
+                infinite        : true,
+                label           : "",
+                limit           : {{limit}},
+                offset          : {{limit}},
+                blogid          : "{{blogFeeds[blogTitle]['guid']}}",
+                cardType        : "acme-",
+                lightbox        : "{{contentType}}",
+                name            : 'section-load', //name of the search button
+                card_class      : 'col-12 acme-col-lg-4 acme-card-1-mobile acme-card-1-tablet acme-card-1-desktop',
+                non_pinned      : {{articleCount}}
+            };
 
-        Acme.loadMore = new Acme.View.articleFeed(params);
+            Acme.loadMore = new Acme.View.articleFeed(params);
 
-
+        {% endif %}
 
 
 
