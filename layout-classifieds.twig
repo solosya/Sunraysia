@@ -2,13 +2,18 @@
 {% set networkData  = _Network.getNetworkData() %}
 {% set blogData     = _Blog.getBlog() %}
 {% set config       = _Network.getThemeConfig() %}
+{% set currentPage  = _Blog.getBlogTitle() %}
 
-{% set sideMenu = _Menu.get({'menuType': 'header', "menuGroupName": _Blog.getBlogTitle() }) %}
-{% set panels = _Menu.get({'menuType': 'header', "menuGroupName":  _Blog.getBlogTitle() ~ " panels"}) %}
+{% set sideMenu = _Menu.get({'menuType': 'header', "menuGroupName": currentPage }) %}
+{% set panels = _Menu.get({'menuType': 'header', "menuGroupName":  currentPage ~ " panels"}) %}
 {% set url = _AppHelper.getParsedUrl() %}
-{% set currentPage = _Blog.getBlogTitle() %}
 
 {% set articleCount = 0 %}
+
+{% set contentType = "article" %}
+{% if blogData['additionalInfo']['contenttype'] is defined %}
+    {% set contentType = blogData['additionalInfo']['contenttype'] %}
+{% endif %}
 
 
 
@@ -113,9 +118,11 @@
                     <a class="what" href="{{blogData.url}}">
                         <h1 class="c-section-head__title c-section-head__title--40">{{this.title}}</h1>
                     </a>
+                
                 {% if not _User.isGuest() %}
                     <a href="{{networkData.defaultBlogUrl}}/classified-create" class="c-section-head__button c-button c-button--red">Submit a listing</a>
                 {% endif %}
+                
                     <div class="c-section-head__rule"></div>
 
                 </div>
@@ -127,20 +134,10 @@
                 <div class="c-filter--search c-filter--search-xs form-group">
                     <div class="c-filter--search--field c-filter--search--field-xs">
                         {# <span id="search-button-2" class="fa fa-search c-search-icon"></span> #}
-                        <input type="text" class="form-control" name="searcg" id="search" placeholder="Search the classifieds">
+                        <input type="text" class="form-control" name="search" id="search" placeholder="Search the classifieds">
                     </div>
                     <div class="c-filter--search--select c-filter--search--select-xs">
-                        <div class="form-control c-filter--search__dropdown--field" id="classySearchSelect" data-guid="">Select a category</div>
-                        <div id="classySearchDropdown" class="c-filter--search__dropdown " style="width:100%">
-                           {# <div class="c-filter--search__dropdown--item j-searchSection" id="classySearchSelect" data-guid="{{blogData.guid}}">All</div> #}
-                           {% for item in sideMenu %}
-                                
-                                <div class="c-filter--search__dropdown--item j-searchSection" data-guid="{{item.blogGuid}}">{{item.blogTitle}}</div>
-                                {% for subitem in item.children %}
-                                    <div class="c-filter--search__dropdown--item j-searchSection" data-guid="{{subitem.blogGuid}}">{{item.blogTitle}} | {{subitem.blogTitle}}</div>
-                                {% endfor %}
-                           {% endfor %}
-                        </div>
+                        <div id="classySearchDropdown" class="" style="width:100%"></div>
                     </div>
                     <div class="c-filter--search--button">
                         <button id="search-button" type="submit" class="c-button c-button--red">Search</button>
@@ -206,8 +203,9 @@
                                 {{this.render('/partials/_single-article.twig', {
                                     article: articles[articleCount], 
                                     position: (articleCount+1),
+                                    imageSize: {width: 285, height: 192},
                                     cardType: "acme-",
-                                    behaviour: 'lightbox',
+                                    contentType: contentType,
                                     containerClass: "acme-card-1-mobile acme-card-1-tablet acme-card-1-desktop"
                                 }) | raw}}
                                 {% set articleCount = (dev) ? articleCount : articleCount + 1 %}
@@ -228,32 +226,6 @@
                                     buttonClass     : "u-display-none",
                                 }) | raw }}
 
-
-                                <script>
-                                    // main script is defered so event listener makes sure
-                                    // defered script is loaded before this runs
-
-                                    document.addEventListener("DOMContentLoaded", function() {
-
-                                        var params = {
-                                            model           : new Card(),
-                                            container       : 'classified_more',
-                                            infinite        : true,
-                                            label           : "",
-                                            limit           : {{limit}},
-                                            offset          : {{limit}},
-                                            blogid          : "{{blogFeeds[blogTitle]['guid']}}",
-                                            cardType        : "acme-",
-                                            lightbox        : "lightbox",
-                                            name            : 'section-load', //name of the search button
-                                            card_class      : 'col-12 acme-col-lg-4 acme-card-1-mobile acme-card-1-tablet acme-card-1-desktop',
-                                            non_pinned      : {{articleCount}}
-                                        };
-
-                                        Acme.loadMore = new Acme.View.articleFeed(params);
-
-                                    });
-                                </script>
                             </div>
                         </div>
                     </div>
@@ -274,10 +246,11 @@
                         {% set pageSectionId = 1 %}
 
                         {% for pagesection in blogFeeds | keys %}
+
                             {% set params = {
                                 'networkData' : networkData,
                                 'blogFeeds'   : blogFeeds,
-                                'blogData'    : blogData,
+                                'blogData'    : blogFeeds[pagesection],
                                 'dev'         : dev,
                                 'config'      : {
                                     blogs: [pagesection],
@@ -288,7 +261,9 @@
                                     link: blogData.url ~"?section=" ~ pagesection | lower,
                                     template_params: {
                                         loadmore: true,
-                                        loadmore_id: pageSectionId ~ ""
+                                        loadmore_id: pageSectionId ~ "",
+                                        contentType: contentType,
+
                                     }
                                 },
                             } %}
@@ -311,16 +286,6 @@
 
 
 
-
-                {# <div class="acme-row">
-                    <div class="acme-col-12">
-                        <a href="javascript:;" class="c-button c-button--blue c-button-inline "  data-target="#ModalMultiImageGallery">Multi Image Gallery</a>
-                        
-                        <a href="javascript:;" class="c-button c-button--blue c-button-inline "  data-target="#ModalAdPopUp">Image pop up of ad</a>
-                        
-                        <a href="javascript:;" class="c-button c-button--blue c-button-inline "  data-target="#ModalAnnouncements">Announcements</a>
-                    </div>
-                </div> #}
             </div>
         </div>
         <div class="clearfix"></div>
@@ -328,7 +293,7 @@
     <div class="clearfix"></div>
 
 
-
+</main>
 
 
 
@@ -345,11 +310,151 @@
     // defered script is loaded before this runs
     document.addEventListener("DOMContentLoaded", function() {
 
-        new Card();
-        
-        var layouts = {
-            "classifieds" : 'systemCardTemplate',
+        var classifiedSections = [];
+        menu = null;
+
+        // override the lightbox handler from the one set in card.js
+        Card.prototype.bindLightbox = function() {
+
+            $('article.{{contentType}}').unbind().on('click', function (e) {
+                
+                e.preventDefault();
+                var csrfToken = $('meta[name="csrf-token"]').attr("content");
+                
+                var blogTitle = $(this).parent().data('blog-title');
+
+                Acme.LightBox = new Acme.lightBox('modal', 'lightbox-modal');
+                Acme.LightBox.render(null, blogTitle, '<div class="spinner" style="position:relative;height:70px;margin-top:30px;margin-bottom:30px"></div>');
+
+                var isSocial = $(this).parent().data('social');
+                var action = 'POST';
+
+                if (isSocial) {
+                    var url = '/api/social/get-social-post';
+                    var blogGuid = $(this).parent().data('blog-guid');
+                    var postGuid = $(this).parent().data('guid');
+                    var payload = {blog_guid: blogGuid, guid: postGuid, _csrf: csrfToken}
+                } else {
+                    var url = '/api/article/get-article';
+                    var articleId = $(this).parent().data('id');
+                    var payload = {articleId: articleId, _csrf: csrfToken}
+                    action = 'GET';
+                }
+
+                if (!isRequestSent) {
+
+                    $.ajax({
+                        type: action,
+                        url: _appJsConfig.appHostName + url,
+                        dataType: 'json',
+                        data: payload,
+                        success: function (data, textStatus, jqXHR) {
+
+                            data.hasMediaVideo = false;
+                            if (data.media['type'] === 'video') {
+                                data.hasMediaVideo = true;
+                            }
+                            
+                            if (data.source == 'youtube') {
+                                var watch = data.media.videoUrl.split("=");
+                                data.media.videoUrl = "https://www.youtube.com/embed/" + watch[1];
+                            }
+                            
+                            data.templatePath = _appJsConfig.templatePath;
+
+                            var article = cardController.renderCard(data, {
+                                cardClass : "acme-card-10-mobile acme-card-10-tablet acme-card-10-desktop",
+                                type : "acme-",
+                                content: "full",
+                                imageWidth: 540,
+                                imageHeight: 0,
+                            });
+
+                            Acme.LightBox.renderPreLayout(article);
+                        },
+                        error: function (jqXHR, textStatus, errorThrown) {
+                            console.log(errorThrown, textStatus, jqXHR);
+                            isRequestSent = false;
+                        },
+                        beforeSend: function (jqXHR, settings) {
+                            isRequestSent = true;
+                        },
+                        complete: function (jqXHR, textStatus) {
+                            isRequestSent = false;
+                        }
+                    });
+                }
+            });
+        }
+        var cardController = new Card();
+
+
+
+        var offset = 0;
+
+        Acme.search = new Acme.View.articleFeed({
+            model           : cardController,
+            container       : 'results',
+            limit           : 30,
+            offset          : offset,
+            loadtype        : 'api/search',
+            name            : 'fd', //name of the loadmore button
+            renderType      : 'write',
+            type            : "{{contentType}}",
+            before          : '<div class="acme-row">',
+            after           : '</div>',
+            cardType        : "acme-",
+            card_class      : 'acme-col-12 acme-col-md-12 acme-col-lg-4 acme-card-1-mobile acme-card-1-tablet acme-card-1-desktop',
+            lightbox        : "{{contentType}}"
+        }); 
+
+
+
+        var CategoryMenu = function() {
+            this.form = "classifieds-form";
+            this.menu = new Acme.listMenu({
+                'parent'        : $('#classySearchDropdown'),
+                'list'          : [],
+                'defaultSelect' : {"label": "Select a category"},
+                'name'          : 'category',
+                'key'           : 'category',
+                'class'         : 'Acme-pulldown Acme-pulldown--border'
+            }).init().render();
+            this.subscriptions = Acme.PubSub.subscribe({
+                'Acme.CategoryMenu.listener' : ['state_changed', 'update_state']
+            });
+        }
+        CategoryMenu.prototype = new Acme.Form();
+        CategoryMenu.constructor = CategoryMenu;
+        CategoryMenu.prototype.listeners = {
+            "category": function(data, topic) {
+                if (data.category === "") data.category = null;
+                Acme.search.options.blogid = data.category;
+            },
+        }
+        Acme.CategoryMenu = new CategoryMenu();
+
+        var menuMapper = function(data) {
+            if (data.children !== 'undefined' && data.children.length > 0 ) {
+                var children = data.children.map(menuMapper);
+                children.unshift({
+                    label: data.blogTitle,
+                    value: data.blogGuid
+                });
+                return children;
+            }
+            return {
+                label: data.blogTitle,
+                value: data.blogGuid
+            }
         };
+
+        Acme.server.fetch(_appJsConfig.appHostName + '/api/menu/get-menu?name={{currentPage}}' ).done(function(data) {
+            classifiedSections = data.map(menuMapper);
+            classifiedSections = [].concat.apply([], classifiedSections);
+            classifiedSections.unshift({label: 'All', value: null});
+            Acme.CategoryMenu.menu.update(classifiedSections);
+        });
 
         Acme.lightBox = function(template, parent, layouts) {
             this.template = template;
@@ -363,7 +468,6 @@
             var self = this;
             var $elem = this.parent.handle.call(this, e);
         };
-
 
 
 
@@ -400,201 +504,70 @@
             }
         });
 
-        var blogGuid = "";
-        var searchLimit = 12;
-        var offset = 0;
-        $('#classySearchSelect').click(function(){
-            $('#classySearchDropdown').addClass('c-filter--search__dropdown--active');
-        });
-
-
-        $('.j-searchSection').click(function(){
-            blogGuid = $(this).data('guid');
-            $('#classySearchSelect').data('guid', $(this).data('guid'));
-            $('#classySearchSelect').text($(this).text());
-            $('#classySearchDropdown').removeClass('c-filter--search__dropdown--active');
-            Acme.search = new Acme.View.articleFeed({
-                model           : new Card(),
-                container       : 'results',
-                limit           : searchLimit,
-                offset          : offset,
-                blogid          : blogGuid,
-                loadtype        : 'api/search',
-                searchterm      : "{{search}}",
-                name            : 'fd', //name of the loadmore button
-                renderType      : 'write',
-                type            : 'classified',
-                before          : '<div class="acme-row">',
-                after           : '</div>',
-                cardType        : "acme-",
-                card_class      : 'acme-col-12 acme-col-md-12 acme-col-lg-4 acme-card-1-mobile acme-card-1-tablet acme-card-1-desktop'
-            }); 
-        })
-
 
 
         // *******************************************
         //                    SEARCH
         // *******************************************
+        var performSearch = function() {
+            var searchTerm = $('#search').val();
+
+            if (!searchTerm) return;
+            Acme.search.options.search = searchTerm;
+            Acme.search.options.offset = 0;
+            Acme.search.fetch();
+        };
+
+
 
         $('#search-button, #search-button-2').on('click', function(e) {
-            if (blogGuid != ""){
-                e.preventDefault();
-                Acme.search.options.search = $('#search').val();
-                if (!Acme.search.options.search) {
-                    return;
-                }
-                Acme.search.fetch();
-            }
+            e.preventDefault();
+            performSearch();
         });
 
         $('#search').keyup(function (e) {
-            var key = e.which;
-            if(key == 13) {
-                if (blogGuid != ""){
-                    e.preventDefault();
-                    Acme.search.options.search = $('#search').val();
-                    if (!Acme.search.options.search) {
-                        return;
-                    }
-                    Acme.search.fetch();
-                }
+            if(e.which == 13) {
+                e.preventDefault();
+                performSearch();
             }
         }); 
 
+
+
+
+        var isRequestSent = false;
+        var self = this;
+        
     
+
+        //section page load more
+        var params = {
+            model           : cardController,
+            container       : 'classified_more',
+            infinite        : true,
+            label           : "",
+            limit           : {{limit}},
+            offset          : {{limit}},
+            blogid          : "{{blogFeeds[blogTitle]['guid']}}",
+            cardType        : "acme-",
+            lightbox        : "{{contentType}}",
+            name            : 'section-load', //name of the search button
+            card_class      : 'col-12 acme-col-lg-4 acme-card-1-mobile acme-card-1-tablet acme-card-1-desktop',
+            non_pinned      : {{articleCount}}
+        };
+
+        Acme.loadMore = new Acme.View.articleFeed(params);
+
+
+
+
+
     });
 
 
+
+
+
+
+
 </script>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <!-- Begins Modals Section -->
-    <div class="o-modal o-modal-gallery o-modal-gallery-xs o-modal-medium">
-        <!-- Remove User Modal -->
-        <div class="modal" id="ModalMultiImageGallery">
-            <div class="modal-dialog">
-                <div class="modal-content modal-content-md">
-                    <div class="o-modal__container o-modal__container--gallery">
-                        <!-- Modal Header -->
-                        <div class="o-modal__container-head">
-                            <div class="o-modal--title o-modal--title-xs text-left">Classifieds</div>
-                            <button type="button" class="modal-close" data-dismiss="modal"><i class="fa fa-times"></i></button>
-                        </div>
-                        <!-- Modal body -->
-                        <div class="o-modal__container-body o-modal__container-body">
-                            <div class="o-media o-media-sm js-slider">
-                                <figure class="o-media--item">
-                                    <div class="o-media--item--galllery">
-                                        <img src="static/images/slider/hockey.jpg" class="img-fluid o-media--image" alt="Article Info">
-                                        <div class="slide-count-wrap">
-                                            <span class="current"></span>
-                                        </div>
-                                    </div>
-                                </figure>
-                                <figure class="o-media--item">
-                                    <div class="o-media--item--galllery">
-                                        <img src="static/images/slider/hockey.jpg" class="img-fluid o-media--image" alt="Article Info">
-                                        <div class="slide-count-wrap">
-                                            <span class="current"></span>
-                                        </div>
-                                    </div>
-                                </figure>
-                            </div>
-                            <div class="o-modal--discription">
-                                <div class="c-cards-view__additionalinfo">
-                                    <div class="c-cards-view__additionalinfo--category">Motor vehicles</div>
-                                </div>
-                                <div class="c-cards-view__info">
-                                    <div class="c-cards-view__info--heading js-card-heading">Vintage tractor</div>
-                                    <div class="c-cards-view__info--description js-card-description">2004, BA, auto, FSH, 70,000kms, reg to July 2019, excellent cond, CAPPS3, $12,000. Phone 0448 235 740 after 6pm.</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-        
-        <div class="modal" id="ModalAdPopUp">
-            <div class="modal-dialog">
-                <div class="modal-content modal-content-md">
-                    <div class="o-modal__container o-modal__container--gallery">
-                        <!-- Modal Header -->
-                        <div class="o-modal__container-head">
-                            <div class="o-modal--title o-modal--title-xs text-left">Jobs</div>
-                            <button type="button" class="modal-close" data-dismiss="modal"><i class="fa fa-times"></i></button>
-                        </div>
-                        <!-- Modal body -->
-                        <div class="o-modal__container-body o-modal__container-body verticalScrollBar">
-                            <div class="o-modal--discription no-margin">
-                                <div class="c-cards-view__additionalinfo">
-                                    <div class="c-cards-view__additionalinfo--category">jobs vacant</div>
-                                </div>
-                                <div class="c-cards-view__info no-margin">
-                                    <div class="c-cards-view__info--heading js-card-heading">Tyre Fitter</div>
-                                </div>
-                            </div>
-                            <div class="o-media o-media-sm">
-                                <img src="static/images/ad-popup.jpg" class="img-fluid o-media--image" alt="Article Info">
-                            </div>
-                            <div class="o-modal--discription">
-                                <div class="c-cards-view__info--description js-card-description">30th March 2019</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-        
-        <div class="modal" id="ModalAnnouncements">
-            <div class="modal-dialog">
-                <div class="modal-content modal-content-md">
-                    <div class="o-modal__container o-modal__container--gallery">
-                        <!-- Modal Header -->
-                        <div class="o-modal__container-head">
-                            <div class="o-modal--title o-modal--title-xs text-left">Announcements</div>
-                            <button type="button" class="modal-close" data-dismiss="modal"><i class="fa fa-times"></i></button>
-                        </div>
-                        <!-- Modal body -->
-                        <div class="o-modal__container-body o-modal__container-body">
-                            <div class="o-modal--discription no-margin">
-                                <div class="c-cards-view__additionalinfo">
-                                    <div class="c-cards-view__additionalinfo--category">Birthday greetings</div>
-                                </div>
-                                <div class="c-cards-view__info no-margin">
-                                    <div class="c-cards-view__info--heading js-card-heading no-margin">Birthday wishes</div>
-                                </div>
-                            </div>
-                            <div class="o-modal--discription">
-                                <div class="c-cards-view__info--description js-card-description">Happy birthday Liz with love from your family.</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</main>

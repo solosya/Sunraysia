@@ -112,6 +112,8 @@
         imageSmall      : _Media.getMediaUrl(article.featuredMedia,500, 325, {'crop': 'fill', 'gravity': 'faces'} ),
         profileImg      : profileImg,
         imgHeight       : imgHeight,
+        blogTitle       : article.blog.title,
+        blogguid        : article.blog.guid,
         hasMedia        : ((article.hasMedia == 'TRUE' or article.hasPreviewMedia == 'TRUE') and imageSuppress == false) ? true : false,
         imgWidth        : imgWidth,
         category        : article.label,
@@ -155,6 +157,8 @@
         category        : article.social.source,
         author          : ( social.source == _Article.socialArticleSourceTwitter() ) ? '@' : '' ~ article.social.user['name'] | lower,
         profileImg      : '',
+        blogguid        : article.social.blog.guid,
+        blogTitle       : article.social.blog.title,
         imageSuppress   : imageSuppress,
         lazyload        : lazyload,
         imgWidth        : imgWidth,
@@ -180,7 +184,9 @@
         class               = "{{swap}}" 
         data-id             = "{{params.id}}" 
         data-guid           = "{{params.guid}}" 
-        data-position       = "{{position}}" 
+        data-position       = "{{position}}"
+        data-blog-guid      = "{{params.blogguid}}"
+        data-blog-title     = "{{params.blogTitle}}"
         data-social         = "{{params.social}}"
         data-article-image  = "{{params.image}}" 
         data-article-text   = "{{Helper.htmlToText(params.title, -1) | raw | escape('html')}}"
@@ -196,6 +202,7 @@
                         {{params.category}} 
                         {{params.hasMedia ? "" : "without-image" }} 
                         {{lightbox}} 
+                        {{contentType}} 
                         {{params.status}}
                         ">
             {{ this.render('_article-'~template~'.twig', {

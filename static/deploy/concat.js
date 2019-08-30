@@ -16632,13 +16632,12 @@ var extend = function(child, parent) { for (var key in parent) { if (hasProp.cal
     //     });
     // };
 // }(jQuery));
+
 (function ($) {
     
     $.image = function (options) {
         var defaults = {
             media : {},
-            height: 500,
-            width: 500,
             mediaOptions: {}
         };
 
@@ -16656,7 +16655,25 @@ var extend = function(child, parent) { for (var key in parent) { if (hasProp.cal
             return;
         }
         
-        var imageOptions = $.extend({},{height: opts.height, width: opts.width}, opts.mediaOptions);
+        var size = {};
+        if (opts.width !== 0) {
+            size.width = opts.width;
+        }
+        if (opts.height !== 0) {
+            size.height = opts.height;
+        } 
+
+        if (opts.mediaOptions.width === 0) {
+            delete opts.mediaOptions.width;
+        }
+
+        if (opts.mediaOptions.height === 0) {
+            delete opts.mediaOptions.height;
+        }
+
+        console.log(opts);
+
+        var imageOptions = $.extend({}, size, opts.mediaOptions);
         var url = $.cloudinary.url(imageId, imageOptions);
         
         return url;
@@ -17845,7 +17862,7 @@ function(a){"use strict";void 0===a.en&&(a.en={"mejs.plural-form":1,"mejs.downlo
         Acme.listMenu.prototype.listItemEvents = function()
         {
             var self = this;
-            this.listContainer.on('click', function(e) {
+            this.listContainer.unbind().on('click', function(e) {
 
                 $.each(self.listElements, function(i,e) {
                     $(e).attr('checked', false);
@@ -18080,7 +18097,7 @@ function(a){"use strict";void 0===a.en&&(a.en={"mejs.plural-form":1,"mejs.downlo
 
             $('html').addClass('u-noscroll')
             $('body').addClass('u-noscroll').append(tmp);
-console.log(layout);
+
             if (layout) {
                 this.renderLayout(layout, this.data);
             }
@@ -19184,8 +19201,9 @@ Card.prototype.renderCard = function(card, options)
 
     // card['readingTime']= self.renderReadingTime(card.readingTime);
     
-    var width = options.imageWidth || 500;
-    var height = options.imageHeight || 350;
+    var width = typeof options.imageWidth !== "undefined" ? options.imageWidth : 500;
+    var height = typeof options.imageHeight !== "undefined" ? options.imageHeight : 350;
+    console.log(options);
 
     if (options.imageOriginal) {
         var width = card.featuredMedia.width;
@@ -19315,6 +19333,7 @@ Card.prototype.bindSocialUpdatePost = function ()
 
 Card.prototype.bindLightbox = function()
 {
+    console.log("controller lightbox");
     var isRequestSent = false;
     var self = this;
     $('article.lightbox').unbind().on('click', function (e) {
@@ -19380,16 +19399,6 @@ Card.prototype.bindLightbox = function()
 
                     Acme.LightBox.renderPreLayout(article);
 
-
-                    // var articleTemplate = Handlebars.compile(Acme.templates.socialPopup);
-                    // var article = articleTemplate(data);
-                    // console.log(article);
-                    // $("body").prepend(article);
-                    // $('.modal').html(article);
-
-                    // setTimeout(function () {
-                    //     $('.modal').modal('show');
-                    // }, 0);
                 },
                 error: function (jqXHR, textStatus, errorThrown) {
                     console.log(errorThrown, textStatus, jqXHR);
@@ -19553,6 +19562,7 @@ Card.prototype.events_refresh = function()
 
 Card.prototype.events = function() 
 {
+    console.log('running controller events');
     this.bindLightbox();
 
     if (_appJsConfig.isUserLoggedIn === 1 && _appJsConfig.userHasBlogAccess === 1) {

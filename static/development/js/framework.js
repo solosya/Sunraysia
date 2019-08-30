@@ -520,7 +520,7 @@
         Acme.listMenu.prototype.listItemEvents = function()
         {
             var self = this;
-            this.listContainer.on('click', function(e) {
+            this.listContainer.unbind().on('click', function(e) {
 
                 $.each(self.listElements, function(i,e) {
                     $(e).attr('checked', false);
@@ -755,7 +755,7 @@
 
             $('html').addClass('u-noscroll')
             $('body').addClass('u-noscroll').append(tmp);
-console.log(layout);
+
             if (layout) {
                 this.renderLayout(layout, this.data);
             }
