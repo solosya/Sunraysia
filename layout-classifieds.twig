@@ -366,7 +366,8 @@
                                 cardClass : "acme-card-10-mobile acme-card-10-tablet acme-card-10-desktop",
                                 type : "acme-",
                                 content: "full",
-                                imageOriginal:true
+                                imageWidth: 540,
+                                imageHeight: 0,
                             });
 
                             Acme.LightBox.renderPreLayout(article);
@@ -538,28 +539,33 @@
         var self = this;
         
     
+
+        //section page load more
+        var params = {
+            model           : cardController,
+            container       : 'classified_more',
+            infinite        : true,
+            label           : "",
+            limit           : {{limit}},
+            offset          : {{limit}},
+            blogid          : "{{blogFeeds[blogTitle]['guid']}}",
+            cardType        : "acme-",
+            lightbox        : "{{contentType}}",
+            name            : 'section-load', //name of the search button
+            card_class      : 'col-12 acme-col-lg-4 acme-card-1-mobile acme-card-1-tablet acme-card-1-desktop',
+            non_pinned      : {{articleCount}}
+        };
+
+        Acme.loadMore = new Acme.View.articleFeed(params);
+
+
+
+
+
     });
 
 
 
-
-    //section page load more
-    var params = {
-        model           : cardController,
-        container       : 'classified_more',
-        infinite        : true,
-        label           : "",
-        limit           : {{limit}},
-        offset          : {{limit}},
-        blogid          : "{{blogFeeds[blogTitle]['guid']}}",
-        cardType        : "acme-",
-        lightbox        : "{{contentType}}",
-        name            : 'section-load', //name of the search button
-        card_class      : 'col-12 acme-col-lg-4 acme-card-1-mobile acme-card-1-tablet acme-card-1-desktop',
-        non_pinned      : {{articleCount}}
-    };
-
-    Acme.loadMore = new Acme.View.articleFeed(params);
 
 
 

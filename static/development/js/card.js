@@ -31,8 +31,9 @@ Card.prototype.renderCard = function(card, options)
 
     // card['readingTime']= self.renderReadingTime(card.readingTime);
     
-    var width = options.imageWidth || 500;
-    var height = options.imageHeight || 350;
+    var width = typeof options.imageWidth !== "undefined" ? options.imageWidth : 500;
+    var height = typeof options.imageHeight !== "undefined" ? options.imageHeight : 350;
+    console.log(options);
 
     if (options.imageOriginal) {
         var width = card.featuredMedia.width;
