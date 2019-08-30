@@ -1,0 +1,601 @@
+{{ set(this, 'title', _Blog.getBlogTitle()) }}
+{% set networkData  = _Network.getNetworkData() %}
+{% set blogData     = _Blog.getBlog() %}
+{% set config       = _Network.getThemeConfig() %}
+
+{% set sideMenu = _Menu.get({'menuType': 'header', "menuGroupName": _Blog.getBlogTitle() }) %}
+{% set panels = _Menu.get({'menuType': 'header', "menuGroupName":  _Blog.getBlogTitle() ~ " panels"}) %}
+{% set url = _AppHelper.getParsedUrl() %}
+{% set currentPage = _Blog.getBlogTitle() %}
+
+{% set articleCount = 0 %}
+
+
+
+{# *******************************************************
+                Fetch all needed feeds
+******************************************************* #}
+{% set blogFeeds = {} %}
+
+{# This page can either render panels or entire section work of articles #}
+{% set fullPage = false %}
+{% set limit = 3 %}
+
+{% if url.query | length > 0 %}
+
+
+    {# SECTION VIEW #}
+    {% if url.query.section is defined and url.query.section != "" %}
+        {% set section = url.query.section | replace({'%20': " "}) %}
+        {% set panels = [{'blogTitle': section}] %}
+        {% set currentPage = section %}
+
+        {% set blogTitle = "" %}
+        {% set blogLink = "" %}
+        {% set fullPage = true %}
+        {% set limit = 12 %}
+    {% endif %}
+
+    {# CATEGORY VIEW #}
+    {% if url.query.category is defined and url.query.category != "" %}
+
+        {% set currentPage = url.query.category | replace({'%20': " "}) | replace({"%26":"&"}) %}
+        
+        {# if category view, we need to get the sections within this category to display
+        as panels.  We get them from the sidemenu #}
+        {% set break = false %}
+        {% for panel in sideMenu if not break  %}
+            {% if panel.blogTitle | lower == currentPage | lower %}
+                {% set panels = panel.children %}
+                {% set break = true %}
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+{% endif %}
+
+
+
+
+
+{# Get the blog feed for the section(s)  #}
+{% for panel in panels %}
+
+    {% set break = false %}
+    
+    {% for blog in networkData.networkBlogs if not break %}
+        {% set blogTitle = blog.title %}
+        {% set blogLink = blog.link %}
+
+        {# FOR DEV  #}
+        {# {% if dev %}
+            {% set blogFeeds = blogFeeds | merge({
+                (key) : { 
+                    'feed' : _Blog.getBlogFeed({'limit': 1, 'offset': 0}), 
+                    'link' : blog.link 
+                    } 
+                }) %}
+        {% endif %} #}
+
+
+        {# FOR PRODUCTION #}
+
+        {% if blogTitle | lower == panel.blogTitle | lower %}
+            
+            {% set feed = _Blog.getBlogFeed({
+                'offset' : 0, 
+                'blogid' : blog.guid,
+                'limit'  : limit
+                })
+            %}
+
+            {% set blogFeeds = blogFeeds | merge({
+                (blog.title) : {
+                    'feed'      : feed,
+                    'link'      : blog.link,
+                    'guid'      : blog.guid
+                    }
+                }) %}
+            {% set break = true %}
+        {% endif %}
+
+    {% endfor %}
+{% endfor %}
+
+
+
+
+<main id="main" class="site-main u-margin-top-60 u-margin-bottom-60" role="main" data-article-limit="{{limit}}" data-article-count="{{articles | length}}">
+    <div class="acme-container">
+        <div class="acme-row">
+            <div class="acme-col-12">
+
+                <div class="c-section-head">
+                    <a class="what" href="{{blogData.url}}">
+                        <h1 class="c-section-head__title c-section-head__title--40">{{this.title}}</h1>
+                    </a>
+                {% if not _User.isGuest() %}
+                    <a href="{{networkData.defaultBlogUrl}}/classified-create" class="c-section-head__button c-button c-button--red">Submit a listing</a>
+                {% endif %}
+                    <div class="c-section-head__rule"></div>
+
+                </div>
+
+            
+           {# *********************************************
+                        Filter and search
+              ********************************************* #}
+                <div class="c-filter--search c-filter--search-xs form-group">
+                    <div class="c-filter--search--field c-filter--search--field-xs">
+                        {# <span id="search-button-2" class="fa fa-search c-search-icon"></span> #}
+                        <input type="text" class="form-control" name="searcg" id="search" placeholder="Search the classifieds">
+                    </div>
+                    <div class="c-filter--search--select c-filter--search--select-xs">
+                        <div class="form-control c-filter--search__dropdown--field" id="classySearchSelect" data-guid="">Select a category</div>
+                        <div id="classySearchDropdown" class="c-filter--search__dropdown " style="width:100%">
+                           {# <div class="c-filter--search__dropdown--item j-searchSection" id="classySearchSelect" data-guid="{{blogData.guid}}">All</div> #}
+                           {% for item in sideMenu %}
+                                
+                                <div class="c-filter--search__dropdown--item j-searchSection" data-guid="{{item.blogGuid}}">{{item.blogTitle}}</div>
+                                {% for subitem in item.children %}
+                                    <div class="c-filter--search__dropdown--item j-searchSection" data-guid="{{subitem.blogGuid}}">{{item.blogTitle}} | {{subitem.blogTitle}}</div>
+                                {% endfor %}
+                           {% endfor %}
+                        </div>
+                    </div>
+                    <div class="c-filter--search--button">
+                        <button id="search-button" type="submit" class="c-button c-button--red">Search</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+
+
+
+
+        <div class="acme-row">
+
+
+           {# *********************************************
+                        Classifieds Side Menu
+              ********************************************* #}
+            <aside class="acme-col-12 acme-col-lg-3 acme-col-md-4 acme-col-sm-4">
+                <div id="classified-menu" class="c-classified-menu c-classified-menu-xs">
+                    {{ this.render('/partials/_menu-classifieds.twig', {
+                        'menu': sideMenu,
+                        'current': currentPage
+                    }) | raw }}
+                </div>
+            </aside>
+
+
+
+
+
+
+
+           {# *********************************************
+                            Main content
+              ********************************************* #}
+        <div class="acme-col-12 acme-col-lg-9 acme-col-md-8 acme-col-sm-12 acme-com-xs-12">
+
+
+
+
+
+                {# *********************************************
+                                Full section page
+                    ********************************************* #}
+                {% if fullPage == true %}
+
+                    {% set articles = blogFeeds[blogTitle].feed.articles %}
+                    <div id="results" class="">
+
+                        <div class="acme-row c-section-head">
+                            <div class="acme-col-12">
+                                <a href="#">
+                                    <div class="c-section-head__title">{{blogTitle}}</div>
+                                </a> 
+                                <div class="c-section-head__rule"></div>
+                            </div>
+                        </div>
+
+                        <div class="acme-row">
+                        {% for i in 0..11 if articles[i] %}
+                            <div class="acme-col-12 acme-col-md-12 acme-col-lg-4">
+                                {{this.render('/partials/_single-article.twig', {
+                                    article: articles[articleCount], 
+                                    position: (articleCount+1),
+                                    cardType: "acme-",
+                                    imageSize: {width: 285, height: 192},
+                                    behaviour: 'lightbox',
+                                    containerClass: "acme-card-1-mobile acme-card-1-tablet acme-card-1-desktop"
+                                }) | raw}}
+                                {% set articleCount = (dev) ? articleCount : articleCount + 1 %}
+                            </div>
+                        {% endfor %}
+
+                        </div>
+
+
+                        <div id="classified_more" class="acme-row"> </div>
+
+                        <div class="acme-row"> 
+                            <div class="acme-col-12">
+
+                                {{ this.render('/partials/ajaxarticles_new.twig', {
+                                    name            : "section-load",
+                                    label           : "",
+                                    buttonClass     : "u-display-none",
+                                }) | raw }}
+
+
+                                <script>
+                                    // main script is defered so event listener makes sure
+                                    // defered script is loaded before this runs
+
+                                    document.addEventListener("DOMContentLoaded", function() {
+
+                                        var params = {
+                                            model           : new Card(),
+                                            container       : 'classified_more',
+                                            infinite        : true,
+                                            label           : "",
+                                            limit           : {{limit}},
+                                            offset          : {{limit}},
+                                            blogid          : "{{blogFeeds[blogTitle]['guid']}}",
+                                            cardType        : "acme-",
+                                            lightbox        : "lightbox",
+                                            name            : 'section-load', //name of the search button
+                                            card_class      : 'col-12 acme-col-lg-4 acme-card-1-mobile acme-card-1-tablet acme-card-1-desktop',
+                                            non_pinned      : {{articleCount}}
+                                        };
+
+                                        Acme.loadMore = new Acme.View.articleFeed(params);
+
+                                    });
+                                </script>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+
+
+
+                {# *********************************************
+                                    Category panel page
+                    ********************************************* #}
+                {% else %}
+                    <div id="results" class="">
+
+                        {% set bannerNo = 1 %}
+                        {% set pageSectionId = 1 %}
+
+                        {% for pagesection in blogFeeds | keys %}
+                            {% set params = {
+                                'networkData' : networkData,
+                                'blogFeeds'   : blogFeeds,
+                                'blogData'    : blogData,
+                                'dev'         : dev,
+                                'config'      : {
+                                    blogs: [pagesection],
+                                    template: "partials/panels/section-classified-panel",
+                                    title: pagesection,
+                                    nomargin: true,
+                                    wrapper: false,
+                                    link: blogData.url ~"?section=" ~ pagesection | lower,
+                                    template_params: {
+                                        loadmore: true,
+                                        loadmore_id: pageSectionId ~ ""
+                                    }
+                                },
+                            } %}
+
+                            {{this.render('render.twig', params) | raw}} 
+                            
+                            {% set pageSectionId = pageSectionId + 1 %}
+
+                            {% if loop.index in bannerSpots %}
+                                {% if config['inventory']['adSpace']['banner'][bannerNo] is defined %}
+                                    <div class="j-adslot" id="{{config['inventory']['adSpace']['banner'][bannerNo]}}" data-adshape="banner"></div>
+                                {% endif %}
+                                {% set bannerNo = bannerNo + 1 %}
+                            {% endif %}
+
+                        {% endfor %}
+
+                    </div>
+                {% endif %}
+
+
+
+
+                {# <div class="acme-row">
+                    <div class="acme-col-12">
+                        <a href="javascript:;" class="c-button c-button--blue c-button-inline "  data-target="#ModalMultiImageGallery">Multi Image Gallery</a>
+                        
+                        <a href="javascript:;" class="c-button c-button--blue c-button-inline "  data-target="#ModalAdPopUp">Image pop up of ad</a>
+                        
+                        <a href="javascript:;" class="c-button c-button--blue c-button-inline "  data-target="#ModalAnnouncements">Announcements</a>
+                    </div>
+                </div> #}
+            </div>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+    <div class="clearfix"></div>
+
+
+
+
+
+
+
+<div id="overlay" class="c-classified-menu__overlay"></div>
+<div id="classified-menu-mobile" class="c-classified-menu c-classified-menu-xs c-classified-menu--mobile">
+    <div id="classified-menu-mobile-open" class="c-classified-menu__open">Categories</div>
+    {{ this.render('/partials/_menu-classifieds.twig', {'menu': sideMenu}) | raw }}
+</div>
+
+
+<script>
+    // main script is defered so event listener makes sure
+    // defered script is loaded before this runs
+    document.addEventListener("DOMContentLoaded", function() {
+
+        new Card();
+        
+        var layouts = {
+            "classifieds" : 'systemCardTemplate',
+        };
+
+        Acme.lightBox = function(template, parent, layouts) {
+            this.template = template;
+            this.parentCont = parent;
+            this.layouts = layouts;
+            this.parent = Acme.modal.prototype;
+        };
+        Acme.lightBox.prototype = new Acme.modal();
+        Acme.lightBox.constructor = Acme.lightBox;
+        Acme.lightBox.prototype.handle = function(e) {
+            var self = this;
+            var $elem = this.parent.handle.call(this, e);
+        };
+
+
+
+
+        $('#classified-menu-mobile-open').on('click', function() {
+            $('#classified-menu-mobile').toggleClass('active');
+            $('body, html').toggleClass('u-noscroll');
+            $('#overlay').toggle();
+        });
+
+
+        $('#classified-menu, #classified-menu-mobile').on('click', '.c-classified-menu__arrow-container', function (event) {
+            event.preventDefault();
+
+            var parent = $(this).closest('ul');
+
+            var arrowContainer = $(this).children('.c-classified-menu__arrow');
+
+            parent.children('li.open').children('.c-classified-menu__submenu').slideUp(200);
+            parent.children('li.open').removeClass('open');
+
+            var list = $(this).closest('li');
+            var childList = list.find('ul');
+            var slideOffeset = -200;
+            var slideSpeed = 200;
+
+            if (childList.is(":visible")) {
+                list.removeClass("open");
+                arrowContainer.removeClass('open');
+                childList.slideUp(slideSpeed, function () {});
+            } else {
+                list.addClass("open");
+                arrowContainer.addClass('open');
+                childList.slideDown(slideSpeed, function () {});
+            }
+        });
+
+        var blogGuid = "";
+        var searchLimit = 12;
+        var offset = 0;
+        $('#classySearchSelect').click(function(){
+            $('#classySearchDropdown').addClass('c-filter--search__dropdown--active');
+        });
+
+
+        $('.j-searchSection').click(function(){
+            blogGuid = $(this).data('guid');
+            $('#classySearchSelect').data('guid', $(this).data('guid'));
+            $('#classySearchSelect').text($(this).text());
+            $('#classySearchDropdown').removeClass('c-filter--search__dropdown--active');
+            Acme.search = new Acme.View.articleFeed({
+                model           : new Card(),
+                container       : 'results',
+                limit           : searchLimit,
+                offset          : offset,
+                blogid          : blogGuid,
+                loadtype        : 'api/search',
+                searchterm      : "{{search}}",
+                name            : 'fd', //name of the loadmore button
+                renderType      : 'write',
+                type            : 'classified',
+                before          : '<div class="acme-row">',
+                after           : '</div>',
+                cardType        : "acme-",
+                card_class      : 'acme-col-12 acme-col-md-12 acme-col-lg-4 acme-card-1-mobile acme-card-1-tablet acme-card-1-desktop'
+            }); 
+        })
+
+
+
+        // *******************************************
+        //                    SEARCH
+        // *******************************************
+
+        $('#search-button, #search-button-2').on('click', function(e) {
+            if (blogGuid != ""){
+                e.preventDefault();
+                Acme.search.options.search = $('#search').val();
+                if (!Acme.search.options.search) {
+                    return;
+                }
+                Acme.search.fetch();
+            }
+        });
+
+        $('#search').keyup(function (e) {
+            var key = e.which;
+            if(key == 13) {
+                if (blogGuid != ""){
+                    e.preventDefault();
+                    Acme.search.options.search = $('#search').val();
+                    if (!Acme.search.options.search) {
+                        return;
+                    }
+                    Acme.search.fetch();
+                }
+            }
+        }); 
+
+    
+    });
+
+
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Begins Modals Section -->
+    <div class="o-modal o-modal-gallery o-modal-gallery-xs o-modal-medium">
+        <!-- Remove User Modal -->
+        <div class="modal" id="ModalMultiImageGallery">
+            <div class="modal-dialog">
+                <div class="modal-content modal-content-md">
+                    <div class="o-modal__container o-modal__container--gallery">
+                        <!-- Modal Header -->
+                        <div class="o-modal__container-head">
+                            <div class="o-modal--title o-modal--title-xs text-left">Classifieds</div>
+                            <button type="button" class="modal-close" data-dismiss="modal"><i class="fa fa-times"></i></button>
+                        </div>
+                        <!-- Modal body -->
+                        <div class="o-modal__container-body o-modal__container-body">
+                            <div class="o-media o-media-sm js-slider">
+                                <figure class="o-media--item">
+                                    <div class="o-media--item--galllery">
+                                        <img src="static/images/slider/hockey.jpg" class="img-fluid o-media--image" alt="Article Info">
+                                        <div class="slide-count-wrap">
+                                            <span class="current"></span>
+                                        </div>
+                                    </div>
+                                </figure>
+                                <figure class="o-media--item">
+                                    <div class="o-media--item--galllery">
+                                        <img src="static/images/slider/hockey.jpg" class="img-fluid o-media--image" alt="Article Info">
+                                        <div class="slide-count-wrap">
+                                            <span class="current"></span>
+                                        </div>
+                                    </div>
+                                </figure>
+                            </div>
+                            <div class="o-modal--discription">
+                                <div class="c-cards-view__additionalinfo">
+                                    <div class="c-cards-view__additionalinfo--category">Motor vehicles</div>
+                                </div>
+                                <div class="c-cards-view__info">
+                                    <div class="c-cards-view__info--heading js-card-heading">Vintage tractor</div>
+                                    <div class="c-cards-view__info--description js-card-description">2004, BA, auto, FSH, 70,000kms, reg to July 2019, excellent cond, CAPPS3, $12,000. Phone 0448 235 740 after 6pm.</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        
+        <div class="modal" id="ModalAdPopUp">
+            <div class="modal-dialog">
+                <div class="modal-content modal-content-md">
+                    <div class="o-modal__container o-modal__container--gallery">
+                        <!-- Modal Header -->
+                        <div class="o-modal__container-head">
+                            <div class="o-modal--title o-modal--title-xs text-left">Jobs</div>
+                            <button type="button" class="modal-close" data-dismiss="modal"><i class="fa fa-times"></i></button>
+                        </div>
+                        <!-- Modal body -->
+                        <div class="o-modal__container-body o-modal__container-body verticalScrollBar">
+                            <div class="o-modal--discription no-margin">
+                                <div class="c-cards-view__additionalinfo">
+                                    <div class="c-cards-view__additionalinfo--category">jobs vacant</div>
+                                </div>
+                                <div class="c-cards-view__info no-margin">
+                                    <div class="c-cards-view__info--heading js-card-heading">Tyre Fitter</div>
+                                </div>
+                            </div>
+                            <div class="o-media o-media-sm">
+                                <img src="static/images/ad-popup.jpg" class="img-fluid o-media--image" alt="Article Info">
+                            </div>
+                            <div class="o-modal--discription">
+                                <div class="c-cards-view__info--description js-card-description">30th March 2019</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        
+        <div class="modal" id="ModalAnnouncements">
+            <div class="modal-dialog">
+                <div class="modal-content modal-content-md">
+                    <div class="o-modal__container o-modal__container--gallery">
+                        <!-- Modal Header -->
+                        <div class="o-modal__container-head">
+                            <div class="o-modal--title o-modal--title-xs text-left">Announcements</div>
+                            <button type="button" class="modal-close" data-dismiss="modal"><i class="fa fa-times"></i></button>
+                        </div>
+                        <!-- Modal body -->
+                        <div class="o-modal__container-body o-modal__container-body">
+                            <div class="o-modal--discription no-margin">
+                                <div class="c-cards-view__additionalinfo">
+                                    <div class="c-cards-view__additionalinfo--category">Birthday greetings</div>
+                                </div>
+                                <div class="c-cards-view__info no-margin">
+                                    <div class="c-cards-view__info--heading js-card-heading no-margin">Birthday wishes</div>
+                                </div>
+                            </div>
+                            <div class="o-modal--discription">
+                                <div class="c-cards-view__info--description js-card-description">Happy birthday Liz with love from your family.</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>

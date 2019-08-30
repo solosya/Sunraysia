@@ -162,6 +162,7 @@ Card.prototype.bindSocialUpdatePost = function ()
 
 Card.prototype.bindLightbox = function()
 {
+    console.log("controller lightbox");
     var isRequestSent = false;
     var self = this;
     $('article.lightbox').unbind().on('click', function (e) {
@@ -227,16 +228,6 @@ Card.prototype.bindLightbox = function()
 
                     Acme.LightBox.renderPreLayout(article);
 
-
-                    // var articleTemplate = Handlebars.compile(Acme.templates.socialPopup);
-                    // var article = articleTemplate(data);
-                    // console.log(article);
-                    // $("body").prepend(article);
-                    // $('.modal').html(article);
-
-                    // setTimeout(function () {
-                    //     $('.modal').modal('show');
-                    // }, 0);
                 },
                 error: function (jqXHR, textStatus, errorThrown) {
                     console.log(errorThrown, textStatus, jqXHR);
@@ -400,6 +391,7 @@ Card.prototype.events_refresh = function()
 
 Card.prototype.events = function() 
 {
+    console.log('running controller events');
     this.bindLightbox();
 
     if (_appJsConfig.isUserLoggedIn === 1 && _appJsConfig.userHasBlogAccess === 1) {
