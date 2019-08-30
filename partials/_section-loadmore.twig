@@ -1,4 +1,7 @@
 {% set cardTypes = cardType is defined ? cardType : "" %}
+{% if contentType is not defined %}
+    {% set contentType = 'article' %}
+{% endif %}
 
 {# please make sure sectionNumber, loadMoreClass and totalCards are set at the top of this file #}
 <div class="row" id="loadmore_section_{{sectionNumber}}"></div>
