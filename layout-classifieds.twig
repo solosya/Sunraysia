@@ -136,6 +136,7 @@
                     <div class="c-filter--search--field c-filter--search--field-xs">
                         {# <span id="search-button-2" class="fa fa-search c-search-icon"></span> #}
                         <input type="text" class="form-control" name="search" id="search" placeholder="Search the classifieds">
+                        <div id="searchSpinner" class="spinner" style="position:relative;top:-22px;right:42px;float:right;display:none;"></div>
                     </div>
                     <div class="c-filter--search--select c-filter--search--select-xs">
                         <div id="classySearchDropdown" class="" style="width:100%"></div>
@@ -405,6 +406,7 @@
             renderType      : 'write',
             type            : "{{contentType}}",
             before          : '<div class="acme-row">',
+            failText        : '<h2 style="font-size:24px;margin-top:25px;color:#0e215d">Sorry, we couldn\'t find what you\'re looking for.</h2>',
             after           : '</div>',
             cardType        : "acme-",
             card_class      : 'acme-col-12 acme-col-md-12 acme-col-lg-4 acme-card-1-mobile acme-card-1-tablet acme-card-1-desktop',
@@ -526,9 +528,15 @@
             var searchTerm = $('#search').val();
 
             if (!searchTerm) return;
+            $('#results').fadeOut(1000);
+            $('#searchSpinner').show();
             Acme.search.options.search = searchTerm;
             Acme.search.options.offset = 0;
-            Acme.search.fetch();
+            Acme.search.fetch().done(function() {
+                $('#searchSpinner').hide();
+                $('#results').show();
+
+            });
         };
 
 
