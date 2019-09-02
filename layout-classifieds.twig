@@ -185,10 +185,11 @@
                     ********************************************* #}
                 {% if fullPage == true %}
 
+
                     {% set articles = blogFeeds[blogTitle].feed.articles %}
                     <div id="results" class="">
 
-                        <div class="acme-row c-section-head">
+                        <div class="acme-row c-section-head" data-bguid="{{blogFeeds[blogTitle]['guid']}}">
                             <div class="acme-col-12">
                                 <a href="#">
                                     <div class="c-section-head__title">{{blogTitle}}</div>
@@ -247,6 +248,7 @@
 
                         {% for pagesection in blogFeeds | keys %}
 
+
                             {% set params = {
                                 'networkData' : networkData,
                                 'blogFeeds'   : blogFeeds,
@@ -263,7 +265,7 @@
                                         loadmore: true,
                                         loadmore_id: pageSectionId ~ "",
                                         contentType: contentType,
-
+                                        blog_guid: blogFeeds[pagesection]['guid']
                                     }
                                 },
                             } %}
@@ -409,7 +411,8 @@
         }); 
 
 
-
+        // garage sales b92b5dfa-5844-4be8-ad6a-1664ab7e2c5e
+        //              519a9fbd-f778-4d4e-b7c6-c85c43eb01c9
         var CategoryMenu = function() {
             this.form = "classifieds-form";
             this.menu = new Acme.listMenu({
