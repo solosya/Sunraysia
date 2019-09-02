@@ -528,13 +528,15 @@
             var searchTerm = $('#search').val();
 
             if (!searchTerm) return;
-            $('#results').fadeOut(1000);
-            $('#searchSpinner').show();
+            var results = $('#results');
+            var spinner = $('#searchSpinner');
+            results.fadeOut(1000);
+            spinner.show();
             Acme.search.options.search = searchTerm;
             Acme.search.options.offset = 0;
             Acme.search.fetch().done(function() {
-                $('#searchSpinner').hide();
-                $('#results').show();
+                results.show();
+                spinner.hide();
 
             });
         };
