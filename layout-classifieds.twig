@@ -437,10 +437,10 @@
         var menuMapper = function(data) {
             if (data.children !== 'undefined' && data.children.length > 0 ) {
                 var children = data.children.map(menuMapper);
-                children.unshift({
-                    label: data.blogTitle,
-                    value: data.blogGuid
-                });
+                //children.unshift({
+                    //label: data.blogTitle,
+                    //value: data.blogGuid
+                //});
                 return children;
             }
             return {
@@ -451,7 +451,16 @@
 
         Acme.server.fetch(_appJsConfig.appHostName + '/api/menu/get-menu?name={{currentPage}}' ).done(function(data) {
             classifiedSections = data.map(menuMapper);
-            classifiedSections = [].concat.apply([], classifiedSections);
+            classifiedSections = [].concat.apply([], classifiedSections).sort(function(a,b) {
+                if (a.label.toLowerCase()<b.label.toLowerCase()) {
+                    return -1;
+                }
+                if (a.label.toLowerCase()>b.label.toLowerCase()) {
+                    return 1;
+                }
+                return 0
+
+            });
             classifiedSections.unshift({label: 'All', value: null});
             Acme.CategoryMenu.menu.update(classifiedSections);
         });
