@@ -220,7 +220,7 @@ $('document').ready(function() {
 
 
 
-    $(".list-arrow").on('click', function(e) {
+    $(".list-arrow-container").on('click', function(e) {
         $parent = $(this).parent();
         var isActive = $parent.hasClass('active');
         $('.dropdown').each(function() {

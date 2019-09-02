@@ -156,17 +156,26 @@
                 }
             }
         }
-
+        .list-arrow-container {
+            position:absolute;
+            display:block;
+            right:0;
+            top:0;
+            height:58px;
+            width:60px;
+        }
         .list-arrow {
             @include rotate(90);
             position:absolute;
             display:block;
-            right:20px;
-            top:25px;
+            position: absolute;
+            top: 21px;
+            right: 50%;
             height:15px;
             width:15px;
             z-index:999;
             transition:.2s ease;
+            
             > span {
                 border-color: $greyish;
             }
