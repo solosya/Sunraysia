@@ -3,6 +3,7 @@
 {% set blogData     = _Blog.getBlog() %}
 {% set config       = _Network.getThemeConfig() %}
 {% set currentPage  = _Blog.getBlogTitle() %}
+{% set mainClassifiedsPage  = currentPage %}
 
 {% set sideMenu = _Menu.get({'menuType': 'header', "menuGroupName": currentPage }) %}
 {% set panels = _Menu.get({'menuType': 'header', "menuGroupName":  currentPage ~ " panels"}) %}
@@ -452,7 +453,7 @@
             }
         };
 
-        Acme.server.fetch(_appJsConfig.appHostName + '/api/menu/get-menu?name={{currentPage}}' ).done(function(data) {
+        Acme.server.fetch(_appJsConfig.appHostName + '/api/menu/get-menu?name={{mainClassifiedsPage}}' ).done(function(data) {
             classifiedSections = data.map(menuMapper);
             classifiedSections = [].concat.apply([], classifiedSections).sort(function(a,b) {
                 if (a.label.toLowerCase()<b.label.toLowerCase()) {
