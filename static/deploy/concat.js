@@ -18146,6 +18146,7 @@ function(a){"use strict";void 0===a.en&&(a.en={"mejs.plural-form":1,"mejs.downlo
                 e.preventDefault();
             }
             if ($elem.data('behaviour') == 'close') {
+                e.preventDefault();
                 this.closeWindow();
             }
             if ( $elem.is('button') ) {

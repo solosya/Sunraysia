@@ -804,6 +804,7 @@
                 e.preventDefault();
             }
             if ($elem.data('behaviour') == 'close') {
+                e.preventDefault();
                 this.closeWindow();
             }
             if ( $elem.is('button') ) {
