@@ -94,7 +94,7 @@
                                 <div class="col-12 col-md-6 col-lg-3">
                                     <div class="c-paywall-card">
                                         <div class="c-paywall-card__panel">
-                                            <h3 class="c-paywall-card__name c-paywall-card__name-xs">{{plan.plan_name|raw}}</h3>
+                                            <h3 class="c-paywall-card__name c-paywall-card__name-xs">{{plan.plan_name}}</h3>
                                             {# <p class="c-paywall-card__excerpt c-paywall-card__excerpt-xs">{{plan.description}}</p> #}
                                             <div class="c-paywall-card__price c-paywall-card__price-lg">{% if val != 'FREE' %}${% endif %}{{val}}</div>
                                         </div>
@@ -108,21 +108,16 @@
                                                 <li>{{(plan.description|replace({'@': '</li><li>'}))|raw}}</li>
                                             </ul>
 
+                                            {% set trial = plan.trial_status == "1" ? 1 : 0 %}
+                                            {% set signup = plan.type == "signup" ? 1 : 0 %}
+                                            
                                             <button type="button" 
                                                     class="c-button c-button--grey c-button-block c-button-md j-plan-subscribe c-paywall-card__subscribe" 
                                                     data-plan-name="{{plan.plan_name}}" 
                                                     data-planid="{{plan.guid}}"
                                                     data-cost="${{val}}"
-                                                    {% if plan.trial_status == "1" %}
-                                                        data-trial=1
-                                                    {% else %}
-                                                        data-trial=0
-                                                    {% endif %}
-                                                    {% if plan.type == "signup" %}
-                                                        data-signup=1
-                                                    {% else %}
-                                                        data-signup=0
-                                                    {% endif %}
+                                                    data-trial="{{trial}}"
+                                                    data-signup="{{signup}}"
                                             >Subscribe</button>
                                             {% if plan.trial_status == "1" %}
                                                 <div class="c-button" style="color:#c51515;background-color:#fff;cursor:unset;">Includes {{plan.trial_period}}-day trial</div>
