@@ -20913,6 +20913,7 @@ $('document').ready(function() {
 
 
     $(".list-arrow-container").on('click', function(e) {
+        console.log('m');
         $parent = $(this).parent();
         var isActive = $parent.hasClass('active');
         $('.dropdown').each(function() {
