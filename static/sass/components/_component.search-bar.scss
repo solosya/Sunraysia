@@ -1,7 +1,8 @@
 .c-search-bar {
     position:absolute;
-    transform: translateY(114px);
-    @include transform(translateY(114px));
+    margin-left: -15px;
+    // transform: translateY(114px);
+    // @include transform(translateY(114px));
     @include transition(all 0.4s ease-in-out);
     width:100%;
 
@@ -12,20 +13,22 @@
 
 
     &--active {
-        @include transform(translateY(165px));
+        @include transform(translateY(50px));
+        height: 50px;
 
     }
 
     &__container {
         // position: absolute;
+        padding-left:15px;
         width:100%;
-        height: 50px;
+        height: 43px;
         @include flexbox();
-        @include justify-content(flex-end);
+        // @include justify-content(flex-end);
         @include align-items(center);
-        left: auto;
-        right: 0;
-        top: 0;
+        // left: auto;
+        // right: 0;
+        // top: 0;
         // display: none;
     }
 

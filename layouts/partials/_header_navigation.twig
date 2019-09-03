@@ -6,25 +6,18 @@
 
 {% set logo = networkData.templatePath~'/static/images/logo.png'%}
 {% if networkData.logoMedia | length > 0 %}
-    {% set logo = _Media.getMediaUrl(networkData.logoMedia, 650, 144, {'crop': 'fit'} )%}
+    {% set logo = _Media.getMediaUrl(networkData.logoMedia, 0, 0, {'crop': 'fit'} )%}
+{% endif %}
+
+{% if secondary is defined %} 
+    {% if networkData.secondaryLogoMedia | length > 0 %}
+        {% set logo = _Media.getMediaUrl(networkData.secondaryLogoMedia, 0, 0, {'crop': 'fit'} )%}
+    {% endif %}
 {% endif %}
 
 
 <header class="c-header u-mobile-margin-bottom-20 u-tablet-margin-bottom-30 u-desktop-margin-bottom-50">
     
-    <div id="search-bar" class="c-search-bar">
-        <div class="container">
-            <div class="row ">
-                <div class="col-12 c-search-bar__container">
-                    <form class="c-search-bar__form" method="get" id="searchform" action="{{networkData.defaultBlogUrl}}/search">
-                        <button class="c-search-bar__submit" type="submit" id="searchsubmit"></button>
-                        <input class="c-search-bar__input" type="text" name="s" placeholder="Search"/>
-                    </form>
-                </div>
-            </div>
-        </div>
-        <div class="o-rule"></div>
-    </div>
 
     
     <div class="container-fluid">
@@ -73,6 +66,8 @@
                         {{ this.render('../../partials/_menu.twig', {'menu': headermenu}) | raw }}
                     </ul>
                 </div>
+   
+
             </div>
             {# *************************************************
                                     END
@@ -88,9 +83,7 @@
 
 
             <div class="col-12 c-header__container">
-                <a href="#" >
-                    <div id="weather" class="c-header__weather-info c-header__weather-info-xs j-weather-panel"></div>
-                </a>
+                <div id="weather" class="c-header__weather-info c-header__weather-info-xs j-weather-panel"></div>
                 
 
                 <button class="c-hamMenu c-hamMenu--tablet js-hamDevice" type="button">
@@ -164,11 +157,30 @@
             {# *************************************************
                                     Menu 
                 ***********************************************#}
-            <div class="col-12 c-navigation">
-                <ul class="c-navigation__list">
-                    {{ this.render('../../partials/_menu.twig', {'menu': headermenu}) | raw }}
-                </ul>
-                <div class="c-navigation__icons__search js-searchButton"></div>
+            <div class="col-12 c-navigation__container">
+
+
+                <div id="search-bar" class="c-search-bar">
+                    <div class="c-search-bar__container">
+                        <form class="c-search-bar__form" method="get" id="searchform" action="{{networkData.defaultBlogUrl}}/search">
+                            <button class="c-search-bar__submit" type="submit" id="searchsubmit"></button>
+                            <input class="c-search-bar__input" type="text" name="s" placeholder="Search"/>
+                        </form>
+                    </div>
+                    <div class="o-rule"></div>
+                </div>
+
+
+
+
+                <div class="c-navigation">
+                    <ul class="c-navigation__list">
+                        {{ this.render('../../partials/_menu.twig', {'menu': headermenu}) | raw }}
+                    </ul>
+                    <div class="c-navigation__icons__search js-searchButton"></div>
+                </div>
+
+
             </div>
         </div>
     </div>

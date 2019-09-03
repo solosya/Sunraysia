@@ -1,9 +1,17 @@
 /* Begin header style */
 
 .c-navigation {
+    position:relative;
+    margin:0 -15px;
+
+    &__container {
+    }
+
+
     @include flexbox();
-    @include justify-content(center);
     @include flex-height(45px);
+
+    @include justify-content(center);
     background-color: $blue;
 
     @media #{$desktop-down} {

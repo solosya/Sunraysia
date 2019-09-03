@@ -63,9 +63,10 @@
           
         display: flex;
         @include flex-direction(row, horizontal);
-        @include flex-height(120px);
+        // @include flex-height(120px);
         @include align-items(center);
-
+        height:auto;
+        min-height:120px;
         @media #{$desktop-down} {
             @include flex-height(112px);
         }
@@ -112,6 +113,7 @@
     }
 
     &__weather-info {
+        position:absolute;
         margin: 15px 0;
         @include flexbox();
         @include flex-direction(row, horizontal);
@@ -123,15 +125,28 @@
     }
 
     &__logo-container {
-        position: absolute;
+        // position: absolute;
         width: 380px;
-        left: 50%;
-        transform: translateX(-190px);
+        // left: 50%;
+        // transform: translateX(-190px);
+        text-align:center;
+        // height:200px;
+        margin: auto;
+        margin-top:20px;
+        margin-bottom:20px;
 
         &--fixed {
             height: 41px;
             width: 270px;
-            transform: translateX(-135px);
+            // transform: translateX(-135px);
+
+            a {
+                height:100%;
+                img {
+
+                    height:100%;
+                }
+            }
         }
 
 
@@ -151,7 +166,11 @@
     }
 
     &__logo {
-        display: block;
+        display: inline-block;
+        // height:100%;
+        // height:80px;
+
+
     }
 
     &__login-buttons-tablet {
@@ -167,6 +186,8 @@
 
 
     &__login-buttons-desktop {
+        position:absolute;
+        right:20px;
         @include flexbox();
         @include flex-direction(row, horizontal);
         @include align-items(flex-end);
