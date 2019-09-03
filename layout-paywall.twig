@@ -91,10 +91,14 @@
                                 {% if val == 0 %}
                                     {% set val = "FREE" %}
                                 {% endif %}
+
+
+                                {% set planName = plan.plan_name |replace({'Member': '<br />Member'}) %}
+
                                 <div class="col-12 col-md-6 col-lg-3">
                                     <div class="c-paywall-card">
                                         <div class="c-paywall-card__panel">
-                                            <h3 class="c-paywall-card__name c-paywall-card__name-xs">{{plan.plan_name}}</h3>
+                                            <h3 class="c-paywall-card__name c-paywall-card__name-xs">{{planName | raw }}</h3>
                                             {# <p class="c-paywall-card__excerpt c-paywall-card__excerpt-xs">{{plan.description}}</p> #}
                                             <div class="c-paywall-card__price c-paywall-card__price-lg">{% if val != 'FREE' %}${% endif %}{{val}}</div>
                                         </div>
