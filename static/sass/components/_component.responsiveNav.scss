@@ -157,13 +157,15 @@
             }
         }
         .list-arrow-container {
-            cursor:pointer;
             position:absolute;
             display:block;
             right:0;
             top:0;
             height:58px;
             width:60px;
+            &:hover{
+                cursor:pointer;
+            }
         }
         .list-arrow {
             @include rotate(90);
