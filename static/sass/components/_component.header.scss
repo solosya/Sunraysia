@@ -153,7 +153,7 @@
         @media #{$desktop-down} {
             height: auto;
             width: 270px;
-            transform: translateX(-135px);
+            // transform: translateX(-135px);
         }
         @media #{$mobile} {
             transform:none;
@@ -200,13 +200,15 @@
     }
 
     &__login-buttons {
+        position:absolute;
+        right:20px;
 
         @include flexbox();
         @include flex-direction(row, horizontal);
         @include align-items(flex-end);
         @include justify-content(flex-end);
         @include font-size(12);
-        position:relative;
+        // position:relative;
         color:$blue;
         font-weight: $weightMedium;
         margin-left:auto;
