@@ -24,7 +24,6 @@
             article: articles[articleCount], 
             position: (articleCount+1),
             containerClass: "card-classified-section-mobile card-classified-section-tablet card-classified-section-desktop card-classified-section-desktop-lg",
-            url: altUrls[1] is defined ? networkData.defaultBlogUrl ~ altUrls[1] : ''
         }) | raw}}
         {% set articleCount = (dev) ? articleCount : articleCount + 1 %}
     </div>
@@ -34,7 +33,6 @@
             article: articles[articleCount], 
             position: (articleCount+1),
             containerClass: "card-classified-section-mobile card-classified-section-tablet card-classified-section-desktop card-classified-section-desktop-lg",
-            url: altUrls[2] is defined ? networkData.defaultBlogUrl ~ altUrls[2] : ''
         }) | raw}}
         {% set articleCount = (dev) ? articleCount : articleCount + 1 %}
     </div>
@@ -44,7 +42,6 @@
             article: articles[articleCount], 
             position: (articleCount+1),
             containerClass: "card-classified-section-mobile card-classified-section-tablet card-classified-section-desktop card-classified-section-desktop-lg",
-            url: altUrls[3] is defined ? networkData.defaultBlogUrl ~ altUrls[3] : ''
         }) | raw}}
         {% set articleCount = (dev) ? articleCount : articleCount + 1 %}
     </div>
