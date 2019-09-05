@@ -96,10 +96,7 @@
         {% set articleTitle = quotes.smarten(article.titlePreview) %}
     {% endif %}
 
-    {% set redirUrl = article.url %}
-    {% if url is defined and url != '' %}
-        {% set redirUrl = url %}
-    {% endif %}
+    {% set articleUrl = article.externalUrl != "" ? article.externalUrl : article.url %}
 
 
     {% set params = {
@@ -128,7 +125,7 @@
         title           : articleTitle,
         image           : _Media.getMediaUrl(article.featuredMedia,imgWidth, imgHeight, {'crop': 'fill', 'gravity': 'faces'} ),
         guid            : article.guid,
-        url             : redirUrl,
+        url             : articleUrl,
         id              : article.articleId,
     } %}
     
