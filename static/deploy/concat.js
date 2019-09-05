@@ -21678,6 +21678,10 @@ Acme.Token.prototype.removeToken = function()
                                         <p class="weather-panel__location">{{location}}</p> \
                                         <div class="weather-panel__description">{{description}}</div> \
                                     </div> \
+                                    <div class="weather-panel__pulldown-icon"> \
+                                        <img class="j-show-weather-forcast" src="' + _appJsConfig.templatePath + '/static/icons/arrow.svg"> \
+                                    </div> \
+                                    <div class="weather-dropdown hidden j-weather-panel-dropdown"> \
                                 </div>'
                         };
 
@@ -21696,7 +21700,7 @@ Acme.Token.prototype.removeToken = function()
                         var forecastTmp = Handlebars.compile(this.templates.forecast);
                         var range = Math.round(data.day_high) + '&#176; - ' + Math.round(data.day_low) + '&#176;'
 
-
+                        console.log('making weather drowpdown panel');
                         this.container.html(
                             weatherTmp( {
                                 "icon": weatherIcons( data.icon ),
