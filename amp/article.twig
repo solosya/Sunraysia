@@ -85,6 +85,7 @@
             </amp-carousel>
         {% endif %}
 
+
         <div class="article__header">
             <div class="article__header-text">
                 <a href="{{ channel.url }}" class="article__channel">{{ article.label | capitalize }}</a>
@@ -111,9 +112,6 @@
 
     <div class="article__container">
         <div class="article__content">
-            <div class="article__intro">
-                {{article.title | raw}}
-            </div>
             {{article.content | raw}}
         </div>
     </div>
