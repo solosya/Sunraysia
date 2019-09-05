@@ -13,6 +13,7 @@
             article: articles[articleCount], 
             position: (articleCount+1),
             containerClass: "card-classified-section-mobile card-classified-section-tablet card-classified-section-desktop card-classified-section-desktop-lg",
+            url: altUrls[0] is defined ? networkData.defaultBlogUrl ~ altUrls[0] : ''
         }) | raw}}
         {% set articleCount = (dev) ? articleCount : articleCount + 1 %}
     </div>
