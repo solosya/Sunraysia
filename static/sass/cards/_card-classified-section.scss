@@ -134,6 +134,12 @@
     .c-cards-view {
         height: 290px;
 
+        &__container {
+            padding: 0 15px 10px 15px;
+        }
+
+
+
         &__media {
             @include flex-height(165px);
 
@@ -148,7 +154,7 @@
         }
 
         &__heading {
-            @include flex-height(65px);
+            @include flex-height(95px);
             @include font-size(22);
             line-height:1.36;
         }
