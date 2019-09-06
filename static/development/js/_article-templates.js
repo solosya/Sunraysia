@@ -69,7 +69,7 @@ var cardTemplateBottom =
                     type        = "button" \
                     data-social = "0"> \
                     <i class="fa fa-eye-slash">\
-                    </i><span class="hide">Hide</span> \
+                    </i><span class="u-display-none">Hide</span> \
                 </button> \
                 \
                 <button \
@@ -78,7 +78,7 @@ var cardTemplateBottom =
                     class="btnhide social-tooltip" \
                     type="button"> \
                     <i class="fa fa-edit"></i>\
-                    <span class="hide">Edit</span> \
+                    <span class="u-display-none">Edit</span> \
                 </button> \
                 \
                 <button data-position="{{position}}" \
@@ -89,7 +89,7 @@ var cardTemplateBottom =
                         type="button" \
                         data-status="{{isPinned}}"> \
                     <i class="fa fa-thumb-tack"></i>\
-                    <span class="hide">{{pinText}}</span> \
+                    <span class="u-display-none">{{pinText}}</span> \
                 </button> \
             </div> \
          {{/if}}\
