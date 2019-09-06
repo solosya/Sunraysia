@@ -18437,7 +18437,7 @@ Acme.templates.ads_infinite =
 Acme.templates.modal = 
 // style="scrolling == unusable position:fixed element might be fixing login for ios safari
 // also margin-top:10px
-'<div id="{{name}}" class="flex_col {{name}}"> \
+'<div id="{{name}}" class="flex_col {{name}}" data-behaviour="close"> \
     <div id="dialog" class="{{name}}__window"> \
         <div class="{{name}}__container" style="scrolling == unusable position:fixed element"> \
             <div class="{{name}}__header"> \
