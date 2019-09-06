@@ -79,6 +79,7 @@
         Acme.loadMore = new Acme.View.articleFeed({
             model           : new Card(),
             container       : 'loadmore_section',
+            offset          : {{limit}},
             limit           : {{limit}},
             before          : '<div class="row">',
             after           : "</div>",
