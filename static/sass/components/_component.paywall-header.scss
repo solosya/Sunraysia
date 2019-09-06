@@ -13,7 +13,13 @@
         color: $white;
         text-align:center;
     }
-
+    
+    &__title-break {
+        @media #{$mobile}{
+            display:block;
+        }
+    
+    }
     &__subtitle {
         @include font-size(32);
         font-weight:$weightLight;
