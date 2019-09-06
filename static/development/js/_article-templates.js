@@ -52,7 +52,7 @@ var cardTemplateTop =
         data-position="{{position}}" \
         data-social={{params.social}} \
         data-article-image="{{{image}}}" \
-        data-article-text="{{params.title}}"> \
+        data-article-text="{{params.title}}" \
         title="{{titleString}}"> \
         \
         <article class="{{cardType}}c-cards-view {{# ifCond params.social "==" 1}} social {{/ifCond}} {{params.category}} {{hasMediaClass}} {{status}} {{lightbox}}">';
