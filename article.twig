@@ -2,16 +2,29 @@
 {{ set(this, 'title', article.title) }}
 {{ this.registerLinkTag({rel:'amphtml', href:_AppHelper.getServerUrl(false)~'?amp=1'}) }}
 
-
-
-
-
 {% set blogInfo = _Blog.getBlog() %}
 {% set networkData = _Network.getNetworkData() %}
 {% set config       = _Network.getThemeConfig() %}
 {% set articleBlog = article.blog.title | lower %}
 {% set relatedArticles = [] %}
 {% set articleBlogInfo = _Blog.getBlog({'guid':article.blog['guid']}) %}
+
+
+
+{% if article.opengraph.description == "" %}
+    {% set meta = _AppHelper.addMetaTag("og:description", {'content' : article.excerpt}) %}
+{% endif %}
+{% if article.twitter.description == "" %}
+    {% set meta = _AppHelper.addMetaTag("twitter:description", {'content' : article.excerpt}) %}
+{% endif %}
+{% if article.twitter.description == "" %}
+    {% set meta = _AppHelper.addMetaTag("description", {'content' : article.excerpt}) %}
+{% endif %}
+
+
+
+
+
 
 {% set showPaywall = false %}
 {% set ArticleContent = article.content %}
