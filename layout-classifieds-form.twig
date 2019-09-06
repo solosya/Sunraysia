@@ -1,3 +1,12 @@
+{% set config = _Network.getThemeConfig() %}
+
+{% set emailGroup = "listings" %}
+
+{% if config['email_groups'] is defined and config['email_groups']['classifieds'] is defined %}
+    {% set emailGroup = config['email_groups']['classifieds'] %}
+{% endif %}
+
+
 <div class="container-fluid no-padding o-body-container  o-body-container-md" data-ver="5">
     <div class="container">
         <div class="row justify-content-center">
@@ -536,7 +545,7 @@
             var formData = {
                 name: self.data.firstname,
                 email: self.data.email_address,
-                emailGroup: "Listings",
+                emailGroup: "{{emailGroup}}",
                 sendToNetworkAdmins: 0,
                 message: formText,
             }
