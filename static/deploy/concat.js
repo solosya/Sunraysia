@@ -18291,6 +18291,7 @@ var cardTemplateTop =
         data-social={{params.social}} \
         data-article-image="{{{image}}}" \
         data-article-text="{{params.title}}"> \
+        title="{{titleString}}"> \
         \
         <article class="{{cardType}}c-cards-view {{# ifCond params.social "==" 1}} social {{/ifCond}} {{params.category}} {{hasMediaClass}} {{status}} {{lightbox}}">';
 
@@ -19204,7 +19205,6 @@ Card.prototype.renderCard = function(card, options)
     
     var width = typeof options.imageWidth !== "undefined" ? options.imageWidth : 500;
     var height = typeof options.imageHeight !== "undefined" ? options.imageHeight : 350;
-    console.log(options);
 
     if (options.imageOriginal) {
         var width = card.featuredMedia.width;
@@ -19221,6 +19221,21 @@ Card.prototype.renderCard = function(card, options)
         articleContent = '<div class="acme-c-cards-view__articleContent">' + card.content + '</div>';
     }
     
+
+    card['titleString'] = "";
+    if (_appJsConfig.isUserLoggedIn === 1 && _appJsConfig.userHasBlogAccess === 1) {
+        var totalstring = "";
+        var totals = (card.total ) ? card.total : false;
+        if ( totals ) {
+            totalstring = "Viewed " + totals.view + " times";
+            totalstring = totalstring + " Published " + card.publishedDateTime;
+        }
+        card['titleString'] = totalstring;
+    }
+
+
+
+
     var articleId = parseInt(card.articleId);
 
     if (card.social) {
