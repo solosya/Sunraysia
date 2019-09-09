@@ -121,6 +121,7 @@
                             {# <div class="d-none">{{_AppHelper.printArray(pwstats)}}</div> #}
                             {% if pwstats['type'] == 'time' %}
                                     <div class="c-account-form__static-text">{{pwstats['name']}} at {{pwstats['currency']|replace({"AUD": "$", "NZD": "$", "GBP": "£", "USD": "$", "EUR": "€"})}}{{ pwstats['plan_value']/100}}</div>
+                            
                             {% elseif pwstats['type'] == 'article' %} 
                                 <div class="c-account-form__static-text">
                                     <span>{{pwstats['total_articles']}} articles for ${{ pwstats['plan_value']/100}}.</span>
@@ -132,11 +133,15 @@
                                 <div class="c-account-form__static-text">
                                     <span>{{ pwstats['article_count']}}/{{pwstats['total_articles']}}</span>
                                 </div>
+                            
                             {% else %}
                                 <div class="c-account-form__static-text">Free limited access.</div>
                             {% endif %} 
 
+
+
                             <hr class="divide divide--dark" />
+
 
                             {% if pwstats['status'] == 'cancelled' %}
                                 {# STATUS #}
@@ -221,7 +226,10 @@
                                     <hr class="divide divide--dark" />
                                 {% endif %} 
 
-                                
+                                <ul class="c-paywall-card__Details c-paywall-card__Details-md">
+                                    <li>{{(pwstats.description|replace({'@': '</li><li>'}))|raw}}</li>
+                                </ul>
+
 
 
                                 {# <div class="">
