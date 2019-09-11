@@ -397,6 +397,10 @@ Acme.UserProfileController.prototype.pageEvents = function ()
 
     $('.j-setplan').on('click', function(e) {
         e.stopPropagation();
+
+        var parent = $('#plans');
+        var cardSupplied = parent.data("card-details");
+
         var listelem = $(e.target);
         if (!listelem.hasClass('j-setplan')) {
             listelem = $(e.target.parentNode);
@@ -455,6 +459,16 @@ Acme.UserProfileController.prototype.pageEvents = function ()
                     msg = msg.replace(/(.+)(\d\d)$/g, "$1.$2");
                 }
             }
+
+
+            if (cardSupplied === 'f' ) {
+                msg = msg + "<br /><br />However, we need you to supply your credit card details. <br />You can enter those a little lower on the page and then we can finalise the plan change.";
+                Acme.SigninView.render("userPlan", "Almost there!", {message: msg});
+                return;
+            }
+    
+
+
             Acme.SigninView.render("userPlan", "Please confirm your plan.", {message: msg})
                 .done(function(r) {
 

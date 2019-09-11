@@ -375,7 +375,7 @@ Acme.templates.forgotFormTmpl =
 
 
 Acme.templates.userPlanMessage = 
-'<p class="{{name}}__message centerText">{{message}}</p> \
+'<p class="{{name}}__message centerText">{{{message}}}</p> \
 <form name="loginForm" id="loginForm" class="active u-margin-top-20 centerText" action="javascript:void(0);" method="post" accept-charset="UTF-8" autocomplete="off"> \
     <button id="cancelbutton" class="c-button c-button--blue-bordered" data-role="okay">OK</button> \
 </form>';

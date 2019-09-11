@@ -5,8 +5,6 @@
 {% set blogData = _Blog.getBlog() %}
 {% set propBlogId = blogData.additionalInfo['propertylistingsid'] %}
 
-<!-- Begin User Profile Page -->
-
 {% set propListingsArr = [] %}
 {% set pwstats = _User.getPaywallStats(true) %}
 {% set plans = _Network.getNetworkData()['paywallPlans'] %}
@@ -23,6 +21,19 @@
 {# {% if user %} 
     {% set userImage = _User.getUserPurchases(user.guid, 0, 10, {'type':"images"}) %}
 {% endif %} #}
+
+{% set url = _AppHelper.getParsedUrl() %}
+{% set params = url['query'] %}
+
+
+{% set showPlans = false %}
+{% for k, p in params if not break %}
+    {% if k == 'plans' %}
+        {% set showPlans = true %}
+    {% endif %}
+
+{% endfor %}
+
 
 
 
@@ -187,28 +198,30 @@
                                 </div>
                             {% else %}
                                 {# STATUS #}
-                                <div class="c-form__group u-margin-top-15">
-                                    <label class="c-form__label c-account-form__label" for="">Status</label>
 
-                                    <!-- Use this for Paid -->
-                                    {% if pwstats['type'] == 'time' %}
-                                        <div class="c-account-form__static-text">
-                                            <span class="c-account-form__static-text-{{pwstats['status']}}">{{ pwstats['status'] | capitalize }}</span>
-                                        </div>
-                                    {% elseif pwstats['type'] == 'article' %}
-                                        <div class="c-account-form__static-text">
-                                            <span class="c-account-form__static-text-{{pwstats['status']}}">{{ pwstats['status'] | capitalize }}</span>
-                                        </div>
-                                    {% else %}
-                                        <div class="c-account-form__static-text">
-                                            <span class="c-account-form__static-text-{{pwstats['status']}}">Free account</span>
-                                        </div>
-                                    {% endif %}
-                                
+                                {# Note: there is an else directly after the if #}
+                                {% if pwstats['type'] == 'article' and pwstats['status'] != 'trial' %}{% else %}
+                                    <div class="c-form__group u-margin-top-15">
+                                        <label class="c-form__label c-account-form__label" for="">Status</label>
 
-                                </div>
-                                    
-                                <hr class="divide divide--dark" />
+                                        <!-- Use this for Paid -->
+                                        {% if pwstats['type'] == 'time' %}
+                                            <div class="c-account-form__static-text">
+                                                <span class="c-account-form__static-text-{{pwstats['status']}}">{{ pwstats['status'] | capitalize }}</span>
+                                            </div>
+                                        {% elseif pwstats['type'] == 'article' %}
+                                            <div class="c-account-form__static-text">
+                                                <span class="c-account-form__static-text-{{pwstats['status']}}">{{ pwstats['status'] | capitalize }}</span>
+                                            </div>
+                                        {% else %}
+                                            <div class="c-account-form__static-text">
+                                                <span class="c-account-form__static-text-{{pwstats['status']}}">Free account</span>
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                    <hr class="divide divide--dark" />
+                                {% endif %}
+
 
                                     {# USERS #}
                                     {# <div class="c-form__group u-margin-top-15">
@@ -261,8 +274,9 @@
                 {# ****************************************************
                                 CHANGE PLANS
                 **************************************************** #}
-
-                <div id="plans" class="row u-margin-top-60" style="display:none">
+                {% set cardSupplied = pwstats['card_last_4'] ? 't' : 'f' %}
+                {% set planStyle = showPlans ? "" : "display:none" %}
+                <div id="plans" class="row u-margin-top-60" style="{{planStyle}}" data-card-details="{{cardSupplied}}">
                     <div class="col-12">
                         <h2 class="c-myAccount__head">Choose subscription</h2>
                         {% if pwstats['userManager'] == true or pwstats['user_role']['IsSystemAdmin'] %}
@@ -275,7 +289,6 @@
                             {% if managedUsersObj['totalCount'] is defined %}
                                 {% set managedUserCount = managedUsersObj['totalCount'] %}
                             {% endif %}
-
 
                             <div class="c-plans">
                                 {% set break = false %}
