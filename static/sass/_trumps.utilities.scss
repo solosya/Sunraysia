@@ -86,6 +86,8 @@
 .no-padding {padding:0;}
 .u-padding-5 { padding:5px; }
 .u-padding-10 { padding:10px }
+.u-before-none { &:before { display:none !important; } };
+.u-after-none { &:after { display:none !important; } }
 .u-margin-top-160 { margin-top: 160px; }
 .u-margin-top-100 { margin-top: 100px; }
 .u-margin-top-90 { margin-top: 90px; }

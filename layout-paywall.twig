@@ -43,8 +43,14 @@
     {% endif %}
 
 {% endfor %}
-
-
+{% set blogCover = false %}
+{% if blogData.media.cover.path != "" %}
+    {% set blogCover = true %}   
+    {% set coverImgSmall  = _Media.getMediaUrl(blogData.media.cover,  767,        0,      {'crop': 'fill', 'gravity': 'faces'} ) %}
+    {% set coverImgMedium = _Media.getMediaUrl(blogData.media.cover,  991,        0,      {'crop': 'fill', 'gravity': 'faces'} ) %}
+    {% set coverImg       = _Media.getMediaUrl(blogData.media.cover, 2000,        0,      {'crop': 'fill', 'gravity': 'faces'} ) %}
+     {# {% set coverImg       = blogData.media.cover.path %} #}
+{% endif %}
 
 
 
@@ -76,7 +82,13 @@
     <div class="c-payWall">
 
         {% if plans | length > 0 %}
-        <div class="c-payWall--pricing c-payWall--pricing-md">
+        <div class="c-payWall--pricing c-payWall--pricing-md{% if blogCover %} u-before-none{% endif %}"
+            {% if blogCover %}
+                style= "background-image:url({{coverImg}});
+                        background-repeat:no-repeat;
+                        background-size:contain;"
+            {% endif %}
+        >
 
             <div class="container u-margin-top-100">
 
