@@ -327,6 +327,9 @@
                 
                 var blogTitle = $(this).parent().data('blog-title');
 
+
+                Acme.PubSub.publish('update_state', {'fixedMenu': 'hide'});
+                
                 Acme.LightBox = new Acme.lightBox('modal', 'lightbox-modal');
                 Acme.LightBox.render(null, blogTitle, '<div class="spinner" style="position:relative;height:70px;margin-top:30px;margin-bottom:30px"></div>');
 

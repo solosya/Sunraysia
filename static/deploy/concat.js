@@ -17676,7 +17676,7 @@ function(a){"use strict";void 0===a.en&&(a.en={"mejs.plural-form":1,"mejs.downlo
 
             var notify = function(){
                 var subscribers = self.topics[topic];
-
+                console.log(subscribers);
                 for ( var i = 0, j = subscribers.length; i < j; i++ ){
                     var scope = window;
                     var scopeSplit = subscribers[i].context.split('.');
@@ -17701,7 +17701,8 @@ function(a){"use strict";void 0===a.en&&(a.en={"mejs.plural-form":1,"mejs.downlo
         };
 
         Acme.PubSub.publish = function( topic, data ){
-            return this.publisher( topic, data, false );
+            console.log(topic, data);
+            return this.publisher( topic, data );
         };
 
         Acme.PubSub.reset = function( ){
@@ -18613,7 +18614,7 @@ Acme.templates.forgotFormTmpl =
 
 
 Acme.templates.userPlanMessage = 
-'<p class="{{name}}__message centerText">{{message}}</p> \
+'<p class="{{name}}__message centerText">{{{message}}}</p> \
 <form name="loginForm" id="loginForm" class="active u-margin-top-20 centerText" action="javascript:void(0);" method="post" accept-charset="UTF-8" autocomplete="off"> \
     <button id="cancelbutton" class="c-button c-button--blue-bordered" data-role="okay">OK</button> \
 </form>';
@@ -19349,14 +19350,14 @@ Card.prototype.bindSocialUpdatePost = function ()
 
 Card.prototype.bindLightbox = function()
 {
-    console.log("controller lightbox");
+
     var isRequestSent = false;
     var self = this;
     $('article.lightbox').unbind().on('click', function (e) {
+
         e.preventDefault();
         var csrfToken = $('meta[name="csrf-token"]').attr("content");
-        
-        
+
         var layouts = {
             "classifieds" : 'systemCardTemplate',
         };
@@ -20593,6 +20594,10 @@ Acme.UserProfileController.prototype.pageEvents = function ()
 
     $('.j-setplan').on('click', function(e) {
         e.stopPropagation();
+
+        var parent = $('#plans');
+        var cardSupplied = parent.data("card-details");
+
         var listelem = $(e.target);
         if (!listelem.hasClass('j-setplan')) {
             listelem = $(e.target.parentNode);
@@ -20651,6 +20656,16 @@ Acme.UserProfileController.prototype.pageEvents = function ()
                     msg = msg.replace(/(.+)(\d\d)$/g, "$1.$2");
                 }
             }
+
+
+            if (cardSupplied === 'f' ) {
+                msg = msg + "<br /><br />However, we need you to supply your credit card details. <br />You can enter those a little lower on the page and then we can finalise the plan change.";
+                Acme.SigninView.render("userPlan", "Almost there!", {message: msg});
+                return;
+            }
+    
+
+
             Acme.SigninView.render("userPlan", "Please confirm your plan.", {message: msg})
                 .done(function(r) {
 
@@ -20718,7 +20733,7 @@ $('document').ready(function() {
     var pageWindow = $(window);
     var scrollMetric = [pageWindow.scrollTop()];
     var articleAd = $('#articleAdScroll');
-    var headerMenu = $("#fixed-header");
+    // var headerMenu = $("#fixed-header");
     
 
 
@@ -20748,16 +20763,46 @@ $('document').ready(function() {
     };
 
 
+    Acme.HeaderMenu = function() {
+        this.parent = $("#fixed-header");
+        this.subscriptions = Acme.PubSub.subscribe({
+            'Acme.headerMenu.listener' : ["update_state"]
+        });
+
+        this.fixed = this.parent.find('.c-header__container');
+        this.listeners = {
+            "fixedMenu": function(data) {
+                if (data.fixedMenu === 'hide') {
+                    this.hideFixed();
+                } else {
+                    this.showFixed();
+
+                }
+            }
+        }
+    }
+
+    Acme.HeaderMenu.prototype = new Acme._View();
+    Acme.HeaderMenu.constructor = Acme.HeaderMenu;
+    Acme.HeaderMenu.prototype.showFixed = function() {
+        this.parent.addClass('active');
+        this.fixed.addClass('active');
+    }
+    Acme.HeaderMenu.prototype.hideFixed = function() {
+        this.parent.removeClass('active');
+        this.fixed.removeClass('active');
+    }
+
+    Acme.headerMenu = new Acme.HeaderMenu();
+
+
+
     var scrollUpMenu = function() {
         var isMob = isMobile();
-        var top = headerMenu.find('.c-header__container');
-        // console.log(top);
         if ( scrollMetric[1] === 'up' && isScolledPast(400) && isMob === false ) {
-            headerMenu.addClass('active');
-            top.addClass('active');
+            Acme.headerMenu.showFixed();
         } else {
-            headerMenu.removeClass('active');
-            top.removeClass('active');
+            Acme.headerMenu.hideFixed();
         }
     }
 
@@ -20765,7 +20810,9 @@ $('document').ready(function() {
     //Onload and resize events
     $(window).on("resize", function () {
         scrollUpMenu();
+
     }).resize();
+
 
     //On Scroll
     $(window).scroll(function() {
@@ -20928,7 +20975,7 @@ $('document').ready(function() {
 
 
     $(".list-arrow-container").on('click', function(e) {
-        console.log('m');
+
         $parent = $(this).parent();
         var isActive = $parent.hasClass('active');
         $('.dropdown').each(function() {

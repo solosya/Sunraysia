@@ -177,14 +177,14 @@ Card.prototype.bindSocialUpdatePost = function ()
 
 Card.prototype.bindLightbox = function()
 {
-    console.log("controller lightbox");
+
     var isRequestSent = false;
     var self = this;
     $('article.lightbox').unbind().on('click', function (e) {
+
         e.preventDefault();
         var csrfToken = $('meta[name="csrf-token"]').attr("content");
-        
-        
+
         var layouts = {
             "classifieds" : 'systemCardTemplate',
         };
