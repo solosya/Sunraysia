@@ -27,7 +27,8 @@
 
 
 <main id="main" class="o-body-container o-body-container-md u-margin-top-60" role="main">
-        
+
+       
     <div class="c-event-form">
         
         <div class="container">
@@ -39,9 +40,11 @@
 
                     <div class="c-page-info">
                         <div class="c-page-info__title">Submit an event</div>
-                        <div class="c-page-info__discription">
-                            <p>Fields marked with an * are required. </p>
-                        </div>
+                        {% if not _User.isGuest() %}
+                            <div class="c-page-info__discription">
+                                <p>Fields marked with an * are required. </p>
+                            </div>
+                        {% endif %}
                     </div>
                 </div>
             </div>
@@ -52,123 +55,128 @@
                 
                 <div class="col-12 col-lg-8 c-event-form">
                     <div class="">
-                        <form id="event-form" action="#" method="post" autocomplete="off">
-                            <div class="row">
+                        {% if _User.isGuest() %}
+                            <h4>Tou must be logged in to submit an event, <a href="{{networkData.defaultBlogUrl}}/paywall">sign up to a free account</a> now!</h4>
+                        {% else %}
+                            <form id="event-form" action="#" method="post" autocomplete="off">
+                                <div class="row">
 
-                                {# NAME #}
-                                <div class="col-12 c-form__group u-margin-bottom-15">
-                                    <label class="c-form__label" for="firstname">Name of event*</label>
-                                    <input id="title" class="c-form__input c-form__input--bordered articleExtendedData" name="title" placeholder="eg. Mildura Farm Festival" aria-required="true" type="text">
-                                    <div class="c-form__help-block"></div>
-                                </div>
+                                    {# NAME #}
+                                    <div class="col-12 c-form__group u-margin-bottom-15">
+                                        <label class="c-form__label" for="firstname">Name of event*</label>
+                                        <input id="title" class="c-form__input c-form__input--bordered articleExtendedData" name="title" placeholder="eg. Mildura Farm Festival" aria-required="true" type="text">
+                                        <div class="c-form__help-block"></div>
+                                    </div>
 
-                                {# START DATE #}
-                                <div class="col-12 col-md-6 c-form__group u-margin-bottom-15">
-                                    <label class="c-form__label" for="start_date">Start date*</label>
-                                    <input type="text" class="c-form__input c-form__input--bordered articleExtendedData" placeholder="eg. 22/03/2019" name="start_date" id="start_date" value="">
-                                    <div class="c-form__help-block"></div>
-                                </div>
+                                    {# START DATE #}
+                                    <div class="col-12 col-md-6 c-form__group u-margin-bottom-15">
+                                        <label class="c-form__label" for="start_date">Start date*</label>
+                                        <input type="text" class="c-form__input c-form__input--bordered articleExtendedData" placeholder="eg. 22/03/2019" name="start_date" id="start_date" value="">
+                                        <div class="c-form__help-block"></div>
+                                    </div>
 
-                                {# END DATE #}
-                                <div class="col-12 col-md-6  c-form__group u-margin-bottom-15">
-                                    <label class="c-form__label" for="end_date">End date*</label>
-                                    <input type="text" class="c-form__input c-form__input--bordered articleExtendedData" placeholder="eg. 22/03/2019" name="end_date" id="end_date" value="" placeholder="">
-                                    <div class="c-form__help-block"></div>
-                                </div>
-
-
-                                {# ADDRESS #}
-                                <div class="col-12 col-md-6 c-form__group u-margin-bottom-15">
-                                    <label class="c-form__label" for="address">Street address*</label>
-                                    <input id="address1" class="c-form__input c-form__input--bordered articleExtendedData" name="address1" placeholder="Street address*" aria-required="true" type="text">
-                                    <div class="c-form__help-block"></div>
-                                </div>
-                                
-
-                                {# SUBURB #}
-                                <div class="col-12 col-md-split col-lg-split c-form__group u-margin-bottom-15">
-                                    <label class="c-form__label" for="suburb">Suburb*</label>
-                                    <input id="suburb" class="c-form__input c-form__input--bordered " name="suburb" placeholder="Suburb" aria-required="true" type="text">
-                                    <div class="c-form__help-block"></div>
-                                </div>
-
-                                {# STATE #}
-                                <div class="col-12 col-md-6 c-form__group u-margin-bottom-15">
-                                    <label class="c-form__label" for="state">State*</label>
-                                    <input id="state" class="c-form__input c-form__input--bordered articleExtendedData" name="state" placeholder="State*" aria-required="true" type="text">
-                                    <div class="c-form__help-block"></div>
-                                </div>
-                                <div class="col-12 col-md-6 c-form__group u-margin-bottom-15">
-                                </div>
+                                    {# END DATE #}
+                                    <div class="col-12 col-md-6  c-form__group u-margin-bottom-15">
+                                        <label class="c-form__label" for="end_date">End date*</label>
+                                        <input type="text" class="c-form__input c-form__input--bordered articleExtendedData" placeholder="eg. 22/03/2019" name="end_date" id="end_date" value="" placeholder="">
+                                        <div class="c-form__help-block"></div>
+                                    </div>
 
 
+                                    {# ADDRESS #}
+                                    <div class="col-12 col-md-6 c-form__group u-margin-bottom-15">
+                                        <label class="c-form__label" for="address">Street address*</label>
+                                        <input id="address1" class="c-form__input c-form__input--bordered articleExtendedData" name="address1" placeholder="Street address*" aria-required="true" type="text">
+                                        <div class="c-form__help-block"></div>
+                                    </div>
+                                    
 
-                                {# CONTACT NAME #}
-                                <div class="col-12 col-md-6 c-form__group u-margin-bottom-15">
-                                    <label class="c-form__label" for="contactname">Contact name*</label>
-                                    <input id="contactname" class="c-form__input c-form__input--bordered articleExtendedData" name="contactname" placeholder="eg. Mary Smith" aria-required="true" type="text">
-                                    <div class="c-form__help-block"></div>
-                                </div>
+                                    {# SUBURB #}
+                                    <div class="col-12 col-md-split col-lg-split c-form__group u-margin-bottom-15">
+                                        <label class="c-form__label" for="suburb">Suburb*</label>
+                                        <input id="suburb" class="c-form__input c-form__input--bordered " name="suburb" placeholder="Suburb" aria-required="true" type="text">
+                                        <div class="c-form__help-block"></div>
+                                    </div>
 
-
-                                {# CONTACT NUMBER #}
-                                <div class="col-12 col-md-6 c-form__group u-margin-bottom-15">
-                                    <label class="c-form__label" for="contactnumber">Contact number</label>
-                                    <input id="contactnumber" class="c-form__input c-form__input--bordered articleExtendedData" name="contactnumber" placeholder="eg. 61 433 333 333" aria-required="true" type="text">
-                                    <div class="c-form__help-block"></div>
-                                </div>
-
-                                {# CONTACT E'MAIL #}
-                                <div class="col-12 col-md-6 c-form__group u-margin-bottom-15">
-                                    <label class="c-form__label" for="contactemail">Email address*</label>
-                                    <input id="contactemail" class="c-form__input c-form__input--bordered articleExtendedData" name="contactemail" placeholder="eg. johnsmith@gmail.com" aria-required="true" type="text">
-                                    <div class="c-form__help-block"></div>
-                                </div>
-
-
-                                {# DESCRIPTION #}
-                                <div class="col-12 c-form__group u-margin-bottom-15">
-                                    <label class="c-form__label" for="contact-email">Event description*</label>
-                                    <textarea id="content"  name="content" class="c-form__input c-form__input--bordered c-event-form_description articleExtendedData" placeholder="Event description*" aria-required="true" type="text"></textarea>
-                                    <div class="c-form__help-block"></div>
-                                </div>
+                                    {# STATE #}
+                                    <div class="col-12 col-md-6 c-form__group u-margin-bottom-15">
+                                        <label class="c-form__label" for="state">State*</label>
+                                        <input id="state" class="c-form__input c-form__input--bordered articleExtendedData" name="state" placeholder="State*" aria-required="true" type="text">
+                                        <div class="c-form__help-block"></div>
+                                    </div>
+                                    <div class="col-12 col-md-6 c-form__group u-margin-bottom-15">
+                                    </div>
 
 
-                                {# UPLOAD PHOTO #}
-                                <div class="col-12 col-md-6 c-form__group ">
-                                    <label class="c-form__label" >Upload file</label>
-                                    <div id="uploadFileBtn" data-imgcls="images" data-id="imageArray" class="c-upload-image">
-                                        <p class="c-upload-image__label" >Upload image</p>
+
+                                    {# CONTACT NAME #}
+                                    <div class="col-12 col-md-6 c-form__group u-margin-bottom-15">
+                                        <label class="c-form__label" for="contactname">Contact name*</label>
+                                        <input id="contactname" class="c-form__input c-form__input--bordered articleExtendedData" name="contactname" placeholder="eg. Mary Smith" aria-required="true" type="text">
+                                        <div class="c-form__help-block"></div>
+                                    </div>
+
+
+                                    {# CONTACT NUMBER #}
+                                    <div class="col-12 col-md-6 c-form__group u-margin-bottom-15">
+                                        <label class="c-form__label" for="contactnumber">Contact number</label>
+                                        <input id="contactnumber" class="c-form__input c-form__input--bordered articleExtendedData" name="contactnumber" placeholder="eg. 61 433 333 333" aria-required="true" type="text">
+                                        <div class="c-form__help-block"></div>
+                                    </div>
+
+                                    {# CONTACT E'MAIL #}
+                                    <div class="col-12 col-md-6 c-form__group u-margin-bottom-15">
+                                        <label class="c-form__label" for="contactemail">Email address*</label>
+                                        <input id="contactemail" class="c-form__input c-form__input--bordered articleExtendedData" name="contactemail" placeholder="eg. johnsmith@gmail.com" aria-required="true" type="text">
+                                        <div class="c-form__help-block"></div>
+                                    </div>
+
+
+                                    {# DESCRIPTION #}
+                                    <div class="col-12 c-form__group u-margin-bottom-15">
+                                        <label class="c-form__label" for="contact-email">Event description*</label>
+                                        <textarea id="content"  name="content" class="c-form__input c-form__input--bordered c-event-form_description articleExtendedData" placeholder="Event description*" aria-required="true" type="text"></textarea>
+                                        <div class="c-form__help-block"></div>
+                                    </div>
+
+
+                                    {# UPLOAD PHOTO #}
+                                    <div class="col-12 col-md-6 c-form__group ">
+                                        <label class="c-form__label" >Upload file</label>
+                                        <div id="uploadFileBtn" data-imgcls="images" data-id="imageArray" class="c-upload-image">
+                                            <p class="c-upload-image__label" >Upload image</p>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
 
 
-                            <div class="row">
-                                <div id="imageArray" class="col-12 col-md-6  u-margin-bottom-15"></div>
-                            </div>
-
-
-                            <div class="row">
-                                <div class="col-12 col-md-4 c-form__group c-event-form__requirements u-margin-bottom-15">
-                                    <p class="c-form__label" >Requirements</p>
-                                    <ul>
-                                        <li>- JPG images only with .JPG extension</li>
-                                        <li>- Minimum width: 620 pixels</li>
-                                        <li>- JPG Quality: Medium/high or 80%</li>
-                                        <li>- File size: Approximately 150kb</li>
-                                    </ul>
-                                </div>
-
-                                <div class="col-12 u-margin-bottom-15">
-                                    <button type="button" id="cancel" class="c-button c-button--inline c-button--blue-bordered" name="">Cancel</button>
-                                    <button type="submit" id="" class="c-button c-button--inline c-button--grey" name="submit">Submit</button>
+                                <div class="row">
+                                    <div id="imageArray" class="col-12 col-md-6  u-margin-bottom-15"></div>
                                 </div>
 
 
+                                <div class="row">
+                                    <div class="col-12 col-md-4 c-form__group c-event-form__requirements u-margin-bottom-15">
+                                        <p class="c-form__label" >Requirements</p>
+                                        <ul>
+                                            <li>- JPG images only with .JPG extension</li>
+                                            <li>- Minimum width: 620 pixels</li>
+                                            <li>- JPG Quality: Medium/high or 80%</li>
+                                            <li>- File size: Approximately 150kb</li>
+                                        </ul>
+                                    </div>
 
-                            </div>
-                        </form>
+                                    
+                                    <div class="col-12 u-margin-bottom-15">
+                                        <button type="button" id="cancel" class="c-button c-button--inline c-button--blue-bordered" name="">Cancel</button>
+                                        <button type="submit" id="" class="c-button c-button--inline c-button--grey" name="submit">Submit</button>
+                                    </div>
+
+
+
+                                </div>
+                            </form>
+                        {% endif %}
                     </div>
                 </div>
 
