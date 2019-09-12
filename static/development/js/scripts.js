@@ -11,7 +11,7 @@ $('document').ready(function() {
     var pageWindow = $(window);
     var scrollMetric = [pageWindow.scrollTop()];
     var articleAd = $('#articleAdScroll');
-    var headerMenu = $("#fixed-header");
+    // var headerMenu = $("#fixed-header");
     
 
 
@@ -41,16 +41,46 @@ $('document').ready(function() {
     };
 
 
+    Acme.HeaderMenu = function() {
+        this.parent = $("#fixed-header");
+        this.subscriptions = Acme.PubSub.subscribe({
+            'Acme.headerMenu.listener' : ["update_state"]
+        });
+
+        this.fixed = this.parent.find('.c-header__container');
+        this.listeners = {
+            "fixedMenu": function(data) {
+                if (data.fixedMenu === 'hide') {
+                    this.hideFixed();
+                } else {
+                    this.showFixed();
+
+                }
+            }
+        }
+    }
+
+    Acme.HeaderMenu.prototype = new Acme._View();
+    Acme.HeaderMenu.constructor = Acme.HeaderMenu;
+    Acme.HeaderMenu.prototype.showFixed = function() {
+        this.parent.addClass('active');
+        this.fixed.addClass('active');
+    }
+    Acme.HeaderMenu.prototype.hideFixed = function() {
+        this.parent.removeClass('active');
+        this.fixed.removeClass('active');
+    }
+
+    Acme.headerMenu = new Acme.HeaderMenu();
+
+
+
     var scrollUpMenu = function() {
         var isMob = isMobile();
-        var top = headerMenu.find('.c-header__container');
-        // console.log(top);
         if ( scrollMetric[1] === 'up' && isScolledPast(400) && isMob === false ) {
-            headerMenu.addClass('active');
-            top.addClass('active');
+            Acme.headerMenu.showFixed();
         } else {
-            headerMenu.removeClass('active');
-            top.removeClass('active');
+            Acme.headerMenu.hideFixed();
         }
     }
 
@@ -58,7 +88,9 @@ $('document').ready(function() {
     //Onload and resize events
     $(window).on("resize", function () {
         scrollUpMenu();
+
     }).resize();
+
 
     //On Scroll
     $(window).scroll(function() {
@@ -221,7 +253,7 @@ $('document').ready(function() {
 
 
     $(".list-arrow-container").on('click', function(e) {
-        console.log('m');
+
         $parent = $(this).parent();
         var isActive = $parent.hasClass('active');
         $('.dropdown').each(function() {

@@ -359,7 +359,7 @@
         };
 
         Acme.PubSub.publish = function( topic, data ){
-            return this.publisher( topic, data, false );
+            return this.publisher( topic, data );
         };
 
         Acme.PubSub.reset = function( ){
