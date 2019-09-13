@@ -17676,7 +17676,7 @@ function(a){"use strict";void 0===a.en&&(a.en={"mejs.plural-form":1,"mejs.downlo
 
             var notify = function(){
                 var subscribers = self.topics[topic];
-                console.log(subscribers);
+
                 for ( var i = 0, j = subscribers.length; i < j; i++ ){
                     var scope = window;
                     var scopeSplit = subscribers[i].context.split('.');
@@ -17701,7 +17701,6 @@ function(a){"use strict";void 0===a.en&&(a.en={"mejs.plural-form":1,"mejs.downlo
         };
 
         Acme.PubSub.publish = function( topic, data ){
-            console.log(topic, data);
             return this.publisher( topic, data );
         };
 
