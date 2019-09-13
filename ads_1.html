@@ -30,10 +30,11 @@
         //set values of the page if the data items exist
         if (keywordCont[0]){
             keyword = keywordCont[0].dataset.keyword;
-            pageName = '/'+keywordCont[0].dataset.pagename.replace(/ /g,"_");
+            pageName = keywordCont[0].dataset.pagename.replace(/ /g,"_");
             pageType = keywordCont[0].dataset.pagetype;
             pageTag  = keywordCont[0].dataset.pagetag;
         }
+        
         //find all the adslots on the page
         var adSlots = document.querySelectorAll('.j-adslot,.j-adslot-filled');
         //start the google ad code
@@ -81,6 +82,7 @@
                     mapping = mappingHpage;
                 }
                 //define the slot with all required data
+                console.log('ad_targeting',pos,pageType,pageName,pageTag)
                 googletag.defineSlot(idNo, sizes, slotId)
                     .setTargeting('POS', [pos])
                     .setTargeting('page-type', [pageType])
@@ -89,6 +91,7 @@
                     .defineSizeMapping(mapping)
                     .addService(googletag.pubads());
                 //add it to the list of items to be displayed
+                
                 googletag.pubads().enableSingleRequest();
                 googletag.pubads().setTargeting('keyword', [keyword])
                         .setTargeting('page-type', [pageType])

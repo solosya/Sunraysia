@@ -43,6 +43,9 @@
                     <br />
                     <p class="c-footer__address">{{contact['address']['street']}}, {{contact['address']['town']}} {{contact['address']['state']}} {{contact['address']['postcode']}}</p>
                     <p class="c-footer__address">{{contact['mail_address']}}</p>
+                    {% if contact['hours'] is defined %}
+                        <p class="c-footer__address"><span class="c-footer__address--bold">Office hours: </span>{{contact['hours']}}</p>
+                    {% endif %}
                 </div>
 
 
