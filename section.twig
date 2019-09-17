@@ -12,8 +12,13 @@
 {% set firstCount = articles | length %}
 
 
-{% set popularArticles = _Article.getPopularArticles({ limit: 4, sortBy: 'VIEWS', scope: 'network' }) %}
-{# {% set recentArticles = _Article.getRecentArticles({ limit: 4}) %} #}
+{% set popularArticles = _Article.getPopularArticles({ 
+    limit: 4, 
+    sortBy: 'VIEWS', 
+    scope: 'network',
+    interval: 168 
+
+    }) %}
 
 
 
