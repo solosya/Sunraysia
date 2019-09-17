@@ -9,8 +9,26 @@
     }
 
     &__caption {
-        padding-right: 70px;
+        padding-right: 50px;
         max-height: 48px;
+        min-width:560px;
+        max-width:560px;
+        overflow:hidden;
+        @media #{$desktop} {
+            min-width: 320px;
+            max-width: 320px;
+        }
+
+
+        @media #{$tablet} {
+            min-width: 420px;
+            max-width: 420px;
+        }
+        @media #{$mobile} {
+            min-width: 220px;
+            max-width: 220px;
+        }
+
     }
 
     &__filesize {
@@ -27,5 +45,12 @@
         >span {
             float:right;   
         }
+
+
+        @media #{$mobile} {
+            min-width:40px;
+        }
+
+
     }
 }
