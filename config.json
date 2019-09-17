@@ -7,6 +7,20 @@
         "event" : {
             "enabled" : true
         },
+        "media" : {
+            "extendedAttributes": [
+                {
+                    "label": "Extensis",
+                    "type": "checkbox",
+                    "name": "extensis"
+                },
+                {
+                    "label": "Purchasable",
+                    "type": "checkbox",
+                    "name": "purchase"
+                }
+            ]
+        },
         "blog" : {
             "routes": {
                 "allowOverride": true,
