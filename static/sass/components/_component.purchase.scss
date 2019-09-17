@@ -12,16 +12,21 @@
         padding-right: 70px;
         max-height: 48px;
         min-width:560px;
+        max-width:560px;
+        overflow:hidden;
         @media #{$desktop} {
             min-width: 320px;
+            max-width: 320px;
         }
 
 
         @media #{$tablet} {
             min-width: 420px;
+            max-width: 420px;
         }
         @media #{$mobile} {
             min-width: 270px;
+            max-width: 270px;
         }
 
     }
