@@ -11,6 +11,19 @@
     &__caption {
         padding-right: 70px;
         max-height: 48px;
+        min-width:560px;
+        @media #{$desktop} {
+            min-width: 320px;
+        }
+
+
+        @media #{$tablet} {
+            min-width: 420px;
+        }
+        @media #{$mobile} {
+            min-width: 270px;
+        }
+
     }
 
     &__filesize {

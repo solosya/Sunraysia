@@ -14,13 +14,10 @@
 {% set user = _User.getUser() %}
 
 {% set purchases = [] %}
-{# {% set purchases = _Order.getUserOrders({userId: user['id']}) %} #}
+{% set purchases = _Order.getUserOrders({userId: user['id']}) %}
 
 
 
-{# {% if user %} 
-    {% set userImage = _User.getUserPurchases(user.guid, 0, 10, {'type':"images"}) %}
-{% endif %} #}
 
 {% set url = _AppHelper.getParsedUrl() %}
 {% set params = url['query'] %}
@@ -413,12 +410,16 @@
                                             },95, 63, {'crop': 'fill', 'gravity': 'faces'} ) %}
                                             {% set filesize = (photo.filesize / 1000) | number_format(0, '.', ',') %}
 
-
                                             <div class="purchase">
                                                 <img class="purchase__image" src="{{url}}" />
                                                 <p class="purchase__caption">{{photo.caption}}</p>
-                                                <p class="purchase__filesize">{{filesize}}MB</p>
-                                                <a class="purchase__download" href="{{photo.path}}" target="_blank"><span class="arrow arrow-down"></span></a>
+                                                {% if item.text_field1 == 'digital' %}
+                                                    <p class="purchase__filesize">{{filesize}}MB</p>
+                                                    <a class="purchase__download" href="{{photo.path}}" target="_blank"><span class="arrow arrow-down"></span></a>
+                                                
+                                                {% else %}
+                                                    <p class="purchase__filesize">{{item.text_field2}} print</p>
+                                                {% endif %}
                                             </div>
 
                                         {% endfor %}
