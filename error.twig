@@ -20,7 +20,7 @@
         <div class="col-12">
 
             <div class="c-error">
-                <h1 class="c-error__title">Oops!</h1>
+                <h1 class="c-error__title">Sorry!</h1>
             </div>
         
         </div>
@@ -33,10 +33,11 @@
             <div class="col-12">
 
                 <div class="c-error u-margin-bottom-60">
-                    <p class="c-error__message">Sorry, that page does not exist or has been moved. </p>
+                    <p class="c-error__message">That story is no longer available or has been moved.</p>
                     <p class="c-error__messagelow">
-                        Please use the menus to find what you are looking for. <br /><br />
-                        For further help, contact <a href="online@sunraysiadaily.com.au">online@sunraysiadaily.com.au</a> 
+                        Please use the menu above to help find what you are looking for.<br />
+                        If the story is more than 12 months old it may not be available.<br /><br />
+                        For further help, contact <a href="online@{{networkData.title | lower | replace(' ', '')}}.com.au">online@{{networkData.title | lower | replace(' ', '')}}.com.au</a> 
                     </p>
                 </div>
             
