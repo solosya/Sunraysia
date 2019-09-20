@@ -13,6 +13,10 @@
 
 {% set networkData = _Network.getNetworkData() %}
 {% set config      = _Network.getThemeConfig() %}
+{% set email = 'admin' %}
+{% if networkData.title == "Sunraysia Daily" %}
+    {% set email = 'online' %}
+{% endif %}
 
 <div class="container  u-margin-bottom-60 c-error__toppanel">
     
@@ -37,7 +41,7 @@
                     <p class="c-error__messagelow">
                         Please use the menu above to help find what you are looking for.<br />
                         If the story is more than 12 months old it may not be available.<br /><br />
-                        For further help, contact <a href="mailto:online@{{networkData.title|lower|replace({' ':''}) }}.com.au">online@{{networkData.title|lower|replace({' ':''}) }}.com.au</a> 
+                        For further help, contact <a href="mailto:{{email}}@{{networkData.title|lower|replace({' ':''}) }}.com.au">{{email}}@{{networkData.title|lower|replace({' ':''}) }}.com.au</a> 
                     </p>
                 </div>
             
