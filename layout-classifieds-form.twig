@@ -300,10 +300,10 @@
                 <!--Place listing section end--> 
                 </div>
                 <div class="col-lg-3">
-                <div class="o-body-container--right-layout article-left-img">
-                    {# <figure> 
-                        <img src="https://images.unsplash.com/photo-1495107334309-fcf20504a5ab?ixlib=rb-1.2.1&w=1000&q=80" class="img-fluid" alt="dummy image">
-                    </figure> #}
+                <div class="o-body-container--right-layout">
+                    {% if config['inventory']['adSpace']['side-fix'][0] is defined %}
+                        <div class="j-adslot" id="{{config['inventory']['adSpace']['side-fix'][0]}}" data-adshape="mrec"></div>
+                    {% endif %}
                 </div>
                 </div>
             </div>
