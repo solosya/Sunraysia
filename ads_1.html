@@ -23,7 +23,8 @@
         // var idNo = '/21847672778/guardian'
         // var idNo = '/21847672778/gannawarra.times'
         //get data from the page about what kind of page it is
-        var keywordCont = document.getElementsByClassName('j-keyword-cont');
+         //get data from the page about what kind of page it is
+         var keywordCont = document.getElementsByClassName('j-keyword-cont');
         var keyword = '';
         var pageName = '';
         var pageType = '';
@@ -36,6 +37,7 @@
             pageType = keywordCont[0].dataset.pagetype;
             pageTag  = keywordCont[0].dataset.pagetag;
         }
+        
         
         //find all the adslots on the page
         var adSlots = document.querySelectorAll('.j-adslot,.j-adslot-filled');
@@ -83,24 +85,21 @@
                     sizes = [[300,600], [300,250]];
                     mapping = mappingHpage;
                 }
-                //define the slot with all required data
-                console.log('ad_targeting',pos,pageType,pageName,pageTag)
-                googletag.defineSlot(idNo, sizes, slotId)
-                    .setTargeting('POS', [pos])
-                    .setTargeting('page-type', [pageType])
-                    .setTargeting('section', [pageName])
-                    .setTargeting('tag', [pageTag])
-                    .defineSizeMapping(mapping)
-                    .addService(googletag.pubads());
-                //add it to the list of items to be displayed
-                
                 googletag.pubads().enableSingleRequest();
-                googletag.pubads().setTargeting('keyword', [keyword])
+                googletag.pubads().setTargeting('section', [pageName])
+                        .setTargeting('keyword', [keyword])
                         .setTargeting('page-type', [pageType])
-                        .setTargeting('section', [pageName])
                         .setTargeting('tag', [pageTag]);
                 googletag.pubads().collapseEmptyDivs();
                 googletag.enableServices();
+                //define the slot with all required data
+                googletag.defineSlot(idNo, sizes, slotId)
+                    .setTargeting('POS', [pos])
+                    .defineSizeMapping(mapping)
+                    .addService(googletag.pubads());
+
+                
+                
                 if (theSlot.innerHTML != ""){
                     googletag.cmd.push(function() { googletag.display(slotId); });
                 }
