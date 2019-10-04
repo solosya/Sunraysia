@@ -1,10 +1,24 @@
 {% set articleCount = 0 %}
 {% set cardIndex = 0 %}
 
+
+{% set countTerm = "" %}
+
+{% if blogData.count != "" %}
+    {% set countTerm = "listings" %}
+{% endif %}
+
+{% if blogData.count == 1 %}
+    {% set countTerm = "listing" %}
+{% endif %}
+
+{% set log = _AppHelper.log(blogData) %}
+
 <div class="acme-row c-section-head" data-buid={{blog_guid}}>
     <div class="acme-col-12">
-        <a href="{{link}}">
+        <a href="{{link}}" style="display:flex">
             <div id="section-{{loadmore_id}}" class="c-section-head__title">{{title}}</div>
+            <div class="c-section-head__count">{{blogData.count}} {{countTerm}}</div>
         </a> 
         <div class="c-section-head__rule"></div>
     </div>

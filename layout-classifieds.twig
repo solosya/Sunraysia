@@ -98,7 +98,9 @@
                 (blog.title) : {
                     'feed'      : feed,
                     'link'      : blog.link,
-                    'guid'      : blog.guid
+                    'guid'      : blog.guid,
+                    'count'     : _Blog.getBlogFeedArticleCount({ "blog_id": blog.id})
+
                     }
                 }) %}
             {% set break = true %}
@@ -267,7 +269,8 @@
                                         loadmore: true,
                                         loadmore_id: pageSectionId ~ "",
                                         contentType: contentType,
-                                        blog_guid: blogFeeds[pagesection]['guid']
+                                        blog_guid: blogFeeds[pagesection]['guid'],
+                                        count: totalFeedCount,
                                     }
                                 },
                             } %}

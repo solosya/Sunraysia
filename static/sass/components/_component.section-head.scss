@@ -16,6 +16,13 @@
         }
 
     }
+    &__count {
+        @include font-size(15);
+        margin:0 0 0 auto;
+        align-self: flex-end;
+        margin-bottom: 9px;
+        color: $greyish;
+    }
 
     &__rule {
         border-top: 1px solid $darkergrey;

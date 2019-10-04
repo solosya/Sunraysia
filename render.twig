@@ -19,6 +19,7 @@
     {% endfor %}
 
     {% set blogLink = blogFeeds[section.blogs[0]].link %}
+    {% set blogFeedArticleCount = blogFeeds[section.blogs[0]].count %}
 
 {# else if a page section has articles from a single blog, no assembly required #}
 {% else %}
@@ -28,11 +29,13 @@
         {% set thisBlog = blogFeeds[ config.blogs[0] ] %}
         {% set feedArr = thisBlog.feed.articles %}
         {% set blogLink = thisBlog.link %}
+        {% set blogFeedArticleCount = thisBlog.count %}
 
     {% else %}
         {% set thisBlog = blogFeeds[ config.blog ] %}
         {% set feedArr = thisBlog.feed.articles %}
         {% set blogLink = thisBlog.link %}
+        {% set blogFeedArticleCount = thisBlog.count %}
 
     {% endif %}
 
@@ -45,6 +48,7 @@
     
     {% set params = {
         articles        : feedArr,
+        totalFeedCount  : blogFeedArticleCount,
         link            : config.link is defined ? config.link : blogLink,
         title           : config.title is defined ? config.title : '',
         dev             : dev,
