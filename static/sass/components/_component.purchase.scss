@@ -3,7 +3,7 @@
     border-bottom: 1px solid $grey_sh1;
     padding: 13px 0;
     align-items: center;
-
+    
     &__image {
         margin-right: 30px;
     }
@@ -19,7 +19,6 @@
             max-width: 320px;
         }
 
-
         @media #{$tablet} {
             min-width: 420px;
             max-width: 420px;
@@ -28,13 +27,20 @@
             min-width: 220px;
             max-width: 220px;
         }
-
+        @media #{$mobile-sm} {
+            display:none;
+        }
+    
     }
 
     &__filesize {
         min-width:70px;
         flex-shrink: 0;
         // background:pink;
+        @media #{$mobile-sm} {
+            margin: 0 0 0 auto;
+        }
+
     }
 
     &__download {
