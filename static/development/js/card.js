@@ -46,7 +46,7 @@ Card.prototype.renderCard = function(card, options)
     // }
     var articleContent = card.excerpt;
     if (typeof options.content != "undefined" && options.content === "full") {
-        articleContent = '<div class="acme-c-cards-view__articleContent">' + card.content + '</div>';
+        articleContent = '<div class="acme-c-cards-view__articleContent"><p>' + card.content + '</p></div>';
     }
     
 

@@ -1,3 +1,10 @@
+// PLEASE NOTE THIS FILE NOW REQUIRES GULP V4
+// https://www.liquidlight.co.uk/blog/how-do-i-update-to-gulp-4/
+
+// to stop npm EACCESS errors install npm this way:
+// https://github.com/nvm-sh/nvm
+
+
 var gulp        = require('gulp');
 var concat      = require('gulp-concat');
 var uglify      = require('gulp-uglify');
@@ -8,12 +15,7 @@ var sourcemaps  = require('gulp-sourcemaps');
 var minifyCss   = require("gulp-clean-css");
 var hasher      = require('gulp-hasher');
 var buster      = require('gulp-cache-buster');
-var runSequence = require('run-sequence');
 
-
-gulp.task('styles', function(callback) {
-    runSequence('sass', 'concat', 'minify-css', 'cache', callback);
-});
 
 
 gulp.task('cache',  function() {
@@ -41,7 +43,7 @@ gulp.task('minify-css', function () {
 gulp.task('concat', function () {
     return gulp.src([
         './static/css/main.css',
-        './static/development/js/plugins/jquery.fancybox/source/jquery.fancybox.css',
+        // './static/development/js/plugins/jquery.fancybox/source/jquery.fancybox.css',
         './static/development/js/plugins/jquery.noty-2.3.8/demo/animate.css',
         './static/development/js/sdk/media-player/mediaelementplayer.css',
         './static/development/js/plugins/owl.carousel.min.css',
@@ -69,6 +71,9 @@ gulp.task('sass', function() {
 });
 
 
+gulp.task('styles', gulp.series('sass', 'concat', 'minify-css', 'cache', function(done) {
+    done();
+}));
 
 
 
@@ -83,7 +88,7 @@ gulp.task('scripts', function(){
         // './static/development/js/plugins/bootstrap-modal.js',
 
         './static/development/js/plugins/jquery.noty-2.3.8/js/noty/packaged/jquery.noty.packaged.min.js',
-        './static/development/js/plugins/jquery.fancybox/source/jquery.fancybox.js',
+        // './static/development/js/plugins/jquery.fancybox/source/jquery.fancybox.js',
 
         // validate used when signing in on login.twig
         './static/development/js/plugins/jquery.validate/jquery.validate.min.js',
@@ -104,7 +109,7 @@ gulp.task('scripts', function(){
 
         './static/development/js/sdk/cloudinary/jquery.cloudinary.js',
         './static/development/js/sdk/notifications.js',
-        './static/development/js/sdk/feed.js',
+        // './static/development/js/sdk/feed.js',
         './static/development/js/sdk/article.js',
         // './static/development/js/sdk/search.js',
         './static/development/js/sdk/disqus.js',
@@ -137,4 +142,4 @@ gulp.task('watch', function (){
 	gulp.watch('./static/development/js/**/*.js', ['scripts']);
 });
 
-gulp.task('default', ['scripts', 'styles']);
+gulp.task('default', gulp.parallel('scripts', 'styles'));

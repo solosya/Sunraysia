@@ -8,20 +8,17 @@
   },
   "author": "",
   "license": "ISC",
-  "devDependencies": {
-    "gulp": "^3.9.1",
-    "gulp-cache-bust": "^1.1.0",
+  "devDependencies": {},
+  "dependencies": {
+    "gulp": "^4.0.2",
     "gulp-cache-buster": "^0.2.1",
-    "gulp-clean-css": "^3.6.0",
+    "gulp-clean-css": "^4.2.0",
     "gulp-concat": "^2.6.1",
-    "gulp-gzip": "^1.4.0",
     "gulp-hasher": "^0.1.0",
-    "gulp-rename": "^1.2.2",
+    "gulp-rename": "^1.4.0",
     "gulp-sass": "^4.0.2",
-    "gulp-sourcemaps": "^2.4.1",
-    "gulp-uglify": "^2.0.0",
-    "gulp-util": "^3.0.8",
-    "run-sequence": "^1.2.1"
-  },
-  "dependencies": {}
+    "gulp-sourcemaps": "^2.6.5",
+    "gulp-uglify": "^3.0.2",
+    "gulp-util": "^3.0.8"
+  }
 }
