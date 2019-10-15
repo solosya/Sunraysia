@@ -39,11 +39,10 @@ Card.prototype.renderCard = function(card, options)
         var height = card.featuredMedia.height;
     }
 
-    // console.log(width, height);
-    // if (card.imageOptions) {
-    //     width = card.imageOptions.width || width;
-    //     height = card.imageOptions.height || height;
-    // }
+    if (card.imageOptions) {
+        width = card.imageOptions.width || width;
+        height = card.imageOptions.height || height;
+    }
     var articleContent = card.excerpt;
     if (typeof options.content != "undefined" && options.content === "full") {
         articleContent = '<div class="acme-c-cards-view__articleContent"><p>' + card.content + '</p></div>';
