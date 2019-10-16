@@ -18820,8 +18820,6 @@ Acme.Feed.prototype.fetch = function()
     //     this.options.blogid = this.options.blogid; // search takes an id instead of a guid
     // }
 
-    console.log('seraching');
-    console.log(this.options);
     this.url = this.domain + '/home/load-articles';
 
     this.requestData = { 
@@ -19261,7 +19259,7 @@ Card.prototype.renderCard = function(card, options)
         card.params = {
             id          : articleId,
             guid        : card.guid,
-            image       : $.image({media:card['featuredMedia'], mediaOptions:{width: width ,height:height, crop: 'limit'} }),
+            image       : $.image({media:card['featuredMedia'], mediaOptions:{width: width ,height:height, crop: 'fill'} }),
             category    : card.label,
             title       : card.title,
             content     : articleContent,

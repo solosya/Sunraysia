@@ -19,8 +19,6 @@ Acme.Feed.prototype.fetch = function()
     //     this.options.blogid = this.options.blogid; // search takes an id instead of a guid
     // }
 
-    console.log('seraching');
-    console.log(this.options);
     this.url = this.domain + '/home/load-articles';
 
     this.requestData = { 

@@ -88,7 +88,7 @@ Card.prototype.renderCard = function(card, options)
         card.params = {
             id          : articleId,
             guid        : card.guid,
-            image       : $.image({media:card['featuredMedia'], mediaOptions:{width: width ,height:height, crop: 'limit'} }),
+            image       : $.image({media:card['featuredMedia'], mediaOptions:{width: width ,height:height, crop: 'fill'} }),
             category    : card.label,
             title       : card.title,
             content     : articleContent,
