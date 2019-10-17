@@ -6,7 +6,6 @@
     Acme.Controller   = {};
     Acme.State        = {};
     Acme.SigninView   = {};
-    Acme.SigninView   = {};
     Acme.UserProfileController = function(){};
 
     if (window.location.port && window.location.port !== '80' && !_appJsConfig.baseHttpPath.split(':')[2] ) {

@@ -10,7 +10,6 @@
 {% set plans = _Network.getNetworkData()['paywallPlans'] %}
 
 
-{% set userLimit = 10 %}
 {% set user = _User.getUser() %}
 
 {% set purchases = [] %}
@@ -30,6 +29,28 @@
     {% endif %}
 
 {% endfor %}
+
+
+{% set remainingUsers = null %} 
+{% set totalPlanUserCount = null %}
+{% set userManager = false %}
+{% set managedUsers = [] %} 
+{% set managedUserCount = 0 %} 
+
+{% if pwstats['userManager'] == true or pwstats['user_role']['IsSystemAdmin'] %}
+    {% set userManager = true %}
+
+    {% set totalPlanUserCount = pwstats['user_count'] %}
+
+    {% set managedUsersObj = _User.getPaywallManagedUsers() %}
+
+    {% if managedUsersObj['users'] is defined %}
+        {% set managedUsers = managedUsersObj['users'] %}
+    {% endif %}
+    {% set managedUserCount = managedUsers | length %} 
+{% endif %}
+
+
 
 
 
@@ -221,10 +242,13 @@
 
 
                                     {# USERS #}
-                                    {# <div class="c-form__group u-margin-top-15">
+                                {% if totalPlanUserCount is not null and totalPlanUserCount > 0 %}
+                                    <div class="c-form__group u-margin-top-15">
                                         <label class="c-form__label c-account-form__label" for="">Users</label>
-                                        <div class="c-account-form__static-text">{{ pwstats['user_count'] }}</div>
-                                    </div> #}
+                                        <div class="c-account-form__static-text">{{managedUserCount}} of {{ totalPlanUserCount }}</div>
+                                    </div>
+                                    <hr class="divide divide--dark" />
+                                {% endif %}
 
 
                                 {# NEXT PAYMENT #}
@@ -276,16 +300,8 @@
                 <div id="plans" class="row u-margin-top-60" style="{{planStyle}}" data-card-details="{{cardSupplied}}">
                     <div class="col-12">
                         <h2 class="c-myAccount__head">Choose subscription</h2>
-                        {% if pwstats['userManager'] == true or pwstats['user_role']['IsSystemAdmin'] %}
+                        {% if userManager == true or pwstats['user_role']['IsSystemAdmin'] %}
 
-                            {% set totalPlanUserCount       = pwstats['user_count'] %}
-                            {% set managedUsersObj          = _User.getPaywallManagedUsers({"limit": userLimit}) %}
-                            {% set managedUsers             = managedUsersObj %}
-
-                            {% set managedUserCount = managedUsers | length %}
-                            {% if managedUsersObj['totalCount'] is defined %}
-                                {% set managedUserCount = managedUsersObj['totalCount'] %}
-                            {% endif %}
 
                             <div class="c-plans">
                                 {% set break = false %}
@@ -333,18 +349,18 @@
                                             {% endif %}
                                         </a>
                                         
-                                        <input type="hidden" id="planid"        value="{{plan.guid}}">
-                                        <input type="hidden" id="planusercount" value="{{userCount}}">
-                                        <input type="hidden" id="plancost"      value="{{plan.plan_value}}">
-                                        <input type="hidden" id="planperiod"    value="{{plan.period}}">
-                                        <input type="hidden" id="planperiodcount" value="{{plan.period_count}}">
-                                        <input type="hidden" id="currentcost"   value="{{pwstats['plan_value']}}">
-                                        <input type="hidden" id="currentperiod" value="{{pwstats['period']}}">
-                                        <input type="hidden" id="currentperiodcount" value="{{pwstats['period_count']}}">
-                                        <input type="hidden" id="currentusers"  value="{{managedUserCount}}">
-                                        <input type="hidden" id="expdate"       value="{{pwstats['expiry_date']}}">
-                                        <input type="hidden" id="plantype"       value="{{plan['type']}}">
-                                        <input type="hidden" id="_csrf"         value="{{_AppHelper.getCsrfToken()}}"> 
+                                        <input type="hidden" id="planid"                value="{{plan.guid}}">
+                                        <input type="hidden" id="planusercount"         value="{{userCount}}">
+                                        <input type="hidden" id="plancost"              value="{{plan.plan_value}}">
+                                        <input type="hidden" id="planperiod"            value="{{plan.period}}">
+                                        <input type="hidden" id="planperiodcount"       value="{{plan.period_count}}">
+                                        <input type="hidden" id="currentcost"           value="{{pwstats['plan_value']}}">
+                                        <input type="hidden" id="currentperiod"         value="{{pwstats['period']}}">
+                                        <input type="hidden" id="currentperiodcount"    value="{{pwstats['period_count']}}">
+                                        <input type="hidden" id="currentusers"          value="{{managedUserCount}}">
+                                        <input type="hidden" id="expdate"               value="{{pwstats['expiry_date']}}">
+                                        <input type="hidden" id="plantype"              value="{{plan['type']}}">
+                                        <input type="hidden" id="_csrf"                 value="{{_AppHelper.getCsrfToken()}}"> 
                                     </div>
                                     {# {% set break = true %} #}
                                 {% endfor %}
@@ -382,6 +398,88 @@
 
                     </div>
                 </div>
+
+
+
+
+
+
+
+
+
+
+
+                {% if userManager == true  and totalPlanUserCount is not null and totalPlanUserCount > 0 %}
+
+                    <div class="row u-margin-top-60">
+                        <div class="col-12">
+
+                            <h2 class="u-margin-bottom-20 c-myAccount__head">My Users</h2>
+
+
+
+                            <div class="row">
+                                <div class="col-12 u-margin-bottom-30">
+                                    <p class="managed-users__count">My Users <span class="profile-section__users-left">{{managedUserCount}} of {{ totalPlanUserCount }} used.</span></p>
+                                    <p id="addManagedUser" style="z-index:1000;" class="managed-users__new u-float-right{% if managedUserCount >= totalPlanUserCount %} hidden{% endif %}">+ Add users</p>
+                                </div>
+                            </div>
+
+                            <div class="row" id="createManagedUser"></div>
+
+                            <a id="createUserErrorMessage"></a>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div id="user_profile" class="col-12">
+                            
+                            <ul id="mangedUsers" class="">
+                                {% if managedUserCount == 0 %} 
+                                    <div id="nousers" class="empty-listing">
+                                        <p>You have no current users.</p>
+                                    </div>
+                                {% else %}
+                                
+                                    {% for user in managedUsers %}
+
+                                        <li id="{{user.id}}" class="userdetails">
+                                            <div class="u-float-left">
+                                                <p class="userdetails__name">
+                                                    <span class="j-firstname">{{user.firstname}}</span> 
+                                                    <span class="j-lastname">{{user.lastname}}</span>
+                                                </p> 
+                                                {# <p class="j-username userdetails__username">{{user.username}}</p> #}
+                                            </div>
+                                            <a class="j-delete userdetails__button userdetails__button--delete u-float-right"></a>
+                                            <a class="j-edit userdetails__button userdetails__button--edit u-float-right"></a>
+                                            <p class="j-email userdetails__email u-float-right">{{user.email}}</p>
+                                        </li>
+                                    {% endfor %}
+
+                                {% endif %}
+
+                            </ul>
+                        
+                        </div>
+                        
+
+                    </div>
+
+                {% endif %}
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
