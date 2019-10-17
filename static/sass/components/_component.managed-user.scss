@@ -28,7 +28,8 @@
     &__close {
         @extend .x-close;
         opacity: .5;
-        
+        right:13px !important;
+
         &--top {
             top:0 !important;
         }

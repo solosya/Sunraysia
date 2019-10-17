@@ -121,9 +121,7 @@
             });
         }
 
-        console.log($('#signup').val());
         if ($("#code-redeem").length > 0 || $('#signup').val() == 1) {
-            console.log('signup');
             self.data['username'] = Math.floor(100000000 + Math.random() * 9000000000000000);
             modal.render("spinner", "Authorising code");
             self.data['planid'] = $('#planid').val();
@@ -165,7 +163,7 @@
         var self = this;
 
         $('.j-plan-subscribe').on("click", function(e) {
-            console.log('subscribe button');
+
             var elem = $(this);
             var plan = elem.data('planid');
             var name = elem.data('plan-name');
@@ -174,7 +172,7 @@
             var signup = elem.data('signup');
             self.data.planid = plan;
             self.data.subscription_choice = name;
-            console.log(plan, name, cost, trial, signup);
+
             $('#planid').val(plan);
             $('#trial').val(trial);
             $('#signup').val(signup);
@@ -253,8 +251,8 @@
     var formhandler = function(formdata, path) {
         var csrfToken = $('meta[name="csrf-token"]').attr("content");
         formdata['_csrf'] = csrfToken;
-        console.log(formdata);
 
+        
         return $.ajax({
             url: _appJsConfig.appHostName + path,
             type: 'post',

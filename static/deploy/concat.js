@@ -18626,7 +18626,7 @@ Acme.templates.userPlanOkCancel =
 
 
 Acme.templates.create_user = 
-'<div id="newUser" class="c-managed-user-new u-margin-bottom-60"> \
+'<div id="newUser" class="u-margin-bottom-60"> \
     <div id="cancelUserCreate" class="c-managed-user__close c-managed-user__close--top"></div> \
     <div class="row u-desktop-padding-top-20 u-margin-bottom-15"> \
         <div class="col col-lg-split has-error"> \

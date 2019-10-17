@@ -342,7 +342,7 @@ Acme.templates.signinFormTmpl =
         \
         <input id="password" class="c-login-modal__input c-form__input c-form__input--bordered-bottom u-margin-top-10" name="password" placeholder="Password" aria-required="true" type="password"> \
         <div class="c-form__help-block">Please enter your email Password</div> \
-        <p id="signin_error" class="c-form__help-block u-font-size-14 u-margin-top-10">hellow</p> \
+        <p id="signin_error" class="c-form__help-block u-font-size-14 u-margin-top-10"></p> \
         <a href="javascript:;" class="c-login-modal__password-link" data-layout="forgot">Forgot password?</a> \
     </div> \
     \
@@ -388,23 +388,23 @@ Acme.templates.userPlanOkCancel =
 
 
 Acme.templates.create_user = 
-'<div id="newUser" class="c-managed-user-new u-margin-bottom-60"> \
+'<div id="newUser" class="col-12 c-managed-user-new u-margin-bottom-60"> \
     <div id="cancelUserCreate" class="c-managed-user__close c-managed-user__close--top"></div> \
     <div class="row u-desktop-padding-top-20 u-margin-bottom-15"> \
-        <div class="col col-lg-split has-error"> \
-            <input id="newuserfirstname" class="form-control" name="firstname" placeholder="First Name" aria-required="true" type="text"> \
+        <div class="col has-error"> \
+            <input id="newuserfirstname" class="c-form__input c-form__input--bordered" name="firstname" placeholder="First Name" aria-required="true" type="text"> \
         </div> \
-        <div class="col col-lg-split"> \
-            <input id="newuserlastname" class="form-control" name="lastname" placeholder="Last Name" aria-required="true" type="text"> \
+        <div class="col"> \
+            <input id="newuserlastname" class="c-form__input c-form__input--bordered" name="lastname" placeholder="Last Name" aria-required="true" type="text"> \
         </div> \
     </div> \
     <div class="row"> \
         <div class="col"> \
-            <input id="newuseruseremail" class="form-control" name="email" placeholder="Email" aria-required="true" type="text"> \
+            <input id="newuseruseremail" class="c-form__input c-form__input--bordered" name="email" placeholder="Email" aria-required="true" type="text"> \
         </div> \
     </div> \
     \
-    <div id="userError" class="help-block"></div> \
+    <div id="userError" class="c-form__help-block u-margin-top-10"></div> \
     \
-    <button id="saveUser" type="button" class="c-button c-button--rounded c-button--blue-bordered u-margin-top-40">Save</button> \
+    <button id="saveUser" type="button" class="c-button c-button--blue-bordered u-margin-top-40">Save</button> \
 </div>';
