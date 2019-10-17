@@ -24,7 +24,7 @@ Acme.UserProfileController.prototype.deleteUser = function(e) {
         _csrf: this.csrfToken
     };
 
-
+    console.log('deleting managed user');
     return $.ajax({
         type: 'post',
         url: _appJsConfig.baseHttpPath + '/user/delete-managed-user',
@@ -177,8 +177,9 @@ Acme.UserProfileController.prototype.events = function()
     // });  
 
     $('.j-delete').unbind().on('click', function(e) {
-        Acme.SigninView.render("userDelete", "Are you sure you want to delete this user?")
+        Acme.SigninView.render("userDelete", "Are you sure you want to delete this user?", {role: 'okay'})
             .done(function() {
+                console.log('calling delete code');
                 self.deleteUser(e);
             });
     });   
@@ -289,7 +290,7 @@ Acme.UserProfileController.prototype.pageEvents = function ()
                 lastname:  $('#newuserlastname').val(), 
                 username:  $('#newuserusername').val(), 
                 useremail: $('#newuseruseremail').val(),
-                _csrf: this.csrfToken
+                _csrf: self.csrfToken
             };
             
             var errorText = "";
@@ -310,7 +311,7 @@ Acme.UserProfileController.prototype.pageEvents = function ()
                 return;
             }
             
-            
+            console.log(requestData);
             
             $(this).addClass('spinner').addClass('c-button--spinner');
             // return;
@@ -320,7 +321,7 @@ Acme.UserProfileController.prototype.pageEvents = function ()
                 dataType: 'json',
                 data: requestData,
                 success: function (data, textStatus, jqXHR) {
-
+                    console.log('success is here');
                     if (data.success == 1) {
 
                         location.reload(false);             
@@ -329,13 +330,18 @@ Acme.UserProfileController.prototype.pageEvents = function ()
                         for (var key in data.error) {
                             text = text + data.error[key] + " ";
                         } 
-                        $('#userError').text(text);
+
+                        $('#saveUser').removeClass('spinner')
+                                      .removeClass('c-button--spinner');
+                        $('#userError').text(text).show();
                     }
                 },
                 error: function (jqXHR, textStatus, errorThrown) {
-                    $('#user-editor-buttons').removeClass('spinner')
-                                             .removeClass('c-button--spinner');
-                    $('#userError').text(textStatus);
+                    console.log('trying to do error stuff');
+
+                    $('#saveUser').removeClass('spinner')
+                                   .removeClass('c-button--spinner');
+                    $('#userError').text(textStatus).show();
                 },
             });        
         });
@@ -363,7 +369,7 @@ Acme.UserProfileController.prototype.pageEvents = function ()
         }
         var requestData = { 
             status: status, 
-            _csrf: this.csrfToken, 
+            _csrf: self.csrfToken, 
         };
 
         Acme.SigninView.render("userPlanChange", title, { message : message })
