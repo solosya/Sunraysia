@@ -46,7 +46,7 @@
                     <div class="c-header__login-buttons-desktop">
                         {% if _User.isGuest() %}
                             <a id="signinBtn" href="javascript:;" class="c-button c-button--blue-bordered u-margin-right-10">Log in</a>
-                            <a href="{{networkData.defaultBlogUrl}}/paywall" class="c-button c-button--blue">Subscribe</a>
+                            <a href="{{networkData.defaultBlogUrl}}/paywall" class="c-button c-button--blue">Join</a>
 
                         {% else %}
                             <a id="user-menu-button-fixed" href="javascript:;" class="c-header__username">Hi {{user.firstname}}</a>
@@ -109,7 +109,7 @@
                 <div class="c-header__login-buttons-desktop">
                     {% if _User.isGuest() %}
                         <a id="signinBtn" href="javascript:;" class="c-button c-button--blue-bordered u-margin-right-10">Log in</a>
-                        <a href="{{networkData.defaultBlogUrl}}/paywall" class="c-button c-button--blue">Subscribe</a>
+                        <a href="{{networkData.defaultBlogUrl}}/paywall" class="c-button c-button--blue">Join</a>
                     {% else %}
                         {# <a id="signinBtn" href="javascript:;" class="c-button c-button--blue-bordered u-margin-right-10">Log in</a> #}
 
@@ -133,7 +133,7 @@
                 <div class="c-header__login-buttons">
                     {% if _User.isGuest() %}
                         <a id="signinBtn" href="javascript:;" class="u-margin-right-5">Log in</a>
-                        <a href="{{networkData.defaultBlogUrl}}/paywall" class="">Subscribe</a>
+                        <a href="{{networkData.defaultBlogUrl}}/paywall" class="">Join</a>
                     {% else %}
 
                         <a id="user-menu-button-tablet" href="javascript:;" class="c-header__username">Hi {{user.firstname}}</a>
@@ -227,7 +227,7 @@
         {% if _User.isGuest() %}
             <div class="c-header__mobile-logins">
                 <a id="signinBtn" href="javascript:;" class="c-header__mobile-login u-margin-right-10">Log in</a>
-                <a href="{{networkData.defaultBlogUrl}}/paywall" class="c-header__mobile-subscribe">Subscribe</a>
+                <a href="{{networkData.defaultBlogUrl}}/paywall" class="c-header__mobile-subscribe">Join</a>
             </div>
         {% else %}
             <a id="user-menu-mobile-button" href="javascript:;" class="c-header__username-mobile">Hi {{user.firstname}}</a>
