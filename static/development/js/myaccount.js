@@ -24,7 +24,6 @@ Acme.UserProfileController.prototype.deleteUser = function(e) {
         _csrf: this.csrfToken
     };
 
-    console.log('deleting managed user');
     return $.ajax({
         type: 'post',
         url: _appJsConfig.baseHttpPath + '/user/delete-managed-user',
