@@ -37,7 +37,6 @@
             delete opts.mediaOptions.height;
         }
 
-        console.log(opts);
 
         var imageOptions = $.extend({}, size, opts.mediaOptions);
         var url = $.cloudinary.url(imageId, imageOptions);
