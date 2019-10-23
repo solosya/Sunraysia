@@ -16671,7 +16671,6 @@ var extend = function(child, parent) { for (var key in parent) { if (hasProp.cal
             delete opts.mediaOptions.height;
         }
 
-        console.log(opts);
 
         var imageOptions = $.extend({}, size, opts.mediaOptions);
         var url = $.cloudinary.url(imageId, imageOptions);
@@ -17347,7 +17346,6 @@ function(a){"use strict";void 0===a.en&&(a.en={"mejs.plural-form":1,"mejs.downlo
     Acme.Collection   = {};
     Acme.Controller   = {};
     Acme.State        = {};
-    Acme.SigninView   = {};
     Acme.SigninView   = {};
     Acme.UserProfileController = function(){};
 
@@ -18580,7 +18578,7 @@ Acme.templates.signinFormTmpl =
         \
         <input id="password" class="c-login-modal__input c-form__input c-form__input--bordered-bottom u-margin-top-10" name="password" placeholder="Password" aria-required="true" type="password"> \
         <div class="c-form__help-block">Please enter your email Password</div> \
-        <p id="signin_error" class="c-form__help-block u-font-size-14 u-margin-top-10">hellow</p> \
+        <p id="signin_error" class="c-form__help-block u-font-size-14 u-margin-top-10"></p> \
         <a href="javascript:;" class="c-login-modal__password-link" data-layout="forgot">Forgot password?</a> \
     </div> \
     \
@@ -18626,25 +18624,25 @@ Acme.templates.userPlanOkCancel =
 
 
 Acme.templates.create_user = 
-'<div id="newUser" class="u-margin-bottom-60"> \
+'<div id="newUser" class="col-12 c-managed-user-new u-margin-bottom-60"> \
     <div id="cancelUserCreate" class="c-managed-user__close c-managed-user__close--top"></div> \
     <div class="row u-desktop-padding-top-20 u-margin-bottom-15"> \
-        <div class="col col-lg-split has-error"> \
-            <input id="newuserfirstname" class="form-control" name="firstname" placeholder="First Name" aria-required="true" type="text"> \
+        <div class="col has-error"> \
+            <input id="newuserfirstname" class="c-form__input c-form__input--bordered" name="firstname" placeholder="First Name" aria-required="true" type="text"> \
         </div> \
-        <div class="col col-lg-split"> \
-            <input id="newuserlastname" class="form-control" name="lastname" placeholder="Last Name" aria-required="true" type="text"> \
+        <div class="col"> \
+            <input id="newuserlastname" class="c-form__input c-form__input--bordered" name="lastname" placeholder="Last Name" aria-required="true" type="text"> \
         </div> \
     </div> \
     <div class="row"> \
         <div class="col"> \
-            <input id="newuseruseremail" class="form-control" name="email" placeholder="Email" aria-required="true" type="text"> \
+            <input id="newuseruseremail" class="c-form__input c-form__input--bordered" name="email" placeholder="Email" aria-required="true" type="text"> \
         </div> \
     </div> \
     \
-    <div id="userError" class="help-block"></div> \
+    <div id="userError" class="c-form__help-block u-margin-top-10"></div> \
     \
-    <button id="saveUser" type="button" class="c-button c-button--rounded c-button--blue-bordered u-margin-top-40">Save</button> \
+    <button id="saveUser" type="button" class="c-button c-button--blue-bordered u-margin-top-40">Save</button> \
 </div>';
 
 (function($) {
@@ -20218,7 +20216,7 @@ Acme.UserProfileController.prototype.deleteUser = function(e) {
         _csrf: this.csrfToken
     };
 
-
+    console.log('deleting managed user');
     return $.ajax({
         type: 'post',
         url: _appJsConfig.baseHttpPath + '/user/delete-managed-user',
@@ -20371,8 +20369,9 @@ Acme.UserProfileController.prototype.events = function()
     // });  
 
     $('.j-delete').unbind().on('click', function(e) {
-        Acme.SigninView.render("userDelete", "Are you sure you want to delete this user?")
+        Acme.SigninView.render("userDelete", "Are you sure you want to delete this user?", {role: 'okay'})
             .done(function() {
+                console.log('calling delete code');
                 self.deleteUser(e);
             });
     });   
@@ -20483,7 +20482,7 @@ Acme.UserProfileController.prototype.pageEvents = function ()
                 lastname:  $('#newuserlastname').val(), 
                 username:  $('#newuserusername').val(), 
                 useremail: $('#newuseruseremail').val(),
-                _csrf: this.csrfToken
+                _csrf: self.csrfToken
             };
             
             var errorText = "";
@@ -20504,7 +20503,7 @@ Acme.UserProfileController.prototype.pageEvents = function ()
                 return;
             }
             
-            
+            console.log(requestData);
             
             $(this).addClass('spinner').addClass('c-button--spinner');
             // return;
@@ -20514,7 +20513,7 @@ Acme.UserProfileController.prototype.pageEvents = function ()
                 dataType: 'json',
                 data: requestData,
                 success: function (data, textStatus, jqXHR) {
-
+                    console.log('success is here');
                     if (data.success == 1) {
 
                         location.reload(false);             
@@ -20523,13 +20522,18 @@ Acme.UserProfileController.prototype.pageEvents = function ()
                         for (var key in data.error) {
                             text = text + data.error[key] + " ";
                         } 
-                        $('#userError').text(text);
+
+                        $('#saveUser').removeClass('spinner')
+                                      .removeClass('c-button--spinner');
+                        $('#userError').text(text).show();
                     }
                 },
                 error: function (jqXHR, textStatus, errorThrown) {
-                    $('#user-editor-buttons').removeClass('spinner')
-                                             .removeClass('c-button--spinner');
-                    $('#userError').text(textStatus);
+                    console.log('trying to do error stuff');
+
+                    $('#saveUser').removeClass('spinner')
+                                   .removeClass('c-button--spinner');
+                    $('#userError').text(textStatus).show();
                 },
             });        
         });
@@ -20557,7 +20561,7 @@ Acme.UserProfileController.prototype.pageEvents = function ()
         }
         var requestData = { 
             status: status, 
-            _csrf: this.csrfToken, 
+            _csrf: self.csrfToken, 
         };
 
         Acme.SigninView.render("userPlanChange", title, { message : message })
@@ -21186,7 +21190,7 @@ Acme.Signin.prototype.errorMsg = function(msg) {
 };
 Acme.Signin.prototype.handle = function(e) {
     var self = this;
-
+    console.log('handling');
     var $elem = this.parent.handle.call(this, e);
 
     if ( $elem.is('a') ) {
@@ -21420,9 +21424,7 @@ $('#signinBtn, #articleSigninBtn').on('click', function(e) {
             });
         }
 
-        console.log($('#signup').val());
         if ($("#code-redeem").length > 0 || $('#signup').val() == 1) {
-            console.log('signup');
             self.data['username'] = Math.floor(100000000 + Math.random() * 9000000000000000);
             modal.render("spinner", "Authorising code");
             self.data['planid'] = $('#planid').val();
@@ -21464,7 +21466,7 @@ $('#signinBtn, #articleSigninBtn').on('click', function(e) {
         var self = this;
 
         $('.j-plan-subscribe').on("click", function(e) {
-            console.log('subscribe button');
+
             var elem = $(this);
             var plan = elem.data('planid');
             var name = elem.data('plan-name');
@@ -21473,7 +21475,7 @@ $('#signinBtn, #articleSigninBtn').on('click', function(e) {
             var signup = elem.data('signup');
             self.data.planid = plan;
             self.data.subscription_choice = name;
-            console.log(plan, name, cost, trial, signup);
+
             $('#planid').val(plan);
             $('#trial').val(trial);
             $('#signup').val(signup);
@@ -21552,8 +21554,8 @@ $('#signinBtn, #articleSigninBtn').on('click', function(e) {
     var formhandler = function(formdata, path) {
         var csrfToken = $('meta[name="csrf-token"]').attr("content");
         formdata['_csrf'] = csrfToken;
-        console.log(formdata);
 
+        
         return $.ajax({
             url: _appJsConfig.appHostName + path,
             type: 'post',
