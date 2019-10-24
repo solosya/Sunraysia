@@ -16671,7 +16671,6 @@ var extend = function(child, parent) { for (var key in parent) { if (hasProp.cal
             delete opts.mediaOptions.height;
         }
 
-        console.log(opts);
 
         var imageOptions = $.extend({}, size, opts.mediaOptions);
         var url = $.cloudinary.url(imageId, imageOptions);
@@ -20217,7 +20216,6 @@ Acme.UserProfileController.prototype.deleteUser = function(e) {
         _csrf: this.csrfToken
     };
 
-    console.log('deleting managed user');
     return $.ajax({
         type: 'post',
         url: _appJsConfig.baseHttpPath + '/user/delete-managed-user',

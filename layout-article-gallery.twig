@@ -47,10 +47,37 @@
                         }) | raw}}
                     </div>
                     <div class="col-12">
-                        <a href="{{blogInfo.url}}"><p class="article-gallery__category">{{article.label}}</p></a>
-                        <h1 class="article-gallery__title">{{ quotes.smarten(article.title) }}</h1>
-                        <time class="article-gallery__date" datetime="{{publishedDate}}">{{article.publishedDate}}</time>
+                            <div class="c-article__category">
+                                {{article.label}}
+                            </div>
+                            <div class="c-article__title">
+                                {{ quotes.smarten(article.title) }}
+                            </div>
 
+
+
+                            <div class="c-article__posted-by">
+                                <div class="c-article__author">
+                                {# "{{_AppHelper.getUserProfileUrl(article.createdBy['username'])}}/posts" #}
+                                    <a class="c-article__author-name" href="{{_AppHelper.getUserProfileUrl(article.createdBy['username'])}}/posts">{{ article.createdBy['displayName'] }}</a>
+
+                                    {% if article['createdBy']['coauthors'] %}
+                                        {% for author in article['createdBy']['coauthors'] %}
+                                            <a class="c-article__author-name" href="{{_AppHelper.getUserProfileUrl(author['username'])}}/posts">{{ author['displayName'] }}</a>
+                                        {% endfor %}
+                                    {% endif %}
+
+                                    <time class="c-article__published">{{article.publishedDate}}</time>
+                                    {# {% if updated %}
+                                         - <time class="c-article__updated">Updated {{ updateDate | capitalize }}</time>
+                                    {% endif %} #}
+                                </div>
+
+                            </div>
+
+                            {% if _User.isAdminUser() %}
+                                    <a href="{{article.editUrl}}" target="_blank" class="c-article__edit-link">Edit article</a>
+                            {% endif %}
                     </div>
                 </div>
 
