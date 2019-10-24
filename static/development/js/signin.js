@@ -23,7 +23,7 @@ Acme.Signin.prototype.errorMsg = function(msg) {
 };
 Acme.Signin.prototype.handle = function(e) {
     var self = this;
-    console.log('handling');
+
     var $elem = this.parent.handle.call(this, e);
 
     if ( $elem.is('a') ) {
@@ -51,8 +51,14 @@ Acme.Signin.prototype.handle = function(e) {
             formData['rememberMe'] = 1;
 
             Acme.server.create(_appJsConfig.appHostName + '/api/auth/login', formData).done(function(r) {
-                // console.log(r);
                 if (r.success === 1) {
+                    // if password reset must return to home page, else 
+                    // get an error when staying on auth endpoint.
+                    if (window.location.pathname === "/auth/reset-thanks") {
+                        window.location.replace(_appJsConfig.appHostName);
+                        return;
+                    }
+
                     window.location.reload();
 
                 } else {
