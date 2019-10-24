@@ -11,6 +11,7 @@ Acme.Signin.prototype = new Acme.modal();
 Acme.Signin.constructor = Acme.Signin;
 Acme.Signin.prototype.errorMsg = function(msg) {
 
+    
     var keys = Object.keys(msg);
     var text = "";
 
