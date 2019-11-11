@@ -1,4 +1,14 @@
-{% set headermenu = _Menu.get({'menuType': 'header', "menuGroupName":"header-main"}) %}
+{# {% set headermenu = _Menu.get({'menuType': 'header', "menuGroupName":"header-main"}) %} #}
+
+{% set headermenu = getCache("headermenu") %}
+{% if (headermenu is empty) %}
+    {% set headermenu = _Menu.get({'menuType': 'header', "menuGroupName":"header-main"}) %}
+    {% set cache = setCache("headermenu", headermenu, 500) %} 
+{% endif %}
+
+
+
+
 
 {% set user = _User.getUser() %}
 {% set theDate = _AppHelper.getCurrentTimestampBasedOnTimezone() %}
