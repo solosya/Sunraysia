@@ -1,5 +1,5 @@
 {{ set(this, 'title', _Blog.getBlogTitle()) }}
-{% set photoVersion = '65' %}
+{% set photoVersion = '66' %}
 {% set networkData  = _Network.getNetworkData() %}
 {% set blogData     = _Blog.getBlog() %}
 
@@ -21,7 +21,7 @@
 
 
 
-<main id="photo-sales" role="main" data-env="{{env}}" data-stripe="{{networkData['stripe_publishable_key']}}"></main>
+<main id="photo-sales" role="main" data-env="{{env}}"></main>
 
 <script>
     window.csrfToken    = "{{_AppHelper.getCsrfToken()}}";

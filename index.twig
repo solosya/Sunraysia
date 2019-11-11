@@ -1,8 +1,20 @@
 {{ set(this, 'title', _Blog.getBlogTitle()) }}
 
+
+{% set networkData = getCache("networkData") %}
+{% if (networkData is empty) %}
+    {% set networkData = _Network.getNetworkData() %} 
+    {% set cache = setCache("networkData", networkData, 500) %} 
+{% endif %}
+
+
+
 {% cache 'indexCache_1' 300 %}
 
-{% set networkData  = _Network.getNetworkData() %}
+
+
+
+
 {% set layoutTitle  = _Page.getLayoutTitle() | lower | replace({' ': '_'}) %}
 {% set blogData     = _Blog.getBlog() %}
 {% set homeBlog     = blogData['title'] | lower %}

@@ -1,4 +1,14 @@
-{% set footerMenu = _Menu.get({'menuType': 'header', 'menuGroupName': 'footer'}) %}
+{# {% set footerMenu = _Menu.get({'menuType': 'header', 'menuGroupName': 'footer'}) %} #}
+
+{% set footerMenu = getCache("footerMenu") %}
+{% if (footerMenu is empty) %}
+    {% set footerMenu = _Menu.get({'menuType': 'header', 'menuGroupName': 'footer'}) %}
+    {% set cache = setCache("footerMenu", footerMenu, 500) %} 
+{% endif %}
+
+
+
+
 
 {% set altLogo = networkData.templatePath~'/static/images/logo-white.png'%}
 {% if networkData.secondaryLogoMedia | length > 0 %}

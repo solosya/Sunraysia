@@ -3,7 +3,16 @@
 {{ this.registerLinkTag({rel:'amphtml', href:_AppHelper.getServerUrl(false)~'?amp=1'}) }}
 
 {% set blogInfo = _Blog.getBlog() %}
-{% set networkData = _Network.getNetworkData() %}
+
+{% set networkData = getCache("networkData") %}
+{% if (networkData is empty) %}
+    {% set networkData = _Network.getNetworkData() %} 
+    {% set cache = setCache("networkData", networkData, 500) %} 
+{% endif %}
+
+
+
+
 {% set config       = _Network.getThemeConfig() %}
 {% set articleBlog = article.blog.title | lower %}
 {% set relatedArticles = [] %}
@@ -81,7 +90,15 @@
 {% else %}
     {# Only grab these if article is not paywalled #}
     {# {% set recentArticles = _Article.getPopularArticles({ limit: 3, excludeArticleIds : [article.id], interval: 168, scope: 'network' }) %} #}
-    {% set recentArticles = _Article.getRecentArticles({ limit: 3, excludeArticleIds : [article.id] }) %}
+    {# {% set recentArticles = _Article.getRecentArticles({ limit: 3, excludeArticleIds : [article.id] }) %} #}
+
+    {% set recentArticles = getCache("articleRecent") %}
+    {% if (recentArticles is empty) %}
+        {% set recentArticles = _Article.getRecentArticles({ limit: 3 }) %}
+        {% set cache = setCache("articleRecent", recentArticles, 500) %} 
+    {% endif %}
+
+
 {% endif %}
 
 {% set articleImg = false %}
