@@ -4,6 +4,10 @@
 
 {% set blogInfo = _Blog.getBlog() %}
 
+{% set allowedReferrers = config['allowedReferrers'] %}
+{% set headers      = _AppHelper.getHttpHeaders() %}
+
+
 {% set networkData = getCache("networkData") %}
 {% if (networkData is empty) %}
     {% set networkData = _Network.getNetworkData() %} 
@@ -31,10 +35,6 @@
 {% endif %}
 
 
-
-
-
-
 {% set showPaywall = false %}
 {% set ArticleContent = article.content %}
 {% set pwstats = {} %}
@@ -42,11 +42,21 @@
     {% set pwstats = _User.getPaywallStats(false) %}
 {% endif %}
 
+{% set bypassPaywall = false %}
+{% if headers['referer'][0] is defined and allowedReferrers is defined %}
+{% set referrrer = headers['referer'][0] | preg_replace('|http(s)*://(.+?)/.*$|', '$2') %}
+    {% for ar in allowedReferrers %}
+        {% if referrrer == ar %}
+            {% set bypassPaywall = true %}
+        {% endif %}
+    {% endfor %}
+{% endif %}
 
 {% set paywallType = "" %}
 {% if  not      _User.isAdminUser() and
                 articleBlogInfo['showPaywall'] == true and
-                article['premiumContent'] == true
+                article['premiumContent'] == true and
+                bypassPaywall == false
                 %}
     {% set showPaywall = true %}
 
@@ -78,6 +88,11 @@
 {% endif %}
 
 
+                {% if showPaywall %}
+showPaywallarticle yes
+                            {% else %}
+showPaywallarticle no
+                        {% endif %}                   
 
 
 

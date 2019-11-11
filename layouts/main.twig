@@ -7,12 +7,16 @@
 {% set blogName      = blogData.title %}
 {% set url           = _AppHelper.getParsedUrl() %}
 {% set config       = _Network.getThemeConfig() %}
+{% set allowedReferrers = config['allowedReferrers'] %}
+{% set headers      = _AppHelper.getHttpHeaders() %}
 
 
 {# If url uses port numbers append to site url data #}
 {% if url['port'] %}
     {% set networkData = networkData | merge({ "defaultBlogUrl" : networkData['defaultBlogUrl'] ~ ":" ~ url['port'] }) %}
 {% endif %}
+
+ {% set testr = headers['referer'][0] | preg_replace('|http(s)*://(.+?)/.*$|', '$2') %}
 
 
 {% set showPaywall = false %}
@@ -26,6 +30,18 @@
     
         {% set showPaywall = true %}
         {% set layout = "layout-marketing" %}
+
+        {% if headers['referer'][0] is defined and allowedReferrers is defined%}
+        {% set referrrer = headers['referer'][0] | preg_replace('|http(s)*://(.+?)/.*$|', '$2') %}
+            {% for ar in allowedReferrers %}
+                {% if referrrer == ar %}
+                    {% set showPaywall = false %}
+                    {% set layout = "" %}
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+
+
     
 {% endif %}
 
@@ -37,6 +53,16 @@
 <!DOCTYPE html>
 <html lang="en-AU" prefix="og: http://ogp.me/ns#">
 <head>
+{{testr}}
+{{headers['referer'][0]}}
+ {% for ar in allowedReferrers %}
+    {{ar}}
+{% endfor %}
+                {% if showPaywall %}
+showPaywall yes
+                            {% else %}
+showPaywall no
+                        {% endif %}                   
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
     <meta http-equiv="Accept-CH" content="DPR, Viewport-Width, Width">
