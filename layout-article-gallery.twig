@@ -2,8 +2,21 @@
 {{ set(this, 'title', article.title) }}
 {{ this.registerLinkTag({rel:'amphtml', href:_AppHelper.getServerUrl(false)~'?amp=1'}) }}
 
-{% set networkData = _Network.getNetworkData() %}
-{% set config       = _Network.getThemeConfig() %}
+{% set networkData = getCache("networkData") %}
+{% if (networkData is empty) %}
+    {% set networkData = _Network.getNetworkData() %} 
+    {% set cache = setCache("networkData", networkData, 500) %} 
+{% endif %}
+
+
+{# {% set config       = _Network.getThemeConfig() %} #}
+{% set config = getCache("themeConfig") %}
+{% if (config is empty) %}
+    {% set config = _Network.getThemeConfig() %}
+    {% set cache = setCache("themeConfig", config, 500) %} 
+{% endif %}
+
+
 {% set blogInfo = _Blog.getBlog() %}
 {% set articleImg = false %}
 {% if article.media|length > 0 %}

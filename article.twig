@@ -4,8 +4,6 @@
 
 {% set blogInfo = _Blog.getBlog() %}
 
-{% set allowedReferrers = config['allowedReferrers'] %}
-{% set headers      = _AppHelper.getHttpHeaders() %}
 
 
 {% set networkData = getCache("networkData") %}
@@ -15,9 +13,20 @@
 {% endif %}
 
 
+{# {% set config       = _Network.getThemeConfig() %} #}
+{% set config = getCache("themeConfig") %}
+{% if (config is empty) %}
+    {% set config = _Network.getThemeConfig() %}
+    {% set cache = setCache("themeConfig", config, 500) %} 
+{% endif %}
 
 
-{% set config       = _Network.getThemeConfig() %}
+
+{% set allowedReferrers = config['allowedReferrers'] %}
+{% set headers      = _AppHelper.getHttpHeaders() %}
+
+
+
 {% set articleBlog = article.blog.title | lower %}
 {% set relatedArticles = [] %}
 {% set articleBlogInfo = _Blog.getBlog({'guid':article.blog['guid']}) %}

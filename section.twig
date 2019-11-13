@@ -1,7 +1,19 @@
 {{ set(this, 'title', _Blog.getBlogTitle()) }}
-{% set networkData = _Network.getNetworkData() %}
 {% set blogData     = _Blog.getBlog() %}
-{% set config       = _Network.getThemeConfig() %}
+
+{% set networkData = getCache("networkData") %}
+{% if (networkData is empty) %}
+    {% set networkData = _Network.getNetworkData() %} 
+    {% set cache = setCache("networkData", networkData, 500) %} 
+{% endif %}
+
+
+{% set config = getCache("themeConfig") %}
+{% if (config is empty) %}
+    {% set config = _Network.getThemeConfig() %}
+    {% set cache = setCache("themeConfig", config, 500) %} 
+{% endif %}
+
 
 
 
@@ -12,13 +24,14 @@
 {% set firstCount = articles | length %}
 
 
-{% set popularArticles = _Article.getPopularArticles({ 
-    limit: 4, 
-    sortBy: 'VIEWS', 
-    scope: 'network',
-    interval: 168 
 
-    }) %}
+{% set popularArticles = getCache("popularArticles") %}
+{% if (popularArticles is empty) %}
+    {% set popularArticles = _Article.getPopularArticles({  limit: 4,  sortBy: 'VIEWS',  scope: 'network', interval: 168  }) %}
+    {% set cache = setCache("popularArticles", popularArticles, 500) %} 
+{% endif %}
+
+
 
 
 
