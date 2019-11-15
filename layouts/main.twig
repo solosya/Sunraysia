@@ -30,9 +30,6 @@
     {% set networkData = networkData | merge({ "defaultBlogUrl" : networkData['defaultBlogUrl'] ~ ":" ~ url['port'] }) %}
 {% endif %}
 
- {% set testr = headers['referer'][0] | preg_replace('|http(s)*://(.+?)/.*$|', '$2') %}
-
-
 {% set showPaywall = false %}
 {% set paywallSection = false %}
 {% set isAdmin = _User.isAdminUser() %}
@@ -61,22 +58,10 @@
 
 
 
-
-
 {{ this.beginPage() }}
 <!DOCTYPE html>
 <html lang="en-AU" prefix="og: http://ogp.me/ns#">
 <head>
-{{testr}}
-{{headers['referer'][0]}}
- {% for ar in allowedReferrers %}
-    {{ar}}
-{% endfor %}
-                {% if showPaywall %}
-showPaywall yes
-                            {% else %}
-showPaywall no
-                        {% endif %}                   
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
     <meta http-equiv="Accept-CH" content="DPR, Viewport-Width, Width">

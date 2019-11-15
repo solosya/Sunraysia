@@ -56,7 +56,6 @@
 {% set bypassPaywall = false %}
 {% if headers['referer'][0] is defined and allowedReferrers is defined %}
 {% set referrrer = headers['referer'][0] | preg_replace('|http(s)*://(.+?)/.*$|', '$2') %}
-    ar?{{ar}}
     {% for ar in allowedReferrers %}
         {% if referrrer == ar %}
             {% set bypassPaywall = true %}
@@ -100,30 +99,6 @@
         {% endif %}
     {% endif %}
 {% endif %}
-
-
-hello?
-{{headers['referer'][0]}}
-ref?sz
-{{referrrer}}
-?ref
-    {% for ar in allowedReferrers %}
-        {{ar}}
-    {% endfor %}
-
-                {% if bypassPaywall %}
-bypassPaywall yes
-                            {% else %}
-bypassPaywall no
-                        {% endif %}                   
-
-
-                {% if showPaywall %}
-showPaywallarticle yes
-                            {% else %}
-showPaywallarticle no
-                        {% endif %}                   
-
 
 
 {% if showPaywall == true %}
