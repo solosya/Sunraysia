@@ -1,19 +1,34 @@
 {# {{ use('yii/web/JqueryAsset') }} #}
 
-{% set networkData   = _Network.getNetworkData() %}
+{# {% set networkData   = _Network.getNetworkData() %} #}
+{% set networkData = getCache("networkData") %}
+{% if (networkData is empty) %}
+    {% set networkData = _Network.getNetworkData() %} 
+    {% set cache = setCache("networkData", networkData, 500) %} 
+{% endif %}
+
+
+{% set config = getCache("themeConfig") %}
+{% if (config is empty) %}
+    {% set config = _Network.getThemeConfig() %}
+    {% set cache = setCache("themeConfig", config, 500) %} 
+{% endif %}
+
+
+
 {% set blogData      = _Blog.getBlog() %}
 {% set pageClass     = _Page.getBodyClass() %}
 {% set layout        = _Page.getLayoutName() %}
 {% set blogName      = blogData.title %}
 {% set url           = _AppHelper.getParsedUrl() %}
-{% set config       = _Network.getThemeConfig() %}
+{% set allowedReferrers = config['allowedReferrers'] %}
+{% set headers      = _AppHelper.getHttpHeaders() %}
 
 
 {# If url uses port numbers append to site url data #}
 {% if url['port'] %}
     {% set networkData = networkData | merge({ "defaultBlogUrl" : networkData['defaultBlogUrl'] ~ ":" ~ url['port'] }) %}
 {% endif %}
-
 
 {% set showPaywall = false %}
 {% set paywallSection = false %}
@@ -26,10 +41,20 @@
     
         {% set showPaywall = true %}
         {% set layout = "layout-marketing" %}
+
+        {% if headers['referer'][0] is defined and allowedReferrers is defined %}
+        {% set referrrer = headers['referer'][0] | preg_replace('|http(s)*://(.+?)/.*$|', '$2') %}
+            {% for ar in allowedReferrers %}
+                {% if referrrer == ar %}
+                    {% set showPaywall = false %}
+                    {% set layout = "" %}
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+
+
     
 {% endif %}
-
-
 
 
 
@@ -81,7 +106,7 @@
 
 
     {% if _AppHelper.getApplicationEnv() == 'PROD'%}
-        <link rel="stylesheet" href="{{networkData.templatePath}}/static/deploy/concat.min.css?v=yudin12_534dc984" type="text/css" media="all">
+        <link rel="stylesheet" href="{{networkData.templatePath}}/static/deploy/concat.min.css?v=534dc984_534dc984" type="text/css" media="all">
     {% else %}
 
         <link rel='stylesheet' href='{{networkData.templatePath}}/static/deploy/concat.css' type='text/css' media='all' />
