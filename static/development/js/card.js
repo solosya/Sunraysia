@@ -33,6 +33,7 @@ Card.prototype.renderCard = function(card, options)
     
     var width = typeof options.imageWidth !== "undefined" ? options.imageWidth : 500;
     var height = typeof options.imageHeight !== "undefined" ? options.imageHeight : 350;
+    var gravity = typeof options.imageGravity !== "undefined" ? options.imageGravity : null;
 
     if (options.imageOriginal) {
         var width = card.featuredMedia.width;
@@ -88,7 +89,7 @@ Card.prototype.renderCard = function(card, options)
         card.params = {
             id          : articleId,
             guid        : card.guid,
-            image       : $.image({media:card['featuredMedia'], mediaOptions:{width: width ,height:height, crop: 'fill'} }),
+            image       : $.image({media : card['featuredMedia'], mediaOptions:{width: width , height: height, crop: 'fill', gravity: gravity} }),
             category    : card.label,
             title       : card.title,
             content     : articleContent,
@@ -405,7 +406,6 @@ Card.prototype.events_refresh = function()
 
 Card.prototype.events = function() 
 {
-    console.log('running controller events');
     this.bindLightbox();
 
     if (_appJsConfig.isUserLoggedIn === 1 && _appJsConfig.userHasBlogAccess === 1) {

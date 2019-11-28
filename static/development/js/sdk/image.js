@@ -36,11 +36,14 @@
         if (opts.mediaOptions.height === 0) {
             delete opts.mediaOptions.height;
         }
+        if (opts.gravity) {
+            size.gavity = opts.gravity;
+        } 
 
 
         var imageOptions = $.extend({}, size, opts.mediaOptions);
         var url = $.cloudinary.url(imageId, imageOptions);
-        
+
         return url;
     };
     
