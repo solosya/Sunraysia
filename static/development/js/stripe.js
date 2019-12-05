@@ -163,7 +163,6 @@
         var self = this;
 
         $('.j-plan-subscribe').on("click", function(e) {
-
             var elem = $(this);
             var plan = elem.data('planid');
             var name = elem.data('plan-name');
@@ -173,10 +172,12 @@
             self.data.planid = plan;
             self.data.subscription_choice = name;
 
+            $input = $('#subscription_choice');
+            $inputId = $input.attr('name');
             $('#planid').val(plan);
             $('#trial').val(trial);
             $('#signup').val(signup);
-            $('#subscription_choice').val(name);
+            $input.val(name).addClass('shrink');
             $('#total_cost').text(cost);
 
             $('.j-plan-subscribe').each(function(i, e) {
@@ -202,7 +203,7 @@
                 $('#payment-total').show();
             }
 
-            self.validate();
+            // self.validate();
         });
 
 
@@ -227,6 +228,12 @@
             }
 
             self.updateData(data);
+
+            if ( elem.val() != "" ) {
+                elem.addClass('shrink');
+            } else {
+                elem.removeClass('shrink');
+            }
 
             var validated = self.validate([elemid]);
             self.render();

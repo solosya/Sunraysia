@@ -1,0 +1,68 @@
+@mixin shrink {
+    line-height: 35px;
+    outline: none;
+    margin-top:10px;
+    border: solid 1px $vimeo;
+}
+
+@mixin shrinkLabel {
+    top: -6px;
+    margin-left:0;
+    @include font-size(12);
+    width: auto;
+    overflow: auto;
+    > span {
+        display:inline;
+    }
+
+}
+
+
+
+.c-paywallform {
+    
+    .c-form {
+
+        &__group {
+            position:relative;
+        }
+
+        &__label {
+            color:$grey;
+            @include font-size(16);
+            font-weight:$weightRegular;
+            position:absolute;
+            top: 14px;
+            margin-left:15px;
+            transition: 300ms ease all;
+            white-space: nowrap;
+            width: 94%;
+            overflow: hidden;
+            
+            > span {
+                display:none;
+                @include font-size(11);
+            }
+        }
+
+        &__input {
+
+            transition: 300ms ease all;
+            
+            &.shrink ~ .c-form__label {
+                @include shrinkLabel();
+            }
+            &.shrink {
+                @include shrink();
+            }
+            &:focus {
+                @include shrink();
+            }
+            &:focus ~ .c-form__label {
+                @include shrinkLabel();
+            }
+        }
+
+    }
+
+}

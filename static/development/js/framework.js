@@ -648,7 +648,7 @@
             }
 
             var validated = true, fields = [];
-            if (checkFields && this.validateFields) {
+            if (checkFields && this.validateFields) {z
                 var fields = intersect(this.validateFields, checkFields);
                 for (var j=0; j<fields.length;j++) {
                     var fieldName = fields[j].split('.').reverse()[0];

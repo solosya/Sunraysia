@@ -17992,7 +17992,7 @@ function(a){"use strict";void 0===a.en&&(a.en={"mejs.plural-form":1,"mejs.downlo
             }
 
             var validated = true, fields = [];
-            if (checkFields && this.validateFields) {
+            if (checkFields && this.validateFields) {z
                 var fields = intersect(this.validateFields, checkFields);
                 for (var j=0; j<fields.length;j++) {
                     var fieldName = fields[j].split('.').reverse()[0];
@@ -21475,7 +21475,6 @@ $('#signinBtn, #articleSigninBtn').on('click', function(e) {
         var self = this;
 
         $('.j-plan-subscribe').on("click", function(e) {
-
             var elem = $(this);
             var plan = elem.data('planid');
             var name = elem.data('plan-name');
@@ -21485,10 +21484,12 @@ $('#signinBtn, #articleSigninBtn').on('click', function(e) {
             self.data.planid = plan;
             self.data.subscription_choice = name;
 
+            $input = $('#subscription_choice');
+            $inputId = $input.attr('name');
             $('#planid').val(plan);
             $('#trial').val(trial);
             $('#signup').val(signup);
-            $('#subscription_choice').val(name);
+            $input.val(name).addClass('shrink');
             $('#total_cost').text(cost);
 
             $('.j-plan-subscribe').each(function(i, e) {
@@ -21514,7 +21515,7 @@ $('#signinBtn, #articleSigninBtn').on('click', function(e) {
                 $('#payment-total').show();
             }
 
-            self.validate();
+            // self.validate();
         });
 
 
@@ -21539,6 +21540,12 @@ $('#signinBtn, #articleSigninBtn').on('click', function(e) {
             }
 
             self.updateData(data);
+
+            if ( elem.val() != "" ) {
+                elem.addClass('shrink');
+            } else {
+                elem.removeClass('shrink');
+            }
 
             var validated = self.validate([elemid]);
             self.render();

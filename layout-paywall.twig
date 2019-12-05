@@ -178,53 +178,53 @@
                                 <div class="c-section-header c-section-header--normal-case">Your details</div>
                             </div>
                             <div class="col-12">
-                                <div class="c-formnotice">Fields marked with an * are required.</div>
+                                <div class="c-formnotice">All fields are required.</div>
                             </div>
                         </div>
 
                         <div class="row u-margin-top-20">
                             <div class="col-md-6">
-                                <div class="">
-                                    <label class="c-form__label" for="firstname">First name*</label>
-                                    <input class="c-form__input c-form__input--bordered" type="text" id="firstname" placeholder="eg. John" name="firstname" required>
+                                <div class="c-form__group">
+                                    <input class="c-form__input c-form__input--bordered" type="text" id="firstname" placeholder="" name="firstname" required>
+                                    <label class="c-form__label" for="firstname">First name</label>
                                     <div class="c-form__help-block">Please fill out this field.</div>
                                 </div>
                             </div>
                             <div class="col-md-6">
-                                <div class="">
-                                    <label class="c-form__label" for="firstname">Last name*</label>
-                                    <input class="c-form__input c-form__input--bordered" type="text" id="lastname" placeholder="eg. Smith" name="lastname" required>
+                                <div class="c-form__group">
+                                    <input class="c-form__input c-form__input--bordered" type="text" id="lastname" placeholder="" name="lastname" required>
+                                    <label class="c-form__label" for="lastname">Last name</label>
                                     <div class="c-form__help-block">Please fill out this field.</div>
                                 </div>
                             </div>
 
-                            <div class="col-md-6 u-margin-top-10">
+                            <div class="col-md-6 u-margin-top-20">
                                 <div class="">
-                                    <label  class="c-form__label" for="firstname">Email address*</label>
-                                    <input class="c-form__input c-form__input--bordered" type="email" id="email" placeholder="eg. johnsmith@gmail.com" name="email" required>
+                                    <input class="c-form__input c-form__input--bordered" type="email" id="email" placeholder="" name="email" required>
+                                    <label  class="c-form__label" for="email">Email address</label>
                                     <div class="c-form__help-block">Please fill out this field.</div>
                                 </div>
                             </div>
-                            <div class="col-md-6 u-margin-top-10">
+                            <div class="col-md-6 u-margin-top-20">
                                 <div class="">
-                                    <label class="c-form__label" for="normalselect">Subscription</label>
-                                    <input id="subscription_choice" class="c-form__input c-form__input--bordered" type="text" id="" placeholder="Choose a plan from above" name="subscription_choice" readonly>
+                                    {# <label class="c-form__label" for="normalselect">Subscription</label> #}
+                                    <input id="subscription_choice" class="c-form__input c-form__input--bordered" type="text" id="subscription_choice" placeholder="Choose a plan from above" name="subscription_choice" readonly disabled>
                                     <div class="c-form__help-block">Please fill out this field.</div>
                                 </div>
                             </div>
 
-                            <div class="col-md-6 u-margin-top-10">
+                            <div class="col-md-6 u-margin-top-20">
                                 <div class="">
-                                    <label class="c-form__label" for="firstname">Password*</label>
-                                    <input class="c-form__input c-form__input--bordered" type="password" id="password" placeholder="Password (must be at least five characters)" name="password" required>
-                                    <div class="c-form__help-block">Password (must be at least six characters)</div>
+                                    <input class="c-form__input c-form__input--bordered" type="password" id="password" placeholder="" name="password" required>
+                                    <label class="c-form__label" for="password">Password <span>(must be at least six characters with upper case, lower case and digit.)</span></label>
+                                    <div class="c-form__help-block">Password (must be at least six characters with upper case, lower case and digit.)</div>
                                 </div>
                             </div>
-                            <div class="col-md-6 u-margin-top-10">
+                            <div class="col-md-6 u-margin-top-20">
                                 <div class="">
-                                    <label class="c-form__label" for="firstname">Confirm password*</label>
-                                    <input class="c-form__input c-form__input--bordered" type="password" id="verifypassword" placeholder="Password (must be at least five characters)" name="verifypassword" required>
-                                    <div class="c-form__help-block">Password (must be at least six characters)</div>
+                                    <input class="c-form__input c-form__input--bordered" type="password" id="verifypassword" placeholder="" name="verifypassword" required>
+                                    <label class="c-form__label" for="verifypassword">Confirm password</label>
+                                    <div class="c-form__help-block">Password must match previously entered.</div>
                                 </div>
                             </div>
                             
