@@ -2,7 +2,7 @@
 
 
 {% if params.hasMedia %}
-    <figure class="{{params.cardType}}c-cards-view__media {{params.videoClass}}">
+    <figure class="{{params.cardType}}c-cards-view__media {{params.videoClass}} {{params.galleryClass}}">
         <picture>
             <source media="(max-width: 767px) and (min-width: 501px)" srcset="{{params.imageMedium}}">
             <source media="(max-width: 500px)" srcset="{{params.imageSmall}}">

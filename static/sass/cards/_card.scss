@@ -9,8 +9,9 @@
 
 
     &.draft {
-        opacity: 0.3
+        opacity: 0.3;
     }
+
     &__media {
         position: relative;
         margin:0;
@@ -64,6 +65,21 @@
             }
         }
 
+        &--gallery {
+            &:before {
+                content: '';
+                display:block;
+                position:absolute;
+                height:52px;
+                width:52px;
+                background-image: url('../icons/gallery.svg');
+                background-repeat: no-repeat;
+                background-size:contain;
+                bottom:5px;
+                left:5px;
+                // background:pink;
+            }
+        }
     }
 
     &__container {

@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="72" height="72" viewBox="0 0 72 72">
+    <defs>
+        <filter id="a" width="106.7%" height="122.4%" x="-3.4%" y="-11.2%" filterUnits="objectBoundingBox">
+            <feMorphology in="SourceAlpha" operator="dilate" radius="3.5" result="shadowSpreadOuter1"/>
+            <feOffset dy="2" in="shadowSpreadOuter1" result="shadowOffsetOuter1"/>
+            <feMorphology in="SourceAlpha" radius="4" result="shadowInner"/>
+            <feOffset dy="2" in="shadowInner" result="shadowInner"/>
+            <feComposite in="shadowOffsetOuter1" in2="shadowInner" operator="out" result="shadowOffsetOuter1"/>
+            <feGaussianBlur in="shadowOffsetOuter1" result="shadowBlurOuter1" stdDeviation="5"/>
+            <feColorMatrix in="shadowBlurOuter1" result="shadowMatrixOuter1" values="0 0 0 0 0.349019608 0 0 0 0 0.345098039 0 0 0 0 0.349019608 0 0 0 0.2 0"/>
+            <feMerge>
+                <feMergeNode in="shadowMatrixOuter1"/>
+                <feMergeNode in="SourceGraphic"/>
+            </feMerge>
+        </filter>
+        <path id="b" d="M.135.242h14.649v14.81H.134z"/>
+    </defs>
+    <g fill="none" fill-rule="evenodd" filter="url(#a)" transform="translate(10 8)">
+        <circle cx="26" cy="26" r="26" fill="#4573CD"/>
+        <path fill="#FFF" d="M35.913 26.128h.027v-.08h-.027zM19.328 29.435H16.37c-.753 0-1.371-.619-1.371-1.398V16.37c0-.753.618-1.37 1.37-1.37h11.532c.753 0 1.371.617 1.371 1.37v2.984h-.806V16.37a.568.568 0 0 0-.565-.565H16.371a.568.568 0 0 0-.565.565v11.666c0 .322.27.564.565.564h2.957v.834z"/>
+        <path fill="#FFF" d="M22.768 33.413h-2.5c-.752 0-1.37-.618-1.37-1.371v-11.72c0-.752.618-1.37 1.37-1.37h11.559c.752 0 1.37.618 1.37 1.37v2.635h-.806v-2.635a.568.568 0 0 0-.564-.564H20.268a.568.568 0 0 0-.564.564v11.693c0 .323.269.564.564.564h2.5v.834z"/>
+        <g transform="translate(22.258 22.258)">
+            <mask id="c" fill="#fff">
+                <use xlink:href="#b"/>
+            </mask>
+            <path fill="#FFF" d="M13.413 15.053H1.505c-.753 0-1.37-.618-1.37-1.371V1.612c0-.752.617-1.37 1.37-1.37h11.908c.753 0 1.371.618 1.371 1.37v12.07c0 .753-.618 1.37-1.37 1.37" mask="url(#c)"/>
+        </g>
+    </g>
+</svg>
