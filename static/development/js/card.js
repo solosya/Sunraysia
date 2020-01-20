@@ -43,6 +43,7 @@ Card.prototype.renderCard = function(card, options)
     if (card.imageOptions) {
         width = card.imageOptions.width || width;
         height = card.imageOptions.height || height;
+        gravity = card.imageOptions.gravity || gravity;
     }
     var articleContent = card.excerpt;
     if (typeof options.content != "undefined" && options.content === "full") {
