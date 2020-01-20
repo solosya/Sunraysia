@@ -6,7 +6,17 @@
 {% set before           = before is defined         ? before : '' %}
 {% set after            = after is defined          ? after : '' %}
 {% set cardCount        = cardCount is defined      ? cardCount : null %}
-{% set imageGravity     = imageGravity is defined   ? imageGravity : null %}
+{% set imageParams      = imageParams is defined   ? imageParams : null %}
+
+{% set imageWidth = 0 %}
+{% set imageHeight = 0 %}
+{% set imageGravity = null %}
+
+{% if imageParams != null %}
+    {% set imageWidth   = imageParams.width is defined   ? imageParams.width   : imageWidth %}
+    {% set imageHeight  = imageParams.height is defined  ? imageParams.height  : imageHeight %}
+    {% set imageGravity = imageParams.gravity is defined ? imageParams.gravity : imageGravity %}
+{% endif %}
 
 <div class="row" id="loadmore_section_{{sectionNumber}}"></div>
 
@@ -123,6 +133,8 @@
             before          : "{{before}}",
             after           : "{{after}}",
             non_pinned      : {{cardCount}},
+            imageWidth      : {{imageWidth}},
+            imageHeight     : {{imageHeight}},
             gravity         : "{{imageGravity}}",
             cardType        : "{{cardTypes}}",
             lightbox        : "{{contentType}}"
