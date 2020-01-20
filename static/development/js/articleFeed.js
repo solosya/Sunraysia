@@ -136,7 +136,8 @@ Acme.View.articleFeed = function(options)
     this.imgWidth   = options.imageWidth || null;
     this.imgHeight  = options.imageHeight|| null;
     this.imgGravity = options.imageGravity || null;
-    
+    console.log('articleFeed', this);
+
     // when clicking less, reset the original offset count
     this.originalCount = options.non_pinned;
 
@@ -201,6 +202,7 @@ Acme.View.articleFeed.prototype.render = function(data)
     } else {
         for (var i in articles) {
             articles[i].imageOptions = {'width': self.imgWidth, 'height': self.imgHeight, 'gravity': self.imgGravity};
+            console.log('before rendercard', articles[i].imageOptions);
             html.push( self.cardModel.renderCard(articles[i], {
                 cardClass: self.cardClass,
                 template: self.template,

@@ -6,7 +6,7 @@
             media : {},
             mediaOptions: {}
         };
-
+        console.log("$image", options);
         var opts = $.extend({}, defaults, options);
         
         var imageId = opts.media.id;
