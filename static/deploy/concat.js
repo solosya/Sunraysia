@@ -16655,10 +16655,10 @@ var extend = function(child, parent) { for (var key in parent) { if (hasProp.cal
             return;
         }
         
-        if (opts.width !== 0) {
+        if (typeof opts.width != 'undefined' && opts.width !== 0) {
             opts.mediaOptions.width = opts.width;
         }
-        if (opts.height !== 0) {
+        if (typeof opts.height != 'undefined' && opts.height !== 0) {
             opts.mediaOptions.height = opts.height;
         } 
 
@@ -19253,11 +19253,16 @@ Card.prototype.renderCard = function(card, options)
 
     } else {
         card['hasMediaClass'] = (card.hasMedia == 1)? 'withImage__content' : 'without-image';
+        var imageOptions = {width: width , height: height, crop: 'fill', gravity: gravity};
 
+        var imageUrl = $.image( {
+            media : card['featuredMedia'], 
+            mediaOptions: imageOptions
+        });
         card.params = {
             id          : articleId,
             guid        : card.guid,
-            image       : $.image({media : card['featuredMedia'], mediaOptions:{width: width , height: height, crop: 'fill', gravity: gravity} }),
+            image       : imageUrl,
             category    : card.label,
             title       : card.title,
             content     : articleContent,

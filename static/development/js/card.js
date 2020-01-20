@@ -85,11 +85,16 @@ Card.prototype.renderCard = function(card, options)
 
     } else {
         card['hasMediaClass'] = (card.hasMedia == 1)? 'withImage__content' : 'without-image';
+        var imageOptions = {width: width , height: height, crop: 'fill', gravity: gravity};
 
+        var imageUrl = $.image( {
+            media : card['featuredMedia'], 
+            mediaOptions: imageOptions
+        });
         card.params = {
             id          : articleId,
             guid        : card.guid,
-            image       : $.image({media : card['featuredMedia'], mediaOptions:{width: width , height: height, crop: 'fill', gravity: gravity} }),
+            image       : imageUrl,
             category    : card.label,
             title       : card.title,
             content     : articleContent,

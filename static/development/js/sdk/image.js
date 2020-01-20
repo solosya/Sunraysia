@@ -21,10 +21,10 @@
             return;
         }
         
-        if (opts.width !== 0) {
+        if (typeof opts.width != 'undefined' && opts.width !== 0) {
             opts.mediaOptions.width = opts.width;
         }
-        if (opts.height !== 0) {
+        if (typeof opts.height != 'undefined' && opts.height !== 0) {
             opts.mediaOptions.height = opts.height;
         } 
 
