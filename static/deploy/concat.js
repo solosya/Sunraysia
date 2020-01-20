@@ -16655,12 +16655,11 @@ var extend = function(child, parent) { for (var key in parent) { if (hasProp.cal
             return;
         }
         
-        var size = {};
         if (opts.width !== 0) {
-            size.width = opts.width;
+            opts.mediaOptions.width = opts.width;
         }
         if (opts.height !== 0) {
-            size.height = opts.height;
+            opts.mediaOptions.height = opts.height;
         } 
 
         if (opts.mediaOptions.width === 0) {
@@ -16670,13 +16669,10 @@ var extend = function(child, parent) { for (var key in parent) { if (hasProp.cal
         if (opts.mediaOptions.height === 0) {
             delete opts.mediaOptions.height;
         }
-        if (opts.gravity) {
-            size.gavity = opts.gravity;
-        } 
 
+        opts.mediaOptions.gravity = opts.gravity || 'faces:auto';
 
-        var imageOptions = $.extend({}, size, opts.mediaOptions);
-        var url = $.cloudinary.url(imageId, imageOptions);
+        var url = $.cloudinary.url(imageId, opts.mediaOptions);
 
         return url;
     };

@@ -1,9 +1,13 @@
-{% set cardTypes = cardType is defined ? cardType : "" %}
-{% if contentType is not defined %}
-    {% set contentType = 'article' %}
-{% endif %}
+{% set cardTypes        = cardType is defined       ? cardType : "" %}
+{% set contentType      = contentType is defined    ? contentType : "article" %}
+{% set sectionNumber    = sectionNumber is defined  ? sectionNumber : null %}
+{% set blogId           = blogId is defined         ? blogId : null %}
+{% set cardClass        = cardClass is defined      ? cardClass : '' %}
+{% set before           = before is defined         ? before : '' %}
+{% set after            = after is defined          ? after : '' %}
+{% set cardCount        = cardCount is defined      ? cardCount : null %}
+{% set imageGravity     = imageGravity is defined   ? imageGravity : null %}
 
-{# please make sure sectionNumber, loadMoreClass and totalCards are set at the top of this file #}
 <div class="row" id="loadmore_section_{{sectionNumber}}"></div>
 
 {# {% if articles|length >= cardCount %} #}
@@ -83,7 +87,7 @@
                                 cardClass : "acme-card-10-mobile acme-card-10-tablet acme-card-10-desktop",
                                 type : "acme-",
                                 content: "full",
-                                imageOriginal:true
+                                imageOriginal: true
                             });
 
                             Acme.LightBox.renderPreLayout(article);
@@ -119,6 +123,7 @@
             before          : "{{before}}",
             after           : "{{after}}",
             non_pinned      : {{cardCount}},
+            gravity         : "{{imageGravity}}",
             cardType        : "{{cardTypes}}",
             lightbox        : "{{contentType}}"
         };
