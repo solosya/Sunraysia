@@ -36,7 +36,7 @@
             delete opts.mediaOptions.height;
         }
 
-        opts.mediaOptions.gravity = opts.gravity || 'faces:auto';
+        opts.mediaOptions.gravity = opts.mediaOptions.gravity || 'faces:auto';
 
         var url = $.cloudinary.url(imageId, opts.mediaOptions);
 

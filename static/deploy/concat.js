@@ -16670,7 +16670,7 @@ var extend = function(child, parent) { for (var key in parent) { if (hasProp.cal
             delete opts.mediaOptions.height;
         }
 
-        opts.mediaOptions.gravity = opts.gravity || 'faces:auto';
+        opts.mediaOptions.gravity = opts.mediaOptions.gravity || 'faces:auto';
 
         var url = $.cloudinary.url(imageId, opts.mediaOptions);
 
@@ -18933,6 +18933,8 @@ Acme.View.articleFeed = function(options)
     this.lightbox   = options.lightbox   || null;
     this.imgWidth   = options.imageWidth || null;
     this.imgHeight  = options.imageHeight|| null;
+    this.imgGravity = options.imageGravity || null;
+
     // when clicking less, reset the original offset count
     this.originalCount = options.non_pinned;
 
@@ -18996,7 +18998,7 @@ Acme.View.articleFeed.prototype.render = function(data)
         html = ["<p>" + self.failText + "</p>"];
     } else {
         for (var i in articles) {
-            articles[i].imageOptions = {'width': self.imgWidth, 'height': self.imgHeight};
+            articles[i].imageOptions = {'width': self.imgWidth, 'height': self.imgHeight, 'gravity': self.imgGravity};
             html.push( self.cardModel.renderCard(articles[i], {
                 cardClass: self.cardClass,
                 template: self.template,
@@ -19211,7 +19213,9 @@ Card.prototype.renderCard = function(card, options)
     if (card.imageOptions) {
         width = card.imageOptions.width || width;
         height = card.imageOptions.height || height;
+        gravity = card.imageOptions.gravity || gravity;
     }
+
     var articleContent = card.excerpt;
     if (typeof options.content != "undefined" && options.content === "full") {
         articleContent = '<div class="acme-c-cards-view__articleContent"><p>' + card.content + '</p></div>';
@@ -19254,7 +19258,6 @@ Card.prototype.renderCard = function(card, options)
     } else {
         card['hasMediaClass'] = (card.hasMedia == 1)? 'withImage__content' : 'without-image';
         var imageOptions = {width: width , height: height, crop: 'fill', gravity: gravity};
-
         var imageUrl = $.image( {
             media : card['featuredMedia'], 
             mediaOptions: imageOptions

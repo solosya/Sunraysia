@@ -43,7 +43,9 @@ Card.prototype.renderCard = function(card, options)
     if (card.imageOptions) {
         width = card.imageOptions.width || width;
         height = card.imageOptions.height || height;
+        gravity = card.imageOptions.gravity || gravity;
     }
+
     var articleContent = card.excerpt;
     if (typeof options.content != "undefined" && options.content === "full") {
         articleContent = '<div class="acme-c-cards-view__articleContent"><p>' + card.content + '</p></div>';
@@ -86,7 +88,6 @@ Card.prototype.renderCard = function(card, options)
     } else {
         card['hasMediaClass'] = (card.hasMedia == 1)? 'withImage__content' : 'without-image';
         var imageOptions = {width: width , height: height, crop: 'fill', gravity: gravity};
-
         var imageUrl = $.image( {
             media : card['featuredMedia'], 
             mediaOptions: imageOptions
