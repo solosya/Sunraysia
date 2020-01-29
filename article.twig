@@ -269,16 +269,19 @@
 
                         {% set classes = ["u-desktop-lg-padding-right-50", "u-desktop-lg-padding-right-30 u-desktop-lg-padding-left-30 u-article-divider-left", "d-none d-lg-block u-desktop-lg-padding-left-50 u-article-divider-left-2"] %}
                         
-                        {% for i in 0..2 if recentArticles[i]  %}
-                            {% if recentArticles[i].guid != article.guid %}
-                                <div class="col-12 col-md-6 col-lg-4 {{classes[i]}}" data-articleid="{{article.guid}}" data-recentid="{{recentArticles[i].guid}}">
+                        {% set count = 0 %}
+                        {% for recent in recentArticles  %}
+                            {% if recent.guid != article.guid and count < 4 %}
+                                <div class="col-12 col-md-6 col-lg-4 {{classes[i]}}" data-articleid="{{article.guid}}" data-recentid="{{recent.guid}}">
                                     {{this.render('partials/_single-article.twig', {
-                                        article: recentArticles[i], 
+                                        article: recent, 
                                         imageSize: {width: 300, height: 180},
                                         containerClass: 'card-2-mobile card-2-tablet card-2-desktop card-2-desktop-lg',
                                         site:   site
                                     }) | raw}}
                                 </div>
+                                {% set count = count + 1 %}
+
                             {% endif %}
                         {% endfor %}
                     </div>
