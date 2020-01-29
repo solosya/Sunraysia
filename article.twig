@@ -114,7 +114,7 @@
 
     {% set recentArticles = getCache("articleRecent") %}
     {% if (recentArticles is empty) %}
-        {% set recentArticles = _Article.getRecentArticles({ limit: 3 }) %}
+        {% set recentArticles = _Article.getRecentArticles({ limit: 4 }) %}
         {% set cache = setCache("articleRecent", recentArticles, 500) %} 
     {% endif %}
 
@@ -266,9 +266,12 @@
                 
                 <div class="offset-lg-1 col-ls-10">
                     <div class="row">
+
                         {% set classes = ["u-desktop-lg-padding-right-50", "u-desktop-lg-padding-right-30 u-desktop-lg-padding-left-30 u-article-divider-left", "d-none d-lg-block u-desktop-lg-padding-left-50 u-article-divider-left-2"] %}
-                        {% for i in 0..2 if recentArticles[i] %}
-                            <div class="col-12 col-md-6 col-lg-4 {{classes[i]}}">
+                        
+                        {% for i in 0..2 if recentArticles[i] and recentArticles[i].guid != article.guid %}
+
+                            <div class="col-12 col-md-6 col-lg-4 {{classes[i]}}" data-articleid="{{article.guid}}" data-recentid="{{recentArticles[i].guid}}">
                                 {{this.render('partials/_single-article.twig', {
                                     article: recentArticles[i], 
                                     imageSize: {width: 300, height: 180},
