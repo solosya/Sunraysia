@@ -71,9 +71,9 @@
 {% set isArticle = (article.articleId > 0 or (isArticle is defined and isArticle == 'true')) ? 0 : 1 %}
 
 
+{% set mediaCount  = 0 %}
 {% if isArticle == 0 %}
     {% set mediaCount  = _Article.getArticleMediaCount(article.articleId) %}
-    {# {% set mediaCount  = 0 %} #}
 
     {% set profileImg = false %}
     {% if authorImg is defined and authorImg == true %}
@@ -98,7 +98,6 @@
     {% endif %}
 
     {% set articleUrl = article.externalUrl != "" ? article.externalUrl : article.url %}
-
 
 
     {% set params = {
@@ -189,6 +188,8 @@
         data-blog-title     = "{{params.blogTitle}}"
         data-social         = "{{params.social}}"
         data-article-image  = "{{params.image}}" 
+        data-media-count    = "{{mediaCount}}" 
+
         data-article-text   = "{{Helper.htmlToText(params.title, -1) | raw | escape('html')}}"
         title               = "{{totalstring}} Display: {{params.displayOrder}} - {{params.pinnedAt}}">
 
