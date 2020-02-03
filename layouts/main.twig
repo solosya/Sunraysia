@@ -7,7 +7,6 @@
     {% set cache = setCache("networkData", networkData, 500) %} 
 {% endif %}
 
-
 {% set config = getCache("themeConfig") %}
 {% if (config is empty) %}
     {% set config = _Network.getThemeConfig() %}
