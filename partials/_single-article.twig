@@ -72,8 +72,8 @@
 
 
 {% if isArticle == 0 %}
-    {# {% set mediaCount  = _Article.getArticleMediaCount(article.articleId) %} #}
-    {% set mediaCount  = 0 %}
+    {% set mediaCount  = _Article.getArticleMediaCount(article.articleId) %}
+    {# {% set mediaCount  = 0 %} #}
 
     {% set profileImg = false %}
     {% if authorImg is defined and authorImg == true %}
