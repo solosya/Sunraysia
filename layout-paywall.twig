@@ -114,7 +114,10 @@
                                         <div class="c-paywall-card__panel">
                                             <h3 class="c-paywall-card__name c-paywall-card__name-xs">{{planName | raw }}</h3>
                                             {# <p class="c-paywall-card__excerpt c-paywall-card__excerpt-xs">{{plan.description}}</p> #}
-                                            <div class="c-paywall-card__price c-paywall-card__price-lg">{% if val != 'FREE' %}${% endif %}{{val}}</div>
+                                            {% if plan.type != 'signup' %}
+                                                <div class="c-paywall-card__price c-paywall-card__price-lg">${{val}}</div>
+                                            {% endif %}
+
                                         </div>
 
 

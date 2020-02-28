@@ -276,7 +276,7 @@
                                 <div class="c-current-plan__spacer"></div>
 
                                 <div class="c-current-plan__subscription-buttons">
-                                    <a id="change-plan" href="#plans" class="c-button c-button--red c-button--2line">Choose Subscription</a>
+                                    <a id="change-plan" href="#currentPlanStats" class="c-button c-button--red c-button--2line">Choose Subscription</a>
                                     <a id="cancelAccount" href="#" class="c-button c-button--red--bordered c-button--2line">Cancel subscription</a>
                                 </div>
 
@@ -297,7 +297,17 @@
                 **************************************************** #}
                 {% set cardSupplied = pwstats['card_last_4'] ? 't' : 'f' %}
                 {% set planStyle = showPlans ? "" : "display:none" %}
-                <div id="plans" class="row u-margin-top-60" style="{{planStyle}}" data-card-details="{{cardSupplied}}">
+                <div id="currentPlanStats" class="row u-margin-top-60" style="{{planStyle}}" 
+                    data-cardsupplied="{{cardSupplied}}"
+                    data-currentUsers="{{managedUserCount}}"
+                    data-currentPeriod="{{pwstats['period']}}"
+                    data-currentCost="{{pwstats['plan_value']}}"
+                    data-currentType="{{pwstats['type']}}"
+                    data-expiry="{{pwstats['expiry_date']}}"
+                    data-currentplanperiodcount="{{pwstats['period_count']}}"
+
+                    
+                    >
                     <div class="col-12">
                         <h2 class="c-myAccount__head">Choose subscription</h2>
                         {% if userManager == true or pwstats['user_role']['IsSystemAdmin'] %}
@@ -323,11 +333,21 @@
                                         {% set selected = 'selected' %}
                                     {% endif %}
                                     
-                                    <div class="c-plans__block c-plans__block-xs {% if selected == 'selected' %} selected {% endif %}  j-setplan ">
+                                    <div class="c-plans__block c-plans__block-xs {% if selected == 'selected' %} selected {% endif %}  j-setplan "
+                                        data-planid          = "{{plan.guid}}"
+                                        data-planusercount   = "{{userCount}}"
+                                        data-plancost        = "{{plan.plan_value}}"
+                                    data-planperiod      = "{{plan.period}}"
+                                        data-trialstatus     = "{{plan['trial_status']}}"
+                                        data-planType        = "{{plan.type}}"
+                                        data-planPeriodCount = "{{plan.period_count}}"
+                                    >
                                         <div class="c-paywall-card__panel">
                                             <h3 class="c-paywall-card__name c-paywall-card__name-xs">{{plan.plan_name}}</h3>
                                             {# <p class="c-paywall-card__excerpt c-paywall-card__excerpt-xs">{{plan.description}}</p> #}
-                                            <div class="c-paywall-card__price c-paywall-card__price-lg">{% if planCost != 'FREE' %}${% endif %}{{planCost}}</div>
+                                            {% if plan.type != 'signup' %}
+                                                <div class="c-paywall-card__price c-paywall-card__price-lg">${{planCost}}</div>
+                                            {% endif %}
                                         </div>
 
 
@@ -349,18 +369,6 @@
                                             {% endif %}
                                         </a>
                                         
-                                        <input type="hidden" id="planid"                value="{{plan.guid}}">
-                                        <input type="hidden" id="planusercount"         value="{{userCount}}">
-                                        <input type="hidden" id="plancost"              value="{{plan.plan_value}}">
-                                        <input type="hidden" id="planperiod"            value="{{plan.period}}">
-                                        <input type="hidden" id="planperiodcount"       value="{{plan.period_count}}">
-                                        <input type="hidden" id="currentcost"           value="{{pwstats['plan_value']}}">
-                                        <input type="hidden" id="currentperiod"         value="{{pwstats['period']}}">
-                                        <input type="hidden" id="currentperiodcount"    value="{{pwstats['period_count']}}">
-                                        <input type="hidden" id="currentusers"          value="{{managedUserCount}}">
-                                        <input type="hidden" id="expdate"               value="{{pwstats['expiry_date']}}">
-                                        <input type="hidden" id="plantype"              value="{{plan['type']}}">
-                                        <input type="hidden" id="_csrf"                 value="{{_AppHelper.getCsrfToken()}}"> 
                                     </div>
                                     {# {% set break = true %} #}
                                 {% endfor %}
@@ -556,7 +564,7 @@
 
 
         $("#change-plan").click(function(e) {
-            $("#plans").toggle();
+            $("#currentPlanStats").toggle();
         });
 
 
