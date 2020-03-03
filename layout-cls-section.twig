@@ -40,12 +40,13 @@
 
         <section>
             <div class="row">
-                <div class="col-12 header">
-                    <div class="hk">
-                        <h2>{{this.title}}</h2>
-                        <p><a href="{{networkData.defaultBlogUrl}}/classifieds?section={{this.title|lower|replace(' ', '%20') }}">See more</a></p>
-                    </div>
+            
+                <div class="col-12">
+                    <h1 class="c-section-header">{{ _Blog.getBlogTitle() }}</h1>
+                    <p class="c-section-header__button"><a href="{{networkData.defaultBlogUrl}}/classifieds?section={{this.title|lower|replace(' ', '%20') }}">See more</a></p>
                 </div>
+       
+                
             </div>
 
             <div class="row">
