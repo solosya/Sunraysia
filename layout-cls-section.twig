@@ -1,0 +1,96 @@
+{{ set(this, 'title', _Blog.getBlogTitle()) }}
+{% set networkData = _Network.getNetworkData() %}
+{% set site        = networkData.title | lower | split(" ")[0]%}
+{% set blogData    = _Blog.getBlog() %}
+
+
+
+
+{% set limit = 18 %}
+
+{% set articlesArr = _Blog.getBlogFeed({'limit': limit, 'offset': 0}) %}
+{% set articles = articlesArr.articles %}
+{% set firstCount = articles | length %}
+
+{# {{this.registerJs("Acme.ads = Acme.InsertAds();")}}#}
+                                                     {# renders the card    fetch-limit      fetch-offset    infinite scroll #}
+                                                     {#            ↑             ↑                 ↑            ↑            #}
+{{this.registerJs("Acme.searchFeed = new Acme.View.articleFeed(Acme.cards, " ~ limit ~ ", " ~ firstCount ~ ", true);")}}
+
+
+
+{# {% set popularArticles = _Article.getPopularArticles({ limit: 10, sortBy: 'VIEWS', scope: 'blog' }) %} #}
+
+
+
+<!-- used to index each article as we loop over throughout the template -->
+{% set articleCount = _AppHelper.getApplicationEnv() == 'DEV' ? 0 : 0 %}
+{% set popCount = _AppHelper.getApplicationEnv() == 'DEV' ? 0 : 0 %}
+{% set dev = _AppHelper.getApplicationEnv() == 'DEV' ? false : false %}
+
+{% set watermark = false %}
+{% if config['watermark']['settings'] is defined and config['watermark']['sections'][articleBlog|lower] is defined %}
+    {% set watermark = config['watermark']['settings'] %}
+{% endif %}
+
+
+<main id="main" class="site-main section-page__main" role="main" data-article-limit="{{limit}}" data-article-count="{{articles | length}}">
+    
+    <div class="container">
+
+        <section>
+            <div class="row">
+                <div class="col-sm-9 header">
+                    <div class="hk">
+                        <h2>{{this.title}}</h2>
+                        <p></p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-9">
+
+                        {% for i in 0..17 if articles[articleCount] %}
+
+                            <div class="col-sm-3 col-xs-9">
+                                {{this.render('partials/_single-article.twig', {
+                                    article: articles[articleCount], 
+                                    imageSize: {width:190, height:160},
+                                    position: articleCount + 1,
+                                    site: site,                               
+                                    containerClass: 'card-sm-wide card-sm-wide-tablet card-sm-wide-mobile'
+                                }) | raw}}
+                                <hr class="divide visible-xs-block">
+                                {% if i < 3 %} <hr class="divide18 hidden-xs space-only">{% endif %}
+
+                            </div>
+
+                            {% set articleCount = (dev) ? articleCount : articleCount + 1 %}
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="loadmore__section">
+            <div class="row">
+                {% if articles|length >= limit %}
+                    {{ this.render('partials/ajaxarticles.twig', {
+                        offset          : limit,
+                        limit           : 12,
+                        name            : "section-load",
+                        non_pinned      : articlesArr.existingNonPinnedCount, 
+                        blogId          : blogData['guid'],
+                        card_class      : "card-sm card-sm-tablet card-sm-mobile col-sm-3 col-xs-9 row-space40",
+                        container       : "mainAjaxArticlescardClass",
+                        buttonClass     : "infinite",
+                        ads             : "yes",
+                        after           : '<hr class="divide18 col-xs-9 visible-xs-block">'
+                    }) | raw }}
+                {% endif %}
+               </div>
+        </section>
+
+    </div>
+    <div class="j-keyword-cont" data-keywords="{{blogData.keywords}}" data-pageName="{{blogData.title}}" data-pageType="section" data-pageTags=""></div>
+</main><!-- .site-main -->
