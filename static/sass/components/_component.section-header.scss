@@ -10,7 +10,14 @@
     &__button {
         position:absolute;
         right:0;
+        &--link{
+            font-style: italic;
+            right: 15px;
+            top: 15px;
+            
+        }
     }
+    
 
     &--large {
         @include font-size(40);
