@@ -6,7 +6,7 @@
 
 
 
-{% set limit = 18 %}
+{% set limit = 12 %}
 
 {% set articlesArr = _Blog.getBlogFeed({'limit': limit, 'offset': 0}) %}
 {% set articles = articlesArr.articles %}
@@ -40,20 +40,20 @@
 
         <section>
             <div class="row">
-                <div class="col-sm-9 header">
+                <div class="col-12 header">
                     <div class="hk">
                         <h2>{{this.title}}</h2>
-                        <p></p>
+                        <p><a href="{{networkData.defaultBlogUrl}}/classifieds?section={{this.title|lower|replace(' ', '%20') }}">See more</a></p>
                     </div>
                 </div>
             </div>
 
             <div class="row">
-                <div class="col-sm-9">
+                
 
-                        {% for i in 0..17 if articles[articleCount] %}
+                        {% for i in 0..11 if articles[articleCount] %}
 
-                            <div class="col-sm-3 col-xs-9">
+                            <div class="col-12 col-md-4 col-lg-3">
                                 {{this.render('partials/_single-article.twig', {
                                     article: articles[articleCount], 
                                     imageSize: {width:190, height:160},
@@ -68,11 +68,10 @@
 
                             {% set articleCount = (dev) ? articleCount : articleCount + 1 %}
                         {% endfor %}
-                    </div>
-                </div>
+                    
             </div>
         </section>
-        <section class="loadmore__section">
+        {# <section class="loadmore__section">
             <div class="row">
                 {% if articles|length >= limit %}
                     {{ this.render('partials/ajaxarticles.twig', {
@@ -89,7 +88,7 @@
                     }) | raw }}
                 {% endif %}
                </div>
-        </section>
+        </section> #}
 
     </div>
     <div class="j-keyword-cont" data-keywords="{{blogData.keywords}}" data-pageName="{{blogData.title}}" data-pageType="section" data-pageTags=""></div>
