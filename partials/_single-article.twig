@@ -96,8 +96,11 @@
     {% if article.titlePreview is defined and article.titlePreview != "" %}
         {% set articleTitle = quotes.smarten(article.titlePreview) %}
     {% endif %}
-
-    {% set articleUrl = article.externalUrl != "" ? article.externalUrl : article.url %}
+    {% if setUrl is defined and setUrl != "" %}
+        {% set articleUrl = setUrl %}
+    {% else %}
+        {% set articleUrl = article.externalUrl != "" ? article.externalUrl : article.url %}
+    {% endif %}
 
 
     {% set params = {
