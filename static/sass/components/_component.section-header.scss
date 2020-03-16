@@ -10,7 +10,20 @@
     &__button {
         position:absolute;
         right:0;
+        &--link{
+            right: 15px;
+            top: 15px;
+            font-size: 18px;
+            font-weight: $weightSemibold;
+            font-stretch: normal;
+            font-style: normal;
+            line-height: 1.63;
+            letter-spacing: normal;
+            color: $info;
+            
+        }
     }
+    
 
     &--large {
         @include font-size(40);
