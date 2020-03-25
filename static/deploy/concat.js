@@ -17988,7 +17988,7 @@ function(a){"use strict";void 0===a.en&&(a.en={"mejs.plural-form":1,"mejs.downlo
             }
 
             var validated = true, fields = [];
-            if (checkFields && this.validateFields) {z
+            if (checkFields && this.validateFields) {
                 var fields = intersect(this.validateFields, checkFields);
                 for (var j=0; j<fields.length;j++) {
                     var fieldName = fields[j].split('.').reverse()[0];
@@ -20666,7 +20666,8 @@ Acme.UserProfileController.prototype.pageEvents = function ()
 
 
             if (cardSupplied === 'f' ) {
-                msg = msg + "<br /><br />However, we need you to supply your credit card details. <br />You can enter those a little lower on the page and then we can finalise the plan change.";
+                // However, we need you to supply your credit card details. <br />You can enter those a little lower on the page and then we can finalise the plan change.
+                msg = msg + "<br /><br />To purchase a paid plan, first you need to add your credit card details further down this page.<br />Then select your new plan to activate the change.";
                 Acme.SigninView.render("userPlan", "Almost there!", {message: msg});
                 return;
             }
