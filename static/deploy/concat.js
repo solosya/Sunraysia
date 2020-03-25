@@ -20657,17 +20657,17 @@ Acme.UserProfileController.prototype.pageEvents = function ()
             }
 
             var msg = "";
-            if ($('#planstatus').text() != 'Trial') {
-                if ((newplandailycost-plandailycost) * diffDays >= 0) {
-                    msg = " This will cost $" +cost;
-                    msg = msg.replace(/(.+)(\d\d)$/g, "$1.$2");
-                }
-            }
+            // if ($('#planstatus').text() != 'Trial') {
+            //     if ((newplandailycost-plandailycost) * diffDays >= 0) {
+            //         msg = " This will cost $" +cost;
+            //         msg = msg.replace(/(.+)(\d\d)$/g, "$1.$2");
+            //     }
+            // }
 
 
             if (cardSupplied === 'f' ) {
                 // However, we need you to supply your credit card details. <br />You can enter those a little lower on the page and then we can finalise the plan change.
-                msg = msg + "<br /><br />To purchase a paid plan, first you need to add your credit card details further down this page.<br />Then select your new plan to activate the change.";
+                msg = msg + "<br /><br />To purchase a paid plan, first you need to add your credit card details on this page.<br />Then select your new plan to activate the change.";
                 Acme.SigninView.render("userPlan", "Almost there!", {message: msg});
                 return;
             }
