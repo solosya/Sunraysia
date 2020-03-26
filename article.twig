@@ -271,7 +271,7 @@
                         
                         {% set count = 0 %}
                         {% for recent in recentArticles  %}
-                            {% if recent.guid != article.guid and count < 4 %}
+                            {% if recent.guid != article.guid and count < 3 %}
                                 <div class="col-12 col-md-6 col-lg-4 {{classes[i]}}" data-articleid="{{article.guid}}" data-recentid="{{recent.guid}}">
                                     {{this.render('partials/_single-article.twig', {
                                         article: recent, 
