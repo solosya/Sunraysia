@@ -303,7 +303,15 @@
                         {% if userManager == true or pwstats['user_role']['IsSystemAdmin'] %}
 
 
-                            <div class="c-plans">
+                            <div id="currentPlanStats"  class="c-plans"
+                                data-cardsupplied="{{cardSupplied}}"
+                                data-currentUsers="{{managedUserCount}}"
+                                data-currentPeriod="{{pwstats['period']}}"
+                                data-currentCost="{{pwstats['plan_value']}}"
+                                data-currentType="{{pwstats['type']}}"
+                                data-expiry="{{pwstats['expiry_date']}}"
+                                data-currentplanperiodcount="{{pwstats['period_count']}}"
+                            >
                                 {% set break = false %}
 
                                 {% for plan in plans if not break %}
@@ -323,7 +331,15 @@
                                         {% set selected = 'selected' %}
                                     {% endif %}
                                     
-                                    <div class="c-plans__block c-plans__block-xs {% if selected == 'selected' %} selected {% endif %}  j-setplan ">
+                                    <div class="c-plans__block c-plans__block-xs {% if selected == 'selected' %} selected {% endif %}  j-setplan "
+                                        data-planid          = "{{plan.guid}}"
+                                        data-planusercount   = "{{userCount}}"
+                                        data-plancost        = "{{plan.plan_value}}"
+                                        data-planperiod      = "{{plan.period}}"
+                                        data-trialstatus     = "{{plan['trial_status']}}"
+                                        data-planType        = "{{plan.type}}"
+                                        data-planPeriodCount = "{{plan.period_count}}"
+                                    >
                                         <div class="c-paywall-card__panel">
                                             <h3 class="c-paywall-card__name c-paywall-card__name-xs">{{plan.plan_name}}</h3>
                                             {# <p class="c-paywall-card__excerpt c-paywall-card__excerpt-xs">{{plan.description}}</p> #}
@@ -331,7 +347,7 @@
                                         </div>
 
 
-                                                                           
+
 
                                         <div class="c-paywall-card__panel">
                                             <ul class="c-paywall-card__Details c-paywall-card__Details-md">
@@ -349,7 +365,7 @@
                                             {% endif %}
                                         </a>
                                         
-                                        <input type="hidden" id="planid"                value="{{plan.guid}}">
+                                        {# <input type="hidden" id="planid"                value="{{plan.guid}}">
                                         <input type="hidden" id="planusercount"         value="{{userCount}}">
                                         <input type="hidden" id="plancost"              value="{{plan.plan_value}}">
                                         <input type="hidden" id="planperiod"            value="{{plan.period}}">
@@ -360,7 +376,7 @@
                                         <input type="hidden" id="currentusers"          value="{{managedUserCount}}">
                                         <input type="hidden" id="expdate"               value="{{pwstats['expiry_date']}}">
                                         <input type="hidden" id="plantype"              value="{{plan['type']}}">
-                                        <input type="hidden" id="_csrf"                 value="{{_AppHelper.getCsrfToken()}}"> 
+                                        <input type="hidden" id="_csrf"                 value="{{_AppHelper.getCsrfToken()}}">  #}
                                     </div>
                                     {# {% set break = true %} #}
                                 {% endfor %}
