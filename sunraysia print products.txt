@@ -1,0 +1,49 @@
+      {
+        "id": 3,
+        "label": "6\" x 4\" ($5, additional copies $2)",
+        "name": "6\" x 4\"",
+        "price": 500,
+        "category": "print"
+      },
+      {
+        "id": 4,
+        "label": "7\" x 5\" ($7, additional copies $2)",
+        "name": "7\" x 5\"",
+        "price": 700,
+        "category": "print"
+      },
+      {
+        "id": 5,
+        "label": "8\" x 6\" ($7, additional copies $2)",
+        "name": "8\" x 6\"",
+        "price": 700,
+        "category": "print"
+      },
+      {
+        "id": 6,
+        "label": "12\" x 8\" ($15, additional copies $10)",
+        "name": "12\" x 8\"",
+        "price": 1500,
+        "category": "print"
+      },
+      {
+        "id": 7,
+        "label": "14\" x 11\" ($25, additional copies $20)",
+        "name": "14\" x 11\"",
+        "price": 2500,
+        "category": "print"
+      },
+      {
+        "id": 8,
+        "label": "18\" x 12\" ($30, additional copies $25)",
+        "name": "18\" x 12\"",
+        "price": 3000,
+        "category": "print"
+      },
+      {
+        "id": 9,
+        "label": "36\" x 24\" ($55, additional copies $50)",
+        "name": "36\" x 24\"",
+        "price": 5500,
+        "category": "print"
+      },

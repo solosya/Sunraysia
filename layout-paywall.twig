@@ -53,6 +53,20 @@
 {% endif %}
 
 
+{% set val = plan.plan_value / 100 %}
+{% if val == 19.89 %}
+    {% set val = 19.90 %}
+{% endif %}
+{% set planPrice = plan.currency|replace({"AUD": "$", "NZD": "$", "GBP": "£", "USD": "$", "EUR": "€"}) ~ val|number_format(2, '.', ',') %}
+
+{% set frequency = plan.period_count > 1 ? plan.period_count : ""  %}
+
+{% set planPeriod = plan.period %}
+{% if plan.period_count > 1 %}
+    {% set planPeriod = plan.period ~ 's' %}
+{% endif %}
+
+{% set frequency = frequency ~ " " ~ planPeriod  %}
 
 
 
@@ -134,6 +148,9 @@
                                                     data-plan-name="{{plan.plan_name}}" 
                                                     data-planid="{{plan.guid}}"
                                                     data-cost="${{val}}"
+                                                    data-period="{{plan.period}}"
+                                                    data-periodcount="{{plan.period_count}}"
+                                                    data-trialperiod="{{plan.trial_period}}"
                                                     data-trial="{{trial}}"
                                                     data-signup="{{signup}}"
                                             >Subscribe</button>
@@ -230,16 +247,16 @@
                             </div>
                             
                             <div class="col-lg-12 u-margin-top-30">
-                                {# <div class="button-set">
-                                    <label>
-                                        <input id="interested" name="interested" type="checkbox" class="validate[required]"> <span><!-- fake radio --></span> I am interested in receiving promotional offers from Sunraysia Daily
-                                    </label>
-                                </div> #}
-                                <div class="button-set u-margin-top-10">
-                                    <label>
-                                        <input id="terms" name="terms" type="checkbox" class="validate[required]"> <span><!-- fake radio --></span> I agree to the <a href="{{networkData.defaultBlogUrl}}/conditions-of-use"><strong>Terms of Use</strong></a>
+                                <div id="trialterms"></div>
+
+                                <div class="button-set c-checkbox u-margin-bottom-15">
+                                    <input id="terms" name="terms" type="checkbox" class="c-checkbox__input validate[required]" />
+                                    <label class="c-checkbox__label u-padding-top-3" for="terms">
+                                        <span class="c-checkbox__button"></span>
+                                        I agree to the <a href="{{networkData.defaultBlogUrl}}/conditions-of-use"><strong>Terms of Use and Cancellation Policy</strong></a>
                                     </label>
                                 </div>
+
                             </div>
 
                         </div>

@@ -50,6 +50,20 @@
     <div class="container">
 
         {% if plan != false  %}
+            {% set val = plan.plan_value / 100 %}
+            {% if val == 19.89 %}
+                {% set val = 19.90 %}
+            {% endif %}
+            {% set planPrice = plan.currency|replace({"AUD": "$", "NZD": "$", "GBP": "£", "USD": "$", "EUR": "€"}) ~ val|number_format(2, '.', ',') %}
+
+            {% set frequency = plan.period_count > 1 ? plan.period_count : ""  %}
+
+            {% set planPeriod = plan.period %}
+            {% if plan.period_count > 1 %}
+                {% set planPeriod = plan.period ~ 's' %}
+            {% endif %}
+
+            {% set frequency = frequency ~ " " ~ planPeriod  %}
 
 
             <div class="row">
@@ -107,6 +121,21 @@
                             </div>
                             
                             <div class="form-group form-group-sm u-margin-bottom-15">
+                            
+                            
+                                <div class="button-set c-checkbox u-margin-bottom-15">
+                                    <input id="terms" name="terms" type="checkbox" class="c-checkbox__input validate[required]" />
+                                    <label class="c-checkbox__label u-padding-top-3" for="terms">
+                                        <span class="c-checkbox__button"></span>
+                                        I agree to the <a href="{{networkData.defaultBlogUrl}}/conditions-of-use"><strong>Terms of Use and Cancellation Policy</strong></a>
+                                    </label>
+                                </div>
+
+                            
+                            
+                            
+                            
+                            
                                 <div class="button-set">
                                     <label><input id="terms" name="terms" type="checkbox" class="validate[required]"><span><!-- fake radio --></span> I agree to the <a href="{{networkData.defaultBlogUrl}}/conditions-of-use"><strong>Terms of Use</strong></a></label>
                                 </div>
@@ -178,15 +207,11 @@
                             </picture>
 
                             {% set uc = plan.user_count %}
-                            {% set val = plan.plan_value / 100 %}
-                            {% if val == 19.89 %}
-                                {% set val = 19.90 %}
-                            {% endif %}
 
                             <div class="c-orderSummary">
                                 <h4 class="c-orderSummary__title">Order summary</h4>
-                                <div class="c-orderSummary__price">{{plan.currency|replace({"AUD": "$", "NZD": "$", "GBP": "£", "USD": "$", "EUR": "€"})}}{{val|number_format(2, '.', ',')}} p/{{plan.period}}</div>
-                                <p class="c-orderSummary__usercount">{{plan.plan_name}}  | {{ uc|replace({ '10001': '20+' }) }} users</p>
+                                <div class="c-orderSummary__price">{{planPrice}} p/{{plan.period}}</div>
+                                <p class="c-orderSummary__usercount">{{plan.plan_name}} | {{ uc|replace({ '10001': '20+' }) }} users</p>
                                 <div class="c-orderSummary__details">
                                     <p>What's included:</p>
                                     <ul>

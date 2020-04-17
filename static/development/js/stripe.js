@@ -70,15 +70,34 @@
         this.validateFields = Object.keys(this.validateRules);
 
         this.events();
+        this.refreshingEvents();
+        this.trialTermsContainer = $('#trialterms');
+        this.trialTermsHtml = 
+            '<div class="button-set c-checkbox u-margin-bottom-15"> \
+                <input id="changeterms" name="changeterms" type="checkbox" class="c-checkbox__input validate[required]" /> \
+                <label class="c-checkbox__label" for="changeterms"> \
+                    <span class="c-checkbox__button"></span> \
+                    I agree to my card being charged {{planPrice}} every {{frequency}} at the end of the {{trialPeriod}}-day free trial period. \
+                </Label> \
+            </div> \
+            \
+            <div class="button-set c-checkbox u-margin-bottom-15"> \
+                <input id="cancelterms" name="cancelterms" type="checkbox" class="c-checkbox__input validate[required]" /> \
+                <label class="c-checkbox__label" for="cancelterms"> \
+                    <span class="c-checkbox__button"></span> \
+                    I understand I can cancel for free before the end of the trial in My Account page, and I will be emailed a payment reminder 7 days before the end of the free trial period. I understand I can cancel my paid subscription at any time in My Account page. \
+                </label> \
+            </div>';
 
-        var trial = $('#trial').val();
-        if (trial == 1) {
-            this.data['trial'] = 'true';
-        }
-        var signup = $('#signup').val();
-        if (signup == 1) {
-            this.data['signup'] = 'true';
-        }
+
+        // var trial = $('#trial').val();
+        // if (trial == 1) {
+        //     this.data['trial'] = 'true';
+        // }
+        // var signup = $('#signup').val();
+        // if (signup == 1) {
+        //     this.data['signup'] = 'true';
+        // }
 
     };
     SubscribeForm.prototype = new Acme.Form(Acme.Validators);
@@ -89,7 +108,7 @@
         this.addInlineErrors();
 
         if (checkTerms) {
-            if (!this.data.terms) {
+            if (!this.data.terms || (this.data.trial === true && (!this.data.cancelterms || !this.data.changeterms))) {
                 this.confirmView = new Acme.Confirm('modal', 'signin-modal', {'terms': 'subscribeTerms'});
                 this.confirmView.render("terms", "Terms of use");
             }
@@ -154,29 +173,62 @@
                 }
             });   
         }
-
-            
-         
     };
+    SubscribeForm.prototype.addValidationRule = function(ruleName, rules) 
+    {
+        this.validateRules[ruleName] = rules;
+        this.validateFields = Object.keys(this.validateRules);
+    },
+    SubscribeForm.prototype.removeValidationRule = function(rule)
+    {
+        delete this.validateRules[rule];
+        this.validateFields = Object.keys(this.validateRules);
+    },
     SubscribeForm.prototype.events = function()
     {
         var self = this;
 
-        $('.j-plan-subscribe').on("click", function(e) {
+        $('.j-plan-subscribe').unbind().on("click", function(e) {
             var elem = $(this);
             var plan = elem.data('planid');
             var name = elem.data('plan-name');
             var cost = elem.data('cost');
+            var period = elem.data('period');
+            var periodcount = elem.data('periodcount');
+            var trialperiod = elem.data('trialperiod');
             var trial = elem.data('trial');
             var signup = elem.data('signup');
+            self.data.trial = trial == 1 ? true : false;
+            self.data.signup = signup == 1 ? true : false;
+
+            if (self.data.trial) {
+                var planPeriod = period;
+                var frequency = periodcount > 1 ? periodcount : "";
+                if (periodcount > 1 ) {
+                    planPeriod = period + 's';
+                }
+                frequency = frequency + " " + planPeriod;
+
+                self.addValidationRule("cancelterms", ["isTrue"]);
+                self.addValidationRule("changeterms", ["isTrue"]);
+                var template = Handlebars.compile(self.trialTermsHtml);
+                var html = template({'planPrice': cost, 'frequency': frequency, 'trialPeriod':trialperiod })
+                self.trialTermsContainer.empty().append(html);
+
+            } else {
+                self.removeValidationRule("cancelterms");
+                self.removeValidationRule("changeterms");
+                self.trialTermsContainer.empty();
+            }
+
             self.data.planid = plan;
             self.data.subscription_choice = name;
 
             $input = $('#subscription_choice');
             $inputId = $input.attr('name');
             $('#planid').val(plan);
-            $('#trial').val(trial);
-            $('#signup').val(signup);
+            // $('#trial').val(trial);
+            // $('#signup').val(signup);
             $input.val(name).addClass('shrink');
             $('#total_cost').text(cost);
 
@@ -202,42 +254,11 @@
                 $('#stripe-form').show();
                 $('#payment-total').show();
             }
+            self.refreshingEvents();
 
             // self.validate();
         });
 
-
-        $('#subscribe-form input, #subscribe-form textarea').on("change", function(e) {
-            e.stopPropagation();
-            e.preventDefault();
-            var data = {};
-            var elem = $(e.target);
-            var elemid = elem.attr('name');
-            var inputType = elem.attr('type');
-
-            if (inputType == 'text' || inputType == 'email' || inputType == 'password') {
-                data[elemid] = elem.val();
-                // username is created from the email plus a random number
-                if (inputType == 'email') {
-                    data['username'] = Math.floor(100000000 + Math.random() * 9000000000000000);
-                }
-
-            } else if (inputType =='checkbox') {
-                var value = elem.is(":checked");
-                data[elemid] = value;
-            }
-
-            self.updateData(data);
-
-            if ( elem.val() != "" ) {
-                elem.addClass('shrink');
-            } else {
-                elem.removeClass('shrink');
-            }
-
-            var validated = self.validate([elemid]);
-            self.render();
-        });
 
         var form = document.getElementById('payment-form');
 
@@ -246,9 +267,51 @@
                 self.submit(e);
             });
         }
-
-
     };
+
+
+
+    SubscribeForm.prototype.refreshingEvents = function()
+    {
+        var self = this;
+
+        $('#subscribe-form input, #subscribe-form textarea').unbind().on("change", function(e) {
+            e.stopPropagation();
+            e.preventDefault();
+            var data = {};
+            var elem = $(e.target);
+            var elemid = elem.attr('name');
+            var inputType = elem.attr('type');
+    
+            if (inputType == 'text' || inputType == 'email' || inputType == 'password') {
+                data[elemid] = elem.val();
+                // username is created from the email plus a random number
+                if (inputType == 'email') {
+                    data['username'] = Math.floor(100000000 + Math.random() * 9000000000000000);
+                }
+    
+            } else if (inputType =='checkbox') {
+                var value = elem.is(":checked");
+                data[elemid] = value;
+            }
+    
+            self.updateData(data);
+    
+            if ( elem.val() != "" ) {
+                elem.addClass('shrink');
+            } else {
+                elem.removeClass('shrink');
+            }
+    
+            var validated = self.validate([elemid]);
+            self.render();
+        });
+    }
+
+
+
+
+
 
     Acme.subscribe = new SubscribeForm();
 
