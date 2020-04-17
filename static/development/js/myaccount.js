@@ -430,8 +430,8 @@ Acme.UserProfileController.prototype.pageEvents = function ()
         var newdays          =  newPlan.data('planperiod');
         var newPlanType      =  newPlan.data('plantype');
 
-
-        if (currentUserCount > 0 && currentUserCount >= planusers) {
+        console.log(currentUserCount);
+        if (currentUserCount > 0 && currentUserCount > planusers) {
             modal.render("userPlan", "You have too many users to change to that plan.");
             return;
         }
