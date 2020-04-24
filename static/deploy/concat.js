@@ -21453,9 +21453,9 @@ $('#signinBtn, #articleSigninBtn').on('click', function(e) {
         if (!validated) return;
 
 
-        $('#signupErros').text('');
+        $('#signupErrors').text('');
         if ( $('#password').val() !== $('#verifypassword').val() ) {
-            $('#signupErros').text('Password fields do not match.');
+            $('#signupErrors').text('Password fields do not match.');
             return;
         }
 
@@ -21470,14 +21470,14 @@ $('#signinBtn, #articleSigninBtn').on('click', function(e) {
             });
         }
 
-        if ($("#code-redeem").length > 0 || $('#signup').val() == 1) {
+        if ($("#code-redeem").length > 0 || this.data.signup == 1) {
             self.data['username'] = Math.floor(100000000 + Math.random() * 9000000000000000);
             modal.render("spinner", "Authorising code");
             self.data['planid'] = $('#planid').val();
             self.data['giftcode'] = $('#code-redeem').val();
             self.data['stripetoken'] = null;
             self.data['redirect'] = false;
-            if ( $('#signup').val() == 1 ) {
+            if ( this.data.signup == 1 ) {
                 self.data['signuponly'] = 1;
             }
             
@@ -21491,7 +21491,7 @@ $('#signinBtn, #articleSigninBtn').on('click', function(e) {
                 if (result.error) {
                     modal.closeWindow();
                     // Inform the user if there was an error
-                    var errorElement = document.getElementById('signupErros');
+                    var errorElement = document.getElementById('signupErrors');
                     errorElement.textContent = result.error.message;
                 } else {
                     // Send the token to your server
