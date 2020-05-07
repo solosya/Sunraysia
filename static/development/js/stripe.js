@@ -106,9 +106,10 @@
     {
         this.clearInlineErrors();
         this.addInlineErrors();
+        var addedTerms = this.data.trial === true && this.data.plantype === 'time';
 
         if (checkTerms) {
-            if (!this.data.terms || (this.data.trial === true && (!this.data.cancelterms || !this.data.changeterms))) {
+            if (!this.data.terms || (addedTerms && (!this.data.cancelterms || !this.data.changeterms))) {
                 this.confirmView = new Acme.Confirm('modal', 'signin-modal', {'terms': 'subscribeTerms'});
                 this.confirmView.render("terms", "Terms of use");
             }
@@ -198,10 +199,12 @@
             var trialperiod = elem.data('trialperiod');
             var trial = elem.data('trial');
             var signup = elem.data('signup');
+            var plantype = elem.data('plantype');
+            
             self.data.trial = trial == 1 ? true : false;
             self.data.signup = signup == 1 ? true : false;
-
-            if (self.data.trial) {
+            self.data.plantype = plantype;
+            if (self.data.trial && self.data.plantype === 'time') {
                 var planPeriod = period;
                 var frequency = periodcount > 1 ? periodcount : "";
                 if (periodcount > 1 ) {
