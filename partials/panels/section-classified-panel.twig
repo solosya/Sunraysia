@@ -41,7 +41,7 @@
 
 {% if articles | length >= 3 %}
 
-    {{this.render('/partials/_section-loadmore.twig', {
+    {{this.render('/partials/_cls-section-loadmore.twig', {
         sectionNumber: loadmore_id, 
         limit: 6,
         blogId: blogData['guid'],
