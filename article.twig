@@ -292,7 +292,9 @@
 
 
 
-
+        {% if config['inventory']['adSpace']['banner'][1] is defined %}
+            <div class="j-adslot" id="{{config['inventory']['adSpace']['banner'][1]}}" data-adshape="banner"></div>
+        {% endif %}
 
 
     </div>

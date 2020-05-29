@@ -130,6 +130,10 @@
 
         </div>
 
+        {% if config['inventory']['adSpace']['banner'][1] is defined %}
+            <div class="j-adslot" id="{{config['inventory']['adSpace']['banner'][1]}}" data-adshape="banner"></div>
+        {% endif %}
+
         <div class="row">
             <div class="col-12 col-lg-3">
             {% if articles[articleCount] %}                                                                
