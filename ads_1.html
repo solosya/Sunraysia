@@ -24,7 +24,7 @@
         // var idNo = '/21847672778/gannawarra.times'
         //get data from the page about what kind of page it is
          //get data from the page about what kind of page it is
-         var keywordCont = document.getElementsByClassName('j-keyword-cont');
+        var keywordCont = document.getElementsByClassName('j-keyword-cont');
         var keyword = '';
         var pageName = '';
         var pageType = '';
@@ -53,10 +53,10 @@
                             .addSize([320, 400], [[320, 50]])
                             .build();
             var mappingMrec = googletag.sizeMapping()
-                            .addSize([320, 400], [[300, 250]])
+                            .addSize([320, 400], ['fluid',[300, 250]])
                             .build();
             var mappingHpage = googletag.sizeMapping()
-                            .addSize([1000, 200], [[300, 600]])
+                            .addSize([1000, 200], [[300, 600],'fluid',[300, 250]])
                             .addSize([320, 400], [[300, 250]])
                             .build();
             var mappingTag = googletag.sizeMapping()
@@ -82,7 +82,7 @@
                     sizes = [[970,250],[970,90],[728,90],[680,90],[320,50]];
                     mapping = mappingMrec;
                 } else if (slotType == 'hpage' || slotType == 'side-fix'){
-                    sizes = [[300,600], [300,250]];
+                    sizes = [[300,600],'fluid', [300,250]];
                     mapping = mappingHpage;
                 }
                 googletag.pubads().enableSingleRequest();
