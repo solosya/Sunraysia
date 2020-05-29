@@ -71,13 +71,17 @@
                 var slotType = theSlot.dataset.adshape;
 
                 //set the POS
-                var pos = theId.slice(-1);
+                var pos = [];
+                var pos = [theId.slice(-1),''];
                 // if size and mapping needs to be set for the shape set it here
                 var sizes = [0,0];
                 var mapping = mappingTag;
                 if (slotType == 'banner'){
                     sizes = [[970,250],[970,90],[728,90],[680,90],[320,50]];
                     mapping = mappingBanner;
+                    if (pos[0] == '1'){
+                        pos[1] = 'masthead';
+                    } 
                 } else if (slotType == 'mrec'){
                     sizes = [[970,250],[970,90],[728,90],[680,90],[320,50]];
                     mapping = mappingMrec;
@@ -94,7 +98,7 @@
                 googletag.enableServices();
                 //define the slot with all required data
                 googletag.defineSlot(idNo, sizes, slotId)
-                    .setTargeting('POS', [pos])
+                    .setTargeting('POS', pos)
                     .defineSizeMapping(mapping)
                     .addService(googletag.pubads());
 
