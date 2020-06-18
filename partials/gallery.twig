@@ -3,6 +3,9 @@
 {% set owl      = '' %}
 {% set owlClass = '' %}
 
+{% set purchasable = purchasable is defined ? purchasable  : false %}
+
+
 {% set imgWidth  = imageSize.width  is defined ? imageSize.width  : 745 %}
 {% set imgHeight = imageSize.height is defined ? imageSize.height : 470 %}
 {% set gravity   = 'faces' %}
@@ -64,7 +67,19 @@ with width taken up with borders on the side #}
 
 
         <figure class="article-gallery__image article-gallery__image-{{galleryStyle}}" data-hash="{{loop.index}}">
-                
+            {% if purchasable %}
+            <div class="photo-purchase">
+                <button class="photo-purchase__button"
+                    data-guid="{{image.guid}}" 
+                    data-id="{{image.id}}" 
+                    data-url="{{articleImgSmall}}" 
+                    data-action="cart" 
+                    id="purchase"
+                    data-caption="{{image.caption}}"
+                >Buy</button>
+            </div>
+            {% endif %} 
+
             {% if image.type == 'image' or image.type == 'doc'%} 
                 <div class="article-gallery__img-container article-gallery__img-container-{{galleryStyle}}">
                     <picture>

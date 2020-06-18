@@ -1,0 +1,9 @@
+.photo-purchase {
+    position:absolute;
+
+    &__button {
+        padding: 5px;
+        color: white;
+        background: rgba(0,0,0,.4);
+    }
+}

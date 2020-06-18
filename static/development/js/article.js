@@ -1,73 +1,64 @@
-// Acme.ArticleController = function() {
-//     return new Acme.article();
-// }
-// Acme.article = function() {
-//     this.events();
-// };
+Acme.ArticleController = function() {
+    return new Acme.article();
+}
+Acme.article = function() {
+    this.events();
+};
 
 
 
-// Acme.article.prototype.InsertInterstitial = function(teads) {
-//     if ($('.article_content > p').length >= 8 && teads == true) {
-//         teadsAd = true;       
-//     }
-//     if ($('.article_content > p').length >= 7) {
-//         $("<div class='visible-xs-block ad-article' style='position:relative;width:300px;margin: 0 auto;'><div class='advert-mobile' data-adsize='mrec'></div></div>").insertAfter( $('.article_content > p')[6] );
-// 	}
-// }
-// Acme.article.prototype.events = function() {
-//     var self=this;
+Acme.article.prototype.events = function() {
+    var self=this;
 
-// }
+    $("#purchase, #favourite").on('click', function(e) {
 
+        var elem = $(e.target);
+        var guid = elem.data('guid');
+        var id = elem.data('id');
+        var url = elem.data('url');
+        var caption = elem.data('caption');
+        var action = elem.data('action');
 
-// Acme.GalleryToggle = function() {
-//     this.events();
-// };
-// Acme.GalleryToggle.prototype.events = function() {
-//     var self = this;
-//     $('#gallery-toggle').on('click', function(e) {
-//         var option = $(e.target);
-
-//         if (option.hasClass('gallery-toggle__item')) {
-//             var types = ['image', 'video'];
-//             var items = $('.gallery-toggle__item').removeClass('gallery-toggle__item--selected');
-
-//             option.addClass('gallery-toggle__item--selected');
-//             var type = types.indexOf( option.data('type') );
-//             var show = $('.owl-gallery-' + types[type]);
-//             var hide = $('.owl-gallery-' + types[!type | 0]);
-//             hide.removeClass('default');
-//             show.addClass('default');
-            
-//             if (types[type] == 'image') {
-//                 self.stopVideo();
-//             }
-//         }
-//     });
+        var photo = {
+            guid: guid,
+            id: id,
+            url: [url],
+            caption: caption,
+            cart: true,
+            saveType: "cart"
+        };
 
 
-//     $('.owl-prev, .owl-next').on('click', function(e) {
-//         self.stopVideo();
-//     });
+        if ( _appJsConfig.isUserLoggedIn === 1 ) {
+            Acme.server.create('/api/user/follow-media', {
+                guid: guid,
+                type: action
+            }).then(function(r) {
+                console.log(r);           
+            });
 
-// };
+        } else {
 
-// Acme.GalleryToggle.prototype.stopVideo = function() {
-//     $('.article-video').each(function() {
-//         this.pause();
-//     });
+            var cart = [];
+            var cartjson = localStorage.getItem('cart');
+            if ( cartjson !== null) {
+                cart = JSON.parse( cartjson );
+            }
     
-//     $('.external-article-video').each(function() {
-//         var videoSource = $(this).data('source');
-//         if ( videoSource == 'youtube' ){
-//             this.contentWindow.postMessage('{"event":"command","func":"stopVideo","args":""}', '*');
-//         } else if (videoSource == 'brightcove') {
-//             this.contentWindow.postMessage("pauseVideo", location.protocol+'//players.brightcove.net');
-//         } else if (videoSource == 'vimeo') {
-//             var player = new Vimeo.Player(this);
-//             player.pause();
-//         }
-//     });
+            var found = cart.filter((item) => {
+                return item.id !== photo.id;
+            });
+    
+            if (found.length < cart.length) {
+                // cart = found;
+            } else {
+                cart.push(photo);
+            }
+    
+            localStorage.setItem('cart', JSON.stringify(cart));
+    
+        }
 
-// }
+
+    });
+}

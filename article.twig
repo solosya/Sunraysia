@@ -19,10 +19,9 @@
 {% if (config is empty) %}
     {% set config = _Network.getThemeConfig() %}
     {% set cache = setCache("themeConfig", config, 500) %} 
-    {% set allowedReferrers = config['allowedReferrers'] %}
 {% endif %}
 
-
+{% set purchasable = config.page.photos.site_cart is defined ? config.page.photos.site_cart : false %}
 
 {% set allowedReferrers = config['allowedReferrers'] %}
 {% set headers      = _AppHelper.getHttpHeaders() %}
@@ -209,7 +208,8 @@
                                     media: article.media,
                                     showPaywall: showPaywall,
                                     watermark: watermark,
-                                    galleryStyle: 'gallery'
+                                    galleryStyle: 'gallery',
+                                    purchasable: purchasable
                                 }) | raw}}
                             {% endif %}
                                                     
@@ -308,5 +308,10 @@
 </main>
 
 
+<script>
+    document.addEventListener("DOMContentLoaded", function(event) {
+        Acme.articleController = Acme.ArticleController();
+    });
+</script>
 
 
