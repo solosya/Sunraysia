@@ -18770,7 +18770,7 @@ Acme.article.prototype.events = function() {
                 cart = JSON.parse( cartjson );
             }
     
-            var found = cart.filter((item) => {
+            var found = cart.filter(function(item) {
                 return item.id !== photo.id;
             });
     
