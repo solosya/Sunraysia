@@ -1,9 +1,14 @@
 {{ set(this, 'title', _Blog.getBlogTitle()) }}
-{% set photoVersion = '67' %}
 {% set networkData  = _Network.getNetworkData() %}
 {% set blogData     = _Blog.getBlog() %}
-
 {% set config       = _Network.getThemeConfig() %}
+
+{% set photoVersion = '68' %}
+{% if config.page.photos.version is defined %}
+    {% set photoVersion = config.page.photos.version %}
+{% endif %}
+
+
 
 
 

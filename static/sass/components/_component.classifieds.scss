@@ -68,6 +68,15 @@
 
     }
 
+    &__count {
+        margin-left:auto;
+        @include font-size(13);
+        color:#595859;
+        position: absolute;
+        right: 5px;
+        top: 11px;
+}
+    
 
     @media #{$mobile} {
         display:none;
@@ -93,8 +102,11 @@
     }
 
     &__item {
+        // @include flexbox;
+        // @include align-items(center);
         @include margin(0);
         @include padding(0);
+
         position:relative;
         border-bottom:1px solid rgba($greyish, 0.5);
 

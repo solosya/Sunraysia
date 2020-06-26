@@ -5,7 +5,7 @@
 {% set currentPage  = _Blog.getBlogTitle() %}
 {% set mainClassifiedsPage  = currentPage %}
 
-{% set sideMenu = _Menu.get({'menuType': 'header', "menuGroupName": currentPage }) %}
+{% set sideMenu = _Menu.get({'menuType': 'header', "menuGroupName": currentPage, 'include_article_count': true  }) %}
 {% set panels = _Menu.get({'menuType': 'header', "menuGroupName":  currentPage ~ " panels"}) %}
 {% set url = _AppHelper.getParsedUrl() %}
 

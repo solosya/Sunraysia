@@ -28,6 +28,7 @@
         {% elseif parentItem.pageTitle != "" %}
             {% set name = parentItem.pageTitle %}
         {% endif %}
+        {% set count = (parentItem.article_count is defined and parentItem.article_count > 0) ? parentItem.article_count : ""  %}
 
 
 
@@ -39,7 +40,7 @@
         {% endif %}
 
         <li class="c-classified-menu__item {{activeClass}}">
-
+        
             <a  class="c-classified-menu__item-link {{childrenClass}}"
                 {% set pageType = "section" %}
                 {% if children %}
@@ -52,6 +53,10 @@
                 {% endif %} 
                 data-bguid="{{parentItem.blogGuid}}"
             >{{name}}</a>
+            
+            {% if not children %}
+                <div class="c-classified-menu__count">{{count}}</div>
+            {% endif %}
         
             {% if children %}
                 {% set display = false %} 
