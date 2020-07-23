@@ -12,6 +12,7 @@
     {% set countTerm = "listing" %}
 {% endif %}
 
+{% if blogData.count > 0 %}
 
 <div class="acme-row c-section-head" data-buid={{blog_guid}}>
     <div class="acme-col-12">
@@ -37,6 +38,7 @@
         </div>
     {% endfor %}
 </div>
+{% endif %}
 
 
 {% if articles | length >= 3 %}
