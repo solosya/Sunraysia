@@ -224,13 +224,7 @@
 
                         <div class="acme-row"> 
                             <div class="acme-col-12">
-
-                                {{ this.render('/partials/ajaxarticles_new.twig', {
-                                    name            : "section-load",
-                                    label           : "",
-                                    buttonClass     : "u-display-none",
-                                }) | raw }}
-
+                                <a href="#" id="section-load" class=""></a>
                             </div>
                         </div>
                     </div>
@@ -409,9 +403,9 @@
             container       : 'results',
             limit           : 30,
             offset          : offset,
+            label           : "Show more results",
             loadtype        : 'api/search',
-            name            : 'fd', //name of the loadmore button
-            renderType      : 'write',
+            name            : 'search-load', //name of the loadmore button
             type            : "{{contentType}}",
             before          : '<div class="acme-row">',
             failText        : '<h2 style="font-size:24px;margin-top:25px;color:#0e215d;font-weight:400;">Sorry, we couldn\'t find what you\'re looking for.</h2>',
@@ -539,8 +533,20 @@
 
             if (!searchTerm) return;
             var results = $('#results');
+
+            var triggerHTML = 
+                '<div class="acme-row"> \
+                    <div class="acme-col-12"> \
+                        <a href="#" id="search-load" class=""></a> \
+                    </div> \
+                </div>';
+            results.after(triggerHTML);
+            results.empty();
+            Acme.search.elem = $('#search-load');
+            Acme.search.events();
+
+
             var spinner = $('#searchSpinner');
-            //results.fadeOut(1000);
             spinner.show();
             Acme.search.options.search = searchTerm;
             Acme.search.options.offset = 0;
