@@ -266,15 +266,15 @@
                     <h1 class="c-related-articles__header c-centenary-article__related__header u-margin-bottom-30" >You might also like...</h1>
                 </div>
                 
-                <div class="offset-lg-1 col-ls-10">
+                <div class="offset-lg-1 col-lg-10">
                     <div class="row">
 
-                        {% set classes = ["u-desktop-lg-padding-right-50", "u-desktop-lg-padding-right-30 u-desktop-lg-padding-left-30 u-article-divider-left", "d-none d-lg-block u-desktop-lg-padding-left-50 u-article-divider-left-2"] %}
+                        {% set classes = ['',"u-desktop-lg-padding-right-50", "u-desktop-lg-padding-right-30 u-desktop-lg-padding-left-30 u-article-divider-left", "d-none d-lg-block u-desktop-lg-padding-left-50 u-article-divider-left-2"] %}
                         
                         {% set count = 0 %}
                         {% for recent in recentArticles  %}
                             {% if recent.guid != article.guid and count < 3 %}
-                                <div class="col-12 col-md-6 col-lg-4 {{classes[i]}}" data-articleid="{{article.guid}}" data-recentid="{{recent.guid}}">
+                                <div class="col-12 col-md-6 col-lg-4 {{classes[loop.index]}}" data-articleid="{{article.guid}}" data-recentid="{{recent.guid}}">
                                     {{this.render('partials/_single-article.twig', {
                                         article: recent, 
                                         imageSize: {width: 300, height: 180},
