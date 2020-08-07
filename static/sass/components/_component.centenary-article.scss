@@ -13,6 +13,12 @@
         margin: 0 auto;
         
     }
+
+    &__mrec{
+        @media #{$tablet-up}{
+            margin-left: calc(50% - 150px);
+        }
+    }
    
     &__edit-link {
         background-color: $gold;
