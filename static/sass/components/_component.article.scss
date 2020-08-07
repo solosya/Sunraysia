@@ -422,7 +422,7 @@
 
         &-view {
             position: relative;
-
+            z-index: 2;
             &:before {
                 content: '';
                 display: block;

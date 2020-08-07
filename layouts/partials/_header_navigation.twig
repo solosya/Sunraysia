@@ -10,12 +10,17 @@
 
 
 
+
 {% set user = _User.getUser() %}
 {% set theDate = _AppHelper.getCurrentTimestampBasedOnTimezone() %}
 {% set theDate = _AppHelper.getDefaultTimezoneDateTime(theDate, "l, F j, Y") %}
 
 {% set logo = networkData.templatePath~'/static/images/logo.png'%}
-{% if networkData.logoMedia | length > 0 %}
+{% if 'centenary' in layout|lower %}
+    {% set logo = networkData.templatePath~'/static/images/goldlogo.svg'%}
+{% endif %}
+
+{# {% if networkData.logoMedia | length > 0 %}
     {% set logo = _Media.getMediaUrl(networkData.logoMedia, 0, 0, {'crop': 'fit'} )%}
 {% endif %}
 
@@ -23,7 +28,7 @@
     {% if networkData.secondaryLogoMedia | length > 0 %}
         {% set logo = _Media.getMediaUrl(networkData.secondaryLogoMedia, 0, 0, {'crop': 'fit'} )%}
     {% endif %}
-{% endif %}
+{% endif %} #}
 
 
 <header class="c-header u-mobile-margin-bottom-20 u-tablet-margin-bottom-30 u-desktop-margin-bottom-50">

@@ -1,0 +1,59 @@
+.c-centenary-section{
+    &__background{
+        position: relative;
+        padding: 60px 0;
+        
+        background-image: linear-gradient(
+            to right, 
+            $lightGold,
+            $white 25%,
+            $white 75%,
+            $lightGold
+        );
+        @media #{$desktop-up}{
+            &:before{
+                content: '';
+                width: 20%;
+                height: 100%;
+                position: absolute;
+                top: 0;
+                left: -10%;
+                background-image: url('../images/florals.svg');
+            }
+            &:after{
+                content: '';
+                width: 20%;
+                height: 100%;
+                position: absolute;
+                top: 0;
+                right: -10%;
+                background-image: url('../images/florals.svg');
+            }
+        }
+    }
+
+    
+
+
+    &__header{
+        @include font-size(28);
+        font-family: $font-family-alt-serif;
+        border-bottom: 1px solid $greyish;
+        font-weight: $weightBold;
+        color: $gold;
+        //text-transform:uppercase;
+        padding-bottom: 6px;
+        margin-bottom: 25px;
+        position:relative;
+        @media #{$tablet-up}{
+            @include font-size(32);
+        }
+        // @media #{$desktop-up}{
+        //     @include font-size(32);
+        // }
+    }
+
+    
+
+    
+}

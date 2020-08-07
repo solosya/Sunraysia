@@ -1,0 +1,318 @@
+{% import "partials/quotes.twig" as quotes %}
+{{ set(this, 'title', article.title) }}
+{{ this.registerLinkTag({rel:'amphtml', href:_AppHelper.getServerUrl(false)~'?amp=1'}) }}
+
+{% set blogInfo = _Blog.getBlog() %}
+
+
+{% set networkData = getCache("networkData") %}
+{% if (networkData is empty) %}
+    {% set networkData = _Network.getNetworkData() %} 
+    {% set cache = setCache("networkData", networkData, 500) %} 
+{% endif %}
+
+{% set headers      = _AppHelper.getHttpHeaders() %}
+
+
+{# {% set config       = _Network.getThemeConfig() %} #}
+{% set config = getCache("themeConfig") %}
+{% if (config is empty) %}
+    {% set config = _Network.getThemeConfig() %}
+    {% set cache = setCache("themeConfig", config, 500) %} 
+{% endif %}
+
+{% set purchasable = config.page.photos.site_cart is defined ? config.page.photos.site_cart : false %}
+
+{% set allowedReferrers = config['allowedReferrers'] %}
+{% set headers      = _AppHelper.getHttpHeaders() %}
+
+
+
+{% set articleBlog = article.blog.title | lower %}
+{% set relatedArticles = [] %}
+{% set articleBlogInfo = _Blog.getBlog({'guid':article.blog['guid']}) %}
+
+
+
+{% if article.opengraph.description == "" %}
+    {% set meta = _AppHelper.addMetaTag("og:description", {'content' : article.excerpt}) %}
+{% endif %}
+{% if article.twitter.description == "" %}
+    {% set meta = _AppHelper.addMetaTag("twitter:description", {'content' : article.excerpt}) %}
+{% endif %}
+{% if article.twitter.description == "" %}
+    {% set meta = _AppHelper.addMetaTag("description", {'content' : article.excerpt}) %}
+{% endif %}
+
+
+{% set showPaywall = false %}
+{% set ArticleContent = article.content %}
+{% set pwstats = {} %}
+{% if not _User.isGuest() %}
+    {% set pwstats = _User.getPaywallStats(false) %}
+{% endif %}
+
+{% set bypassPaywall = false %}
+{% if headers['referer'][0] is defined and allowedReferrers is defined %}
+{% set referrrer = headers['referer'][0] | preg_replace('|http(s)*://(.+?)/.*$|', '$2') %}
+    {% for ar in allowedReferrers %}
+        {% if referrrer == ar %}
+            {% set bypassPaywall = true %}
+        {% endif %}
+    {% endfor %}
+{% endif %}
+
+{% set paywallType = "" %}
+{% if  not      _User.isAdminUser() and
+                articleBlogInfo['showPaywall'] == true and
+                article['premiumContent'] == true
+                %}
+    {% if bypassPaywall == false %} 
+        {% set showPaywall = true %}
+    {% endif %}
+
+
+    {# DETERMINE IF PAYWALL IS 'PAID' OR 'FREE' #}
+    {% if articleBlogInfo['paywallAllowSignupOnly'] == true %}
+        {# TURN FREE PAYWALL OFF FOR LOGGED IN USERS AND SET FREE PAYWALL TO SHOW #}
+        
+        {% if not _User.isGuest() %}
+            {% set showPaywall = false %}
+        {% else %}
+            {% set paywallType = "signup" %}
+        {% endif %}
+    {% else %}
+        {# DETERMINE WHICH PAYWALL TO SHOW #}
+        {% if not _User.isGuest() %}
+
+            {% if pwstats['type'] == 'article' %}
+                {% set paywallType = "topup" %}
+            {% elseif pwstats['type'] == 'time' %}
+                {% set paywallType = "renew" %}
+            {% else %}
+                {% set paywallType = "upgrade" %}
+            {% endif %}
+
+        {% else %}
+            {% set paywallType = "subscribe" %}
+        {% endif %}
+    {% endif %}
+{% endif %}
+
+
+{% if showPaywall == true %}
+    {% set storySplit = ArticleContent | split('<p>')  %}
+    {% set para2_words = storySplit[2] | split(' ') | slice(0, 10) %}
+    {% set para2 = para2_words | join(' ') ~ '</p>'  %}
+    {% set ArticleContent = '<p>' ~ [storySplit[1], storySplit[2]] | join('<p>') %}
+
+{% else %}
+    {# Only grab these if article is not paywalled #}
+    {# {% set recentArticles = _Article.getPopularArticles({ limit: 3, excludeArticleIds : [article.id], interval: 168, scope: 'network' }) %} #}
+    {# {% set recentArticles = _Article.getRecentArticles({ limit: 3, excludeArticleIds : [article.id] }) %} #}
+
+    {% set recentArticles = getCache("articleRecent") %}
+    {% if (recentArticles is empty) %}
+        {% set recentArticles = _Article.getRecentArticles({ limit: 4 }) %}
+        {% set cache = setCache("articleRecent", recentArticles, 500) %} 
+    {% endif %}
+
+
+{% endif %}
+
+{% set articleImg = false %}
+{% set featured = false %}
+
+{% if article.media|length > 0 %}
+    {% set articleImg = _Media.getMediaUrl(article.media[0],1094, 515, {'crop': 'fill', 'gravity': 'faces:auto'} ) %}
+
+    {% set featured = article.media[0].type %}
+{% endif %}
+
+
+{% set profileImg = _Media.getMediaUrl(article.createdBy['media'], 100, 100, {radius: 'max', gravity: 'face', 'crop': 'thumb', type: 'user'}) %}
+{% set publishDate = _AppHelper.getDefaultTimezoneDateTime(article.publishDate, 'F, Y') %}
+{% set updateDate = _AppHelper.getDefaultTimezoneDateTime(article.updatedDateTime,'F j, Y') %}
+
+{% set updated = false %}
+{% if article.publishedDateTime != article.updatedDateTime %}
+    {% set updatedAgo = _AppHelper.getSecondsSincePublished(article.updatedDateTime) %}
+    {% if updatedAgo < 86400 %}
+        {% set updateDate = _AppHelper.getRelativeTime(article.updatedDateTime) ~ " ago" %}
+    {% endif %}
+    {% set updated = true %}
+{% endif %}
+
+
+
+{% set testCount = 0 %}
+
+{% set watermark = false %}
+{% if config['watermark']['settings'] is defined and config['watermark']['sections'][articleBlog|lower] is defined %}
+    {% set watermark = config['watermark']['settings'] %}
+{% endif %}
+
+<div class="c-centenary-banner">
+    <p class="c-centenary-banner__title">— Your 100 Years —</p>
+    <p class="c-centenary-banner__subtitle">of Sunraysia Daily</p>
+    <div class="c-centenary-banner__img">
+        
+    </div>
+</div>
+
+<main id="main" class="c-centenary-section__background" role="main">
+
+    <div class="container">
+        <div class="row">
+            <div class="col-12 col-lg-10 col-xl-8 offset-lg-1 offset-xl-2">
+
+                <div class="c-article c-centenary-article">
+                    <div class="c-article__main c-centenary-article__main">
+                        <div class="c-article__head c-centenary-article__head">
+                            
+                            <div class="c-centenary-article__logo u-margin-bottom-20 u-desktop-margin-bottom-30 ">
+                                <img class="c-centenary-article__logoimg" src="{{networkData.templatePath}}/static/images/centlogo.png">
+                            </div>
+                            <div class="c-article__category c-centenary-article__categorybox">
+                                <div class="c-article__category c-centenary-article__category">
+                                    {{article.label}}
+                                </div>
+                            </div>
+                            <h1 class="c-article__title c-centenary-article__title u-margin-bottom-15">
+                                {{ quotes.smarten(article.title) }}
+                            </h1>
+
+
+
+                            <div class="c-article__posted-by c-centenary-article__posted-by">
+                                <div class="c-article__author c-centenary-article__author">
+                                {# "{{_AppHelper.getUserProfileUrl(article.createdBy['username'])}}/posts" #}
+                                    <a class="c-article__author-name c-centenary-article__author-name" href="{{_AppHelper.getUserProfileUrl(article.createdBy['username'])}}/posts">{{ article.createdBy['displayName'] }}</a>
+
+                                    {% if article['createdBy']['coauthors'] %}
+                                        {% for author in article['createdBy']['coauthors'] %}
+                                            <a class="c-article__author-name c-centenary-article__author-name" href="{{_AppHelper.getUserProfileUrl(author['username'])}}/posts">{{ author['displayName'] }}</a>
+                                        {% endfor %}
+                                    {% endif %}
+
+                                    <time class="c-article__published c-centenary-article__published">{{article.publishedDate}}</time>
+                                    {# {% if updated %}
+                                         - <time class="c-article__updated">Updated {{ updateDate | capitalize }}</time>
+                                    {% endif %} #}
+                                </div>
+
+                            </div>
+
+                            {% if _User.isAdminUser() %}
+                                    <a href="{{article.editUrl}}" target="_blank" class="c-article__edit-link c-centenary-article__edit-link">Edit article</a>
+                            {% endif %}
+
+                        </div> <!-- close head -->
+
+
+                    {% if articleImg %} 
+
+                        <div class="gallery-container relative">
+                            {% if article.media|length > 0 %}
+                                {{this.render('partials/gallery.twig', {
+                                    media: article.media,
+                                    showPaywall: showPaywall,
+                                    watermark: watermark,
+                                    galleryStyle: 'gallery',
+                                    purchasable: purchasable
+                                }) | raw}}
+                            {% endif %}
+                                                    
+
+                        </div> 
+
+                    {% endif %}
+
+
+
+
+
+
+                        <div class="c-article__container c-centenary-article__">
+                                {{ ArticleContent | _resizeImages({'width': 600}) | raw }}
+                        </div>
+
+
+
+                        {% if showPaywall == true %}
+                            {{this.render("partials/article/paywall.twig", {networkData: networkData, paywallType: paywallType }) | raw}}
+                        {% endif %}
+
+                    </div>
+
+
+                    <!-- Disqus Comment Added -->
+                    {% if networkData.thirdPartyIntegrations['disqus'] | length > 0 and networkData.thirdPartyIntegrations['disqus']['shortName'] != '' %}
+                        {{this.render("partials/article/_disqus_comments.twig", {disqus: networkData.thirdPartyIntegrations['disqus'], userId: article.createdBy['id'], url:article.url, articleId: article.id}) | raw}}
+                    {% endif %}
+
+
+                </div>
+                <!-- End Article Page -->
+            </div>
+
+        </div>
+
+
+        {% if recentArticles | length > 0 %}
+
+            <div class="row c-related-articles  c-centenary-article__related u-desktop-margin-top-100">
+                <div class="col-12">
+                    <h1 class="c-related-articles__header c-centenary-article__related__header u-margin-bottom-30" >You might also like...</h1>
+                </div>
+                
+                <div class="offset-lg-1 col-ls-10">
+                    <div class="row">
+
+                        {% set classes = ["u-desktop-lg-padding-right-50", "u-desktop-lg-padding-right-30 u-desktop-lg-padding-left-30 u-article-divider-left", "d-none d-lg-block u-desktop-lg-padding-left-50 u-article-divider-left-2"] %}
+                        
+                        {% set count = 0 %}
+                        {% for recent in recentArticles  %}
+                            {% if recent.guid != article.guid and count < 3 %}
+                                <div class="col-12 col-md-6 col-lg-4 {{classes[i]}}" data-articleid="{{article.guid}}" data-recentid="{{recent.guid}}">
+                                    {{this.render('partials/_single-article.twig', {
+                                        article: recent, 
+                                        imageSize: {width: 300, height: 180},
+                                        containerClass: 'card-12-mobile card-12-tablet card-12-desktop card-12-desktop-lg',
+                                        site:   site
+                                    }) | raw}}
+                                </div>
+                                {% set count = count + 1 %}
+
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+
+
+
+        {% if config['inventory']['adSpace']['banner'][1] is defined %}
+            <div class="j-adslot" id="{{config['inventory']['adSpace']['banner'][1]}}" data-adshape="banner"></div>
+        {% endif %}
+
+
+    </div>
+    {% set theKeywords = '' %}
+    {% if article.keywords is defined and article.keywords != '' %}
+        {% set theKeywords = article.keywords %}
+    {% elseif blogInfo.keywords is defined and blogInfo.keywords != '' %}
+        {% set theKeywords = blogInfo.keywords %}
+    {% endif %}
+    <div class="j-keyword-cont" data-keywords="{{theKeywords}}" data-pageName="{{articleBlog}}" data-pageType="article" data-pageTags=""></div>
+</main>
+
+
+<script>
+    document.addEventListener("DOMContentLoaded", function(event) {
+        Acme.articleController = Acme.ArticleController();
+    });
+</script>
+
+

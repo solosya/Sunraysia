@@ -1,0 +1,82 @@
+.c-centenary-banner{
+    position: relative;
+    
+    @media #{$mobile}{
+        height: 66px;
+        margin-top: -20px;
+    }
+    @media #{$tablet}{
+        height: 110px;
+        margin-top: -30px;
+    }
+    @media #{$desktop-up}{
+        height: 157px;
+        margin-top: -45px;
+    }
+
+    &__title{
+
+        position: relative;
+        font-family: $font-family-alt-serif;
+        text-align: center;
+        color: $gold;
+        text-transform: uppercase;
+        z-index: 1;
+        @media #{$mobile}{
+            @include font-size(26);
+            padding-top: 10px;
+        }
+        @media #{$tablet}{
+            @include font-size(42);
+            padding-top: 15px;
+        }
+        @media #{$desktop-up}{
+            @include font-size(60);
+            padding-top: 20px;
+        }
+
+    }
+    &__subtitle{
+        position: relative;
+        font-family: $font-family-alt-serif;
+        text-align: center;
+        color: $white;
+        text-transform: uppercase;
+        z-index: 1;
+        @media #{$mobile}{
+            @include font-size(12);
+        }
+        @media #{$tablet}{
+            @include font-size(15);
+        }
+        @media #{$desktop-up}{
+            @include font-size(22);
+        }
+    }
+
+
+    &__img{
+        position: absolute;
+        top: 0;
+        @media #{$mobile}{
+            height: 66px;
+            width: 100%;
+            left: 0;
+            background-size: 100%;
+            background-image: url('../images/cent-header-mob.png');
+        }
+        @media #{$tablet}{
+            height: 110px;
+            width: 100%;
+            left: 0;
+            background-size: 100%;
+            background-image: url('../images/cent-header-tab.png');
+        }
+        @media #{$desktop-up}{
+            height: 157px;
+            width: 2500px;
+            left: calc(50% - 1250px);
+            background-image: url('../images/cent-header-desk.png');
+        }
+    }
+}
