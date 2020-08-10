@@ -101,7 +101,7 @@ $('document').ready(function() {
         }
         scrollMetric = [scroll, direction];
         scrollUpMenu();
-        // adScroll();
+        adScroll();
     });
 
 
@@ -144,38 +144,29 @@ $('document').ready(function() {
 
 
 
-    // var adScroll = function() {
-
-    //     //set sidebar height for desktop scrolling ad
-    //     if ($('#articleContentContainer').length > 0) {
-    //         var articleTop = $('#articleContentContainer').position().top
-    //         var theHeight = $('#articleContentContainer').height();
-    //         $('#adScrollContainer').css("height",theHeight+"px");
-    //         var screenHeight = $(window).height();
-    //         // if the window is below a certain height some of the sidebar is missing
-    //         // so we have to compensate so the scrolling remains smooth       
-    //         if (screenHeight <= 814) {
-    //             var screenDiff = (814 - screenHeight) + 843;
-    //         } else {
-    //             screenDiff = 843;
-    //         }
-    //         // tell ad when to scroll and when not to based on the size of the article
-    //         // 135 is the space above left for foldaway menu
-    //         if ( scrollMetric[1] === 'up' && !isScolledPast(articleTop-135)) {
-    //             articleAd.removeClass('fixad').removeClass('lockad-bottom').addClass('lockad-top');
-    //         }
-    //         else if ( scrollMetric[1] === 'up' && !isScolledPast((theHeight-screenDiff)+articleTop)) {
-    //             articleAd.removeClass('lockad-bottom').addClass('fixad');
-    //         }
-    //         else if ( scrollMetric[1] === 'down' && isScolledPast((theHeight-screenDiff)+articleTop)) {
-    //             articleAd.removeClass('fixad').removeClass('lockad-top').addClass('lockad-bottom');
-    //         } 
-    //         else if ( scrollMetric[1] === 'down' && isScolledPast(articleTop-135)) {
-    //             articleAd.removeClass('lockad-top').addClass('fixad');
-    //         }
-    //     }
+    var adScroll = function() {
+        // console.log('scrollin',scrollMetric);
+        //set sidebar height for desktop scrolling ad
+        if ($('.j-skycontainer').length > 0) {
+            var articleTop = ($('main').position().top - 200);
+            var theHeight = $('main').height();
+            // tell ad when to scroll and when not to based on the size of the article
+            // 135 is the space above left for foldaway menu
+            if ( scrollMetric[1] === 'up' && !isScolledPast(articleTop)) {
+                $('.j-adslot-skyscraper').each(function() {$(this).removeClass('advertisment__skyscraper--fixed').addClass('advertisment__skyscraper--absolute')});
+            }
+            else if ( scrollMetric[1] === 'up' && !isScolledPast(theHeight - 600)) {
+                $('.j-adslot-skyscraper').each(function() {$(this).removeClass('advertisment__skyscraper--absolute').addClass('advertisment__skyscraper--fixed')});
+            }
+            else if ( scrollMetric[1] === 'down' && isScolledPast((theHeight - 600))) {
+                $('.j-adslot-skyscraper').each(function() {$(this).removeClass('advertisment__skyscraper--fixed').addClass('advertisment__skyscraper--absolute')});
+            } 
+            else if ( scrollMetric[1] === 'down' && isScolledPast(articleTop)) {
+                $('.j-adslot-skyscraper').each(function() {$(this).removeClass('advertisment__skyscraper--absolute').addClass('advertisment__skyscraper--fixed')});
+            }
+        }
         
-    // }
+    }
 
 
 

@@ -32,6 +32,7 @@
             display: block;
             width: 160px;
             height: 600px;
+            transition: position 5s ease-in;
             &--left{
                 left: calc((100vw - 1620px) / 4); 
             }
@@ -45,7 +46,7 @@
             }
             &--fixed{
                 position: fixed;
-                top: 40px;
+                top: 200px;
             }
         }
     }
