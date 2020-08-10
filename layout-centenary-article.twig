@@ -163,6 +163,18 @@
     </a>
 </div>
 
+{% if config['inventory']['adSpace']['skyscraper'][0] is defined %}
+    <div class="advertisment__skycontainer j-skycontainer">
+        
+            <div class="j-adslot j-adslot-skyscraper advertisment__skyscraper advertisment__skyscraper--left advertisment__skyscraper--absolute" id="{{config['inventory']['adSpace']['skyscraper'][0]}}" data-adshape="skyscraper"></div>
+        
+
+        {% if config['inventory']['adSpace']['skyscraper'][1] is defined %}
+            <div class="j-adslot j-adslot-skyscraper advertisment__skyscraper advertisment__skyscraper--right advertisment__skyscraper--absolute" id="{{config['inventory']['adSpace']['skyscraper'][1]}}" data-adshape="skyscraper"></div>
+        {% endif %}
+    </div>
+{% endif %}
+
 <main id="main" class="c-centenary-section__background" role="main">
 
     <div class="container">
@@ -173,22 +185,6 @@
                 {% endif %}
             </div>
         </div>
-
-    </div >
-
-        {% if config['inventory']['adSpace']['skyscraper'][0] is defined %}
-            <div class="advertisment__skycontainer j-skycontainer">
-                
-                    <div class="j-adslot j-adslot-skyscraper advertisment__skyscraper advertisment__skyscraper--left advertisment__skyscraper--absolute" id="{{config['inventory']['adSpace']['skyscraper'][0]}}" data-adshape="skyscraper"></div>
-                
-
-                {% if config['inventory']['adSpace']['skyscraper'][1] is defined %}
-                    <div class="j-adslot j-adslot-skyscraper advertisment__skyscraper advertisment__skyscraper--right advertisment__skyscraper--absolute" id="{{config['inventory']['adSpace']['skyscraper'][1]}}" data-adshape="skyscraper"></div>
-                {% endif %}
-            </div>
-        {% endif %}
-
-    <div class="container">
         <div class="row justify-content-center">
             <div class="col-12 col-lg-7 col-xl-6">
 
