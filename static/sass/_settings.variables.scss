@@ -147,7 +147,7 @@ $screen-md-max:              ($screen-lg-min - 1) !default;
 
 $center:					center;
 
-
+$desktop-xl:            "screen and (min-width : 1650px)";
 $desktop-lg: 			"screen and (min-width : 1330px)";
 $desktop-lg-down:       "screen and (max-width : 1329px)";
 

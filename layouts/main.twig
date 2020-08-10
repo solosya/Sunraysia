@@ -197,7 +197,17 @@
         layout: layout,
     }) | raw }}
 
+    {% if config['inventory']['adSpace']['skyscraper'][0] is defined %}
+        <div class="advertisment__skycontainer">
+            
+                <div class="j-adslot j-adslot-skyscraper advertisment__skyscraper advertisment__skyscraper--left advertisment__skyscraper--absolute" id="{{config['inventory']['adSpace']['skyscraper'][0]}}" data-adshape="skyscraper"></div>
+            
 
+            {% if config['inventory']['adSpace']['skyscraper'][1] is defined %}
+                <div class="j-adslot j-adslot-skyscraper advertisment__skyscraper advertisment__skyscraper--right advertisment__skyscraper--absolute" id="{{config['inventory']['adSpace']['skyscraper'][1]}}" data-adshape="skyscraper"></div>
+            {% endif %}
+        </div>
+    {% endif %}
 
 
     {% if showPaywall %}

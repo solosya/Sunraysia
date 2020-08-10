@@ -59,6 +59,10 @@
                             .addSize([1000, 200], [[300, 600],'fluid',[300, 250]])
                             .addSize([320, 400], [[300, 250]])
                             .build();
+            var mappingSky = googletag.sizeMapping()
+                            .addSize([1650, 200], [[160, 600],[120,600]])
+                            .addSize([0, 0], [])
+                            .build();
             var mappingTag = googletag.sizeMapping()
                             .addSize([0, 0], [[1, 1]])
                             .build();                
@@ -88,6 +92,9 @@
                 } else if (slotType == 'hpage' || slotType == 'side-fix'){
                     sizes = [[300,600],'fluid', [300,250]];
                     mapping = mappingHpage;
+                } else if (slotType == 'skyscraper'){
+                    sizes = [[160, 600],[120,600]];
+                    mapping = mappingSky;
                 }
                 googletag.pubads().enableSingleRequest();
                 googletag.pubads().setTargeting('section', [pageName])

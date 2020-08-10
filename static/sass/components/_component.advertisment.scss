@@ -20,6 +20,36 @@
         }
     }
 
+    &__skycontainer{
+        position: relative;
+        height: 1px;
+        width: 100%;
+    }
+
+    &__skyscraper{
+        display: none;
+        @media #{$desktop-xl}{
+            display: block;
+            width: 160px;
+            height: 600px;
+            &--left{
+                left: calc((100vw - 1620px) / 4); 
+            }
+            &--right{
+                right: calc((100vw - 1620px) / 4);
+            
+            }
+            &--absolute{
+                position: absolute;
+                top: 40px;
+            }
+            &--fixed{
+                position: fixed;
+                top: 40px;
+            }
+        }
+    }
+
     &__hpage {
         
     }
