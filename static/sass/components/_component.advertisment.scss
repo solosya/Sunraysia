@@ -33,6 +33,7 @@
             width: 160px;
             height: 600px;
             transition: position 5s ease-in;
+            z-index: 3;
             &--left{
                 left: calc((100vw - 1620px) / 4); 
             }
