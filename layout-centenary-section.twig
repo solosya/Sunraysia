@@ -53,6 +53,8 @@
     </a>
 </div>
 
+
+
 <main id="main" class="site-main c-centenary-section__background" role="main" data-article-limit="{{limit}}" data-article-count="{{articles | length}}" data-ref="{{blogData.guid}}">
     
     <div class="container">
@@ -64,6 +66,18 @@
                 {% endif %}
             </div>
         </div>
+
+        {% if config['inventory']['adSpace']['skyscraper'][0] is defined %}
+            <div class="advertisment__skycontainer j-skycontainer">
+                
+                    <div class="j-adslot j-adslot-skyscraper advertisment__skyscraper advertisment__skyscraper--left advertisment__skyscraper--absolute" id="{{config['inventory']['adSpace']['skyscraper'][0]}}" data-adshape="skyscraper"></div>
+                
+
+                {% if config['inventory']['adSpace']['skyscraper'][1] is defined %}
+                    <div class="j-adslot j-adslot-skyscraper advertisment__skyscraper advertisment__skyscraper--right advertisment__skyscraper--absolute" id="{{config['inventory']['adSpace']['skyscraper'][1]}}" data-adshape="skyscraper"></div>
+                {% endif %}
+            </div>
+        {% endif %}
 
         <div class="row">
             <div class="col-12">

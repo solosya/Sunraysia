@@ -197,7 +197,7 @@
         layout: layout,
     }) | raw }}
 
-    {% if config['inventory']['adSpace']['skyscraper'][0] is defined %}
+    {% if config['inventory']['adSpace']['skyscraper'][0] is defined and 'centenary' not in layout|lower %}
         <div class="advertisment__skycontainer j-skycontainer">
             
                 <div class="j-adslot j-adslot-skyscraper advertisment__skyscraper advertisment__skyscraper--left advertisment__skyscraper--absolute" id="{{config['inventory']['adSpace']['skyscraper'][0]}}" data-adshape="skyscraper"></div>
