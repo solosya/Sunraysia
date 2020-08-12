@@ -152,72 +152,42 @@
     {% set watermark = config['watermark']['settings'] %}
 {% endif %}
 
-<div class="c-centenary-banner">
-    <a href="{{networkData.defaultBlogUrl}}/your-100-years">
-        <p class="c-centenary-banner__title">— Your 100 Years —</p>
-        <p class="c-centenary-banner__subtitle">of Sunraysia Daily</p>
-    
-        <div class="c-centenary-banner__img">
-            
-        </div>
-    </a>
-</div>
-
-{% if config['inventory']['adSpace']['skyscraper'][0] is defined %}
-    <div class="advertisment__skycontainer j-skycontainer">
-        
-            <div class="j-adslot j-adslot-skyscraper advertisment__skyscraper advertisment__skyscraper--left advertisment__skyscraper--absolute" id="{{config['inventory']['adSpace']['skyscraper'][0]}}" data-adshape="skyscraper"></div>
-        
-
-        {% if config['inventory']['adSpace']['skyscraper'][1] is defined %}
-            <div class="j-adslot j-adslot-skyscraper advertisment__skyscraper advertisment__skyscraper--right advertisment__skyscraper--absolute" id="{{config['inventory']['adSpace']['skyscraper'][1]}}" data-adshape="skyscraper"></div>
-        {% endif %}
-    </div>
-{% endif %}
-
-<main id="main" class="c-centenary-section__background" role="main">
+<main id="main" class="c-obit-section__background c-obit-section__background--wide" role="main">
 
     <div class="container">
-        <div class="row">
-            <div class="col-12">
-                {% if config['inventory']['adSpace']['banner'][1] is defined %}
-                    <div class="j-adslot u-desktop-margin-bottom-100 u-tablet-margin-bottom-40 u-mobile-margin-bottom-30" id="{{config['inventory']['adSpace']['banner'][1]}}" data-adshape="banner"></div>
-                {% endif %}
-            </div>
-        </div>
         <div class="row justify-content-center">
             <div class="col-12 col-lg-7 col-xl-6">
 
-                <div class="c-article c-centenary-article">
-                    <div class="c-article__main c-centenary-article__main">
-                        <div class="c-article__head c-centenary-article__head">
-                            
-                            <div class="c-centenary-article__logo u-margin-bottom-20 u-desktop-margin-bottom-30 ">
-                                <img class="c-centenary-article__logoimg" src="{{networkData.templatePath}}/static/images/centlogo.png">
+                <div class="c-article c-obit-article">
+                    <div class="c-article__main c-obit-article__main">
+                        <div class="c-article__head c-obit-article__head">
+                            <div class="c-obit-article__intro ">
+                                {{article.additionalInfo.intro}}
                             </div>
-                            <div class="c-article__category c-centenary-article__categorybox">
-                                <div class="c-article__category c-centenary-article__category">
-                                    {{article.label}}
-                                </div>
+                            <hr class="">
+                            <div class="c-obit-article__logo u-margin-bottom-10 ">
+                                <img class="c-obit-article__logoimg" src="{{networkData.templatePath}}/static/icons/rose.svg">
                             </div>
-                            <h1 class="c-article__title c-centenary-article__title u-margin-bottom-15">
-                                {{ quotes.smarten(article.title) }}
+                            <h1 class="c-article__title c-obit-article__title u-margin-bottom-5">
+                                {{ article.title }}
                             </h1>
+                            <p class="c-obit-article__lifespan">{{article.additionalInfo.birth}} – {{article.additionalInfo.passing}}</p>
+                            <hr class="">
 
 
 
-                            <div class="c-article__posted-by c-centenary-article__posted-by">
-                                <div class="c-article__author c-centenary-article__author">
+                            <div class="c-article__posted-by c-obit-article__posted-by">
+                                <div class="c-article__author c-obit-article__author">
                                 {# "{{_AppHelper.getUserProfileUrl(article.createdBy['username'])}}/posts" #}
-                                    <a class="c-article__author-name c-centenary-article__author-name" href="{{_AppHelper.getUserProfileUrl(article.createdBy['username'])}}/posts">{{ article.createdBy['displayName'] }}</a>
+                                    {# <a class="c-article__author-name c-obit-article__author-name" href="{{_AppHelper.getUserProfileUrl(article.createdBy['username'])}}/posts">{{ article.createdBy['displayName'] }}</a>
 
                                     {% if article['createdBy']['coauthors'] %}
                                         {% for author in article['createdBy']['coauthors'] %}
-                                            <a class="c-article__author-name c-centenary-article__author-name" href="{{_AppHelper.getUserProfileUrl(author['username'])}}/posts">{{ author['displayName'] }}</a>
+                                            <a class="c-article__author-name c-obit-article__author-name" href="{{_AppHelper.getUserProfileUrl(author['username'])}}/posts">{{ author['displayName'] }}</a>
                                         {% endfor %}
-                                    {% endif %}
+                                    {% endif %} #}
 
-                                    <time class="c-article__published c-centenary-article__published">{{article.publishedDate}}</time>
+                                    <time class="c-article__published c-obit-article__published">Published on {{article.publishedDate}}</time>
                                     {# {% if updated %}
                                          - <time class="c-article__updated">Updated {{ updateDate | capitalize }}</time>
                                     {% endif %} #}
@@ -226,7 +196,7 @@
                             </div>
 
                             {% if _User.isAdminUser() %}
-                                    <a href="{{article.editUrl}}" target="_blank" class="c-article__edit-link c-centenary-article__edit-link">Edit article</a>
+                                    <a href="{{article.editUrl}}" target="_blank" class="c-article__edit-link c-obit-article__edit-link">Edit article</a>
                             {% endif %}
 
                         </div> <!-- close head -->
@@ -255,7 +225,7 @@
 
 
 
-                        <div class="c-article__container c-centenary-article__container">
+                        <div class="c-article__container c-obit-article__container">
                                 {{ ArticleContent | _resizeImages({'width': 600}) | raw }}
                         </div>
 
@@ -265,13 +235,12 @@
                             {{this.render("partials/article/paywall.twig", {networkData: networkData, paywallType: paywallType }) | raw}}
                         {% endif %}
 
+                        <p class="c-obit-article__contact">If you would like to place an obituary for your loved one, please contact us at <a href="mailto:classads@sunraysiadaily.com.au">classads@sunraysiadaily.com.au</a></p>
+
                     </div>
 
 
-                    <!-- Disqus Comment Added -->
-                    {% if networkData.thirdPartyIntegrations['disqus'] | length > 0 and networkData.thirdPartyIntegrations['disqus']['shortName'] != '' %}
-                        {{this.render("partials/article/_disqus_comments.twig", {disqus: networkData.thirdPartyIntegrations['disqus'], userId: article.createdBy['id'], url:article.url, articleId: article.id}) | raw}}
-                    {% endif %}
+                   
 
 
                 </div>
@@ -281,42 +250,9 @@
         </div>
 
 
-        {% if recentArticles | length > 0 %}
 
-            <div class="row c-related-articles  c-centenary-article__related u-desktop-margin-top-100">
-                <div class="col-12">
-                    <h1 class="c-related-articles__header c-centenary-article__related__header u-margin-bottom-30" >You might also like...</h1>
-                </div>
-                
-                <div class="col-12 offset-lg-1 col-lg-10">
-                    <div class="row">
-
-                        {% set classes = ['',"u-desktop-lg-padding-right-50", "u-desktop-lg-padding-right-30 u-desktop-lg-padding-left-30 u-article-divider-left", "d-none d-lg-block u-desktop-lg-padding-left-50 u-article-divider-left-2"] %}
-                        
-                        {% set count = 0 %}
-                        {% for recent in recentArticles  %}
-                            {% if recent.guid != article.guid and count < 3 %}
-                                <div class="col-12 col-md-6 col-lg-4 {{classes[loop.index]}}" data-articleid="{{article.guid}}" data-recentid="{{recent.guid}}">
-                                    {{this.render('partials/_single-article.twig', {
-                                        article: recent, 
-                                        imageSize: {width: 300, height: 180},
-                                        containerClass: 'card-12-mobile card-12-tablet card-12-desktop card-12-desktop-lg',
-                                        site:   site
-                                    }) | raw}}
-                                </div>
-                                {% set count = count + 1 %}
-
-                            {% endif %}
-                        {% endfor %}
-                    </div>
-                </div>
-            </div>
-        {% endif %}
-
-
-
-        {% if config['inventory']['adSpace']['banner'][2] is defined %}
-            <div class="j-adslot" id="{{config['inventory']['adSpace']['banner'][2]}}" data-adshape="banner"></div>
+        {% if config['inventory']['adSpace']['banner'][1] is defined %}
+            <div class="j-adslot" id="{{config['inventory']['adSpace']['banner'][1]}}" data-adshape="banner"></div>
         {% endif %}
 
 

@@ -1,0 +1,87 @@
+.c-obit-section{
+    &__background{
+        position: relative;
+        padding: 60px 0;
+        
+        
+        @media #{$mobile}{
+            margin-top: -20px;
+        }
+        @media #{$tablet-up}{
+            margin-top: -30px;
+            &:before{
+                content: '';
+                width: 72px;
+                height: 100%;
+                position: absolute;
+                top: 0;
+                left: 0;
+                background-image: url('../images/leaves.png');
+                background-repeat: repeat-y;
+                transform: scaleX(-1);
+            }
+            &:after{
+                content: '';
+                width: 72px;
+                height: 100%;
+                position: absolute;
+                top: 0;
+                right: 0;
+                background-image: url('../images/leaves.png');
+                background-repeat: repeat-y;
+                z-index: -1;
+            }
+        }
+        @media #{$desktop-up}{
+            margin-top: -50px;
+            &:before{
+                width: 203px;
+            }
+            &:after{
+                width: 203px;
+            }
+        }
+        &--wide{
+            @media #{$desktop-xl}{
+                
+                &:before{
+                    width: 30%;
+                    background-image: url('../images/wideleaves.png');
+                }
+                &:after{
+                    width: 30%;
+                    background-image: url('../images/wideleaves.png');
+                }
+            }
+        }
+    }
+
+    
+
+
+    &__header{
+        @include font-size(28);
+        font-family: $font-family-alt-serif;
+        border-bottom: 1px solid $greyish;
+        font-weight: $weightBold;
+        color: $green;
+        text-transform:uppercase;
+        padding-bottom: 6px;
+        margin-bottom: 25px;
+        position:relative;
+        @media #{$tablet-up}{
+            @include font-size(32);
+        }
+        // @media #{$desktop-up}{
+        //     @include font-size(32);
+        // }
+    }
+
+    &__mrec{
+        @media #{$tablet-up}{
+            margin-left: calc(50% - 150px);
+        }
+    }
+
+    
+}

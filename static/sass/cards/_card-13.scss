@@ -1,0 +1,118 @@
+@mixin card-13-base() {
+    margin-left: -20px;
+    margin-right: -20px;
+    .c-cards-view {
+        @include flex-direction(column, vertical);
+
+
+        &__container {
+            padding:0 25px 30px;
+            position: relative;
+            &:before{
+                content: '';
+                width: 21px;
+                height: 37px;
+                background-image: url('../icons/rose.svg');
+                background-size: 21px;
+                position: absolute;
+                top: 15px;
+                left: 25px;
+            }
+        }
+
+        &__category {
+            display: none;
+        }
+
+        &__heading {
+            font-family: $font-family-alt-serif;
+            margin: 60px 0 20px;
+            @include font-size(28);
+            color: $green;
+        }
+        &__description {
+            margin-top: 5px;
+            @include font-size(13);
+            @include flex-height(57px);
+        }
+        &__author {
+            display: none;
+        }
+
+        &__time {
+            display: none;
+        }
+    }
+}
+
+
+
+.card-13-mobile {
+    @media #{$mobile} {
+        @include card-13-base();
+        @include card-name("C13 mobile");
+
+
+    }
+}
+
+
+@mixin card-13-tablet-base() {
+    @include card-13-base();
+
+    margin-left: 0;
+    margin-right: 0;
+
+    .c-cards-view {
+        @include flex-direction(row, horizontal);
+        @include flex-height(341px);
+
+        &__media {
+            @include flex-width(321px);
+            img {
+                height:100%;
+            }
+        }
+        &__container {
+            padding-left: 32px;
+            &:before{
+                top: 90px;
+                left: 32px;
+            }
+        }
+
+        &__heading{
+            margin-top: 135px;
+            max-height: 75px;
+        }
+        &__description{
+            @include flex-height(76px);
+        }
+    }
+}
+
+.card-13-tablet {
+    @media #{$tablet} {
+        @include card-13-tablet-base();
+        @include card-name("C13 tablet");
+    }
+}
+
+
+.card-13-desktop {
+    @media #{$desktop} {
+        @include card-13-tablet-base();
+        @include card-name("C13 desktop");
+    }
+}
+
+
+
+
+.card-13-desktop-lg {
+    @media #{$desktop-lg} {
+        @include card-13-tablet-base();
+        @include card-name("C13 desktop lg");
+
+    }
+}

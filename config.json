@@ -7,6 +7,26 @@
         "event" : {
             "enabled" : true
         },
+        "article" : {
+            "extendedAttributes": [
+                
+                {
+                    "name": "intro",
+                    "label": "Introduction message (such as: 'In Loving Memory')",
+                    "type": "inputbox"
+                },
+                {
+                    "name": "birth",
+                    "label": "Date of Birth",
+                    "type": "inputbox"
+                },
+                {
+                    "name": "passing",
+                    "label": "Date of Passing",
+                    "type": "inputbox"
+                }
+            ]
+        },
         "media" : {
             "extendedAttributes": [
                 {
