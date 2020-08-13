@@ -4,7 +4,13 @@
     .c-cards-view {
         @include flex-direction(column, vertical);
 
-
+        &__media{
+            &--gallery{
+                &:before{
+                    display: none;
+                }
+            }
+        }
         &__container {
             padding:0 25px 30px;
             position: relative;
