@@ -17,7 +17,7 @@
 
 
 
-{% set limit = 11 %}
+{% set limit = 6 %}
 
 {% set articlesArr = _Blog.getBlogFeed({'limit': limit, 'offset': 0}) %}
 {% set articles = articlesArr.articles %}
@@ -47,7 +47,8 @@
 
         <div class="row">
             <div class="col-12">
-                <h1 class="c-obit-section__header">{{ _Blog.getBlogTitle() }}</h1>
+                <p class="c-obit-section__contact d-none d-md-block u-margin-top-15">If you would like to place an obituary for your loved one, please contact us at <a href="mailto:classads@sunraysiadaily.com.au">classads@sunraysiadaily.com.au</a></p>
+                <h1 class="c-obit-section__header">In Loving Memory</h1>
             </div>
         </div>      
 
@@ -73,7 +74,7 @@
         <div class="row">
             <div class="col-12">
                 {% if config['inventory']['adSpace']['banner'][1] is defined %}
-                    <div class="j-adslot u-desktop-margin-bottom-60 u-tablet-margin-bottom-40 u-mobile-margin-bottom-30" id="{{config['inventory']['adSpace']['banner'][2]}}" data-adshape="banner"></div>
+                    <div class="j-adslot u-desktop-margin-bottom-60 u-tablet-margin-bottom-40 u-mobile-margin-bottom-30" id="{{config['inventory']['adSpace']['banner'][1]}}" data-adshape="banner"></div>
                 {% endif %}
             </div>
         </div>
@@ -83,7 +84,7 @@
                 {% if limit <= articleCount %}
                     {{ this.render('/partials/ajaxarticles_new.twig', {
                         name            : "section-load",
-                        label           : "",
+                        label           : "+ Load more",
                         buttonClass     : "u-display-none",
                     }) | raw }}
                 {% endif %}
@@ -107,10 +108,10 @@
         Acme.loadMore = new Acme.View.articleFeed({
             model           : new Card(),
             container       : 'loadmore',
-            infinite        : true,
+            infinite        : false,
             label           : false,
-            limit           : 12,
-            offset          : 12,
+            limit           : 6,
+            offset          : 6,
             blogid          : '{{blogData['guid']}}',
             name            : 'section-load', //name of the search button
             card_class      : 'card-12-mobile card-12-tablet card-12-desktop card-12-desktop-lg col-12 col-md-6 col-lg-4',

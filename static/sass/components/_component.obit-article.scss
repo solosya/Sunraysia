@@ -183,6 +183,7 @@
     @include font-size(12);
     line-height: 1.17;
     color: $grey-text;
+    margin-top: 20px;
     >a{
         color: $grey-text;
         &:hover{

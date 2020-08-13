@@ -42,174 +42,61 @@
 {% set dev = _AppHelper.getApplicationEnv() == 'DEV' ? false : false %}
 
 
-<div class="c-centenary-banner">
-    <a href="{{networkData.defaultBlogUrl}}/your-100-years">
-        <p class="c-centenary-banner__title">— Your 100 Years —</p>
-        <p class="c-centenary-banner__subtitle">of Sunraysia Daily</p>
-    
-        <div class="c-centenary-banner__img">
-            
-        </div>
-    </a>
-</div>
 
-{% if config['inventory']['adSpace']['skyscraper'][0] is defined %}
-    <div class="advertisment__skycontainer j-skycontainer">
-        
-            <div class="j-adslot j-adslot-skyscraper advertisment__skyscraper advertisment__skyscraper--left advertisment__skyscraper--absolute" id="{{config['inventory']['adSpace']['skyscraper'][0]}}" data-adshape="skyscraper"></div>
-        
 
-        {% if config['inventory']['adSpace']['skyscraper'][1] is defined %}
-            <div class="j-adslot j-adslot-skyscraper advertisment__skyscraper advertisment__skyscraper--right advertisment__skyscraper--absolute" id="{{config['inventory']['adSpace']['skyscraper'][1]}}" data-adshape="skyscraper"></div>
-        {% endif %}
-    </div>
-{% endif %}
 
-<main id="main" class="site-main c-centenary-section__background" role="main" data-article-limit="{{limit}}" data-article-count="{{articles | length}}" data-ref="{{blogData.guid}}">
+<main id="main" class="site-main c-obit-section__background" role="main" data-article-limit="{{limit}}" data-article-count="{{articles | length}}" data-ref="{{blogData.guid}}">
     
     <div class="container">
 
-        <div class="row">
-            <div class="col-12">
-                {% if config['inventory']['adSpace']['banner'][1] is defined %}
-                    <div class="j-adslot u-desktop-margin-bottom-100 u-tablet-margin-bottom-40 u-mobile-margin-bottom-30" id="{{config['inventory']['adSpace']['banner'][1]}}" data-adshape="banner"></div>
-                {% endif %}
-            </div>
-        </div>
+        <div class="row justify-content-center">
+            <div class="col-12 col-lg-9">
 
-        
+                <div class="row">
+                    <div class="col-12">
+                        <h1 class="c-obit-section__header">In Loving Memory</h1>
+                    </div>
+                </div>
 
-        <div class="row">
-            <div class="col-12">
-                <h1 class="c-centenary-section__header">{{ _Blog.getBlogTitle() }}</h1>
-            </div>
-        </div>
+                <div class="row">
+                    <div class="col-12 col-lg-6">
+                        <p class="c-obit-section__infohead u-margin-bottom-25">Let us help commemorate your loved ones by turning their stories into everlasting memories.</p>
+                        <p class="c-obit-section__infotext u-margin-bottom-40">Our “In Loving Memory” service is a beautiful way to share your loved one’s story, it will be writte  by an experienced journalist. You have a choice of a half or full page story that will be publised in the newspaper and it will also be published online.</p>
+                        <a href="{{networkData.defaultBlogUrl}}/in-loving-memory-submit-form" target="_blank"><div class="c-obit-section__infobutton">Make an Enquiry</div></a>
+                        <img class="u-margin-top-50 d-md-none d-lg-block" src="{{networkData.templatePath}}/static/images/ilm-1.jpg">
+                    </div>
 
-        {# <div class="d-none">
-            {{_AppHelper.printArray(articlesArr)}}
-        </div> #}
+                    <div class="col-12 col-lg-6 d-md-none d-lg-block">
+                    <img class="u-mobile-margin-top-30 c-obit-section__infoimage" src="{{networkData.templatePath}}/static/images/ilm-2.jpg">
+                    </div>
 
+                    <div class="col-12 col-lg-6 d-none d-md-block d-lg-none">
+                        <div class="row">
+                            <div class="col-7">
+                                <img class=" c-obit-section__infoimage" src="{{networkData.templatePath}}/static/images/ilm-1.jpg">
+                            </div>
+                            <div class="col-5">
+                                <img src="{{networkData.templatePath}}/static/images/ilm-2.jpg">
+                            </div>
+                        </div>
+                    </div>
+
+                </row>
+
+
+                
+
+                <div class="row">
+                    <div class="col-12">
+                        {% if config['inventory']['adSpace']['banner'][1] is defined %}
+                            <div class="j-adslot u-desktop-margin-bottom-60 u-tablet-margin-bottom-40 u-mobile-margin-bottom-30" id="{{config['inventory']['adSpace']['banner'][1]}}" data-adshape="banner"></div>
+                        {% endif %}
+                    </div>
+                </div>
 
        
-                
-        <div class="row">
-
-
-                {% set initOrder = [1,3] %}
-                 {% for i in 1..2 if articles[articleCount] %}   
-                    <div class="col-12 col-md-6 col-lg-4 order-md-{{initOrder[i]}} order-lg-{{i}}">                                                             
-                        {{this.render('partials/_single-article.twig', {
-                            article: articles[articleCount], 
-                            position: (articleCount+1),
-                            imageSize: {width: 615, height: 399},
-                            containerClass: "card-12-mobile card-12-tablet card-12-desktop card-12-desktop-lg"
-                        }) | raw}}
-                        {% set articleCount = (dev) ? articleCount : articleCount + 1 %}
-                    </div>
-                {% endfor %}
-
-                <div class="col-12 col-md-6 col-lg-4 order-md-2 order-lg-3">
-                    {% if config['inventory']['adSpace']['mrec'][0] is defined %}
-                        <div class="j-adslot c-centenary-section__mrec u-desktop-margin-top-100 u-tablet-margin-top-100" id="{{config['inventory']['adSpace']['mrec'][0]}}" data-adshape="mrec"></div>
-                    {% endif %}
-                </div>
-           
-            
-
-            
-                {% for i in 4..6 if articles[articleCount] %}   
-                    <div class="col-12 col-md-6 col-lg-4 order-md-{{i}}">                                                             
-                        {{this.render('partials/_single-article.twig', {
-                            article: articles[articleCount], 
-                            position: (articleCount+1),
-                            imageSize: {width: 615, height: 399},
-                            containerClass: "card-12-mobile card-12-tablet card-12-desktop card-12-desktop-lg"
-                        }) | raw}}
-                        {% set articleCount = (dev) ? articleCount : articleCount + 1 %}
-                    </div>
-                {% endfor %}
-           
-
-            
-        </div>
-        <div class="row">
-            <div class="col-12">
-                {% if config['inventory']['adSpace']['banner'][2] is defined %}
-                    <div class="j-adslot u-desktop-margin-bottom-60 u-tablet-margin-bottom-40 u-mobile-margin-bottom-30" id="{{config['inventory']['adSpace']['banner'][2]}}" data-adshape="banner"></div>
-                {% endif %}
             </div>
         </div>
-
-        <div class="row">
-            
-
-           
-                {% for i in 0..5 if articles[articleCount] %}   
-                 <div class="col-12 col-md-6 col-lg-4">                                                             
-                    {{this.render('partials/_single-article.twig', {
-                        article: articles[articleCount], 
-                        position: (articleCount+1),
-                        imageSize: {width: 615, height: 399},
-                        containerClass: "card-12-mobile card-12-tablet card-12-desktop card-12-desktop-lg"
-                    }) | raw}}
-                    {% set articleCount = (dev) ? articleCount : articleCount + 1 %}
-                    </div>
-                {% endfor %}
-            
-        </div>
-
-        <div class="row">
-            <div class="col-12">
-                {% if config['inventory']['adSpace']['banner'][3] is defined %}
-                    <div class="j-adslot u-desktop-margin-bottom-60 u-tablet-margin-bottom-40 u-mobile-margin-bottom-30" id="{{config['inventory']['adSpace']['banner'][3]}}" data-adshape="banner"></div>
-                {% endif %}
-            </div>
-        </div>
-
-        <div id="loadmore" class="row">
-            
-        </div>
-
-
-        <div class="row">
-            <div class="col-12">
-                {% if limit <= articleCount %}
-                    {{ this.render('/partials/ajaxarticles_new.twig', {
-                        name            : "section-load",
-                        label           : "",
-                        buttonClass     : "u-display-none",
-                    }) | raw }}
-                {% endif %}
-
-                </div>
-        </div>
-
-
     </div>
     <div class="j-keyword-cont" data-keywords="{{blogData.keywords}}" data-pageName="{{blogData.title}}" data-pageType="section" data-pageTags=""></div>
 </main>
-
-
-
-
-<script>
-    // main script is defered so event listener makes sure
-    // defered script is loaded before this runs
-
-    document.addEventListener("DOMContentLoaded", function() {
-        Acme.loadMore = new Acme.View.articleFeed({
-            model           : new Card(),
-            container       : 'loadmore',
-            infinite        : true,
-            label           : false,
-            limit           : 12,
-            offset          : 12,
-            blogid          : '{{blogData['guid']}}',
-            name            : 'section-load', //name of the search button
-            card_class      : 'card-12-mobile card-12-tablet card-12-desktop card-12-desktop-lg col-12 col-md-6 col-lg-4',
-            non_pinned      : {{articleCount}}
-
-        });
-
-    });
-</script>

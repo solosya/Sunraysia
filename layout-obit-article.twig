@@ -162,7 +162,11 @@
                     <div class="c-article__main c-obit-article__main">
                         <div class="c-article__head c-obit-article__head">
                             <div class="c-obit-article__intro ">
-                                {{article.additionalInfo.intro}}
+                                {% if article.additionalInfo.intro != '' %}
+                                    {{article.additionalInfo.intro}}
+                                {% else %}
+                                    In Loving Memory
+                                {% endif %}
                             </div>
                             <hr class="">
                             <div class="c-obit-article__logo u-margin-bottom-10 ">
