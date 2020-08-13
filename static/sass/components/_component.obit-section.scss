@@ -83,7 +83,9 @@
         @include font-size(12);
         line-height: 1.17;
         color: $grey-text;
-        float: right;
+        @media #{$desktop-up}{
+            float: right;
+        }
         >a{
             color: $grey-text;
             &:hover{

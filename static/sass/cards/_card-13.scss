@@ -3,7 +3,7 @@
     margin-right: -20px;
     .c-cards-view {
         @include flex-direction(column, vertical);
-
+        background-color: white;
         &__media{
             &--gallery{
                 &:before{
@@ -109,6 +109,12 @@
     @media #{$desktop} {
         @include card-13-tablet-base();
         @include card-name("C13 desktop");
+        .c-cards-view {
+            &__media {
+                @include flex-width(250px);
+                
+            }
+        }
     }
 }
 
