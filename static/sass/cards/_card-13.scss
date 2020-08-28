@@ -109,12 +109,12 @@
     @media #{$desktop} {
         @include card-13-tablet-base();
         @include card-name("C13 desktop");
-        .c-cards-view {
-            &__media {
-                @include flex-width(250px);
+        // .c-cards-view {
+        //     &__media {
+        //         @include flex-width(250px);
                 
-            }
-        }
+        //     }
+        // }
     }
 }
 
