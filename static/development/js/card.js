@@ -100,6 +100,7 @@ Card.prototype.renderCard = function(card, options)
             title       : card.title,
             content     : articleContent,
             author      : card.createdBy.displayName,
+            blogTitle   : card.blogTitle,
             publishDate : card.publishDate,
             videoClass  : card.featuredMedia['type'] == 'video' ? 'c-cards-view__media--video' : '',
             hasMedia    : card.hasMedia,
