@@ -95,7 +95,11 @@
 
 
     </div>
-    <div class="j-keyword-cont" data-keywords="{{blogData.keywords}}" data-pageName="{{blogData.title}}" data-pageType="section" data-pageTags=""></div>
+    {% set adSection = blogData.title %}
+    {% if blogData.parentBlog.title is defined and blogData.parentBlog.title != '' %}
+        {% set adSection = blogData.parentBlog.title %}
+    {% endif %}
+    <div class="j-keyword-cont" data-keywords="{{blogData.keywords}}" data-pageName="{{adSection}}" data-pageType="section" data-pageTags=""></div>
 </main>
 
 
