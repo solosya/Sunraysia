@@ -18285,6 +18285,7 @@ var cardTemplateTop =
         data-id="{{params.id}}" \
         data-guid="{{params.guid}}" \
         data-position="{{position}}" \
+        data-blog-title="{{params.blogTitle}}" \
         data-social={{params.social}} \
         data-article-image="{{{image}}}" \
         data-article-text="{{params.title}}" \
@@ -19261,6 +19262,7 @@ Card.prototype.renderCard = function(card, options)
             title       : card.title,
             content     : articleContent,
             author      : card.createdBy.displayName,
+            blogTitle   : card.blogTitle,
             publishDate : card.publishDate,
             videoClass  : card.featuredMedia['type'] == 'video' ? 'c-cards-view__media--video' : '',
             hasMedia    : card.hasMedia,

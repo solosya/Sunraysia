@@ -50,6 +50,7 @@ var cardTemplateTop =
         data-id="{{params.id}}" \
         data-guid="{{params.guid}}" \
         data-position="{{position}}" \
+        data-blog-title="{{params.blogTitle}}" \
         data-social={{params.social}} \
         data-article-image="{{{image}}}" \
         data-article-text="{{params.title}}" \
