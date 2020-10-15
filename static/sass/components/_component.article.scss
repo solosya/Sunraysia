@@ -87,6 +87,31 @@
         height:14px;
     }
 
+
+    &__social-links {
+        @include flexbox();
+        @include align-items(baseline);
+        @include justify-content(flex-end);
+        min-width: 180px;
+        @media #{$mobile} {
+            margin-top:10px;
+            @include justify-content(flex-start);
+
+        }
+    }
+
+    &__social-link {
+        margin-left:15px;
+        &:first-child {
+            margin-left:0;
+        }
+        @media #{$mobile} {
+            margin-left:0;
+            margin-right:15px;
+        }
+    }
+
+
     &__title {
         color: $black;
         font-family: $primaryFont;
@@ -101,7 +126,7 @@
     &__published {
         color: $greyish;
         font-family: $primaryFont;
-        @include font-size(10);
+        @include font-size(12);
         line-height: 1.5;
         font-weight: $weightMedium;
         letter-spacing: normal;
@@ -133,14 +158,21 @@
     }
 
     &__posted-by {
+        @include flexbox();
         margin-bottom: 14px;
+        margin-top:10px;
         border-bottom: 1px solid $offwhite;
         padding-bottom:20px;
+        @media #{$mobile} {
+            @include flex-direction(column, vertical);
+        }
+
     }
 
     &__author {
         @include font-size(12);
         text-transform: uppercase;
+        flex-grow:1;
     }
 
     &__author-name {
@@ -148,7 +180,7 @@
         font-family: $primaryFont;
         font-weight: $weightMedium;
         line-height: 1.15;
-        @include font-size(10);
+        @include font-size(12);
 
     }
 
