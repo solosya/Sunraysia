@@ -1,120 +1,121 @@
-<!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-17484367-1"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'UA-17484367-1');
-</script>
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-MVZGLHG');</script>
+<!-- End Google Tag Manager -->
+
+
 
 <!-- Google AD Code here -->
 <script async='async' src='https://www.googletagservices.com/tag/js/gpt.js'></script>
 <script>
-  var googletag = googletag || {};
-  googletag.cmd = googletag.cmd || [];
+var googletag = googletag || {};
+googletag.cmd = googletag.cmd || [];
 </script>
 
 <script async="async">
-     // main script is defered so event listener makes sure
-    // defered script is loaded before this runs
-    document.addEventListener("DOMContentLoaded", function(event) {
-        // declare the ad server and overall inventory name
-        var idNo = '/21847672778/sunraysia.daily'
-        // var idNo = '/21847672778/guardian'
-        // var idNo = '/21847672778/gannawarra.times'
-        //get data from the page about what kind of page it is
-         //get data from the page about what kind of page it is
-        var keywordCont = document.getElementsByClassName('j-keyword-cont');
-        var keyword = '';
-        var pageName = '';
-        var pageType = '';
-        var pageTag  = '';
-        var slotsToPush = [];
-        //set values of the page if the data items exist
-        if (keywordCont[0]){
-            keyword = keywordCont[0].dataset.keyword;
-            pageName = keywordCont[0].dataset.pagename.replace(/ /g,"_");
-            pageType = keywordCont[0].dataset.pagetype;
-            pageTag  = keywordCont[0].dataset.pagetag;
-        }
-        
-        
-        //find all the adslots on the page
-        var adSlots = document.querySelectorAll('.j-adslot,.j-adslot-filled');
-        //start the google ad code
+ // main script is defered so event listener makes sure
+// defered script is loaded before this runs
+document.addEventListener("DOMContentLoaded", function(event) {
+    // declare the ad server and overall inventory name
+    var idNo = '/21847672778/sunraysia.daily'
+    // var idNo = '/21847672778/guardian'
+    // var idNo = '/21847672778/gannawarra.times'
+    //get data from the page about what kind of page it is
+     //get data from the page about what kind of page it is
+    var keywordCont = document.getElementsByClassName('j-keyword-cont');
+    var keyword = '';
+    var pageName = '';
+    var pageType = '';
+    var pageTag  = '';
+    var slotsToPush = [];
+    //set values of the page if the data items exist
+    if (keywordCont[0]){
+        keyword = keywordCont[0].dataset.keyword;
+        pageName = keywordCont[0].dataset.pagename.replace(/ /g,"_");
+        pageType = keywordCont[0].dataset.pagetype;
+        pageTag  = keywordCont[0].dataset.pagetag;
+    }
+    
+    
+    //find all the adslots on the page
+    var adSlots = document.querySelectorAll('.j-adslot,.j-adslot-filled');
+    //start the google ad code
 
-        googletag.cmd.push(function() {
-            //declare mapping variables
-            var mappingBanner = googletag.sizeMapping()
-                            .addSize([1000, 200], [[970, 250], [970, 90], [728, 90]])
-                            .addSize([768, 200], [[680, 90]])
-                            .addSize([480, 200], [[320, 50]])
-                            .addSize([360, 400], [[320, 50]])
-                            .addSize([320, 400], [[320, 50]])
-                            .build();
-            var mappingMrec = googletag.sizeMapping()
-                            .addSize([320, 400], ['fluid',[300, 250]])
-                            .build();
-            var mappingHpage = googletag.sizeMapping()
-                            .addSize([1000, 200], [[300, 600],'fluid',[300, 250]])
-                            .addSize([320, 400], [[300, 250]])
-                            .build();
-            var mappingSky = googletag.sizeMapping()
-                            .addSize([1650, 200], [[160, 600],[120,600]])
-                            .addSize([0, 0], [])
-                            .build();
-            var mappingTag = googletag.sizeMapping()
-                            .addSize([0, 0], [[1, 1]])
-                            .build();                
-            //cycle through the ad slots on the page and define the associated google slot
-            for (var i = 0; i< adSlots.length; i++){
-                var theId = adSlots[i].id;
-                var slotId = 'div-gpt-ad-'+theId;
-                //find the ad shape
-                var theSlot = document.getElementById(theId);
-                var slotType = theSlot.dataset.adshape;
+    googletag.cmd.push(function() {
+        //declare mapping variables
+        var mappingBanner = googletag.sizeMapping()
+                        .addSize([1000, 200], [[970, 250], [970, 90], [728, 90]])
+                        .addSize([768, 200], [[680, 90]])
+                        .addSize([480, 200], [[320, 50]])
+                        .addSize([360, 400], [[320, 50]])
+                        .addSize([320, 400], [[320, 50]])
+                        .build();
+        var mappingMrec = googletag.sizeMapping()
+                        .addSize([320, 400], ['fluid',[300, 250]])
+                        .build();
+        var mappingHpage = googletag.sizeMapping()
+                        .addSize([1000, 200], [[300, 600],'fluid',[300, 250]])
+                        .addSize([320, 400], [[300, 250]])
+                        .build();
+        var mappingSky = googletag.sizeMapping()
+                        .addSize([1650, 200], [[160, 600],[120,600]])
+                        .addSize([0, 0], [])
+                        .build();
+        var mappingTag = googletag.sizeMapping()
+                        .addSize([0, 0], [[1, 1]])
+                        .build();                
+        //cycle through the ad slots on the page and define the associated google slot
+        for (var i = 0; i< adSlots.length; i++){
+            var theId = adSlots[i].id;
+            var slotId = 'div-gpt-ad-'+theId;
+            //find the ad shape
+            var theSlot = document.getElementById(theId);
+            var slotType = theSlot.dataset.adshape;
 
-                //set the POS
-                var pos = [];
-                var pos = [theId.slice(-1),''];
-                // if size and mapping needs to be set for the shape set it here
-                var sizes = [0,0];
-                var mapping = mappingTag;
-                if (slotType == 'banner'){
-                    sizes = [[970,250],[970,90],[728,90],[680,90],[320,50]];
-                    mapping = mappingBanner;
-                    if (pos[0] == '1'){
-                        pos[1] = 'masthead';
-                    } 
-                } else if (slotType == 'mrec'){
-                    sizes = [[970,250],[970,90],[728,90],[680,90],[320,50]];
-                    mapping = mappingMrec;
-                } else if (slotType == 'hpage' || slotType == 'side-fix'){
-                    sizes = [[300,600],'fluid', [300,250]];
-                    mapping = mappingHpage;
-                } else if (slotType == 'skyscraper'){
-                    sizes = [[160, 600],[120,600]];
-                    mapping = mappingSky;
-                }
-                googletag.pubads().enableSingleRequest();
-                googletag.pubads().setTargeting('section', [pageName])
-                        .setTargeting('keyword', [keyword])
-                        .setTargeting('page-type', [pageType])
-                        .setTargeting('tag', [pageTag]);
-                googletag.pubads().collapseEmptyDivs();
-                googletag.enableServices();
-                //define the slot with all required data
-                googletag.defineSlot(idNo, sizes, slotId)
-                    .setTargeting('POS', pos)
-                    .defineSizeMapping(mapping)
-                    .addService(googletag.pubads());
-
-                
-                
-                if (theSlot.innerHTML != ""){
-                    googletag.cmd.push(function() { googletag.display(slotId); });
-                }
+            //set the POS
+            var pos = [];
+            var pos = [theId.slice(-1),''];
+            // if size and mapping needs to be set for the shape set it here
+            var sizes = [0,0];
+            var mapping = mappingTag;
+            if (slotType == 'banner'){
+                sizes = [[970,250],[970,90],[728,90],[680,90],[320,50]];
+                mapping = mappingBanner;
+                if (pos[0] == '1'){
+                    pos[1] = 'masthead';
+                } 
+            } else if (slotType == 'mrec'){
+                sizes = [[970,250],[970,90],[728,90],[680,90],[320,50]];
+                mapping = mappingMrec;
+            } else if (slotType == 'hpage' || slotType == 'side-fix'){
+                sizes = [[300,600],'fluid', [300,250]];
+                mapping = mappingHpage;
+            } else if (slotType == 'skyscraper'){
+                sizes = [[160, 600],[120,600]];
+                mapping = mappingSky;
             }
-        });
+            googletag.pubads().enableSingleRequest();
+            googletag.pubads().setTargeting('section', [pageName])
+                    .setTargeting('keyword', [keyword])
+                    .setTargeting('page-type', [pageType])
+                    .setTargeting('tag', [pageTag]);
+            googletag.pubads().collapseEmptyDivs();
+            googletag.enableServices();
+            //define the slot with all required data
+            googletag.defineSlot(idNo, sizes, slotId)
+                .setTargeting('POS', pos)
+                .defineSizeMapping(mapping)
+                .addService(googletag.pubads());
+
+            
+            
+            if (theSlot.innerHTML != ""){
+                googletag.cmd.push(function() { googletag.display(slotId); });
+            }
+        }
     });
+});
 </script>
