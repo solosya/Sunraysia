@@ -51,51 +51,20 @@
         position:absolute;
     }
 
-    // .horizontal-form {
-    //     width:100%;
-    // }
-    // .account-form__group {
-    //     @include flexbox;
-    //     @include align-items(flex-start);
-    //     @include align-content(flex-start);
-    //     @include justify-content(flex-start);
-    //     @include flex-direction(column, vertical);
-        
-    //     @include responsive(sm) {
-    //         @include align-items(center);
-    //         @include flex-direction(row, horizontal);
-    //     }
-        
-    //     &:last-child, &:only-child {
-    //         margin-bottom:0px;
-    //     }
-    // }
-    // .account-form__control-label {
-    //     width:100%;
-    //     flex:0 0 100%;
-    //     max-width:100%;
-    //     color: $greyish;
-    //     margin-bottom:7px;
-    //     @include font-size(14);
-    //     line-height:1.5;
-    //     font-weight:$weightBold;
-        
-    //     @include responsive(sm) {
-    //         width:130px;
-    //         flex:0 0 130px;
-    //         max-width:130px;
-    //         margin-bottom:0;
-    //     }
-    // }
-    // .account-form__input-text {
-    //     color:$black;
-    //     margin-bottom:0px;
-    //     @include font-size(14);
-    //     line-height:1.5;
-    //     font-weight:$weightRegular;
-    // }
-
-
+    
+    &__note-credit-card {
+        @include font-size(15);
+        font-weight: 500;
+        color:black;
+        margin-bottom: 10px;
+    }
+    &__note-faq {
+        @include font-size(12);
+        font-style: italic;
+        line-height: 1.33;
+        color: #595859;
+      
+    }
     
     &__Search {
         width:100%;
@@ -148,88 +117,7 @@
             }
         }
         
-        // .close {
-        //     @extend .x-close;
-        // }
             
 
     }
 }
-
-
-
-
-
-// .c-myAccount {
-//     .account-form__group.fullwidth {
-//         @include align-items(flex-start);
-//         @include align-content(flex-start);
-//         @include justify-content(flex-start);
-//         @include flex-direction(column, vertical!important);
-        
-//         @include responsive(sm) {
-            
-//         }
-            
-//         label {
-//             width:100%;
-//             flex:0 0 100%;
-//             max-width:100%;
-//             margin-bottom:10px;
-//         }
-//         .three-column {
-//             width:100%;
-//             @include flexbox;
-//             @include align-items(center);
-//             @include align-content(flex-start);
-//             @include justify-content(flex-start);
-//             @include flex-direction(row, horizontal);
-//         }
-//         .account-form__input-text {
-//             width:100%;
-//             max-height:44px;
-//         }
-//         .w490 {
-//             width:60%;
-//             flex:0 0 60%;
-//             max-width:60%;
-//             @include flexbox;
-            
-//             @include responsive(sm) {
-//                 width:60%;
-//                 flex:0 0 60%;
-//                 max-width:60%;
-//             }
-//         }
-//         .w85 {
-//             width:20%;
-//             flex:0 0 20%;
-//             max-width:20%;
-//             @include flexbox;
-//             padding-left:10px;
-            
-//             @include responsive(sm) {
-//                 width:20%;
-//                 flex:0 0 20%;
-//                 max-width:20%;
-//                 padding-left:15px;
-//             }
-//         }
-        
-//         .w450, .w70 {
-//             .account-form__input-text {
-//                 width:100%;
-//                 max-height:44px;
-//             }
-//         }
-//     }
-
-//     .c-myAccount__Subscription {
-//         .account-form__group {
-//             @include responsive(sm) {
-//                 @include align-items(flex-start);
-//             }
-//         }
-//     }
-// }
-

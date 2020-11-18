@@ -1,0 +1,314 @@
+/* Begin header style */
+
+.c-button {
+    border: none;
+    outline: none;
+    background: none;
+    cursor: pointer;
+    padding: 10px 14px;
+    display: inline-block;
+    border: 1px solid $transparent;
+    @include font-size(12);
+    line-height: 1.5;
+    @include transition(all 0.3s ease);
+    min-width: 120px;
+    text-align: center;
+    height: 40px;
+    outline:0;
+    font-weight: $weightBold;
+    // @include flexbox();
+    // @include align-items(center);
+    // @include justify-content(center);
+    text-transform: uppercase;
+    
+    &:focus {
+        outline:none;
+    }
+
+    &--block {
+        width: $viewportSize;
+        display: block;
+    }
+
+    &--inline {
+        display:inline-block;
+    }
+
+    &--rounded {
+        @include border-radius(25px);
+    }
+
+    &--radius {
+        @include border-radius(4px);
+    }
+    
+    &--md {
+        height: auto;
+        @include padding(12 30);
+    }
+
+    &--blue {
+        color: $white;
+        border-color: $blue;
+        background-color: $blue;
+        font-weight: $weightBold;
+        &:hover {
+            color: $white;
+            border-color: $blue_sh1;
+            background-color: $blue_sh1;
+        }
+
+        &-bordered {
+            color: $blue;
+            border-color: $black_sh3;
+            background-color: $white;
+            font-weight: $weightBold;
+            &:hover {
+                color: $white;
+                border-color: $blue_sh1;
+                background-color: $blue_sh1;
+            }
+        }
+    }
+
+    &--info {
+        color: $white;
+        border-color: $info;
+        background-color: $info;
+
+        &:hover {
+            color: $white;
+            border-color: darken($info, 10%);
+            background-color: darken($info, 10%);
+        }
+
+        &-bordered {
+            color: $info;
+            border-color: $info;
+            background-color: $white;
+
+            &:hover {
+                color: $white;
+                border-color: darken($info, 10%);
+                background-color: darken($info, 10%);
+            }
+        }
+    }
+    
+    &--red {
+        color: $white;
+        border-color: $error;
+        background-color: $error;
+
+        &:hover {
+            color: $white;
+            border-color: $blackred;
+            background-color: $blackred;
+        }
+
+        &--bordered {
+            color: $error;
+            border-color: $greyish;
+            background-color: transparent;
+
+            &:hover {
+                color: $white;
+                border-color: $blackred;
+                background-color: $blackred;
+            }
+        }
+    }
+
+    &--wtbgred {
+        background: transparent;
+        color:$error;
+        border-color:rgba($greyish, 0.5);
+        &:hover {
+            color: $white;
+            border-color: $error;
+            background-color: $error;
+        }
+
+    }
+    
+
+    &--wtbg {
+        background: transparent;
+        color:$white;
+        border-color: $white;
+        &:hover {
+            color: $white;
+            border-color: $blue_sh1;
+            background-color: $blue_sh1;
+        }
+
+        &-bordered {
+            color: $white;
+            border-color: $white;
+            background: transparent;
+
+            &:hover {
+                color: $white;
+                border-color: $blue_sh1;
+                background-color: $blue_sh1;
+            }
+        }
+    }
+    
+    &--grey {
+        color: $white;
+        border-color: $darkergrey;
+        background-color: $darkergrey;
+        font-weight: $weightRegular;
+
+        &:hover {
+            color: $white;
+            border-color: darken($darkergrey,7.5%);
+            background-color: darken($darkergrey,7.5%);
+        }
+
+        &-bordered {
+            color: $greyish;
+            border-color: $greyish;
+            background-color: $white;
+
+            &:hover {
+                color: $white;
+                border-color: darken($greyish,7.5%);
+                background-color: darken($greyish,7.5%);
+            }
+        }
+    }
+
+    &--lightgrey {
+        color: $white;
+        border-color: $black_sh5;
+        background-color: $black_sh5;
+
+        &:hover {
+            color: $white;
+            border-color: darken($black_sh5,8.5%);
+            background-color: darken($black_sh5,8.5%);
+        }
+
+        &-bordered {
+            color: $black_sh5;
+            border-color: $black_sh5;
+            background-color: $white;
+
+            &:hover {
+                color: $white;
+                border-color: darken($black_sh5,8.5%);
+                background-color: darken($black_sh5,8.5%);
+            }
+        }
+    }
+
+    &--boderwidth1 {
+        border-width: 1px;
+    }
+
+   
+    &--disabled {
+        @include opacity(.5);
+        pointer-events: none;
+    }
+    
+    &--text {
+        height: auto;
+        border: 0px none;
+        text-align: left;
+        min-width: inherit;
+        @include padding(0);
+        text-transform: capitalize;
+        background-color: transparent;
+        @include transition(all 0.3s ease);
+    }
+    
+    &--link-muted {
+        color:$greyish;
+        @include font-size(14);
+        line-height: 1.4;
+        @include transition(all 0.3s ease);
+        
+        svg, .img_svg {
+            color:$greyish;
+            @include transition(all 0.3s ease);
+        }
+        
+        &:hover, &:focus, &:active {
+            color:$blue_sh1;
+            @include opacity(1);
+            
+            svg, .img_svg {
+                color:$blue_sh1;
+            }
+        }
+    }
+
+    &--2line{
+        @media #{$desktop-up}{
+            padding: 2px 14px;
+        }
+    }
+    
+    &:disabled {
+        @include opacity(.5);
+        pointer-events: none;
+        border-color: $greyish;
+        background-color: $greyish;
+    }
+}
+
+.c-button-transparent {
+    color:$black_sh3;
+    cursor:pointer;
+    border:0px none;
+    @include opacity(1);
+    @include font-size(15);
+    background-color:transparent;
+    @include flexbox();
+    text-align: center;
+    @include align-items(center);
+    
+    .icon {
+        color:$black_sh3;
+        @include size(18px);
+        @include opacity(1);
+        text-align:center;
+        @include font-size(14);
+        line-height:25px;
+        @include margin-right(5);
+    }
+
+    &:last-child {
+        .icon {
+            @include margin-left(5);
+            @include margin-right(0);
+        }
+    }
+    &:first-child {
+        .icon {
+            @include margin-left(0);
+            @include margin-right(5);
+        }
+    }
+    
+    &:hover, &:focus, &:active {
+        color:$red;
+        @include opacity(1);
+
+        .icon {
+            color:$red;
+        }
+    }
+    
+    &.selected {
+        .icon {
+            color:$red;
+            @include opacity(1);
+        }
+    }
+}
+
+/* End header style */

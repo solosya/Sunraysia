@@ -1,0 +1,184 @@
+.c-paywalled-article {
+    height: 260px;
+    padding-top: 56px;
+    @include linear-gradient(82deg, #c51515, #4c76c9);
+    
+    @media #{$mobile} {
+        @include linear-gradient(180deg, #c51515, #4c76c9);
+    }
+    &__signup{
+        @include linear-gradient(82deg, #4573cd, #4c76c9);
+        @media #{$mobile} {
+            @include linear-gradient(180deg, #4573cd, #4c76c9);
+        }
+    }
+
+    &__signup{
+        @include linear-gradient(82deg, #4573cd, #4c76c9);
+        @media #{$mobile} {
+            @include linear-gradient(180deg, #4573cd, #4c76c9);
+        }
+    }
+    &__topup{
+        background: #e7e7e7;
+        border-bottom: 28px solid $error;
+    }
+
+    @media #{$tablet} {
+        height: 235px;
+        padding-top: 35px;
+    }
+
+    @media #{$mobile} {
+        height:auto;
+        padding: 30px;
+        padding-top: 37px;
+    }
+
+
+    &__container {
+        @include flexbox();
+        @include flex-direction(row, horizontal);
+        width:100%;
+        @media #{$mobile} {
+            @include flex-direction(column, vertical);
+        }
+    }
+
+
+
+    &__publication {
+        font-family: $base-font-family;
+        @include font-size(14);
+        color: $white;
+        font-weight: $weightBold;
+        text-transform: uppercase;
+        margin-bottom: 7px;
+        &--topup{
+            color: $greyish;
+        }
+
+        @media #{$tablet} {
+            margin-bottom: 20px;
+        }
+
+        @media #{$mobile} {
+            margin-bottom: 17px;
+        }
+
+    }
+
+    &__text {
+        font-family: $base-font-family;
+        @media #{$desktop-lg} {
+            max-width: 590px;
+            margin-right: 180px;
+        }
+        @media #{$desktop} {
+            max-width: 590px;
+            margin-right: 135px;
+        }
+        @media #{$tablet} {
+            max-width: 430px;
+            margin-right: 50px;
+        }
+        &--topup{
+                max-width: 700px;
+                
+            
+            
+        }
+
+    }
+
+    
+    &__title {
+        font-family: $base-font-family;
+        @include font-size(39);
+        color: $white;
+        line-height: 1.10;
+        font-weight: $weightBold;
+        margin-bottom: 15px;
+
+        @media #{$tablet} {
+            @include font-size(28);
+        }
+
+        @media #{$mobile} {
+            @include font-size(24);
+            line-height:1.4;
+        }
+        &--topup{
+            color: $error;
+        }
+        &--underline{
+            text-decoration: underline;
+            color: inherit;
+            &:hover{
+                color: $error;
+            }
+        }
+
+    }
+    &__subscriptions {
+        font-family: $base-font-family;
+        @include font-size(18);
+        color: $white;
+        line-height: 1.13;
+        font-weight:$weightLight;
+
+        @media #{$mobile} {
+            display:block;
+            margin-bottom:20px;
+            font-weight:$weightLight;
+        }
+        &--topup{
+            color: $black;
+        }
+        &--underline{
+            text-decoration: underline;
+            color: inherit;
+            &:hover{
+                color: $error;
+            }
+        }
+
+    }
+
+
+    &__action {
+        font-family: $base-font-family;
+        width:220px;
+        padding-top:27px;
+
+        @media #{$mobile} {
+            width:100%;
+        }
+
+    }
+
+    &__period {
+        font-family: $base-font-family;
+        color: $greyish;
+        font-family: $weightLight;
+        @include font-size(15);
+        line-height: 1.6;
+        font-weight: $weightRegular;
+        @include margin-bottom(30);
+        letter-spacing: normal;
+
+        a {
+            display: block;
+            @include font-size(12);
+            text-decoration: underline;
+            @include margin-top(14);
+            color: $greyish;
+            font-family: $primaryFont;
+        }
+    }
+
+    &__button {
+        width:100%;
+    }
+
+}

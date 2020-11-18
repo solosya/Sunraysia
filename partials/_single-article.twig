@@ -7,6 +7,7 @@
 {% set swap          = swap          is defined and swap == 'false'         ? ''        : 'swap'  %}
 {% set dev           = dev           is defined and dev == true             ? true      : false   %}
 {% set inline        = inline        is defined and inline != ''            ? inline    : ''      %}
+{% set amp           = amp           is defined and amp == true             ? true      : false   %}
 
 {# This can add a prefix to the card class to segregate its styles #}
 {% set cardType      = cardType      is defined and cardType != ''          ? cardType  : ''      %}
@@ -96,12 +97,16 @@
     {% if article.titlePreview is defined and article.titlePreview != "" %}
         {% set articleTitle = quotes.smarten(article.titlePreview) %}
     {% endif %}
+
     {% if setUrl is defined and setUrl != "" %}
         {% set articleUrl = setUrl %}
     {% else %}
         {% set articleUrl = article.externalUrl != "" ? article.externalUrl : article.url %}
     {% endif %}
 
+    {% if amp == true %}
+        {% set articleUrl = articleUrl ~ '?amp=1' %}
+    {% endif %}
 
     {% set params = {
         imageSuppress   : imageSuppress,
@@ -217,7 +222,7 @@
         </article>
 
         {# Article admin buttons to delete/edit/pin #}
-        {% if article.userHasBlogAccess == '1' and swap != '' %}
+        {% if article.userHasBlogAccess == '1' and swap != '' and amp != true %}
             {{ this.render('_article_admin.twig', {
                 article  : article, 
                 position : position, 

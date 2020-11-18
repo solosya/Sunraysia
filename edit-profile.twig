@@ -300,6 +300,8 @@
                 <div id="plans" class="row u-margin-top-60" style="{{planStyle}}" data-card-details="{{cardSupplied}}">
                     <div class="col-12">
                         <h2 class="c-myAccount__head">Choose subscription</h2>
+                        <p class="c-myAccount__note-credit-card">Basic members need to add credit card details below and click Update, before changing plan.</p>
+
                         {% if userManager == true or pwstats['user_role']['IsSystemAdmin'] %}
 
 
@@ -384,7 +386,7 @@
                             </div>
                                 
                         {% endif %}
-
+                        <p class="c-myAccount__note-faq u-margin-top-10">Need help with your account? Read our <a href="{{networkData.defaultBlogUrl}}/faq">FAQ</a> here.</p>
                     </div>
                 </div>
 
@@ -398,7 +400,7 @@
                         <form id="update-card-form" action="/update" method="post">
                             <div class="">
                                 <h2 class="c-myAccount__head">Credit card details</h2>
-
+                                <p class="c-myAccount__note-credit-card">To add a new card, complete these fields and click Update.</p>
                                 <div class="three-column">
                                     <div id="card-element">
                                     <!-- a Stripe Element will be inserted here. -->
