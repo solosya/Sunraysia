@@ -3,9 +3,93 @@
 
 {% set network = _Network.getNetworkData() %}
 {% set publisher = {height: 60, width: 600, name: network.title, logo: ''} %}
+{% set profileImg = _Media.getMediaUrl(article.createdBy['media'], 100, 100, {radius: 'max', gravity: 'face', 'crop': 'thumb', type: 'user'}) %}
+
 {% if network.logoMedia | length > 0 %}
     {% set publisher = publisher|merge({logo:_Media.getMediaUrl(network.logoMedia, publisher.width, publisher.height, {'crop': 'lpad'} )})%}
 {% endif %}
+
+
+
+{% set showPaywall = false %}
+{% set ArticleContent = article.content %}
+
+{% set pwstats = {} %}
+{% if not _User.isGuest() %}
+    {% set pwstats = _User.getPaywallStats(false) %}
+{% endif %}
+
+
+
+
+{% set paywallType = "" %}
+{% if not _User.isAdminUser() and article.showPaywall == true %}
+
+    {% set showPaywall = true %}
+    
+    {# DETERMINE IF PAYWALL IS 'PAID' OR 'FREE' #}
+    {% if articleBlogInfo['paywallAllowSignupOnly'] == true %}
+        {# TURN FREE PAYWALL OFF FOR LOGGED IN USERS AND SET FREE PAYWALL TO SHOW #}
+        
+        {% if not _User.isGuest() %}
+            {% set showPaywall = false %}
+        {% else %}
+            {% set paywallType = "signup" %}
+        {% endif %}
+
+        
+    {% else %}
+        {# DETERMINE WHICH PAYWALL TO SHOW #}
+        {% if not _User.isGuest() %}
+
+            {% if pwstats['type'] == 'article' %}
+                {% set paywallType = "topup" %}
+            {% elseif pwstats['type'] == 'time' %}
+                {% set paywallType = "renew" %}
+            {% else %}
+                {% set paywallType = "upgrade" %}
+            {% endif %}
+
+        {% else %}
+            {% set paywallType = "subscribe" %}
+        {% endif %}
+    {% endif %}
+{% endif %}
+
+
+
+{# {% set showPaywall = true %}
+{% set paywallType = "signup" %} #}
+
+
+
+
+{% set trialToggle = false %}
+
+{% if showPaywall == true %}
+    {% set storySplit = ArticleContent | split('</p>')  %}
+    {% set para2      = storySplit[1] | slice(0, 200) ~ '</p>'  %}
+    {% set ArticleContent  = [storySplit[0], para2] | join('</p>') %}
+
+{% endif %}
+
+{% if showPaywall == false %}
+    {% set recentArticles = _Article.getRecentArticles({ limit: 5, excludeArticleIds : [article.id] }) %}
+{% endif %}
+
+
+{% set updateDate = _AppHelper.getDefaultTimezoneDateTime(article.updatedDateTime,'F j, Y') %}
+{% set updated = false %}
+{% if article.publishedDateTime != article.updatedDateTime %}
+    {% set updatedAgo = _AppHelper.getSecondsSincePublished(article.updatedDateTime) %}
+    {% if updatedAgo < 86400 %}
+        {% set updateDate = _AppHelper.getRelativeTime(article.updatedDateTime) ~ " ago" %}
+    {% endif %}
+    {% set updated = true %}
+{% endif %}
+
+
+
 <script type="application/ld+json">
     {
         "@context": "https://schema.org",
@@ -30,31 +114,88 @@
             }
         }
         {% if article.media | length > 0 %}
-        ,
-        {% set i = 1 %}
-        {% for media in article.media %}
-        {% set medUrl = _Media.getMediaUrl(media,1280, 720, {'crop': 'fill', 'gravity': 'faces:auto'} ) %}
-        {% if media.type != 'video' %} 
+            ,
+            {% set i = 1 %}
+            {% for media in article.media %}
+                {% set medUrl = _Media.getMediaUrl(media,1280, 720, {'crop': 'fill', 'gravity': 'faces:auto'} ) %}
+                {% if media.type != 'video' %} 
 
-        "image": {
-            "@type": "ImageObject",
-            "url": "{{medUrl}}",
-            "width": 1280,
-            "height": 720
-        }
-        {% if article.media | length > i %}
-        ,
-        {% endif %}
-        {% endif %}
-        {% set i = i+1 %}
-        {% endfor %}
+                "image": {
+                    "@type": "ImageObject",
+                    "url": "{{medUrl}}",
+                    "width": 1280,
+                    "height": 720
+                }
+                    {% if article.media | length > i %}
+                        ,
+                    {% endif %}
+                {% endif %}
+                
+                {% set i = i+1 %}
+            {% endfor %}
         {% endif %}
     }
 </script>
+
+{% set ad = _Ads.getKeywordBasedCTA('amp-ad')%}
+
+{% if ad is defined and ad|length > 0 %}
+
+    <div class="article__advertisement">{{ad.description |raw}}</div>
+
+{% endif %}
+
+
 <div class="article {{ article.media|length <= 0 ? 'no_image' : '' }}">
     <div class="article__headerSection">
+
+        <div class="article__header">
+            <div class="article__header-text">
+                <a href="{{ channel.url }}" class="article__channel">{{ article.label | capitalize }}</a>
+                <div class="article__headline">{{article.title}}</div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="article__info_container">
+        <div class="article__info">
+            
+            <div class="article__info_tabs">
+                <a class="article__info_tab" href="{{_AppHelper.getUserProfileUrl(article.createdBy['username'])}}/posts">{{ article.createdBy['displayName'] }}</a>
+                {% set readingTime = Helper.getEstimatedReadingTime(article.content)%}
+                <div class="article__info_tab">{{article.publishedDate}}</div>
+                {% if updated %}
+                    <time class="article__info_tab">Updated {{ updateDate | capitalize }}</time>
+                {% endif %}
+                <div class="article__info_tab">{{Helper.renderReadingTime(readingTime) | raw}}</div>
+            </div>
+
+
+            <div class="article__social-share-buttons">
+                <amp-social-share class="share-email" type="email" aria-label="Share by email" width="23" height="15"></amp-social-share>
+                {# <amp-social-share class="share-facebook" type="facebook" aria-label="Share on Facebook" width="9" height="18" data-attribution="531506617052166"></amp-social-share> #}
+                <amp-social-share class="share-twitter" type="twitter" aria-label="Share on Twitter" width="24" height="18"></amp-social-share>
+                <amp-social-share class="share-linkedin" type="linkedin" aria-label="Share on LinkedIn" width="22" height="20"></amp-social-share>
+            </div>
+        </div>
+
+        {# <div class="article__info-author">
+            <amp-img alt="{{ article.createdBy['displayName'] }}" width="30" height="30" layout="responsive" class="article__info-avatar" src="{{ profileImg }}"></amp-img>
+            {% if config['hide-author'] is defined and config['hide-author'] %}
+                <p class="article__info_tab">{{ article.createdBy['displayName'] }}</p>
+            {% else %}
+                <a class="article__info-author-name" href="{{_AppHelper.getUserProfileUrl(article.createdBy['username'])}}/posts">{{ article.createdBy['displayName'] }}</a>
+            {% endif %}
+
+            <a href="{{_AppHelper.buildUrl('profile/user-profile',{name: Html.encode(article.createdBy['username'])})}}" class="article__info_author" itemprop="name">By {{ article.createdBy['displayName'] }}</a>
+        </div> #}
+
+    </div>
+
+
         {% if article.media|length %}
-            <amp-carousel width="1280" height="720" layout="responsive" type="slides" autoplay="" loop="">
+            <amp-carousel width="1280" height="720" layout="responsive" type="slides"  loop="">
                 {% for media in article.media %}
                     {% if media.type == 'video' %} 
                         {% set mediaUrl = "" %}
@@ -79,6 +220,7 @@
                         {% set medUrl = _Media.getMediaUrl(media,1280, 720, {'crop': 'fill', 'gravity': 'faces:auto'} ) %}
                         <figure>
                             <amp-img src="{{medUrl}}" class="" layout="fill"></amp-img>
+                            {# <amp-fit-text layout="responsive" width="500" height="100">{{media.caption | raw }}</amp-fit-text> #}
                         </figure>
                     {% endif %}
                 {% endfor %}
@@ -86,34 +228,47 @@
         {% endif %}
 
 
-        <div class="article__header">
-            <div class="article__header-text">
-                <a href="{{ channel.url }}" class="article__channel">{{ article.label | capitalize }}</a>
-                <div class="article__headline">{{article.title}}</div>
-            </div>
-        </div>
-    </div>
-    <div class="article__info_container">
-        <div class="article__info">
-            <a href="{{_AppHelper.buildUrl('profile/user-profile',{name: Html.encode(article.createdBy['username'])})}}" class="article__info_author" itemprop="name">By {{ article.createdBy['displayName'] }}</a>
-
-            <div class="article__info_tabs">
-                {% set readingTime = Helper.getEstimatedReadingTime(article.content)%}
-                <div class="article__info_tab">{{article.publishedDate}}</div>
-                <div class="article__info_tab">{{Helper.renderReadingTime(readingTime) | raw}}</div>
-            </div>
-            <p class="heading">
-            <amp-social-share type="twitter" width="45" height="33"></amp-social-share>
-            <amp-social-share type="facebook" width="45" height="33" data-attribution="531506617052166"></amp-social-share>
-            <amp-social-share type="gplus" width="45" height="33"></amp-social-share>
-            </p>
-        </div>
-    </div>
-
     <div class="article__container">
         <div class="article__content">
-            {{article.content | raw}}
+            {{ArticleContent | raw}}
         </div>
+
+
+        {% if showPaywall == true %}
+                </div>
+            </div>
+            {{this.render('layouts/partials/paywall_article_notice.twig', {
+                networkData:network, 
+                paywallType:paywallType,
+                articleUrl : article.url ~ "?amp=1" | url_encode
+                }) | raw}}
+        {% endif %}
+
     </div>
+
+
+
+
+
+    {% if showPaywall == false %}
+        <div class="">
+            <h1 class="latest__header" >You might also like...</h1>
+            {% for i in 0..3 if recentArticles[i] %}
+                <div class="">
+                    {{this.render('../partials/_single-article.twig', {
+                        article: recentArticles[i], 
+                        imageSize: {width: 300, height: 180},
+                        containerClass: 'card-2-mobile card-2-tablet card-2-desktop card-2-desktop-lg',
+                        template: 'amp',
+                        amp : true,
+                        site:   site
+                    }) | raw}}
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+
+
 </div>
 

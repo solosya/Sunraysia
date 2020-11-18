@@ -1,0 +1,116 @@
+{% set link = _Blog.getHomeBlogSettings() %}
+{% set logo = networkData.templatePath~'/static/images/logo.svg'%}
+
+
+{% set logoWidth = 142 %}
+{% set logoHeight = 35 %}
+
+{% if config['logo2'] is defined and config['logo2']['mobile'] is defined %}
+    {% if config['logo2']['mobile']['width'] is defined %}
+        {% set logoWidth = config['logo2']['mobile']['width'] %}
+
+        {% if config['logo2']['mobile']['height'] is not defined %}
+            {% set logoHeight = 0 %}
+        {% endif %}
+    {% endif %}
+
+    {% if config['logo2']['mobile']['height'] is defined %}
+        {% set logoHeight = config['logo2']['mobile']['height'] %}
+
+        {% if config['logo2']['mobile']['width'] is not defined %}
+            {% set logoWidth = 0 %}
+        {% endif %}
+
+    {% endif %}
+{% endif %}
+
+{# {% set log = _AppHelper.log(networkData.secondaryLogoMedia) %} #}
+
+{% if networkData.secondaryLogoMedia | length > 0 %}
+    {% set logo = _Media.getMediaUrl(networkData.secondaryLogoMedia, logoWidth, logoHeight, {'crop': 'fit'} ) %}
+{% endif %}
+
+{% set log = _AppHelper.log(logo) %}
+
+{% set footerMenu = getCache("footerMenu") %}
+{% if (footerMenu is empty) %}
+    {% set footerMenu = _Menu.get({'menuType': 'header', 'menuGroupName': 'footer'}) %}
+    {% set cache = setCache("footerMenu", footerMenu, 500) %} 
+{% endif %}
+
+{% set config       = _Network.getThemeConfig() %}
+
+
+
+{% set config = _Network.getThemeConfig() %}
+{% set contact = {
+    "telephone": null,
+    "emails" : [],
+    "address":[],
+    "mail_address":null
+ } %}
+
+
+
+{% if config['contact'] is defined %}
+    {% set contact = config['contact'] %}
+{% endif %}
+
+
+
+<footer class="c-footer c-footer-sm">
+
+    <div class="c-footer__container">
+        <div class="">
+            <a href="{{networkData.defaultBlogUrl}}" class="c-footer__logo">
+                <amp-img layout="fixed" width="{{logoWidth}}" height="{{logoHeight}}" src="{{logo}}" class="image-fluid"></amp-img>
+            </a>
+
+            {# <a href="{{networkData.defaultBlogUrl}}" class="c-footer__logo u-tablet-margin-bottom-20 u-desktop-margin-bottom-20">
+                <img src="{{altLogo}}" alt="{{networkData.title}}">
+            </a> #}
+        </div>
+        <div class="c-footer__contact">
+            <p class="c-footer__subhead">GET IN TOUCH</p>
+            <p class="c-footer__address"><span class="c-footer__address--bold">Telephone</span> {{contact['telephone']}}</p>
+            {% for email in contact['emails'] %}
+                <p class="c-footer__email"><span class="c-footer__email--bold">{{email['label']}}</span> {{email['value']}}</p>
+            {% endfor %}
+
+            <br />
+            <p class="c-footer__address">{{contact['address']['street']}}, {{contact['address']['town']}} {{contact['address']['state']}} {{contact['address']['postcode']}}</p>
+            <p class="c-footer__address">{{contact['mail_address']}}</p>
+            {% if contact['hours'] is defined %}
+                <p class="c-footer__address"><span class="c-footer__address--bold">Office hours: </span>{{contact['hours']}}</p>
+            {% endif %}
+        </div>
+
+
+        <div class="c-footer__navigation-container">
+                
+            {% set footercols = 0 %}
+            {% for i in 0..4 if footerMenu | length > footercols %}
+                <div class="col-12 col-md-4 c-footer__navigation u-border-left">
+                    
+                        {{this.render('../../../layouts/partials/_submenu_navigation.twig', {
+                            items: footerMenu | slice(footercols, 6),
+                            class: '',
+                        }) | raw}}
+                    
+                </div>
+                {% set footercols = footercols + 6 %}
+            {% endfor %}
+        </div>
+    </div>
+
+
+
+    <div class="c-footer__bottom">
+        <div class="c-footer__copyright">&copy; Elliott Newspaper Group {{ "now"|date("Y") }}. Powered by Pagemasters</div>
+        <div class="c-footer__links">
+            <a href="{{networkData.defaultBlogUrl}}/conditions-of-use" class="c-footer__link">Terms &amp; Conditions</a>
+            <a href="{{networkData.defaultBlogUrl}}/privacy-policy" class="c-footer__link">Privacy</a>
+            <a href="{{networkData.defaultBlogUrl}}/complaints-policy" class="c-footer__link">Complaints policy</a>
+        </div>
+    </div>
+</footer>

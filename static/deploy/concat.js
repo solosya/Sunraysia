@@ -20671,8 +20671,9 @@ Acme.UserProfileController.prototype.pageEvents = function ()
 
 
         if (cardSupplied === 'f' ) {
+            
             // However, we need you to supply your credit card details. <br />You can enter those a little lower on the page and then we can finalise the plan change.
-            msg = msg + "<br /><br />To purchase a paid plan, first you need to add your credit card details on this page.<br />Then select your new plan to activate the change.";
+            msg = msg + "<br /><br />This plan change requires a credit card.<br />Please add your card to the Credit Card Details section and click UPDATE, then select a new plan.";
             modal.render("userPlan", "Almost there!", {message: msg});
             return;
         }

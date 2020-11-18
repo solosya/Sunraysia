@@ -1,0 +1,172 @@
+@mixin card-2-base() {
+    // margin-left: -20px;
+    // margin-right: -20px;
+
+    .c-cards-view {
+        @include flex-direction(column, vertical);
+        background: $white;
+
+
+        &__container {
+            padding: 30px 25px 30px 25px;
+        }
+
+        &__category {
+            margin-bottom: 11px;
+        }
+
+        &__heading {
+            @include flex-height(53px);
+            @include font-size(20);
+        }
+        &__description {
+            margin-top: 5px;
+            @include flex-height(40px);
+        }
+
+        &__time {
+            margin-top: 13px;
+        }
+
+        &.video {
+            .c-cards-view__media .video-icon {
+                @include size(40px);
+            }
+        }
+
+        &.without-image {
+            .c-cards-view__container {
+                width: 100%;
+                margin-left: 0px;
+                padding: 0px 20px 0;
+            }
+
+            .c-cards-view__description {
+                margin-bottom: 15px;
+                display: block;
+                max-height: 90px;
+                overflow: hidden;
+            }
+        }
+
+        &.social {
+
+            .social-icon {
+                @include size(30px);
+
+                &:before {
+                    @include font-size(13);
+                    line-height: 32px;
+                }
+            }
+
+            &.without-image {
+                .c-cards-view__container {
+                    padding-top: 40px;
+                }
+            }
+        }
+
+    }
+}
+
+.card-2-mobile {
+    @media #{$mobile} {
+        @include card-2-base();
+        @include card-name("C2 mobile");
+
+    }
+}
+
+
+@mixin card-2-tablet-base {
+    @include card-2-base();
+    margin-left: 0;
+    margin-right: 0;
+    
+    .c-cards-view {
+        height: 493px;
+
+        &__media {
+            @include flex-height(228px);
+
+            img {
+                height: 100%;
+            }
+
+        }
+
+        &__category {
+            margin-bottom: 9px;
+        }
+
+        &__heading {
+            @include flex-height(90px);
+            @include font-size(22);
+            line-height:1.36;
+        }
+        &__description {
+            margin-top: 5px;
+            @include flex-height(56px);
+        }
+
+
+        &.without-image {
+
+            .c-cards-view {
+                &__container {
+                    padding: 30px;
+                }
+                &__category {
+                    margin-bottom: 50px;
+                }
+        
+                &__heading {
+                    margin-bottom: 10px;
+                }
+                &__description {
+                    margin-top: 5px;
+                    @include flex-height(225px);
+                    @include font-size(15);
+                    line-height: 1.9;
+                }
+        
+                &__author {
+                    margin-top:35px;
+                }
+
+
+            }
+        }
+
+    }
+
+}
+
+.card-2-tablet {
+    @media #{$tablet} {
+        @include card-name("C2 tablet");
+        @include card-2-tablet-base();
+    }
+
+}
+.card-2-desktop {
+
+    @media #{$desktop} {
+
+        @include card-name("C2 desktop");
+        @include card-2-tablet-base();
+    }
+}
+
+
+.card-2-desktop-lg {
+
+    @media #{$desktop-lg} {
+        @include card-name("C2 desktop lg");
+        @include card-2-tablet-base();
+    }
+}
+
+
+
