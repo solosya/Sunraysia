@@ -86,7 +86,10 @@ Card.prototype.renderCard = function(card, options)
         }
 
     } else {
-        card['hasMediaClass'] = (card.hasMedia == 1)? 'withImage__content' : 'without-image';
+
+        var hasMedia = (card.hasMedia == 1 || card.hasPreviewMedia);
+        card['hasMediaClass'] = hasMedia ? 'withImage__content' : 'without-image';
+
         var imageOptions = {width: width , height: height, crop: 'fill', gravity: gravity};
         var imageUrl = $.image( {
             media : card['featuredMedia'], 
@@ -103,7 +106,7 @@ Card.prototype.renderCard = function(card, options)
             blogTitle   : card.blogTitle,
             publishDate : card.publishDate,
             videoClass  : card.featuredMedia['type'] == 'video' ? 'c-cards-view__media--video' : '',
-            hasMedia    : card.hasMedia,
+            hasMedia    : hasMedia,
             social      : 0
 
         };
