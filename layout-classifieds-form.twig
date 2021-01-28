@@ -339,7 +339,6 @@
             this.validateRules = {
                 "title"         : ["notEmpty"], 
                 "content"       : ["notEmpty"], 
-                "start_date"    : ["notEmpty"],
                 "firstname"     : ["notEmpty"],
                 "lastname"      : ["notEmpty"],
                 "email_address" : ["notEmpty"],
@@ -610,7 +609,6 @@
             $('#content').on('input', function(e) {
                 var elem = $(e.target);
                 var text = elem.val().trim();
-                var paras = text.split('\n');
 
                 var text = text.replace(/\s/g, "¡" );
                 var text = text.replace(/\n/g, "¡" );
