@@ -6,7 +6,7 @@
         @include flex-height(162px);
 
         &__media {
-            @include flex-width(100px);
+            @include flex-width(143px);
             img {
                 height:100%;
             }
@@ -24,14 +24,16 @@
             margin-bottom: 5px;
             order: 1;
             flex-grow:0;
+            margin-top: 15px;
         }
 
         &__heading {
             @include font-size(22);
-            @include flex-height(32px);
+            @include flex-height(99px);
             order: 3;
         }
         &__description {
+            display: none;
             margin-top: 5px;
             order: 4;
             // @include flex-height(40px);
@@ -109,14 +111,17 @@
 
         
         .acme-c-cards-view {
-            @include flex-height(280px);
+            @include flex-height(325px);
 
             @include flex-direction(column, vertical);
 
 
             &__container {
+                order: 1;
+                min-height: 133px;
             }
             &__media {
+                order: 2;
                 @include flex-height(192px);
                 min-width:100%;
                 max-width:100%;
