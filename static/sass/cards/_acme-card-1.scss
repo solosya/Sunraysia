@@ -28,8 +28,8 @@
         }
 
         &__heading {
-            @include font-size(22);
-            @include flex-height(99px);
+            @include font-size(18);
+            @include flex-height(81px);
             order: 3;
         }
         &__description {
@@ -40,10 +40,12 @@
         }
 
         &__author {
+            display: none;
             order: 2;
             margin-bottom: 20px;
         }
         &__time {
+            display: none;
             @include font-size(15);
             font-weight: $weightMedium;
         }
@@ -70,6 +72,10 @@
                     display: block;
                     max-height: 90px;
                     overflow: hidden;
+                    @include flex-height(50px);
+                }
+                &__heading{
+                    @include flex-height(54px);
                 }
 
                 &__author {
@@ -141,7 +147,13 @@
                 .acme-c-cards-view {
 
                     &__heading {
-                        // margin-top:70px;
+                        margin-bottom:20px;
+                    }
+        
+
+                    &__description {
+                        display:block;
+                        @include flex-height(90px);
                     }
         
 
