@@ -132,7 +132,11 @@
                 min-width:100%;
                 max-width:100%;
                 // @include flex-width(167px);
-            }   
+            }  
+            &__heading {
+                @include font-size(22);
+                @include flex-height(66px);
+            } 
 
             &__description {
                     display:none;
