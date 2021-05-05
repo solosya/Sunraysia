@@ -10,6 +10,9 @@
         
         @media #{$tablet-up} {
             height:400px;
+            video{
+                width: 100%;
+            }
         }
     }
 
