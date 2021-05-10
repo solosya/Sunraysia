@@ -32,6 +32,10 @@
     {% set imgHeight = (imageSize.height is defined) ? imageSize.height : imgWidth %}
 {% endif %}
 
+{% set gravity = (imageGravity is defined) ? imageGravity : 'faces' %}
+
+
+
 
 
 {# // used for dev to turn an article into a social card for testing ui #}
@@ -112,11 +116,11 @@
         imageSuppress   : imageSuppress,
         displayOrder    : article.displayOrder,
         placeholder     : "https://place-hold.it/1",
-        imageMedium     : _Media.getMediaUrl(article.featuredMedia,768, 500, {'crop': 'fill', 'gravity': 'faces'} ),
+        imageMedium     : _Media.getMediaUrl(article.featuredMedia,768, 500, {'crop': 'fill', 'gravity': gravity} ),
         publishDate     : publishDate,
         galleryClass    : mediaCount > 1 ? 'c-cards-view__media--gallery' : '',
         videoClass      : article.featuredMedia['type'] == 'video' ? 'c-cards-view__media--video' : '',
-        imageSmall      : _Media.getMediaUrl(article.featuredMedia,500, 325, {'crop': 'fill', 'gravity': 'faces'} ),
+        imageSmall      : _Media.getMediaUrl(article.featuredMedia,500, 325, {'crop': 'fill', 'gravity': gravity} ),
         profileImg      : profileImg,
         imgHeight       : imgHeight,
         blogTitle       : article.blog.title,
@@ -133,7 +137,7 @@
         status          : article.status,
         social          : isArticle,
         title           : articleTitle,
-        image           : _Media.getMediaUrl(article.featuredMedia,imgWidth, imgHeight, {'crop': 'fill', 'gravity': 'faces'} ),
+        image           : _Media.getMediaUrl(article.featuredMedia,imgWidth, imgHeight, {'crop': 'fill', 'gravity': gravity} ),
         guid            : article.guid,
         url             : articleUrl,
         id              : article.articleId,

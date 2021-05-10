@@ -203,7 +203,7 @@
                         </div>
 
                         <div class="acme-row">
-                        {% for i in 0..11 if articles[i] %}
+                        {% for i in 0..2 if articles[i] %}
                             <div class="acme-col-12 acme-col-md-12 acme-col-lg-4">
                                 {{this.render('/partials/_single-article.twig', {
                                     article: articles[articleCount], 
@@ -211,7 +211,8 @@
                                     imageSize: {width: 285, height: 192},
                                     cardType: "acme-",
                                     contentType: contentType,
-                                    containerClass: "acme-card-1-mobile acme-card-1-tablet acme-card-1-desktop"
+                                    containerClass: "acme-card-1-mobile acme-card-1-tablet acme-card-1-desktop",
+                                    imageGravity: 'north'
                                 }) | raw}}
                                 {% set articleCount = (dev) ? articleCount : articleCount + 1 %}
                             </div>
@@ -265,7 +266,7 @@
                                         contentType: contentType,
                                         blog_guid: blogFeeds[pagesection]['guid'],
                                         count: totalFeedCount,
-                                        imageGravity: 'north',
+                                        imageGravity: 'north'
                                     }
                                 },
                             } %}
@@ -413,6 +414,7 @@
             cardType        : "acme-",
             imageWidth      : 294,
             imageHeight     : 192,
+            imageGravity    : 'north',
             card_class      : 'acme-card-1-mobile acme-card-1-tablet acme-card-1-desktop acme-col-12 acme-col-md-12 acme-col-lg-4',
             lightbox        : "{{contentType}}"
         }); 
@@ -593,6 +595,7 @@
                 lightbox        : "{{contentType}}",
                 imageWidth      : 294,
                 imageHeight     : 192,
+                imageGravity    : 'north',
                 name            : 'section-load', //name of the search button
                 card_class      : 'acme-card-1-mobile acme-card-1-tablet acme-card-1-desktop acme-col-12 acme-col-lg-4 ',
                 non_pinned      : {{articleCount}}

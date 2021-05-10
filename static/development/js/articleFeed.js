@@ -135,7 +135,7 @@ Acme.View.articleFeed = function(options)
     this.lightbox   = options.lightbox   || null;
     this.imgWidth   = options.imageWidth || null;
     this.imgHeight  = options.imageHeight|| null;
-    this.imgGravity = options.imageGravity || null;
+    this.imgGravity = options.imageGravity || 'faces';
 
     // when clicking less, reset the original offset count
     this.originalCount = options.non_pinned;

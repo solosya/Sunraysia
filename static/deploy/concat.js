@@ -18925,7 +18925,7 @@ Acme.View.articleFeed = function(options)
     this.lightbox   = options.lightbox   || null;
     this.imgWidth   = options.imageWidth || null;
     this.imgHeight  = options.imageHeight|| null;
-    this.imgGravity = options.imageGravity || null;
+    this.imgGravity = options.imageGravity || 'faces';
 
     // when clicking less, reset the original offset count
     this.originalCount = options.non_pinned;
@@ -19175,7 +19175,8 @@ Card.prototype.renderCard = function(card, options)
     card['cardType'] = options.type || "";
     card['lightbox'] = options.lightbox || "";
 
-
+    // console.log(options);
+    // console.log(card);
     
     if (card.status == "draft") {
         card['articleStatus'] = "draft";
@@ -19196,7 +19197,7 @@ Card.prototype.renderCard = function(card, options)
     var width = typeof options.imageWidth !== "undefined" ? options.imageWidth : 500;
     var height = typeof options.imageHeight !== "undefined" ? options.imageHeight : 350;
     var gravity = typeof options.imageGravity !== "undefined" ? options.imageGravity : null;
-
+    // console.log(gravity);
     if (options.imageOriginal) {
         var width = card.featuredMedia.width;
         var height = card.featuredMedia.height;
@@ -19207,7 +19208,7 @@ Card.prototype.renderCard = function(card, options)
         height = card.imageOptions.height || height;
         gravity = card.imageOptions.gravity || gravity;
     }
-
+    // console.log(gravity);
     var articleContent = card.excerpt;
     if (typeof options.content != "undefined" && options.content === "full") {
         articleContent = '<div class="acme-c-cards-view__articleContent"><p>' + card.content + '</p></div>';
