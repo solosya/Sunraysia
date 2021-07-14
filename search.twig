@@ -22,7 +22,7 @@
                 <div class="c-search">
                     <div class="c-search__head">
                         {% set resultString = firstCount < 2 ? 'result' : 'results' %}
-                        Showing <span>{{firstCount}}</span>  {{resultString}} for '<span class="c-search__name">{{search}}</span>'
+                        Showing <span>{{firstCount}}</span>  {{resultString}} for '<span class="c-search__name">{{search | raw}}</span>'
                     </div>
 
                     <div id="results">
