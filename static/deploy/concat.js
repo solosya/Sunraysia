@@ -18233,6 +18233,418 @@ function(a){"use strict";void 0===a.en&&(a.en={"mejs.plural-form":1,"mejs.downlo
 
 
 
+/**
+ * Handlebar Article templates for listing
+ */
+
+Acme.templates = {};
+
+Handlebars.registerHelper('fixPrice', function(text) {
+    if (!text) return "";
+    return text.replace(/\$/g, "");
+});
+
+
+
+Handlebars.registerHelper('ifCond', function (v1, operator, v2, options) {
+
+    switch (operator) {
+        case '==':
+            return (v1 == v2) ? options.fn(this) : options.inverse(this);
+        case '===':
+            return (v1 === v2) ? options.fn(this) : options.inverse(this);
+        case '!=':
+            return (v1 != v2) ? options.fn(this) : options.inverse(this);
+        case '!==':
+            return (v1 !== v2) ? options.fn(this) : options.inverse(this);
+        case '<':
+            return (v1 < v2) ? options.fn(this) : options.inverse(this);
+        case '<=':
+            return (v1 <= v2) ? options.fn(this) : options.inverse(this);
+        case '>':
+            return (v1 > v2) ? options.fn(this) : options.inverse(this);
+        case '>=':
+            return (v1 >= v2) ? options.fn(this) : options.inverse(this);
+        case '&&':
+            return (v1 && v2) ? options.fn(this) : options.inverse(this);
+        case '||':
+            return (v1 || v2) ? options.fn(this) : options.inverse(this);
+        default:
+            return options.inverse(this);
+    }
+});
+
+// **********************************************************
+//                         CARDS
+// **********************************************************
+
+var cardTemplateTop = 
+'<div class="{{containerClass}} "> \
+    <a  href="{{url}}" \
+        class="swap" \
+        data-id="{{params.id}}" \
+        data-guid="{{params.guid}}" \
+        data-position="{{position}}" \
+        data-blog-title="{{params.blogTitle}}" \
+        data-social={{params.social}} \
+        data-article-image="{{{image}}}" \
+        data-article-text="{{params.title}}" \
+        title="{{titleString}}"> \
+        \
+        <article class="{{cardType}}c-cards-view {{# ifCond params.social "==" 1}} social {{/ifCond}} {{params.category}} {{hasMediaClass}} {{status}} {{lightbox}}">';
+
+var cardTemplateBottom = 
+        '</article>\
+        \
+        {{#if userHasBlogAccess}} \
+            <div class="btn_overlay articleMenu"> \
+                <button \
+                    title       = "Hide" \
+                    data-guid   = "{{guid}}" \
+                    class       = "btnhide social-tooltip HideBlogArticle" \
+                    type        = "button" \
+                    data-social = "0"> \
+                    <i class="fa fa-eye-slash">\
+                    </i><span class="u-display-none">Hide</span> \
+                </button> \
+                \
+                <button \
+                    onclick="window.location=\'{{{editUrl}}}\'; return false;" \
+                    title="Edit" \
+                    class="btnhide social-tooltip" \
+                    type="button"> \
+                    <i class="fa fa-edit"></i>\
+                    <span class="u-display-none">Edit</span> \
+                </button> \
+                \
+                <button data-position="{{position}}" \
+                        data-social="0" \
+                        data-id="{{articleId}}" \
+                        title="{{pinTitle}}" \
+                        class="btnhide social-tooltip PinArticleBtn {{# ifCond isPinned "==" 1 }}selected{{/ifCond}}" \
+                        type="button" \
+                        data-status="{{isPinned}}"> \
+                    <i class="fa fa-thumb-tack"></i>\
+                    <span class="u-display-none">{{pinText}}</span> \
+                </button> \
+            </div> \
+         {{/if}}\
+    </a>\
+</div>';
+
+
+
+Acme.templates.systemCardTemplate = 
+    cardTemplateTop + 
+        '{{#if params.hasMedia}}\
+            <figure class="{{cardType}}c-cards-view__media" {{params.videoClass}}>\
+                <img class="img-fluid lazyload" data-original="{{params.image}}" src="{{params.image}}" style="background-image:url("{{placeholder}}"")>\
+                <div class="video-icon"></div> \
+            </figure>\
+        {{/if}} \
+        \
+        <div class="social-icon"></div>\
+        \
+        <div class="{{cardType}}c-cards-view__container">\
+            <div class="{{cardType}}c-cards-view__category">{{ params.category }}</div>\
+            <h2 class="{{cardType}}c-cards-view__heading j-truncate">{{{ params.title }}}</h2>\
+            <p class="{{cardType}}c-cards-view__description j-truncate">{{{ params.content }}}</p>\
+            <div class="{{cardType}}c-cards-view__author">\
+                <time class="{{cardType}}c-cards-view__time" datetime="{{params.publishDate}}">{{params.publishDate}}</time>\
+            </div>\
+        </div>'+ 
+    cardTemplateBottom;
+
+
+
+// **********************************************************
+//                       CARDS END
+// **********************************************************
+
+
+
+
+
+
+
+
+
+
+Acme.templates.spinnerTmpl = '<div class="spinner"></div>';
+Acme.templates.spinner = 
+    '<div id="{{name}}" class="flex_col {{name}}"> \
+        <div id="dialog" class="{{name}}__window"> \
+            <div class="{{name}}__header"> \
+                <h2 class="{{name}}__title">{{title}}</h2> \
+            </div> \
+            <div class="{{name}}__content-window" id="dialogContent"></div> \
+        </div> \
+    </div>';
+
+
+
+// Acme.templates.carousel_item = 
+// '<li class="carousel-tray__item swap-images"> \
+//     <div data-id="{{imageid}}" class="carousel-tray__delete"> \
+//         <span class="o-close"></span> \
+//     </div> \
+//     <img class="carousel-tray__img" src="{{imagePath}}" /> \
+// </li>';
+
+Acme.templates.swappingHelper = 
+'<div class="SwappingHelper" style="display:none"> \
+    <div style="width: 270px; height: 105px; padding: 3px; background-color: #FFF; max-width: 270px; max-height: 105px; overflow: hidden; z-index: 999 !important;"> \
+        <img class="article-image" src="" style="width:97px; height: 97px; float: left;" /> \
+        <p class="article-text" style="width: 165px; float: left; padding-left: 3px;color: #394659;font-size: 14px; font-family: Droid Serif,serif; line-height: 20px; margin-top:0px;"></p> \
+    </div> \
+</div>';
+
+
+
+
+
+
+
+
+Acme.templates.managed_user = 
+'<li id="{{id}}" class="c-managed-user"> \
+    <p class="c-managed-user__email j-email">{{email}}</p> \
+    <a class="c-managed-user__close j-delete "></a> \
+    <a class="c-managed-user__edit j-edit"></a> \
+</li>';
+
+
+
+
+
+
+
+
+
+
+    
+    
+
+Acme.templates.ads_infinite = 
+    "<div class='advert-desktop advert-tablet col-sm-9 hidden-xs u-margin-top-30' data-adsize='banner' style='padding:0;'></div>\
+    <div class='col-xs-9 visible-xs-block' style='padding:0;width:300px;height:250px;'><div class='advert-mobile' data-adsize='mrec'></div></div>\
+    <hr class='divide18 col-xs-9 visible-xs-block'>";
+
+
+
+Acme.templates.modal = 
+// style="scrolling == unusable position:fixed element might be fixing login for ios safari
+// also margin-top:10px
+'<div id="{{name}}" class="flex_col {{name}}" data-behaviour="close"> \
+    <div id="dialog" class="{{name}}__window"> \
+        <div class="{{name}}__container" style="scrolling == unusable position:fixed element"> \
+            <div class="{{name}}__header"> \
+                <h2 class="{{name}}__title">{{title}}</h2> \
+                <a class="{{name}}__close" href="javascript:;" data-behaviour="close"></a> \
+            </div> \
+            <div class="{{name}}__content-window" id="dialogContent" style="scrolling == unusable position:fixed element"></div> \
+        </div> \
+    </div> \
+</div>';
+    
+    
+// Acme.templates.carousel_item = 
+// '<div class="carousel-tray__item" style="background-image:url( {{imagePath}} )"> \
+//     <span data-id="{{imageid}}" class="carousel-tray__delete"></span> \
+// </div>';
+
+// window.templates.listingDeleteTmpl =  
+//     '<p>{{msg}}</p> \
+//     <div> \
+//         <form> \
+//             <button class="_btn _btn--red" data-role="{{role}}">DELETE</button> \
+//             <button class="_btn _btn--gray">CANCEL</button> \
+//         </form> \
+//     </div>';
+
+
+Acme.templates.subscribeTerms =  
+    '<p class="password-reset-form__p u-margin-bottom-20 centerText">Please agree to the terms of use.</p> \
+    <div class="centerText"> \
+        <button class="c-button c-button--blue">Okay</button> \
+    </div>';
+
+Acme.templates.listingDeleteTmpl =  
+    '<p style="margin-top:10px;">{{msg}}</p> \
+    <div style="display:flex"> \
+        <form style="margin:auto; margin-top:20px;"> \
+            <button class="c-button c-button--inline c-button--rounded c-button--blue-bordered u-margin-right-10" data-role="{{role}}">DELETE</button> \
+            <button class="c-button c-button--inline c-button--rounded c-button--blue-bordered" data-role="cancel">CANCEL</button> \
+        </form> \
+    </div>';
+    
+
+
+Acme.templates.listingSavedTmpl =  
+'<p class=" u-margin-bottom-30 u-margin-top-20 centerText">Following approval it will be posted to the events page within 24 hours.</p> \
+<div class="centerText"> \
+    <button class="c-button c-button--blue">Okay</button> \
+</div>';
+
+
+
+
+
+Acme.templates.socialPopup =
+'<div class="modal social--modal social--modal--md" id="ModalSocialCard"> \
+    <div class="modal-dialog"> \
+        <div class="modal-content modal-content--md"> \
+            <div class="o-modal__container card-social-popup-desktop"> \
+                \
+                <div class="o-modal__container-head"> \
+                    <button type="button" class="close" data-dismiss="modal">&times;</button> \
+                </div> \
+                \
+                <div class="o-modal__container-body c-cards-view social facebook"> \
+                    <figure class="c-cards-view__media"> \
+                        <img src="{{media.path}}" alt="Image" class="img-fluid" /> \
+                        <div class="video-icon"></div> \
+                        <div class="social-icon"></div> \
+                    </figure> \
+                    \
+                    <div class="c-cards-view__container"> \
+                        <div class="c-cards-view__category">{{source}}</div> \
+                        <div class="c-cards-view__heading">{{content}}</div> \
+                        <div class="c-cards-view__author"> \
+                            <div class="c-cards-view__author-name">{{user.name}}</div> \
+                            <div class="c-cards-view__time">{{publishDate}}</div> \
+                        </div> \
+                    </div> \
+                </div> \
+            </div> \
+        </div> \
+    </div> \
+</div>';
+
+
+Acme.templates.classified =
+'<div class="" id="ModalMultiImageGallery"> \
+    <div class=""> \
+        <div class="modal-content modal-content-md"> \
+            <div class="o-modal__container o-modal__container--gallery"> \
+            \
+                <div class="o-modal__container-body o-modal__container-body"> \
+                    <div class="o-media o-media-sm js-slider"> \
+                        <figure class="o-media--item"> \
+                            <div class="o-media--item--galllery"> \
+                                <img src="static/images/slider/hockey.jpg" class="img-fluid o-media--image" alt="Article Info"> \
+                                <div class="slide-count-wrap"> \
+                                    <span class="current"></span> \
+                                </div> \
+                            </div> \
+                        </figure> \
+                        <figure class="o-media--item"> \
+                            <div class="o-media--item--galllery"> \
+                                <img src="static/images/slider/hockey.jpg" class="img-fluid o-media--image" alt="Article Info"> \
+                                <div class="slide-count-wrap"> \
+                                    <span class="current"></span> \
+                                </div> \
+                            </div> \
+                        </figure> \
+                    </div> \
+                    <div class="o-modal--discription"> \
+                        <div class="c-cards-view__container"> \
+                            <div class="c-cards-view__ategory">Motor vehicles</div> \
+                            <div class="c-cards-view__heading js-truncate">Vintage tractor</div> \
+                            <div class="c-cards-view__description js-truncate">2004, BA, auto, FSH, 70,000kms, reg to July 2019, excellent cond, CAPPS3, $12,000. Phone 0448 235 740 after 6pm.</div> \
+                        </div> \
+                    </div> \
+                </div> \
+            </div> \
+        </div> \
+    </div> \
+</div>';
+
+
+
+
+
+
+
+// **********************************************************
+//                       FORMS
+// **********************************************************
+
+Acme.templates.signinFormTmpl = 
+'<form id="loginForm" class="vertical-form" action="#" method="post" autocomplete="off"> \
+    <div class="c-form c-login-modal"> \
+        <input id="email" class="c-login-modal__input c-form__input c-form__input--bordered-bottom" name="username" placeholder="Email Address" aria-required="true" type="text"> \
+        <div class="c-form__help-block">Please enter your email address</div> \
+        \
+        <input id="password" class="c-login-modal__input c-form__input c-form__input--bordered-bottom u-margin-top-10" name="password" placeholder="Password" aria-required="true" type="password"> \
+        <div class="c-form__help-block">Please enter your email Password</div> \
+        <p id="signin_error" class="c-form__help-block u-font-size-14 u-margin-top-10"></p> \
+        <a href="javascript:;" class="c-login-modal__password-link" data-layout="forgot">Forgot password?</a> \
+    </div> \
+    \
+    <div class="c-form__buttons"> \
+        <button id="signinBtn" type="submit" class="c-button c-button--blue j-signin">Log in</button> \
+    </div> \
+    \
+    <div class="c-login-modal__subaction"> \
+        <span>Trouble logging in? <a href="'+_appJsConfig.appHostName +'/faq" target="_blank">Read our FAQs</a></span>\
+        <a href="javascript:;" class="c-login-modal__password-link text-center" data-layout="forgot">Set a PR password</a> \
+    </div> \
+</form>';
+
+
+
+Acme.templates.forgotFormTmpl = 
+'<form id="forgotForm" class="vertical-form" action="#" method="post" autocomplete="off"> \
+    <div class="c-form c-forgot-modal__description"> \
+        Enter your email below and we will send you a link to set your password. \
+    </div> \
+    \
+    <input id="email" class="c-form__input c-forgot-modal__input" name="email" placeholder="Email Address" aria-required="true" type="text"> \
+    <div class="c-form__help-block">Please enter your email address</div> \
+    \
+    <div class="c-form__buttons"> \
+        <button type="submit" class="c-button c-button--blue-bordered j-forgot-email">Send Email</button> \
+    </div> \
+</form>';
+
+
+
+Acme.templates.userPlanMessage = 
+'<p class="{{name}}__message centerText">{{{message}}}</p> \
+<form name="loginForm" id="loginForm" class="active u-margin-top-20 centerText" action="javascript:void(0);" method="post" accept-charset="UTF-8" autocomplete="off"> \
+    <button id="cancelbutton" class="c-button c-button--blue-bordered" data-role="okay">OK</button> \
+</form>';
+
+Acme.templates.userPlanOkCancel = 
+'<p class="{{name}}__message centerText">{{message}}</p> \
+<form name="loginForm" id="loginForm" class="active u-margin-top-20 centerText" action="javascript:void(0);" method="post" accept-charset="UTF-8" autocomplete="off"> \
+    <button id="okaybutton" class="c-button c-button--inline c-button--blue-bordered" data-role="okay">Confirm</button> \
+</form>';
+
+
+Acme.templates.create_user = 
+'<div id="newUser" class="col-12 c-managed-user-new u-margin-bottom-60"> \
+    <div id="cancelUserCreate" class="c-managed-user__close c-managed-user__close--top"></div> \
+    <div class="row u-desktop-padding-top-20 u-margin-bottom-15"> \
+        <div class="col has-error"> \
+            <input id="newuserfirstname" class="c-form__input c-form__input--bordered" name="firstname" placeholder="First Name" aria-required="true" type="text"> \
+        </div> \
+        <div class="col"> \
+            <input id="newuserlastname" class="c-form__input c-form__input--bordered" name="lastname" placeholder="Last Name" aria-required="true" type="text"> \
+        </div> \
+    </div> \
+    <div class="row"> \
+        <div class="col"> \
+            <input id="newuseruseremail" class="c-form__input c-form__input--bordered" name="email" placeholder="Email" aria-required="true" type="text"> \
+        </div> \
+    </div> \
+    \
+    <div id="userError" class="c-form__help-block u-margin-top-10"></div> \
+    \
+    <button id="saveUser" type="button" class="c-button c-button--blue-bordered u-margin-top-40">Save</button> \
+</div>';
+
 (function($) {
     
 
@@ -20330,348 +20742,340 @@ Acme.UserProfileController.prototype.listingEvents = function() {
 Acme.articleFeeds = {};
 
 $("img.lazyload").lazyload({
-    effect : "fadeIn"
+  effect: "fadeIn",
 });
 
+$("document").ready(function () {
+  var mobileView = 992;
+  var desktopView = 1119;
+  var pageWindow = $(window);
+  var scrollMetric = [pageWindow.scrollTop()];
+  var articleAd = $("#articleAdScroll");
+  // var headerMenu = $("#fixed-header");
 
-$('document').ready(function() {
-    var mobileView = 992;
-    var desktopView = 1119;
-    var pageWindow = $(window);
-    var scrollMetric = [pageWindow.scrollTop()];
-    var articleAd = $('#articleAdScroll');
-    // var headerMenu = $("#fixed-header");
-    
-
-
-
-
-    var isMobile = function(){
-        if (window.innerWidth < mobileView) {
-            return true;
-        }
-        return false;
-    };
-
-    var isDesktop = function(){
-        if (window.innerWidth > desktopView) {
-            return true;
-        }
-        return false;
-    };
-
-
-    var isScolledPast = function(position){
-
-        if (scrollMetric[0] >= position) {
-            return true;
-        }
-        return false;
-    };
-
-
-    Acme.HeaderMenu = function() {
-        this.parent = $("#fixed-header");
-        this.subscriptions = Acme.PubSub.subscribe({
-            'Acme.headerMenu.listener' : ["update_state"]
-        });
-
-        this.fixed = this.parent.find('.c-header__container');
-        this.listeners = {
-            "fixedMenu": function(data) {
-                if (data.fixedMenu === 'hide') {
-                    this.hideFixed();
-                } else {
-                    this.showFixed();
-
-                }
-            }
-        }
+  var isMobile = function () {
+    if (window.innerWidth < mobileView) {
+      return true;
     }
+    return false;
+  };
 
-    Acme.HeaderMenu.prototype = new Acme._View();
-    Acme.HeaderMenu.constructor = Acme.HeaderMenu;
-    Acme.HeaderMenu.prototype.showFixed = function() {
-        this.parent.addClass('active');
-        this.fixed.addClass('active');
+  var isDesktop = function () {
+    if (window.innerWidth > desktopView) {
+      return true;
     }
-    Acme.HeaderMenu.prototype.hideFixed = function() {
-        this.parent.removeClass('active');
-        this.fixed.removeClass('active');
+    return false;
+  };
+
+  var isScolledPast = function (position) {
+    if (scrollMetric[0] >= position) {
+      return true;
     }
+    return false;
+  };
 
-    Acme.headerMenu = new Acme.HeaderMenu();
+  Acme.HeaderMenu = function () {
+    this.parent = $("#fixed-header");
+    this.subscriptions = Acme.PubSub.subscribe({
+      "Acme.headerMenu.listener": ["update_state"],
+    });
 
-
-
-    var scrollUpMenu = function() {
-        var isMob = isMobile();
-        if ( scrollMetric[1] === 'up' && isScolledPast(400) && isMob === false ) {
-            Acme.headerMenu.showFixed();
+    this.fixed = this.parent.find(".c-header__container");
+    this.listeners = {
+      fixedMenu: function (data) {
+        if (data.fixedMenu === "hide") {
+          this.hideFixed();
         } else {
-            Acme.headerMenu.hideFixed();
+          this.showFixed();
         }
+      },
+    };
+  };
+
+  Acme.HeaderMenu.prototype = new Acme._View();
+  Acme.HeaderMenu.constructor = Acme.HeaderMenu;
+  Acme.HeaderMenu.prototype.showFixed = function () {
+    this.parent.addClass("active");
+    this.fixed.addClass("active");
+  };
+  Acme.HeaderMenu.prototype.hideFixed = function () {
+    this.parent.removeClass("active");
+    this.fixed.removeClass("active");
+  };
+
+  Acme.headerMenu = new Acme.HeaderMenu();
+
+  var scrollUpMenu = function () {
+    var isMob = isMobile();
+    if (scrollMetric[1] === "up" && isScolledPast(400) && isMob === false) {
+      Acme.headerMenu.showFixed();
+    } else {
+      Acme.headerMenu.hideFixed();
     }
+  };
 
+  //Onload and resize events
+  $(window)
+    .on("resize", function () {
+      scrollUpMenu();
+    })
+    .resize();
 
-    //Onload and resize events
-    $(window).on("resize", function () {
-        scrollUpMenu();
-
-    }).resize();
-
-
-    //On Scroll
-    $(window).scroll(function() {
-        var direction = 'down';
-        var scroll = $(window).scrollTop();
-        if (scroll < scrollMetric[0]) {
-            direction = 'up';
-        }
-        scrollMetric = [scroll, direction];
-        scrollUpMenu();
-        adScroll();
-    });
-
-
-    $("#user-menu-button").click(function(event) {
-        $("#user-menu").toggle();
-    });
-    $("#user-menu-button-fixed").click(function(event) {
-        $("#user-menu-fixed").toggle();
-    });
-
-    $("#user-menu-mobile-button").click(function(event) {
-        $("#user-menu-mobile").toggle();
-    });
-    $("#user-menu-button-tablet").click(function(event) {
-        $("#user-menu-tablet").toggle();
-    });
-
-    $(".js-hamDesktop").click(function(event) {
-		event.preventDefault();
-        $(this).toggleClass("active");
-        $('#mega-menu').toggleClass('is-visible');
-        $('body, html').toggleClass('u-noscroll');
-    });
-    
-    $(".js-hamDevice").click(function(event) {
-		event.preventDefault();
-        // $(this).toggleClass("active");
-        $('body, html').toggleClass('u-noscroll');
-
-        $('.responsive-standalone').toggleClass('navigation-active');
-        $('.responsive-standalone-close').toggleClass('open');
-        // $(".responsive-standalone-overlay").animate({
-        //     "opacity": "toggle"
-        // }, {
-        //     duration: 500
-        // }, function () {
-        //     $(".responsive-standalone-overlay").fadeIn();
-        // });
-    });
-
-
-
-    var adScroll = function() {
-        // console.log('scrollin',scrollMetric);
-        //set sidebar height for desktop scrolling ad
-        if ($('.j-skycontainer').length > 0) {
-            var articleTop = ($('main').position().top - 200);
-            var theHeight = $('main').height();
-            // tell ad when to scroll and when not to based on the size of the article
-            // 135 is the space above left for foldaway menu
-            if ( scrollMetric[1] === 'up' && !isScolledPast(articleTop)) {
-                $('.j-adslot-skyscraper').each(function() {$(this).removeClass('advertisment__skyscraper--fixed').addClass('advertisment__skyscraper--absolute')});
-            }
-            else if ( scrollMetric[1] === 'up' && !isScolledPast(theHeight - 600)) {
-                $('.j-adslot-skyscraper').each(function() {$(this).removeClass('advertisment__skyscraper--absolute').addClass('advertisment__skyscraper--fixed')});
-            }
-            else if ( scrollMetric[1] === 'down' && isScolledPast((theHeight - 600))) {
-                $('.j-adslot-skyscraper').each(function() {$(this).removeClass('advertisment__skyscraper--fixed').addClass('advertisment__skyscraper--absolute')});
-            } 
-            else if ( scrollMetric[1] === 'down' && isScolledPast(articleTop)) {
-                $('.j-adslot-skyscraper').each(function() {$(this).removeClass('advertisment__skyscraper--absolute').addClass('advertisment__skyscraper--fixed')});
-            }
-        }
-        
+  //On Scroll
+  $(window).scroll(function () {
+    var direction = "down";
+    var scroll = $(window).scrollTop();
+    if (scroll < scrollMetric[0]) {
+      direction = "up";
     }
+    scrollMetric = [scroll, direction];
+    scrollUpMenu();
+    adScroll();
+  });
 
+  $("#user-menu-button").click(function (event) {
+    $("#user-menu").toggle();
+  });
+  $("#user-menu-button-fixed").click(function (event) {
+    $("#user-menu-fixed").toggle();
+  });
 
+  $("#user-menu-mobile-button").click(function (event) {
+    $("#user-menu-mobile").toggle();
+  });
+  $("#user-menu-button-tablet").click(function (event) {
+    $("#user-menu-tablet").toggle();
+  });
 
-    window.Acme.scrollThumbs = function(elem) {
+  $(".js-hamDesktop").click(function (event) {
+    event.preventDefault();
+    $(this).toggleClass("active");
+    $("#mega-menu").toggleClass("is-visible");
+    $("body, html").toggleClass("u-noscroll");
+  });
 
-        if (elem.length === 0) {
-            return;
-        }
-        var elem = $(elem);
-        var elemWidth = elem.width();
-        var container = elem.parent();
-        var containerWidth = container.width();
-        var scrollAmount = container.scrollLeft();
-        var containerView = [scrollAmount, containerWidth + scrollAmount];
+  $(".js-hamDevice").click(function (event) {
+    event.preventDefault();
+    // $(this).toggleClass("active");
+    $("body, html").toggleClass("u-noscroll");
 
-        var middle = (containerView[1] - containerView[0]) / 2 ;
-        var middle = scrollAmount + middle;
-        var elempos = elem[0].offsetLeft + elemWidth/2;
-
-        if ( elempos > middle ) {
-            var scroll = true;
-            var scrollpos = scrollAmount + (elempos - middle);
-        } else if ( elem[0].offsetLeft < middle ) {
-            var scroll = true;
-            var scrollpos = scrollAmount - (middle - elempos);
-        }
-
-        if (scroll) {
-            container.animate({
-                scrollLeft : scrollpos
-            });
-        }
-    }
-
-
-
-    // Onload and resize events
-    // pageWindow.on("resize", function () {
-    //     // removeMobileMenuStyles();
-    // }).resize();
-
-
-
-
-    // $('.js-menu').on('click', function (event) {
-    //     event.preventDefault();
-    //     $('body').addClass('u-noscroll');
-    //     $('.responsive-standalone').addClass('navigation-active');
-    //     $('.responsive-standalone-close').addClass('open');
-    //     $(".responsive-standalone-overlay").animate({
-    //         "opacity": "toggle"
-    //     }, {
-    //         duration: 500
-    //     }, function () {
-    //         $(".responsive-standalone-overlay").fadeIn();
-    //     });
-    //     return false;
+    $(".responsive-standalone").toggleClass("navigation-active");
+    $(".responsive-standalone-close").toggleClass("open");
+    // $(".responsive-standalone-overlay").animate({
+    //     "opacity": "toggle"
+    // }, {
+    //     duration: 500
+    // }, function () {
+    //     $(".responsive-standalone-overlay").fadeIn();
     // });
+  });
 
-    function closeMobileMenu() {
-        $('body').removeClass('u-noscroll');
-        $('.responsive-standalone-close').removeClass('open');
-        $('.responsive-standalone').removeClass('navigation-active');
-        $(".responsive-standalone-overlay").hide();
-    }
-    $('.responsive-standalone-close').on('click', function (event) {
-        event.preventDefault();
-        closeMobileMenu();
-        return false;
-    });
-    $(".responsive-standalone-overlay").on('click', function () {
-        closeMobileMenu();
-    });
-
-
-
-    $(".list-arrow-container").on('click', function(e) {
-
-        $parent = $(this).parent();
-        var isActive = $parent.hasClass('active');
-        $('.dropdown').each(function() {
-            var elem = $(this);
-            elem.removeClass('active');
-            elem.find('.custom-menu').removeClass('custom-menu--active');
+  var adScroll = function () {
+    // console.log('scrollin',scrollMetric);
+    //set sidebar height for desktop scrolling ad
+    if ($(".j-skycontainer").length > 0) {
+      var articleTop = $("main").position().top - 200;
+      var theHeight = $("main").height();
+      // tell ad when to scroll and when not to based on the size of the article
+      // 135 is the space above left for foldaway menu
+      if (scrollMetric[1] === "up" && !isScolledPast(articleTop)) {
+        $(".j-adslot-skyscraper").each(function () {
+          $(this)
+            .removeClass("advertisment__skyscraper--fixed")
+            .addClass("advertisment__skyscraper--absolute");
         });
-        if (!isActive) {
-            $parent.addClass('active');
-            $(this).siblings('.custom-menu').addClass('custom-menu--active');
-        }
-    });
-
-
-
-    // $('.js-card-heading').ellipsis({
-    //     responsive: true,
-    //     lines: 2
-    // });
-
-    // $('.js-card-description, .u-without-image .js-card-heading').ellipsis({
-    //     responsive: true,
-    //     lines: 3
-    // });
-
-    // $('.u-without-image .js-card-description').ellipsis({
-    //     responsive: true,
-    //     lines: 4
-    // });
-
-    $('.js-searchButton').on('click',function() {
-        $('#search-bar').toggleClass('c-search-bar--active')
-            .find('.c-search-bar__input').focus();
-
-    });
-    $('.js-searchClose').on('click',function() {
-        $('.c-search-bar').hide();
-    });
-
-    $('.c-article__container figure').each(function () {
-        var figureStyle = $(this).attr('style') !== undefined;
-        var figureClassLeft = $(this).hasClass('alignleft');
-        var figureClassRight = $(this).hasClass('alignright');
-        if (!(figureStyle) && !(figureClassLeft) && !(figureClassRight)) {
-            $(this).after('<div class="clearfix"></div>');
-        }
-    });
-
-    // $('.js-media').slick();
-
-
-    var truncate = '';
-    clearTimeout(truncate);
-    truncate = setTimeout((function() {
-        $('.j-truncate').dotdotdot({
-            watch: true
+      } else if (scrollMetric[1] === "up" && !isScolledPast(theHeight - 600)) {
+        $(".j-adslot-skyscraper").each(function () {
+          $(this)
+            .removeClass("advertisment__skyscraper--absolute")
+            .addClass("advertisment__skyscraper--fixed");
         });
-    }), 750);
+      } else if (scrollMetric[1] === "down" && isScolledPast(theHeight - 600)) {
+        $(".j-adslot-skyscraper").each(function () {
+          $(this)
+            .removeClass("advertisment__skyscraper--fixed")
+            .addClass("advertisment__skyscraper--absolute");
+        });
+      } else if (scrollMetric[1] === "down" && isScolledPast(articleTop)) {
+        $(".j-adslot-skyscraper").each(function () {
+          $(this)
+            .removeClass("advertisment__skyscraper--absolute")
+            .addClass("advertisment__skyscraper--fixed");
+        });
+      }
+    }
+  };
 
+  window.Acme.scrollThumbs = function (elem) {
+    if (elem.length === 0) {
+      return;
+    }
+    var elem = $(elem);
+    var elemWidth = elem.width();
+    var container = elem.parent();
+    var containerWidth = container.width();
+    var scrollAmount = container.scrollLeft();
+    var containerView = [scrollAmount, containerWidth + scrollAmount];
 
-    $("#owl-gallery-image").owlCarousel({
-        items: 1,
-        dots: false,
-        nav: true,
-        navText: [
-            "",
-            ""
-        ]
-    });   
+    var middle = (containerView[1] - containerView[0]) / 2;
+    var middle = scrollAmount + middle;
+    var elempos = elem[0].offsetLeft + elemWidth / 2;
 
-    $("#owl-gallery-card").owlCarousel({
-        items: 1,
-        dots: true,
-        nav: false,
-        navText: [
-            "",
-            ""
-        ]
-    });   
+    if (elempos > middle) {
+      var scroll = true;
+      var scrollpos = scrollAmount + (elempos - middle);
+    } else if (elem[0].offsetLeft < middle) {
+      var scroll = true;
+      var scrollpos = scrollAmount - (middle - elempos);
+    }
 
+    if (scroll) {
+      container.animate({
+        scrollLeft: scrollpos,
+      });
+    }
+  };
 
-    //this is used for the gallery template
-    $("#owl-gallery-article").owlCarousel({
-        items: 1,
-        thumbs: true,
-        thumbsPrerendered: true,
-        URLhashListener:true,
-        startPosition: 'URLHash',
-        pagination: true,
-        dots: false,
-        nav: true,
-        navText: [
-            "",
-            ""
-        ]
-    });   
+  // Onload and resize events
+  // pageWindow.on("resize", function () {
+  //     // removeMobileMenuStyles();
+  // }).resize();
 
+  // $('.js-menu').on('click', function (event) {
+  //     event.preventDefault();
+  //     $('body').addClass('u-noscroll');
+  //     $('.responsive-standalone').addClass('navigation-active');
+  //     $('.responsive-standalone-close').addClass('open');
+  //     $(".responsive-standalone-overlay").animate({
+  //         "opacity": "toggle"
+  //     }, {
+  //         duration: 500
+  //     }, function () {
+  //         $(".responsive-standalone-overlay").fadeIn();
+  //     });
+  //     return false;
+  // });
 
+  function closeMobileMenu() {
+    $("body").removeClass("u-noscroll");
+    $(".responsive-standalone-close").removeClass("open");
+    $(".responsive-standalone").removeClass("navigation-active");
+    $(".responsive-standalone-overlay").hide();
+  }
+  $(".responsive-standalone-close").on("click", function (event) {
+    event.preventDefault();
+    closeMobileMenu();
+    return false;
+  });
+  $(".responsive-standalone-overlay").on("click", function () {
+    closeMobileMenu();
+  });
+
+  $(".list-arrow-container").on("click", function (e) {
+    $parent = $(this).parent();
+    var isActive = $parent.hasClass("active");
+    $(".dropdown").each(function () {
+      var elem = $(this);
+      elem.removeClass("active");
+      elem.find(".custom-menu").removeClass("custom-menu--active");
+    });
+    if (!isActive) {
+      $parent.addClass("active");
+      $(this).siblings(".custom-menu").addClass("custom-menu--active");
+    }
+  });
+
+  // $('.js-card-heading').ellipsis({
+  //     responsive: true,
+  //     lines: 2
+  // });
+
+  // $('.js-card-description, .u-without-image .js-card-heading').ellipsis({
+  //     responsive: true,
+  //     lines: 3
+  // });
+
+  // $('.u-without-image .js-card-description').ellipsis({
+  //     responsive: true,
+  //     lines: 4
+  // });
+
+  $(".js-searchButton").on("click", function () {
+    $("#search-bar")
+      .toggleClass("c-search-bar--active")
+      .find(".c-search-bar__input")
+      .focus();
+  });
+  $(".js-searchClose").on("click", function () {
+    $(".c-search-bar").hide();
+  });
+
+  $(".c-article__container figure").each(function () {
+    var figureStyle = $(this).attr("style") !== undefined;
+    var figureClassLeft = $(this).hasClass("alignleft");
+    var figureClassRight = $(this).hasClass("alignright");
+    if (!figureStyle && !figureClassLeft && !figureClassRight) {
+      $(this).after('<div class="clearfix"></div>');
+    }
+  });
+
+  // $('.js-media').slick();
+
+  var truncate = "";
+  clearTimeout(truncate);
+  truncate = setTimeout(function () {
+    $(".j-truncate").dotdotdot({
+      watch: true,
+    });
+  }, 750);
+
+  $("#owl-gallery-image").owlCarousel({
+    items: 1,
+    dots: false,
+    nav: true,
+    navText: ["", ""],
+  });
+
+  $("#owl-gallery-card").owlCarousel({
+    items: 1,
+    dots: true,
+    nav: false,
+    navText: ["", ""],
+  });
+
+  //this is used for the gallery template
+  $("#owl-gallery-article").owlCarousel({
+    items: 1,
+    thumbs: true,
+    thumbsPrerendered: true,
+    URLhashListener: true,
+    startPosition: "URLHash",
+    pagination: true,
+    dots: false,
+    nav: true,
+    navText: ["", ""],
+  });
+
+  setTimeout(function () {
+    $(".c-article__container figure img").each(function () {
+      console.log("mayank");
+      var width = $(this).width() + "px";
+      var captionObj = $(this).closest("figure").find("figcaption");
+      if (captionObj) {
+        captionObj.css({ width: width, display: "block" });
+      }
+    });
+  }, 400);
+
+  $(window).resize(function () {
+    $(".c-article__container figure img").each(function () {
+      var width = $(this).width() + "px";
+      var captionObj = $(this).closest("figure").find("figcaption");
+      if (captionObj) {
+        captionObj.css({ width: width, display: "block" });
+      }
+    });
+  });
 });
 
 // var SearchController = (function ($) {
@@ -21703,414 +22107,3 @@ Acme.Token.prototype.removeToken = function()
 
 
 }(jQuery));
-/**
- * Handlebar Article templates for listing
- */
-
-Acme.templates = {};
-
-Handlebars.registerHelper('fixPrice', function(text) {
-    if (!text) return "";
-    return text.replace(/\$/g, "");
-});
-
-
-
-Handlebars.registerHelper('ifCond', function (v1, operator, v2, options) {
-
-    switch (operator) {
-        case '==':
-            return (v1 == v2) ? options.fn(this) : options.inverse(this);
-        case '===':
-            return (v1 === v2) ? options.fn(this) : options.inverse(this);
-        case '!=':
-            return (v1 != v2) ? options.fn(this) : options.inverse(this);
-        case '!==':
-            return (v1 !== v2) ? options.fn(this) : options.inverse(this);
-        case '<':
-            return (v1 < v2) ? options.fn(this) : options.inverse(this);
-        case '<=':
-            return (v1 <= v2) ? options.fn(this) : options.inverse(this);
-        case '>':
-            return (v1 > v2) ? options.fn(this) : options.inverse(this);
-        case '>=':
-            return (v1 >= v2) ? options.fn(this) : options.inverse(this);
-        case '&&':
-            return (v1 && v2) ? options.fn(this) : options.inverse(this);
-        case '||':
-            return (v1 || v2) ? options.fn(this) : options.inverse(this);
-        default:
-            return options.inverse(this);
-    }
-});
-
-// **********************************************************
-//                         CARDS
-// **********************************************************
-
-var cardTemplateTop = 
-'<div class="{{containerClass}} "> \
-    <a  href="{{url}}" \
-        class="swap" \
-        data-id="{{params.id}}" \
-        data-guid="{{params.guid}}" \
-        data-position="{{position}}" \
-        data-blog-title="{{params.blogTitle}}" \
-        data-social={{params.social}} \
-        data-article-image="{{{image}}}" \
-        data-article-text="{{params.title}}" \
-        title="{{titleString}}"> \
-        \
-        <article class="{{cardType}}c-cards-view {{# ifCond params.social "==" 1}} social {{/ifCond}} {{params.category}} {{hasMediaClass}} {{status}} {{lightbox}}">';
-
-var cardTemplateBottom = 
-        '</article>\
-        \
-        {{#if userHasBlogAccess}} \
-            <div class="btn_overlay articleMenu"> \
-                <button \
-                    title       = "Hide" \
-                    data-guid   = "{{guid}}" \
-                    class       = "btnhide social-tooltip HideBlogArticle" \
-                    type        = "button" \
-                    data-social = "0"> \
-                    <i class="fa fa-eye-slash">\
-                    </i><span class="u-display-none">Hide</span> \
-                </button> \
-                \
-                <button \
-                    onclick="window.location=\'{{{editUrl}}}\'; return false;" \
-                    title="Edit" \
-                    class="btnhide social-tooltip" \
-                    type="button"> \
-                    <i class="fa fa-edit"></i>\
-                    <span class="u-display-none">Edit</span> \
-                </button> \
-                \
-                <button data-position="{{position}}" \
-                        data-social="0" \
-                        data-id="{{articleId}}" \
-                        title="{{pinTitle}}" \
-                        class="btnhide social-tooltip PinArticleBtn {{# ifCond isPinned "==" 1 }}selected{{/ifCond}}" \
-                        type="button" \
-                        data-status="{{isPinned}}"> \
-                    <i class="fa fa-thumb-tack"></i>\
-                    <span class="u-display-none">{{pinText}}</span> \
-                </button> \
-            </div> \
-         {{/if}}\
-    </a>\
-</div>';
-
-
-
-Acme.templates.systemCardTemplate = 
-    cardTemplateTop + 
-        '{{#if params.hasMedia}}\
-            <figure class="{{cardType}}c-cards-view__media" {{params.videoClass}}>\
-                <img class="img-fluid lazyload" data-original="{{params.image}}" src="{{params.image}}" style="background-image:url("{{placeholder}}"")>\
-                <div class="video-icon"></div> \
-            </figure>\
-        {{/if}} \
-        \
-        <div class="social-icon"></div>\
-        \
-        <div class="{{cardType}}c-cards-view__container">\
-            <div class="{{cardType}}c-cards-view__category">{{ params.category }}</div>\
-            <h2 class="{{cardType}}c-cards-view__heading j-truncate">{{{ params.title }}}</h2>\
-            <p class="{{cardType}}c-cards-view__description j-truncate">{{{ params.content }}}</p>\
-            <div class="{{cardType}}c-cards-view__author">\
-                <time class="{{cardType}}c-cards-view__time" datetime="{{params.publishDate}}">{{params.publishDate}}</time>\
-            </div>\
-        </div>'+ 
-    cardTemplateBottom;
-
-
-
-// **********************************************************
-//                       CARDS END
-// **********************************************************
-
-
-
-
-
-
-
-
-
-
-Acme.templates.spinnerTmpl = '<div class="spinner"></div>';
-Acme.templates.spinner = 
-    '<div id="{{name}}" class="flex_col {{name}}"> \
-        <div id="dialog" class="{{name}}__window"> \
-            <div class="{{name}}__header"> \
-                <h2 class="{{name}}__title">{{title}}</h2> \
-            </div> \
-            <div class="{{name}}__content-window" id="dialogContent"></div> \
-        </div> \
-    </div>';
-
-
-
-// Acme.templates.carousel_item = 
-// '<li class="carousel-tray__item swap-images"> \
-//     <div data-id="{{imageid}}" class="carousel-tray__delete"> \
-//         <span class="o-close"></span> \
-//     </div> \
-//     <img class="carousel-tray__img" src="{{imagePath}}" /> \
-// </li>';
-
-Acme.templates.swappingHelper = 
-'<div class="SwappingHelper" style="display:none"> \
-    <div style="width: 270px; height: 105px; padding: 3px; background-color: #FFF; max-width: 270px; max-height: 105px; overflow: hidden; z-index: 999 !important;"> \
-        <img class="article-image" src="" style="width:97px; height: 97px; float: left;" /> \
-        <p class="article-text" style="width: 165px; float: left; padding-left: 3px;color: #394659;font-size: 14px; font-family: Droid Serif,serif; line-height: 20px; margin-top:0px;"></p> \
-    </div> \
-</div>';
-
-
-
-
-
-
-
-
-Acme.templates.managed_user = 
-'<li id="{{id}}" class="c-managed-user"> \
-    <p class="c-managed-user__email j-email">{{email}}</p> \
-    <a class="c-managed-user__close j-delete "></a> \
-    <a class="c-managed-user__edit j-edit"></a> \
-</li>';
-
-
-
-
-
-
-
-
-
-
-    
-    
-
-Acme.templates.ads_infinite = 
-    "<div class='advert-desktop advert-tablet col-sm-9 hidden-xs u-margin-top-30' data-adsize='banner' style='padding:0;'></div>\
-    <div class='col-xs-9 visible-xs-block' style='padding:0;width:300px;height:250px;'><div class='advert-mobile' data-adsize='mrec'></div></div>\
-    <hr class='divide18 col-xs-9 visible-xs-block'>";
-
-
-
-Acme.templates.modal = 
-// style="scrolling == unusable position:fixed element might be fixing login for ios safari
-// also margin-top:10px
-'<div id="{{name}}" class="flex_col {{name}}" data-behaviour="close"> \
-    <div id="dialog" class="{{name}}__window"> \
-        <div class="{{name}}__container" style="scrolling == unusable position:fixed element"> \
-            <div class="{{name}}__header"> \
-                <h2 class="{{name}}__title">{{title}}</h2> \
-                <a class="{{name}}__close" href="javascript:;" data-behaviour="close"></a> \
-            </div> \
-            <div class="{{name}}__content-window" id="dialogContent" style="scrolling == unusable position:fixed element"></div> \
-        </div> \
-    </div> \
-</div>';
-    
-    
-// Acme.templates.carousel_item = 
-// '<div class="carousel-tray__item" style="background-image:url( {{imagePath}} )"> \
-//     <span data-id="{{imageid}}" class="carousel-tray__delete"></span> \
-// </div>';
-
-// window.templates.listingDeleteTmpl =  
-//     '<p>{{msg}}</p> \
-//     <div> \
-//         <form> \
-//             <button class="_btn _btn--red" data-role="{{role}}">DELETE</button> \
-//             <button class="_btn _btn--gray">CANCEL</button> \
-//         </form> \
-//     </div>';
-
-
-Acme.templates.subscribeTerms =  
-    '<p class="password-reset-form__p u-margin-bottom-20 centerText">Please agree to the terms of use.</p> \
-    <div class="centerText"> \
-        <button class="c-button c-button--blue">Okay</button> \
-    </div>';
-
-Acme.templates.listingDeleteTmpl =  
-    '<p style="margin-top:10px;">{{msg}}</p> \
-    <div style="display:flex"> \
-        <form style="margin:auto; margin-top:20px;"> \
-            <button class="c-button c-button--inline c-button--rounded c-button--blue-bordered u-margin-right-10" data-role="{{role}}">DELETE</button> \
-            <button class="c-button c-button--inline c-button--rounded c-button--blue-bordered" data-role="cancel">CANCEL</button> \
-        </form> \
-    </div>';
-    
-
-
-Acme.templates.listingSavedTmpl =  
-'<p class=" u-margin-bottom-30 u-margin-top-20 centerText">Following approval it will be posted to the events page within 24 hours.</p> \
-<div class="centerText"> \
-    <button class="c-button c-button--blue">Okay</button> \
-</div>';
-
-
-
-
-
-Acme.templates.socialPopup =
-'<div class="modal social--modal social--modal--md" id="ModalSocialCard"> \
-    <div class="modal-dialog"> \
-        <div class="modal-content modal-content--md"> \
-            <div class="o-modal__container card-social-popup-desktop"> \
-                \
-                <div class="o-modal__container-head"> \
-                    <button type="button" class="close" data-dismiss="modal">&times;</button> \
-                </div> \
-                \
-                <div class="o-modal__container-body c-cards-view social facebook"> \
-                    <figure class="c-cards-view__media"> \
-                        <img src="{{media.path}}" alt="Image" class="img-fluid" /> \
-                        <div class="video-icon"></div> \
-                        <div class="social-icon"></div> \
-                    </figure> \
-                    \
-                    <div class="c-cards-view__container"> \
-                        <div class="c-cards-view__category">{{source}}</div> \
-                        <div class="c-cards-view__heading">{{content}}</div> \
-                        <div class="c-cards-view__author"> \
-                            <div class="c-cards-view__author-name">{{user.name}}</div> \
-                            <div class="c-cards-view__time">{{publishDate}}</div> \
-                        </div> \
-                    </div> \
-                </div> \
-            </div> \
-        </div> \
-    </div> \
-</div>';
-
-
-Acme.templates.classified =
-'<div class="" id="ModalMultiImageGallery"> \
-    <div class=""> \
-        <div class="modal-content modal-content-md"> \
-            <div class="o-modal__container o-modal__container--gallery"> \
-            \
-                <div class="o-modal__container-body o-modal__container-body"> \
-                    <div class="o-media o-media-sm js-slider"> \
-                        <figure class="o-media--item"> \
-                            <div class="o-media--item--galllery"> \
-                                <img src="static/images/slider/hockey.jpg" class="img-fluid o-media--image" alt="Article Info"> \
-                                <div class="slide-count-wrap"> \
-                                    <span class="current"></span> \
-                                </div> \
-                            </div> \
-                        </figure> \
-                        <figure class="o-media--item"> \
-                            <div class="o-media--item--galllery"> \
-                                <img src="static/images/slider/hockey.jpg" class="img-fluid o-media--image" alt="Article Info"> \
-                                <div class="slide-count-wrap"> \
-                                    <span class="current"></span> \
-                                </div> \
-                            </div> \
-                        </figure> \
-                    </div> \
-                    <div class="o-modal--discription"> \
-                        <div class="c-cards-view__container"> \
-                            <div class="c-cards-view__ategory">Motor vehicles</div> \
-                            <div class="c-cards-view__heading js-truncate">Vintage tractor</div> \
-                            <div class="c-cards-view__description js-truncate">2004, BA, auto, FSH, 70,000kms, reg to July 2019, excellent cond, CAPPS3, $12,000. Phone 0448 235 740 after 6pm.</div> \
-                        </div> \
-                    </div> \
-                </div> \
-            </div> \
-        </div> \
-    </div> \
-</div>';
-
-
-
-
-
-
-
-// **********************************************************
-//                       FORMS
-// **********************************************************
-
-Acme.templates.signinFormTmpl = 
-'<form id="loginForm" class="vertical-form" action="#" method="post" autocomplete="off"> \
-    <div class="c-form c-login-modal"> \
-        <input id="email" class="c-login-modal__input c-form__input c-form__input--bordered-bottom" name="username" placeholder="Email Address" aria-required="true" type="text"> \
-        <div class="c-form__help-block">Please enter your email address</div> \
-        \
-        <input id="password" class="c-login-modal__input c-form__input c-form__input--bordered-bottom u-margin-top-10" name="password" placeholder="Password" aria-required="true" type="password"> \
-        <div class="c-form__help-block">Please enter your email Password</div> \
-        <p id="signin_error" class="c-form__help-block u-font-size-14 u-margin-top-10"></p> \
-        <a href="javascript:;" class="c-login-modal__password-link" data-layout="forgot">Forgot password?</a> \
-    </div> \
-    \
-    <div class="c-form__buttons"> \
-        <button id="signinBtn" type="submit" class="c-button c-button--blue j-signin">Log in</button> \
-    </div> \
-    \
-    <div class="c-login-modal__subaction"> \
-        <span>Trouble logging in? <a href="'+_appJsConfig.appHostName +'/faq" target="_blank">Read our FAQs</a></span>\
-        <a href="javascript:;" class="c-login-modal__password-link text-center" data-layout="forgot">Set a PR password</a> \
-    </div> \
-</form>';
-
-
-
-Acme.templates.forgotFormTmpl = 
-'<form id="forgotForm" class="vertical-form" action="#" method="post" autocomplete="off"> \
-    <div class="c-form c-forgot-modal__description"> \
-        Enter your email below and we will send you a link to set your password. \
-    </div> \
-    \
-    <input id="email" class="c-form__input c-forgot-modal__input" name="email" placeholder="Email Address" aria-required="true" type="text"> \
-    <div class="c-form__help-block">Please enter your email address</div> \
-    \
-    <div class="c-form__buttons"> \
-        <button type="submit" class="c-button c-button--blue-bordered j-forgot-email">Send Email</button> \
-    </div> \
-</form>';
-
-
-
-Acme.templates.userPlanMessage = 
-'<p class="{{name}}__message centerText">{{{message}}}</p> \
-<form name="loginForm" id="loginForm" class="active u-margin-top-20 centerText" action="javascript:void(0);" method="post" accept-charset="UTF-8" autocomplete="off"> \
-    <button id="cancelbutton" class="c-button c-button--blue-bordered" data-role="okay">OK</button> \
-</form>';
-
-Acme.templates.userPlanOkCancel = 
-'<p class="{{name}}__message centerText">{{message}}</p> \
-<form name="loginForm" id="loginForm" class="active u-margin-top-20 centerText" action="javascript:void(0);" method="post" accept-charset="UTF-8" autocomplete="off"> \
-    <button id="okaybutton" class="c-button c-button--inline c-button--blue-bordered" data-role="okay">Confirm</button> \
-</form>';
-
-
-Acme.templates.create_user = 
-'<div id="newUser" class="col-12 c-managed-user-new u-margin-bottom-60"> \
-    <div id="cancelUserCreate" class="c-managed-user__close c-managed-user__close--top"></div> \
-    <div class="row u-desktop-padding-top-20 u-margin-bottom-15"> \
-        <div class="col has-error"> \
-            <input id="newuserfirstname" class="c-form__input c-form__input--bordered" name="firstname" placeholder="First Name" aria-required="true" type="text"> \
-        </div> \
-        <div class="col"> \
-            <input id="newuserlastname" class="c-form__input c-form__input--bordered" name="lastname" placeholder="Last Name" aria-required="true" type="text"> \
-        </div> \
-    </div> \
-    <div class="row"> \
-        <div class="col"> \
-            <input id="newuseruseremail" class="c-form__input c-form__input--bordered" name="email" placeholder="Email" aria-required="true" type="text"> \
-        </div> \
-    </div> \
-    \
-    <div id="userError" class="c-form__help-block u-margin-top-10"></div> \
-    \
-    <button id="saveUser" type="button" class="c-button c-button--blue-bordered u-margin-top-40">Save</button> \
-</div>';

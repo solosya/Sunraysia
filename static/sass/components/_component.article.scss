@@ -312,13 +312,13 @@
         width: 100%;
         margin-left: 0px;
         margin-right: 0px;
-        position: absolute;
         bottom: 0;
         left: 0;
-        background: rgba($black, 0.7) none repeat scroll 0 0;
-        color: $white;
+        color: $greyish;
+        font-size: 0.6875rem;
+        font-style: italic;
         z-index: 30;
-        padding: 10px 20px;
+        padding: 10px 0px;
         font-family: $primaryFont !important;
       }
     }
