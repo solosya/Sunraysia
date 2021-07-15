@@ -317,7 +317,6 @@ $("document").ready(function () {
 
   setTimeout(function () {
     $(".c-article__container figure img").each(function () {
-      console.log("mayank");
       var width = $(this).width() + "px";
       var captionObj = $(this).closest("figure").find("figcaption");
       if (captionObj) {
