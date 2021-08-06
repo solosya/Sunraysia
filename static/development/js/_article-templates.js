@@ -244,6 +244,17 @@ Acme.templates.listingDeleteTmpl =
     </div>';
     
 
+Acme.templates.listingSentTmpl =
+    '<div class="justify-content-center"> \
+        <h2 class="u-margin-top-15">{{title}}</h2> \
+        <p class="u-margin-top-15">A staff member will be in touch with you soon.</p> \
+    </div> \
+    <div class="u-margin-top-15"> \
+        <form class="justify-content-center"> \
+            <button class="c-button c-button--inline c-button--blue-bordered">Okay</button> \
+        </form> \
+    </div>';
+
 
 Acme.templates.listingSavedTmpl =  
 '<p class=" u-margin-bottom-30 u-margin-top-20 centerText">Following approval it will be posted to the events page within 24 hours.</p> \

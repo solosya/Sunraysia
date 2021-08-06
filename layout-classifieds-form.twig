@@ -7,6 +7,10 @@
 {% if config['email_groups'] is defined and config['email_groups']['classifieds'] is defined %}
     {% set emailGroup = config['email_groups']['classifieds'] %}
 {% endif %}
+{% set formRedirect = '' %}
+{% if config['classified-form'] is defined and config['classified-form']['redirect'] is defined %}
+    {% set formRedirect = config['classified-form']['redirect'] %}
+{% endif %}
 
 
 {% set DeadlineText = "Deadlines: Monday edition – 10am, 3 days prior. Tuesday to Saturday editions – 10am, 1 day prior. Discounts apply for publishing on multiple days." %}
@@ -571,13 +575,20 @@
                 message: formText,
             }
 
+            Acme.sentView = new Acme.Confirm('modal', 'signin', {"listing"   : 'listingSentTmpl'});
+
             Acme.server.create('/api/contact/send-email', formData).done(function(r) {
 
                 if (r.success === '1' || r.success === 1) {
-                    $().General_ShowNotification({message: 'Classified sent, thanks!'});
+                    //$().General_ShowNotification({message: 'Classified sent, thanks!'});
+                    Acme.sentView.render("listing","Thank you for submitting your classified listing.")
                     setTimeout( function() {
-                        window.location.reload(false);
-                    }, 3000)
+                        if ('{{formRedirect}}' != ''){
+                            window.location.assign('{{formRedirect}}');
+                        } else{
+                            window.location.reload(false);
+                        }
+                    }, 10000)
                 } else {
                     submitButton.removeClass('spinner').removeClass('c-button--spinner').text('SUBMIT LISTING');
                 }
