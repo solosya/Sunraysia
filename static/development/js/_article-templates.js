@@ -246,7 +246,6 @@ Acme.templates.listingDeleteTmpl =
 
 Acme.templates.listingSentTmpl =
     '<div class="justify-content-center"> \
-        <h2 class="u-margin-top-15">{{title}}</h2> \
         <p class="u-margin-top-15">A staff member will be in touch with you soon.</p> \
     </div> \
     <div class="u-margin-top-15"> \
