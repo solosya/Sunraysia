@@ -63,7 +63,10 @@
 {% endif %}
 
 {% set paywallType = "" %}
-{% if  not _User.isAdminUser() and article['premiumContent'] == true %}
+{% if  not      _User.isAdminUser() and
+                articleBlogInfo['showPaywall'] == true and
+                article['premiumContent'] == true
+                %}
     {% if bypassPaywall == false %} 
         {% set showPaywall = true %}
     {% endif %}
