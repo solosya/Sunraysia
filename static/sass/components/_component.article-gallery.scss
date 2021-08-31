@@ -18,6 +18,9 @@
                 height: unset;
               }
         }
+        @media #{$desktop-up}{
+            height: unset;
+        }
     }
 
 
