@@ -35,7 +35,7 @@
                 }
             ]
         },
-        "media": {
+        "media" : {
             "extendedAttributes": [
                 {
                     "label": "Extensis",
@@ -49,27 +49,18 @@
                 }
             ]
         },
-        "blog": {
+        "blog" : {
             "routes": {
                 "allowOverride": true,
                 "comment": "allowing override is for single page apps that hand their own routing"
             },
-            "endUserAccess": [
-                "jobs",
-                "prop",
-                "events",
-                "local",
-                "",
-                "426",
-                "422",
-                "Sunraysia",
-                "",
-                "",
-                "",
-                "UAT",
-                "",
-                "",
-                "3548"
+            "endUserAccess" : [
+
+                                    "jobs",    "prop",      "events",
+                    "local",        "",         "426",      "422",    
+                    "Sunraysia",    "",         "",         "",   
+                    "UAT",          "",         "",         "3548"
+                
             ],
             "extendedAttributes": [
                 {
@@ -82,59 +73,59 @@
         "Classifieds": {
             "extendedAttributes": [
                 {
-                    "label": "Contact Name",
+                    "label" : "Contact Name",
                     "name": "contactName",
                     "type": "inputbox",
-                    "placeholder": "Enter Contact Name",
+                    "placeholder" : "Enter Contact Name",
                     "required": false
                 },
                 {
-                    "label": "Address 1",
+                    "label" : "Address 1",
                     "name": "address1",
                     "type": "inputbox",
-                    "placeholder": "Enter Address 1",
+                    "placeholder" : "Enter Address 1",
                     "required": false
                 },
                 {
-                    "label": "Address 2",
+                    "label" : "Address 2",
                     "name": "address2",
                     "type": "inputbox",
-                    "placeholder": "Enter Address 2",
+                    "placeholder" : "Enter Address 2",
                     "required": false
                 },
                 {
-                    "label": "City",
+                    "label" : "City",
                     "name": "city",
                     "type": "inputbox",
-                    "placeholder": "Enter City",
+                    "placeholder" : "Enter City",
                     "required": false
                 },
                 {
-                    "label": "State",
+                    "label" : "State",
                     "name": "state",
                     "type": "inputbox",
-                    "placeholder": "Enter State",
+                    "placeholder" : "Enter State",
                     "required": false
                 },
                 {
-                    "label": "Postcode",
+                    "label" : "Postcode",
                     "name": "postalCode",
                     "type": "inputbox",
-                    "placeholder": "Enter Postcode",
+                    "placeholder" : "Enter Postcode",
                     "required": false
                 },
                 {
-                    "label": "Phone",
+                    "label" : "Phone",
                     "name": "phone",
                     "type": "inputbox",
-                    "placeholder": "Enter Phone",
+                    "placeholder" : "Enter Phone",
                     "required": false
                 },
                 {
-                    "label": "Email Address",
+                    "label" : "Email Address",
                     "name": "email",
                     "type": "inputbox",
-                    "placeholder": "Enter Email",
+                    "placeholder" : "Enter Email",
                     "required": false
                 }
             ]
