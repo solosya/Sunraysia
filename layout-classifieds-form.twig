@@ -581,7 +581,7 @@
 
                 if (r.success === '1' || r.success === 1) {
                     //$().General_ShowNotification({message: 'Classified sent, thanks!'});
-                    Acme.sentView.render("listing","Thank you for submitting your classified listing.")
+                    Acme.sentView.render("listing","Thank you for submitting your listing.")
                     setTimeout( function() {
                         if ('{{formRedirect}}' != ''){
                             window.location.assign('{{formRedirect}}');
