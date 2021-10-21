@@ -1,15 +1,23 @@
 {
-    "compressHtml" : false,
-    "module" : {
-        "debug" : {
-            "enabled" : true
+    "compressHtml": false,
+    "module": {
+        "debug": {
+            "enabled": true
         },
-        "event" : {
-            "enabled" : true
+        "event": {
+            "enabled": true
         },
-        "article" : {
+        "user": {
             "extendedAttributes": [
-                
+                {
+                    "label": "Plan status",
+                    "name": "plan_status",
+                    "type": "inputbox"
+                }
+            ]
+        },
+        "article": {
+            "extendedAttributes": [
                 {
                     "name": "intro",
                     "label": "Introduction message (such as: 'In Loving Memory')",
