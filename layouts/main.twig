@@ -64,7 +64,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
     <meta http-equiv="Accept-CH" content="DPR, Viewport-Width, Width">
-
+    {% if config.metaTags is defined %}
+        {% for tag in config.metaTags %}
+            {% if tag.name is defined and tag.name != "" and tag.content is defined and tag.content != "" %}
+                <meta name="{{tag.name}}" content="{{tag.content}}" />
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+    
     <meta name="google-site-verification" content="LLgWSPAesUa9X77EPVG9LjdUZuZ89ba7BxxBWumHKOo" />
 
     <link rel="profile" href="https://gmpg.org/xfn/11">
