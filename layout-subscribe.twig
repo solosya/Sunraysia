@@ -1,7 +1,6 @@
 {{ set(this, 'title', _Blog.getBlogTitle()) }}
 {% set networkData = _Network.getNetworkData() %}
-{% set plans = networkData['paywallPlans'] %}
-
+{% set plans = _Paywall.getActiveNetworkPaywallPlans() %}
 
 {% set plan = false %}
 {% set trial = false %}
