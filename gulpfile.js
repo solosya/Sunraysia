@@ -65,8 +65,7 @@ gulp.task("sass", function () {
   return gulp
     .src(["./static/sass/main.scss"])
     .pipe(sourcemaps.init())
-    .pipe(
-      sass({
+    .pipe(sass({
         includePaths: [
           "./static/sass/components",
           "./static/sass/cards",
