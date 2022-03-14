@@ -123,6 +123,11 @@
                                     {% set val = "FREE" %}
                                 {% endif %}
 
+                                <div class="d-none">
+                                    {{plan}}
+                                    {{plan_value}}
+                                </div>
+
 
                                 {% set planName = plan.plan_name |replace({'Member': '<br />Member'}) %}
 
