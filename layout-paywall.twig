@@ -123,13 +123,6 @@
                                     {% set val = "FREE" %}
                                 {% endif %}
 
-                                <div class="d-none">
-                                    {{_AppHelper.printArray(plan)}}
-                                    {{_AppHelper.printArray(plan.plan_value)}}
-                                    {{_AppHelper.printArray(val)}}
-                                </div>
-
-
                                 {% set planName = plan.plan_name |replace({'Member': '<br />Member'}) %}
 
                                 <div class="col-12 col-md-6 col-lg-3">
