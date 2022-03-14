@@ -63,7 +63,7 @@
 
         &:hover, &:focus {
             color:$white;
-            background-color:darken($blue, 18%);
+            /* background-color:darken($blue, 18%); */
         }
     }
     &--bottom{
@@ -103,7 +103,7 @@
 
             &:hover, &:focus {
                 color:$white;
-                background-color:darken($blue, 18%);
+                /* background-color:darken($blue, 18%); */
             }
         }
     }

@@ -75,7 +75,7 @@
 
         &:hover, &:focus {
             color:$white;
-            background-color:darken($blue, 18%);
+            /* background-color:darken($blue, 18%); */
         }
     }
     
@@ -98,7 +98,7 @@
 
             &:hover, &:focus {
                 color:$white;
-                background-color:darken($blue, 18%);
+                /* background-color:darken($blue, 18%); */
             }
         }
     }
