@@ -9,7 +9,7 @@ var concat = require("gulp-concat");
 var uglify = require("gulp-uglify");
 var gp_rename = require("gulp-rename");
 var gutil = require("gulp-util");
-var sass = require("gulp-sass");
+var sass = require("gulp-sass")(require("sass"));
 var sourcemaps = require("gulp-sourcemaps");
 var minifyCss = require("gulp-clean-css");
 var hasher = require("gulp-hasher");
@@ -65,8 +65,7 @@ gulp.task("sass", function () {
   return gulp
     .src(["./static/sass/main.scss"])
     .pipe(sourcemaps.init())
-    .pipe(
-      sass({
+    .pipe(sass({
         includePaths: [
           "./static/sass/components",
           "./static/sass/cards",

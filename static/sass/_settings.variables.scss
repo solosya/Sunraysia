@@ -45,7 +45,7 @@ $grey:          rgba(89,88,89, 0.7);
 $grey_sh1:      rgba(89,88,89, 0.5);
 $black:         #000000;
 $transparent:   rgba(0,0,0, 0);
-$blue:          #0e215d;
+$blue:          var(--sec-color);
 $blue_sh1:      #4573cd;
 $blue_sh2:      #4772cc;
 $blue_sh3:      #ebf4f8;
@@ -82,8 +82,12 @@ $linkedin:      #1f7bc2;
 $flickr:        #377ede;
 $lightgrey:     #cdcdcd;
 $lightborder:   #e0e0e0;
-
-
+:root {
+    --sec-color: #0e215d;
+}
+@if (var(--sec-color) != #0e215d) {
+    $blue: var(--sec-color);
+}
 
 //Buttons
 // $btn-primary-color:              #fff !default;

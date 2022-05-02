@@ -243,9 +243,8 @@
 
 
 
-
                         <div class="c-article__container">
-                                {{ ArticleContent | _resizeImages({'width': 600}) | raw }}
+                            {{ ArticleContent | _resizeImages({'width': 600, articleId: article.id, networkId:article.networkId }) | raw }}
                         </div>
 
 
