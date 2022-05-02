@@ -110,6 +110,14 @@
 {% endfor %}
 
 
+{% set allowPosting = true %}
+{% set allowSearch = true %}
+{% if config['classifieds']['allow-posting'] is defined and config['classifieds']['allow-posting'] == false %}
+    {% set allowPosting = false %}
+{% endif %}
+{% if config['classifieds']['allow-search'] is defined and config['classifieds']['allow-search'] == false %}
+    {% set allowSearch = false %}
+{% endif %}
 
 
 <main id="main" class="site-main u-margin-top-60 u-margin-bottom-60" role="main" data-article-limit="{{limit}}" data-article-count="{{articles | length}}">
@@ -122,7 +130,7 @@
                         <h1 class="c-section-head__title c-section-head__title--40">{{this.title}}</h1>
                     </a>
                 
-                {% if not _User.isGuest() %}
+                {% if allowPosting %}
                     <a href="{{networkData.defaultBlogUrl}}/classified-create" class="c-section-head__button c-button c-button--red">Submit a listing</a>
                 {% endif %}
                 
@@ -134,19 +142,21 @@
            {# *********************************************
                         Filter and search
               ********************************************* #}
-                <div class="c-filter--search c-filter--search-xs form-group">
-                    <div class="c-filter--search--field c-filter--search--field-xs">
-                        {# <span id="search-button-2" class="fa fa-search c-search-icon"></span> #}
-                        <input type="text" class="form-control" name="search" id="search" placeholder="Search the classifieds">
-                        <div id="searchSpinner" class="spinner" style="position:relative;top:-22px;right:42px;float:right;display:none;"></div>
+              {% if allowSearch %}
+                    <div class="c-filter--search c-filter--search-xs form-group">
+                        <div class="c-filter--search--field c-filter--search--field-xs">
+                            {# <span id="search-button-2" class="fa fa-search c-search-icon"></span> #}
+                            <input type="text" class="form-control" name="search" id="search" placeholder="Search">
+                            <div id="searchSpinner" class="spinner" style="position:relative;top:-22px;right:42px;float:right;display:none;"></div>
+                        </div>
+                        <div class="c-filter--search--select c-filter--search--select-xs">
+                            <div id="classySearchDropdown" class="" style="width:100%"></div>
+                        </div>
+                        <div class="c-filter--search--button">
+                            <button id="search-button" type="submit" class="c-button c-button--red">Search</button>
+                        </div>
                     </div>
-                    <div class="c-filter--search--select c-filter--search--select-xs">
-                        <div id="classySearchDropdown" class="" style="width:100%"></div>
-                    </div>
-                    <div class="c-filter--search--button">
-                        <button id="search-button" type="submit" class="c-button c-button--red">Search</button>
-                    </div>
-                </div>
+                {% endif %}
             </div>
         </div>
         
