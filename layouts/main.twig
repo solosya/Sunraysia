@@ -257,6 +257,7 @@
         document.addEventListener("DOMContentLoaded", function(event) {
             if (typeof window.Acme === 'undefined') {window.Acme = {};}
             Acme.templatePath = '" ~ networkData.templatePath ~ "';
+            new Card();
         });
     </script>
 
