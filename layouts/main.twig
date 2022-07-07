@@ -1,6 +1,3 @@
-{# {{ use('yii/web/JqueryAsset') }} #}
-
-{# {% set networkData   = _Network.getNetworkData() %} #}
 {% set networkData = getCache("networkData") %}
 {% if (networkData is empty) %}
     {% set networkData = _Network.getNetworkData() %} 
@@ -14,8 +11,7 @@
 {% endif %}
 
 
-
-{% set blogData      = _Blog.getBlog() %}
+{% set blogData      = _Blog.getBlog(null, {'excludeMenus' : true}) %}
 {% set pageClass     = _Page.getBodyClass() %}
 {% set layout        = _Page.getLayoutName() %}
 {% set blogName      = blogData.title %}
@@ -257,6 +253,7 @@
         document.addEventListener("DOMContentLoaded", function(event) {
             if (typeof window.Acme === 'undefined') {window.Acme = {};}
             Acme.templatePath = '" ~ networkData.templatePath ~ "';
+            new Card();
         });
     </script>
 

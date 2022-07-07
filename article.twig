@@ -2,8 +2,7 @@
 {{ set(this, 'title', article.title) }}
 {{ this.registerLinkTag({rel:'amphtml', href:_AppHelper.getServerUrl(false)~'?amp=1'}) }}
 
-{% set blogInfo = _Blog.getBlog() %}
-
+{% set blogInfo = _Blog.getBlog(null, {'excludeMenus' : true}) %}
 
 {% set networkData = getCache("networkData") %}
 {% if (networkData is empty) %}
