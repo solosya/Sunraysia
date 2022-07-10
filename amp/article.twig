@@ -74,7 +74,15 @@
 {% endif %}
 
 {% if showPaywall == false %}
-    {% set recentArticles = _Article.getRecentArticles({ limit: 5, excludeArticleIds : [article.id] }) %}
+
+    {% set cacheKey = "amp_recent" %}
+    {% set recentArticles = getCache(cacheKey) %}
+    {% if (recentArticles is empty) %}
+        {% set recentArticles = _Article.getRecentArticles({ limit: 5, excludeArticleIds : [article.id] }) %}
+        {% set cache = setCache(cacheKey, recentArticles, 900) %} 
+    {% endif %} 
+
+
 {% endif %}
 
 
