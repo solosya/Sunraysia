@@ -1,13 +1,18 @@
 {% set articleCount = 0 %}
 {% set cardIndex = 0 %}
 
-{% set popularArticles = _Article.getPopularArticles({ 
-    limit: 4, 
-    sortBy: 'VIEWS', 
-    scope: 'network',
-    interval: 168 
 
-     }) %}
+{% set cacheKey = "section_00_popular" %}
+{% set popularArticles = getCache(cacheKey) %}
+{% if (popularArticles is empty) %}
+    {% set popularArticles = _Article.getPopularArticles({ 
+        limit: 4, 
+        sortBy: 'VIEWS', 
+        scope: 'network',
+        interval: 168 
+        }) %}
+    {% set cache = setCache(cacheKey, popularArticles, 900) %} 
+{% endif %} 
 
 <div class="row" data-section="00">
         
