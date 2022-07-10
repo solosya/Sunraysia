@@ -110,7 +110,7 @@
     {% set recentArticles = getCache("articleRecent") %}
     {% if (recentArticles is empty) %}
         {% set recentArticles = _Article.getRecentArticles({ limit: 4 }) %}
-        {% set cache = setCache("articleRecent", recentArticles, 500) %} 
+        {% set cache = setCache("articleRecent", recentArticles, 900) %} 
     {% endif %}
 
 
