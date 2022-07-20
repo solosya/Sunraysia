@@ -10,8 +10,9 @@ Acme.Signin = function(template, parent, layouts) {
 Acme.Signin.prototype = new Acme.modal();
 Acme.Signin.constructor = Acme.Signin;
 Acme.Signin.prototype.errorMsg = function(msg) {
-
-    
+    if (typeof msg === 'undefined') {
+        return;
+    }
     var keys = Object.keys(msg);
     var text = "";
 
@@ -84,7 +85,6 @@ Acme.Signin.prototype.handle = function(e) {
                 if (r.success === 1) {
                     location.reload();
                 } else {
-                    self.errorMsg();
                     location.reload();
                 }
 

@@ -18607,7 +18607,7 @@ Acme.templates.signinFormTmpl =
 Acme.templates.forgotFormTmpl = 
 '<form id="forgotForm" class="vertical-form" action="#" method="post" autocomplete="off"> \
     <div class="c-form c-forgot-modal__description"> \
-        Enter your email below and we will send you a link to set your password. \
+        Enter your email below and if you have an account we will send you a link to set your password. \
     </div> \
     \
     <input id="email" class="c-form__input c-forgot-modal__input" name="email" placeholder="Email Address" aria-required="true" type="text"> \
@@ -21187,8 +21187,9 @@ Acme.Signin = function(template, parent, layouts) {
 Acme.Signin.prototype = new Acme.modal();
 Acme.Signin.constructor = Acme.Signin;
 Acme.Signin.prototype.errorMsg = function(msg) {
-
-    
+    if (typeof msg === 'undefined') {
+        return;
+    }
     var keys = Object.keys(msg);
     var text = "";
 
@@ -21261,7 +21262,6 @@ Acme.Signin.prototype.handle = function(e) {
                 if (r.success === 1) {
                     location.reload();
                 } else {
-                    self.errorMsg();
                     location.reload();
                 }
 
