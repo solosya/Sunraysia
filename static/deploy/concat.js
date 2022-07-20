@@ -21262,6 +21262,7 @@ Acme.Signin.prototype.handle = function(e) {
                     location.reload();
                 } else {
                     self.errorMsg();
+                    location.reload();
                 }
 
             }).fail(function(r) { console.log(r);});
