@@ -19,21 +19,6 @@
 
 {% set limit = 11 %}
 
-{% set articlesArr = _Blog.getBlogFeed({'limit': limit, 'offset': 0}) %}
-{% set articles = articlesArr.articles %}
-{% set firstCount = articles | length %}
-
-
-
-{% set popularArticles = getCache("popularArticles") %}
-{% if (popularArticles is empty) %}
-    {% set popularArticles = _Article.getPopularArticles({  limit: 4,  sortBy: 'VIEWS',  scope: 'network', interval: 168  }) %}
-    {% set cache = setCache("popularArticles", popularArticles, 500) %} 
-{% endif %}
-
-
-
-
 
 
 <!-- used to index each article as we loop over throughout the template -->

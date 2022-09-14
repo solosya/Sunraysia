@@ -25,14 +25,6 @@
 
 
 
-{% set popularArticles = getCache("popularArticles") %}
-{% if (popularArticles is empty) %}
-    {% set popularArticles = _Article.getPopularArticles({  limit: 4,  sortBy: 'VIEWS',  scope: 'network', interval: 168  }) %}
-    {% set cache = setCache("popularArticles", popularArticles, 500) %} 
-{% endif %}
-
-
-
 
 
 

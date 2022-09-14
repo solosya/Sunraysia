@@ -3,7 +3,8 @@
 
 
 {% set cacheKey = "section_00_popular" %}
-{% set popularArticles = getCache(cacheKey) %}
+{% set forceCache = true %}
+{% set popularArticles = getCache(cacheKey, forceCache) %}
 {% if (popularArticles is empty) %}
     {% set popularArticles = _Article.getPopularArticles({ 
         limit: 4, 
@@ -11,7 +12,7 @@
         scope: 'network',
         interval: 168 
         }) %}
-    {% set cache = setCache(cacheKey, popularArticles, 900) %} 
+    {% set cache = setCache(cacheKey, popularArticles, 900, forceCache) %} 
 {% endif %} 
 
 <div class="row" data-section="00">

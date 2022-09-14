@@ -24,11 +24,11 @@
 {% set firstCount = articles | length %}
 
 
-
-{% set popularArticles = getCache("popularArticles") %}
+{% set forceCache = true %}
+{% set popularArticles = getCache("popularArticles", forceCache) %}
 {% if (popularArticles is empty) %}
     {% set popularArticles = _Article.getPopularArticles({  limit: 4,  sortBy: 'VIEWS',  scope: 'network', interval: 168  }) %}
-    {% set cache = setCache("popularArticles", popularArticles, 500) %} 
+    {% set cache = setCache("popularArticles", popularArticles, 500, forceCache) %} 
 {% endif %}
 
 

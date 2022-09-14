@@ -107,10 +107,11 @@
     {# {% set recentArticles = _Article.getPopularArticles({ limit: 3, excludeArticleIds : [article.id], interval: 168, scope: 'network' }) %} #}
     {# {% set recentArticles = _Article.getRecentArticles({ limit: 3, excludeArticleIds : [article.id] }) %} #}
 
-    {% set recentArticles = getCache("articleRecent") %}
+    {% set forceCache = true %}
+    {% set recentArticles = getCache("articleRecent", forceCache) %}
     {% if (recentArticles is empty) %}
         {% set recentArticles = _Article.getRecentArticles({ limit: 4 }) %}
-        {% set cache = setCache("articleRecent", recentArticles, 900) %} 
+        {% set cache = setCache("articleRecent", recentArticles, 900, forceCache) %} 
     {% endif %}
 
 
