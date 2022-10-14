@@ -30,7 +30,6 @@
     {% set logo = _Media.getMediaUrl(networkData.secondaryLogoMedia, logoWidth, logoHeight, {'crop': 'fit'} ) %}
 {% endif %}
 
-{% set log = _AppHelper.log(logo) %}
 
 {% set footerMenu = getCache("footerMenu") %}
 {% if (footerMenu is empty) %}
