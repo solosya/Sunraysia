@@ -108,13 +108,12 @@
     {# {% set recentArticles = _Article.getRecentArticles({ limit: 3, excludeArticleIds : [article.id] }) %} #}
 
     {% set forceCache = true %}
-    {% set recentArticles = getCache("articleRecent", forceCache) %}
+    {% set cacheKey = 'articleRecent' ~ blogInfo.id %}
+    {% set recentArticles = getCache(cacheKey, forceCache) %}
     {% if (recentArticles is empty) %}
         {% set recentArticles = _Article.getRecentArticles({ limit: 4 }) %}
-        {% set cache = setCache("articleRecent", recentArticles, 900, forceCache) %} 
+        {% set cache = setCache(cacheKey, recentArticles, 900, forceCache) %} 
     {% endif %}
-
-
 {% endif %}
 
 {% set articleImg = false %}
