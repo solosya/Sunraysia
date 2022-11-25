@@ -107,6 +107,28 @@
     {# {% set recentArticles = _Article.getPopularArticles({ limit: 3, excludeArticleIds : [article.id], interval: 168, scope: 'network' }) %} #}
     {# {% set recentArticles = _Article.getRecentArticles({ limit: 3, excludeArticleIds : [article.id] }) %} #}
 
+    {% if config['inventory']['articleAd'] is defined %}
+        {% set adPos = config['inventory']['articleAd'] %}
+        {% set storySplit = ArticleContent | split('</p>') %}
+
+        {% if storySplit[(adPos['position'] + 2) - 1] %}
+ 
+            {% if adPos['slot'] is defined %}
+                {% set inarticleslot = adPos['slot'] %}
+                {% set ArticleContent = '' %}
+                {% for para in storySplit %}
+                    {% set ArticleContent = ArticleContent ~ para ~ '</p>' %}
+                    {% if loop.index == adPos['position'] %}
+                        {% set ArticleContent = ArticleContent ~ '
+                            <div class="u-margin-top-30 u-margin-bottom-30 '~ adPos['class'] ~'">
+                                <div class="j-adslot" id="' ~ inarticleslot ~ '" data-adshape="banner"></div>
+                            </div>' %}
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+        {% endif %}
+    {% endif %}
+    
     {% set forceCache = true %}
     {% set cacheKey = 'articleRecent' ~ blogInfo.id %}
     {% set recentArticles = getCache(cacheKey, forceCache) %}
@@ -150,11 +172,9 @@
 
 
 <main id="main" class="u-margin-top-60 u-margin-bottom-60" role="main">
-
     <div class="container">
         <div class="row">
             <div class="col-12 col-lg-7 col-xl-6 offset-xl-1">
-
                 <div class="c-article">
                     <div class="c-article__main">
                         <div class="c-article__head">
@@ -216,42 +236,30 @@
 
                         </div> <!-- close head -->
 
-                            {% if _User.isAdminUser() %}
-                                    <a href="{{article.editUrl}}" target="_blank" class="c-article__edit-link u-margin-top-20">Edit article</a>
-                            {% endif %}
+                        {% if _User.isAdminUser() %}
+                                <a href="{{article.editUrl}}" target="_blank" class="c-article__edit-link u-margin-top-20">Edit article</a>
+                        {% endif %}
 
-                    {% if articleImg %} 
+                        {% if articleImg %} 
 
-                        <div class="gallery-container relative">
-                            {% if article.media|length > 0 %}
-                                {{this.render('partials/gallery.twig', {
-                                    media: article.media,
-                                    showPaywall: showPaywall,
-                                    watermark: watermark,
-                                    galleryStyle: 'gallery',
-                                    purchasable: purchasable
-                                }) | raw}}
-                            {% endif %}
-                                                    
+                            <div class="gallery-container relative">
+                                {% if article.media|length > 0 %}
+                                    {{this.render('partials/gallery.twig', {
+                                        media: article.media,
+                                        showPaywall: showPaywall,
+                                        watermark: watermark,
+                                        galleryStyle: 'gallery',
+                                        purchasable: purchasable
+                                    }) | raw}}
+                                {% endif %}
+                                                        
 
-                        </div> 
+                            </div> 
 
-                    {% endif %}
-
-
-
-
-
+                        {% endif %}
                         <div class="c-article__container">
                             {{ ArticleContent | _resizeImages({'width': 600, articleId: article.id, networkId:article.networkId }) | raw }}
                         </div>
-
-
-
-                        {% if showPaywall == true %}
-                            {{this.render("partials/article/paywall.twig", {networkData: networkData, paywallType: paywallType }) | raw}}
-                        {% endif %}
-
                     </div>
 
 
@@ -262,9 +270,7 @@
 
 
                 </div>
-                <!-- End Article Page -->
             </div>
-
 
             <div class="col-12 col-lg-3 offset-lg-1">
                 <div class="o-body-container__right-layout">
@@ -273,12 +279,16 @@
                     {% endif %}
                 </div>
             </div>
-
         </div>
+    </div>
+
+    {% if showPaywall == true %}
+        {{this.render("partials/article/paywall.twig", {networkData: networkData, paywallType: paywallType }) | raw}}
+    {% endif %}
 
 
-        {% if recentArticles | length > 0 %}
-
+    {% if recentArticles | length > 0 %}
+        <div class="container">
             <div class="row c-related-articles u-desktop-margin-top-100">
                 <div class="col-12">
                     <h1 class="c-related-articles__header u-margin-bottom-30" >You might also like...</h1>
@@ -307,16 +317,13 @@
                     </div>
                 </div>
             </div>
-        {% endif %}
+        </div>
+    {% endif %}
 
+    {% if config['inventory']['adSpace']['banner'][1] is defined %}
+        <div class="j-adslot" id="{{config['inventory']['adSpace']['banner'][1]}}" data-adshape="banner"></div>
+    {% endif %}
 
-
-        {% if config['inventory']['adSpace']['banner'][1] is defined %}
-            <div class="j-adslot" id="{{config['inventory']['adSpace']['banner'][1]}}" data-adshape="banner"></div>
-        {% endif %}
-
-
-    </div>
     {% set theKeywords = '' %}
     {% if article.keywords is defined and article.keywords != '' %}
         {% set theKeywords = article.keywords %}
@@ -330,10 +337,9 @@
 </main>
 
 
+
 <script>
     document.addEventListener("DOMContentLoaded", function(event) {
         Acme.articleController = Acme.ArticleController();
     });
 </script>
-
-

@@ -15,15 +15,10 @@
 {% set pageClass     = _Page.getBodyClass() %}
 {% set layout        = _Page.getLayoutName() %}
 {% set blogName      = blogData.title %}
-{% set url           = _AppHelper.getParsedUrl() %}
 {% set allowedReferrers = config['allowedReferrers'] %}
 {% set headers      = _AppHelper.getHttpHeaders() %}
 
 
-{# If url uses port numbers append to site url data #}
-{% if url['port'] %}
-    {% set networkData = networkData | merge({ "defaultBlogUrl" : networkData['defaultBlogUrl'] ~ ":" ~ url['port'] }) %}
-{% endif %}
 
 {% set showPaywall = false %}
 {% set paywallSection = false %}
