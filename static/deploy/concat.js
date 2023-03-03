@@ -21768,7 +21768,8 @@ Acme.Token.prototype.removeToken = function()
         Acme.Weather.prototype.fetch = function()
         {
             var self = this;
-            Acme.server.fetch('https://weather.pagemasters.com.au/weather?q=' + this.location)
+            // Acme.server.fetch('https://weather.pagemasters.com.au/weather?q=' + this.location)
+            Acme.server.fetch('https://weather.publish.net.au/weather?q=' + this.location)
                 .done(function(r) {
                     self.data = r.data[0];
                     if (self.data.location.indexOf("Err:") == 0) {
