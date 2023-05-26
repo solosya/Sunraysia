@@ -19,16 +19,16 @@
     {% set messages = messages ~ m %}
 {% endfor %}
 
-    <script src='https://www.google.com/recaptcha/api.js' async defer></script>
+    {# <script src='https://www.google.com/recaptcha/api.js' async defer></script>
     <script>
     function contactEnable() {
         $('#btnContact').prop('disabled', false); 
     }
-    </script>
+    </script> #}
 
 
 
-    <main id="main" class="u-margin-top-60" role="main">
+    <main id="main" class="u-margin-top-60 d-none" role="main">
         
         <div class="o-body-container o-body-container-md">
             <div class="c-contact">
