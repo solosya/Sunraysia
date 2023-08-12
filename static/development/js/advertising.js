@@ -40,7 +40,7 @@
                     url: _appJsConfig.appHostName + '/api/ad/get-all',
                     dataType: 'json',
                     data: {
-                        'multiKeywords': keysString,
+                        'multiKeywords': allAdsKeywords,
                     },
                     success: function (data, textStatus, jqXHR) {
                         if (data.length < 1 ){
