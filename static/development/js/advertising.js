@@ -1,12 +1,9 @@
 (function($) {
-    (function($) {
-    
-
-    Acme.LoadAds = function()
-    {
+    Acme.LoadAds = function() {
         if ($(".j-adslot").length > 0) {
             var adslots = $(".j-adslot");
             var deviceSize = getDeviceForAd();
+            
             var allAdsKeywords = []
             for (var i=0;i<adslots.length;i++) {
                 var elem = adslots[i];
