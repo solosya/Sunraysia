@@ -18238,7 +18238,7 @@ function(a){"use strict";void 0===a.en&&(a.en={"mejs.plural-form":1,"mejs.downlo
         if ($(".j-adslot").length > 0) {
             var adslots = $(".j-adslot");
             var deviceSize = getDeviceForAd();
-            
+
             var allAdsKeywords = []
             for (var i=0;i<adslots.length;i++) {
                 var elem = adslots[i];
@@ -18248,7 +18248,7 @@ function(a){"use strict";void 0===a.en&&(a.en={"mejs.plural-form":1,"mejs.downlo
                 let keysArray = [elem.id,deviceSize];
                 if ($(".j-keyword-cont").length > 0) {
                     var keywordCont = $(".j-keyword-cont")[0];
-                    var keysExtra = keywordCont.dataset.keywords.split(',');
+                    var keysExtra = keywordCont.dataset.keyword.split(',');
                     if (keysExtra[0] != ""){
                         for (var j=0;j<keysExtra.length;j++){
                             if (keysExtra[j] != "") {
