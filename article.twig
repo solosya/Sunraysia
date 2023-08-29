@@ -207,13 +207,14 @@
 
 
                             <div class="c-article__posted-by">
-                                <div class="c-article__author" itemprop="author">
+                                <div class="c-article__author" itemscope itemprop="author" itemtype="https://schema.org/Person">
+                                    <meta itemprop="name" content="{{article.createdBy['displayName']}}">
                                 {# "{{_AppHelper.getUserProfileUrl(article.createdBy['username'])}}/posts" #}
-                                    <a itemprop="name" class="c-article__author-name" href="{{_AppHelper.getUserProfileUrl(article.createdBy['username'])}}/posts">{{ article.createdBy['displayName'] }}</a>
+                                    <a itemprop="url" class="c-article__author-name" href="{{_AppHelper.getUserProfileUrl(article.createdBy['username'])}}/posts">{{ article.createdBy['displayName'] }}</a>
 
                                     {% if article['createdBy']['coauthors'] %}
                                         {% for author in article['createdBy']['coauthors'] %}
-                                            <a itemprop="name" class="c-article__author-name" href="{{_AppHelper.getUserProfileUrl(author['username'])}}/posts">{{ author['displayName'] }}</a>
+                                            <a  class="c-article__author-name" href="{{_AppHelper.getUserProfileUrl(author['username'])}}/posts">{{ author['displayName'] }}</a>
                                         {% endfor %}
                                     {% endif %}
 
@@ -260,6 +261,13 @@
 
                             <div class="gallery-container relative">
                                 {% if article.media|length > 0 %}
+
+                                {% if article.media[0]['type'] != 'video' %}
+                                        <div itemprop="image" itemscope itemtype="https://schema.org/ImageObject" >
+                                            <meta itemprop="url" content="{{ _Media.getMediaUrl(article.media[0], 0, 0, {'crop': 'fill', 'gravity': 'auto'} )}}">
+                                        </div>
+                                    {% endif %}
+                                    
                                     {{this.render('partials/gallery.twig', {
                                         media: article.media,
                                         showPaywall: showPaywall,
