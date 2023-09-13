@@ -195,16 +195,13 @@
                     <div class="c-article__main">
                         <div class="c-article__head">
                             
-
-
-                            <a href={{blogInfo.url}} class="c-article__category">
-                                {{blogInfo.title}}
+                            <a href={{blogInfo.url}}>
+                                <div class="c-article__category">{{blogInfo.title}}</div>
                             </a>
+                            
                             <h1 class="c-article__title" itemprop="headline">
                                 {{ quotes.smarten(article.title) }}
                             </h1>
-
-
 
                             <div class="c-article__posted-by">
                                 <div class="c-article__author" itemscope itemprop="author" itemtype="https://schema.org/Person">
