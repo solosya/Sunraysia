@@ -49,14 +49,14 @@
 {% if env == 'prod' or env == 'uat' %}
     <link rel="stylesheet" href="https://d3pbdxdl8c65wb.cloudfront.net/themes/{{themeId}}/static/css/main.chunk.css?ver={{photoVersion}}" type="text/css" media="all">
     <link rel="stylesheet" href="https://d3pbdxdl8c65wb.cloudfront.net/themes/{{themeId}}/static/css/1.chunk.css?ver={{photoVersion}}" type="text/css" media="all">
-    <script type="text/javascript" src='https://d3pbdxdl8c65wb.cloudfront.net/themes/{{themeId}}/static/js/1.chunk.js?ver="{{photoVersion}}'></script>
+    <script type="text/javascript" src='https://d3pbdxdl8c65wb.cloudfront.net/themes/{{themeId}}/static/js/1.chunk.js?ver={{photoVersion}}'></script>
     
     {# {% if _User.isAdminUser() %} #}
         {# <link rel="stylesheet" href="https://d3pbdxdl8c65wb.cloudfront.net/themes/{{themeId}}/static/css/Admin.chunk.css?ver={{photoVersion}}" type="text/css" media="all">
-        <script defer type="text/javascript" src='https://d3pbdxdl8c65wb.cloudfront.net/themes/{{themeId}}/static/js/Admin.chunk.js?ver="{{photoVersion}}'></script> #}
+        <script defer type="text/javascript" src='https://d3pbdxdl8c65wb.cloudfront.net/themes/{{themeId}}/static/js/Admin.chunk.js?ver={{photoVersion}}'></script> #}
     {# {% endif %} #}
 
-    <script type="text/javascript" src='https://d3pbdxdl8c65wb.cloudfront.net/themes/{{themeId}}/static/js/main.chunk.js?ver="{{photoVersion}}'></script>
+    <script type="text/javascript" src='https://d3pbdxdl8c65wb.cloudfront.net/themes/{{themeId}}/static/js/main.chunk.js?ver={{photoVersion}}'></script>
 {% endif %}
 
 

@@ -106,6 +106,11 @@ $("document").ready(function () {
     $("#user-menu-tablet").toggle();
   });
 
+  $(".user-menu-button-dropdown").click(function (event) {
+    $(".user-menu-dropdown").toggle();
+  });
+
+
   $(".js-hamDesktop").click(function (event) {
     event.preventDefault();
     $(this).toggleClass("active");
