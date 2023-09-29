@@ -72,7 +72,12 @@
         }
 
         @media #{$mobile} {
-            @include flex-height(65px);
+           // @include flex-height(65px);
+            @include flex-height(inherit);
+            @include flexbox;
+            @include flex-direction(column, vertical);
+            @include align-items(flex-start);
+            padding: 30px 15px 15px;
         }       
 
         &.active {
@@ -280,6 +285,34 @@
         line-height:36px;
         padding-left:25px;
         float:left;
+    }
+
+    &__mobile-view {
+        display: none;
+        @media #{$mobile} {
+            position: relative;
+            display: block;
+            margin-top: 10px;
+            order: 2;
+            width: 100%;
+            @include flexbox;
+            @include justify-content(space-between);
+            @include align-items(center);
+
+            .c-hamMenu {
+                position: relative;
+                order: 1;
+            } 
+
+            .c-header__login-buttons-mobileView {
+                order: 2;
+            }
+
+            .c-user-menu { 
+                position: absolute;
+                top: 35px;
+            }
+        }
     }
 
 }

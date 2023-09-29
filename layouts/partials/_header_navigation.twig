@@ -103,9 +103,7 @@
                 <div id="weather" class="c-header__weather-info c-header__weather-info-xs j-weather-panel"></div>
                 
 
-                <button class="c-hamMenu c-hamMenu--tablet js-hamDevice" type="button">
-                    <span class="transition-med"></span>
-                </button>
+                
 
 
                 <div class="c-header__logo-container">
@@ -115,6 +113,28 @@
 
 
                     <p id="header-date" class="c-header__date"> {{theDate}} </p>
+                </div>
+                <div class="c-header__mobile-view">
+                    <button class="c-hamMenu c-hamMenu--tablet js-hamDevice" type="button">
+                        <span class="transition-med"></span>
+                    </button>
+                    <div class="c-header__login-buttons-mobileView">
+                        {% if _User.isGuest() %}
+                            <a id="signinBtn" href="javascript:;" class="c-button c-button--blue-bordered u-margin-right-10">Log in</a>
+                            <a href="{{networkData.defaultBlogUrl}}/paywall" class="c-button c-button--blue">Join</a>
+                        {% else %}
+                            {# <a id="signinBtn" href="javascript:;" class="c-button c-button--blue-bordered u-margin-right-10">Log in</a> #}
+
+                            <a href="javascript:;" class="c-header__username user-menu-button-dropdown">Hi {{user.firstname}}</a>
+                            <div class="c-user-menu user-menu-dropdown" style="display:none">
+                                <p class="c-user-menu__name">{{user.firstname}} {{user.lastname}}</p>
+                                <p class="c-user-menu__email">{{user.email}}</p>
+                                <hr class="divide divide--dark" />
+                                <a class="c-user-menu__link" href="{{networkData.defaultBlogUrl}}/user/edit-profile">My Account</a>
+                                <a class="c-user-menu__link" href="{{_AppHelper.getLogoffUrl()}}">Log out</a>
+                            </div>
+                        {% endif %}
+                    </div>
                 </div>
 
 
