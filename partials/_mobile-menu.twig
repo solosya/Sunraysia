@@ -1,0 +1,21 @@
+<div class="app-mobileMenu">
+	{% for item in menu |slice(0, 4) %}
+
+		<a class="app-mobileMenu_item"
+        href={{item.link | raw}}
+        {% if item.target != "" %} 
+            target="{{item.target}}"
+        {% endif %} 
+        
+        >
+        {% if item.label != "" %}
+                {{item.label}}
+        {% elseif item.blogTitle != "" %}
+            {{item.blogTitle}}
+        {% elseif item.pageTitle != "" %}
+            {{item.pageTitle}}
+        {% endif %}
+        </a>
+
+	{% endfor %}
+</div>

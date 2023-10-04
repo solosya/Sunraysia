@@ -315,4 +315,24 @@
         }
     }
 
+    .app-mobileMenu {
+        background-color: var(--sec-color);
+        width: 100%;
+        display: none;
+
+        &_item {
+            display: block;
+            color: var(--white);
+            font-weight: 600;
+            padding: 15px;
+            line-height: 1.4;
+        }
+
+        @media #{$mobile} {
+            @include flexbox;
+            @include align-items(center);
+            @include justify-content(space-between);
+        }
+    }
 }
+
