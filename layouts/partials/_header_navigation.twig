@@ -6,6 +6,12 @@
     {% set cache = setCache("headermenu", headermenu, 500) %} 
 {% endif %}
 
+{% set mobileMenu = getCache("mobileMenu") %}
+{% if (mobileMenu is empty) %}
+    {% set mobileMenu = _Menu.get({'menuType': 'header', "menuGroupName":"mobileNav"}) %}
+    {% set cache = setCache("mobileMenu", mobileMenu, 500) %} 
+{% endif %}
+
 
 
 
@@ -219,6 +225,11 @@
 
 
             </div>
+
+            {# *************************************************
+                                    Mobile highlighter menu 
+                ***********************************************#}
+            {{ this.render('../../partials/_mobile-menu.twig', {'menu': mobileMenu}) | raw }}
         </div>
     </div>
 </header>
