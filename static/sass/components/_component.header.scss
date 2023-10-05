@@ -328,7 +328,7 @@
             line-height: 1.4;
         }
 
-        @media #{$mobile} {
+        @media #{$tablet} {
             @include flexbox;
             @include align-items(center);
             @include justify-content(space-between);
