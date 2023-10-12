@@ -314,26 +314,29 @@
             }
         }
     }
+}
+.app-mobileMenu {
+    background-color: var(--sec-color);
+    width: 100%;
+    display: none;
+    position: sticky;
+    top: 0;
+    z-index: 999;
 
-    .app-mobileMenu {
-        background-color: var(--sec-color);
-        width: 100%;
-        display: none;
+    &_item {
+        display: block;
+        color: var(--white);
+        font-weight: 600;
+        padding: 6px 15px;
+        font-size: 14px;
+        line-height: 1.4;
+        text-transform: uppercase;
+    }
 
-        &_item {
-            display: block;
-            color: var(--white);
-            font-weight: 600;
-            padding: 15px;
-            line-height: 1.4;
-            text-transform: uppercase;
-        }
-
-        @media #{$tablet}, #{$mobile} {
-            @include flexbox;
-            @include align-items(center);
-            @include justify-content(space-between);
-        }
+    @media #{$tablet}, #{$mobile} {
+        @include flexbox;
+        @include align-items(center);
+        @include justify-content(space-between);
     }
 }
 

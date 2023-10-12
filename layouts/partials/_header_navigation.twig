@@ -39,7 +39,7 @@
 {% endif %}
 
 
-<header class="c-header u-mobile-margin-bottom-20 u-tablet-margin-bottom-30 u-desktop-margin-bottom-50">
+<header class="c-header u-tablet-margin-bottom-30 u-desktop-margin-bottom-50">
     
 
     
@@ -227,15 +227,13 @@
 
 
             </div>
-
-            {# *************************************************
-                                    Mobile highlighter menu 
-                ***********************************************#}
-            {{ this.render('../../partials/_mobile-menu.twig', {'menu': mobileMenu}) | raw }}
         </div>
     </div>
 </header>
-
+{# *************************************************
+                    Mobile highlighter menu 
+***********************************************#}
+{{ this.render('../../partials/_mobile-menu.twig', {'menu': mobileMenu}) | raw }}
 
 
 
