@@ -224,7 +224,7 @@ body {
     // background: #fff;
     font-family: $font-family-sans-serif;
 
-    @media #{$media-ipadSmall} {
+    @media #{$media-ipadPortrait} {
         overflow-x: initial;
     }
 }
