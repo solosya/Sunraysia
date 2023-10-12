@@ -333,10 +333,15 @@
         text-transform: uppercase;
     }
 
-    @media #{$tablet}, #{$mobile} {
+    @media #{$media-ipadPortrait} {
         @include flexbox;
         @include align-items(center);
         @include justify-content(space-between);
+    }
+}
+.site-main {
+    @media #{$mobile} {
+        margin: 0 10px;
     }
 }
 
