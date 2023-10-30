@@ -63,6 +63,7 @@
             "lastname"          : ["notEmpty"], 
             "password"          : ["notEmpty"],
             "email"             : ["notEmpty"], 
+            "address1"           : ["notEmpty"], 
             "terms"             : ["isTrue"],
             "subscription_choice":["notEmpty"]
         };
