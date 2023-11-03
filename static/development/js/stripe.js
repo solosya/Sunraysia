@@ -62,8 +62,7 @@
             "firstname"         : ["notEmpty"], 
             "lastname"          : ["notEmpty"], 
             "password"          : ["notEmpty"],
-            "email"             : ["notEmpty"], 
-            "address1"           : ["notEmpty"], 
+            "email"             : ["notEmpty"],
             "terms"             : ["isTrue"],
             "subscription_choice":["notEmpty"]
         };
