@@ -62,7 +62,7 @@
             "firstname"         : ["notEmpty"], 
             "lastname"          : ["notEmpty"], 
             "password"          : ["notEmpty"],
-            "email"             : ["notEmpty"], 
+            "email"             : ["notEmpty"],
             "terms"             : ["isTrue"],
             "subscription_choice":["notEmpty"]
         };
@@ -234,6 +234,13 @@
             // $('#signup').val(signup);
             $input.val(name).addClass('shrink');
             $('#total_cost').text(cost);
+            
+            $addressFieldInfo = $('#displayAddress_info');
+            if(plan == '9d11bab3-b33e-492b-9c78-6ae8f09f417c') {
+                $addressFieldInfo.removeClass('d-none');
+            }else {
+                $addressFieldInfo.hasClass('d-none') ? '' : $addressFieldInfo.addClass('d-none');
+            }
 
             $('.j-plan-subscribe').each(function(i, e) {
                 var button = $(e);
