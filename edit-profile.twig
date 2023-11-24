@@ -42,17 +42,13 @@
 
     {% set totalPlanUserCount = pwstats['user_count'] %}
 
-    {% set managedUsersObj = _User.getPaywallManagedUsers() %}
+    {% set managedUsersObj = _User.getPaywallManagedUsers({"limit": 500}) %}
 
     {% if managedUsersObj['users'] is defined %}
         {% set managedUsers = managedUsersObj['users'] %}
     {% endif %}
     {% set managedUserCount = managedUsers | length %} 
 {% endif %}
-
-
-
-
 
 
 {% set articleCount = _AppHelper.getApplicationEnv() == 'DEV' ? 0 : 0 %}
