@@ -114,12 +114,12 @@
 
 <main id="main" class="site-main" role="main" data-layout="{{layoutTitle}}">
 
-{{ blogFeeds | keys }}
-
 {# *******************************************************
                 Fetch all needed feeds
 ******************************************************* #}
 {% for key in blogFeeds | keys %}
+
+    {{ key }}
 
     {% set break = false %}
     {% for blog in networkData.networkBlogs if not break %}
