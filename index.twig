@@ -119,8 +119,6 @@
 ******************************************************* #}
 {% for key in blogFeeds | keys %}
 
-    {{ key }}
-
     {% set break = false %}
     {% for blog in networkData.networkBlogs if not break %}
 
