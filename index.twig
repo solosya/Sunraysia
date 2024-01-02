@@ -44,7 +44,7 @@
 
         {% for i, panel in panels %}
 
-            {% if panels[pagesection]['active'] is not defined or panels[pagesection]['active'] == true %}
+            {% if panel['active'] is not defined or panel['active'] == true %}
 
                 {% if panel['articleOrder'] is defined %}
 
@@ -79,7 +79,7 @@
 
                     {% endif %}
                 {% endif %}
-                
+
             {% endif %}
 
         {% endfor %}
