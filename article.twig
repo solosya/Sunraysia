@@ -120,18 +120,46 @@
                     {% set ArticleContent = ArticleContent ~ para ~ '</p>' %}
                     {% if loop.index == adPos['position'] %}
                         {% set ArticleContent = ArticleContent ~ '
-                            <div class="u-margin-top-30 u-margin-bottom-30 '~ adPos['class'] ~'">
+                            <div class="u-margin-top-30 u-margin-bottom-30 ccc'~ adPos['class'] ~'">
                                 <div class="j-adslot" id="' ~ inarticleslot ~ '" data-adshape="banner"></div>
                             </div>' %}
                     {% endif %}
                 {% endfor %}
             {% endif %}
         {% endif %}
+
+        {% else %}
     {% endif %}
 
-    {# {% set storySplit = ArticleContent | split('<p>')  %}
-    {% if storySplit | length > 3 %}
+    {% set storySplit = ArticleContent | split('</p>') %}
+
+        {% if storySplit[3] %}
+                {% set ArticleContent = '' %}
+                {% for para in storySplit %}
+                    {% set ArticleContent = ArticleContent ~ para ~ '</p>' %}
+                    {% if loop.index == 3 %}
+                        {% if networkData['id'] == '451' %}
+                        {% set ArticleContent = ArticleContent ~ '<script data-wid="auto" type="text/javascript" src="https://content.viralize.tv/display/?zid=AAE89SfKQAO2gUjH"></script>' %}
+                        {% elseif networkData['id'] == '452' %}
+                            {% set ArticleContent = ArticleContent ~ '<script data-wid="auto" type="text/javascript" src="https://content.viralize.tv/display/?zid=AAFGZkdX9hrAMe34"></script>' %}
+                            
+                        {% elseif networkData['id'] == '453' %}
+                            {% set ArticleContent = ArticleContent ~ '<script data-wid="auto" type="text/javascript" src="https://content.viralize.tv/display/?zid=AAFGZ8wFPtqFkEhL"></script>' %}
+                            
+                        {% elseif networkData['id'] == '570' %}
+                            {% set ArticleContent = ArticleContent ~ '<script data-wid="auto" type="text/javascript" src="https://content.viralize.tv/display/?zid=AAFGZSAco4rnROta"></script>' %}
+                            
+                        {% endif %}
+                        
+                    {% endif %}
+                {% endfor %}
+        {% endif %}
+
+    
+    
+    {# {% if storySplit | length > 3 %}
         {% if networkData['id'] == '451' %}
+            {% set ArticleContent = '<p>' ~ [storySplit[1], storySplit[2]],  | join('<p>') %}
             <script data-wid="auto" type="text/javascript" src="https://content.viralize.tv/display/?zid=AAE89SfKQAO2gUjH"></script>
         {% elseif networkData['id'] == '452' %}
             <script data-wid="auto" type="text/javascript" src="https://content.viralize.tv/display/?zid=AAFGZkdX9hrAMe34"></script>
