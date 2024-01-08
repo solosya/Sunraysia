@@ -129,7 +129,7 @@
         {% endif %}
     {% endif %}
 
-    {% set storySplit = ArticleContent | split('<p>')  %}
+    {# {% set storySplit = ArticleContent | split('<p>')  %}
     {% if storySplit | length > 3 %}
         {% if networkData['id'] == '451' %}
             <script data-wid="auto" type="text/javascript" src="https://content.viralize.tv/display/?zid=AAE89SfKQAO2gUjH"></script>
@@ -140,7 +140,7 @@
         {% elseif networkData['id'] == '570' %}
             <script data-wid="auto" type="text/javascript" src="https://content.viralize.tv/display/?zid=AAFGZSAco4rnROta"></script>
         {% endif %}
-    {% endif %}
+    {% endif %} #}
     
     {% set forceCache = true %}
     {% set cacheKey = 'articleRecent' ~ blogInfo.id %}
