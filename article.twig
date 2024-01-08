@@ -128,6 +128,19 @@
             {% endif %}
         {% endif %}
     {% endif %}
+
+    {% set storySplit = ArticleContent | split('<p>')  %}
+    {% if storySplit | length > 3 %}
+        {% if networkData['id'] == '451' %}
+            <script data-wid="auto" type="text/javascript" src="https://content.viralize.tv/display/?zid=AAE89SfKQAO2gUjH"></script>
+        {% elseif networkData['id'] == '452' %}
+            <script data-wid="auto" type="text/javascript" src="https://content.viralize.tv/display/?zid=AAFGZkdX9hrAMe34"></script>
+        {% elseif networkData['id'] == '453' %}
+            <script data-wid="auto" type="text/javascript" src="https://content.viralize.tv/display/?zid=AAFGZ8wFPtqFkEhL"></script>
+        {% elseif networkData['id'] == '570' %}
+            <script data-wid="auto" type="text/javascript" src="https://content.viralize.tv/display/?zid=AAFGZSAco4rnROta"></script>
+        {% endif %}
+    {% endif %}
     
     {% set forceCache = true %}
     {% set cacheKey = 'articleRecent' ~ blogInfo.id %}
