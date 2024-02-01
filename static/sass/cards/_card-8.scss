@@ -4,9 +4,11 @@
         @include flex-direction(column, vertical);
         margin:0;
         box-shadow:none;
+        margin-bottom: 30px;
 
         &__container {
             padding:0 0 0 0;
+            height: auto;
         }
 
         &__category {
@@ -55,6 +57,12 @@
     @media #{$mobile} {
         @include card-8-base();
         @include card-name("C3 mobile");
+
+        .c-cards-view {
+            &__media {
+                margin-bottom: 20px;
+            }
+        }
     }
 }
 
@@ -67,7 +75,8 @@
 
     .c-cards-view {
         @include flex-direction(row, horizontal);
-        @include flex-height(136px);
+        //@include flex-height(136px);
+        min-height: 136px;
 
         &__media {
             @include flex-width(300px);
@@ -93,6 +102,10 @@
         @include card-name("C3 desktop");
 
         .c-cards-view {
+
+            &__media {
+                margin-right: 20px;
+            }
             &.without-image {
                 .c-cards-view {
                     &__container {
