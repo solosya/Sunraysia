@@ -98,7 +98,11 @@
                     <div class="col-12">
 
                         <div class="c-article__container c-article__container-sm u-margin-top-40">
+                            {% if showPaywall == true %}
+                                {{_AppHelper.getArticleExcerpt(article.content, 400) | raw}}
+                            {% else %}
                                 {{ ArticleContent | _resizeImages({'width': 600}) | raw }}
+                            {% endif %}
                         </div>
                         {% if showPaywall == true %}
                             <div class="c-article__paywalled-view u-margin-top-40 u-desktop-margin-top-70">
