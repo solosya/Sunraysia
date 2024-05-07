@@ -229,7 +229,8 @@
         {% if article.userHasBlogAccess == '1' and swap != '' and amp != true %}
             {{ this.render('_article_admin.twig', {
                 article  : article, 
-                position : position, 
+                position : position,
+                blogguid : params.blogguid,
                 type     : params.social == 0 ? "article" : "social"
             } ) | raw }}
         {% endif %}

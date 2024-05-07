@@ -88,6 +88,7 @@ var cardTemplateBottom =
                         title="{{pinTitle}}" \
                         class="btnhide social-tooltip PinArticleBtn {{# ifCond isPinned "==" 1 }}selected{{/ifCond}}" \
                         type="button" \
+                        data-guid= "{{guid}}" \
                         data-status="{{isPinned}}"> \
                     <i class="fa fa-thumb-tack"></i>\
                     <span class="u-display-none">{{pinText}}</span> \
