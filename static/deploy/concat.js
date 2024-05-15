@@ -16175,8 +16175,10 @@ var extend = function(child, parent) { for (var key in parent) { if (hasProp.cal
                 var postParams = {id: articleId, status: existingStatus, social: isSocial, position: position, _csrf: csrfToken};
 
                 if(typeof blogguid != 'undefined' && blogguid != "") {
+                    console.log(blogguid);
                     postParams['blogGuid'] = blogguid;
                 }
+                
                 
                 $.ajax({
                     type: 'POST',
@@ -16194,6 +16196,7 @@ var extend = function(child, parent) { for (var key in parent) { if (hasProp.cal
                     },
                     error: function(jqXHR, textStatus, errorThrown){
                         if (opts.onError && typeof opts.onError === 'function') {
+                            console.log('mayank error')
                             opts.onError(elem, jqXHR.responseText);
                         }
                     },

@@ -36,6 +36,7 @@
                 {{this.render('../_single-article.twig', {
                     article: articles[articleCount], 
                     position: (articleCount+1),
+                    feedBlogGuid: articles[articleCount]['requestedBlog']['guid'],
                     lazyload: false,
                     imageSize: {width: 300, height: 230},
                     containerClass: "card-4-mobile card-2-tablet card-2-desktop card-2-desktop-lg"
