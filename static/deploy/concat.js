@@ -20912,7 +20912,7 @@ var layouts = {
 Acme.SigninView = new Acme.Signin('modal', 'signin-modal', layouts);
 
 
-$('#signinBtn, #articleSigninBtn').on('click', function(e) {
+$(document).on('click', '#signinBtn, #articleSigninBtn, .j-signin', function(e) {
     e.preventDefault();
     Acme.SigninView.render("signin", "Log in");
 });
