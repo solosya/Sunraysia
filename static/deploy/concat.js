@@ -21281,7 +21281,7 @@ $('#signinBtn, #articleSigninBtn').on('click', function(e) {
                         text = `This email address already exist, please provide another email or <a class="j-signin" href="javascript:;">click here to login</a>`
                     }
                     console.log(text);
-                    $('#signupErrors').innerHTML = text;
+                    $('#signupErrors').html(text);
                 }   
             },
             error: function(data) {
