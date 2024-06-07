@@ -21276,8 +21276,12 @@ $('#signinBtn, #articleSigninBtn').on('click', function(e) {
                     var text = ''
                     for (var key in data.error) {
                         text = text + data.error[key] + " ";
-                    } 
-                    $('#signupErrors').text(text);
+                    }
+                    if(text.trim() == 'Email already exists. Please provide another email.') {
+                        text = `This email address already exist, please provide another email or <a class="j-signin" href="javascript:;">click here to login</a>`
+                    }
+                    console.log(text);
+                    $('#signupErrors').innerHTML(text);
                 }   
             },
             error: function(data) {
