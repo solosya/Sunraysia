@@ -130,8 +130,8 @@
 
         </div>
 
-        {% if config['inventory']['adSpace']['banner'][1] is defined %}
-            <div class="j-adslot u-desktop-margin-bottom-60 u-tablet-margin-bottom-40 u-mobile-margin-bottom-30" id="{{config['inventory']['adSpace']['banner'][1]}}" data-adshape="banner"></div>
+        {% if config['inventory']['adSpace']['banner'][2] is defined %}
+            <div class="j-adslot u-desktop-margin-bottom-60 u-tablet-margin-bottom-40 u-mobile-margin-bottom-30" id="{{config['inventory']['adSpace']['banner'][2]}}" data-adshape="banner"></div>
         {% endif %}
 
         <div class="row">
@@ -193,12 +193,15 @@
 
         </div>
 
-
-
-
-
-
-
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    {% if config['inventory']['adSpace']['banner'][2] is defined %}
+                        <div class="j-adslot" id="{{config['inventory']['adSpace']['banner'][2]}}" data-adshape="banner"></div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
 
 
         <div id="loadmore" class="row">
@@ -227,6 +230,17 @@
                 {% endif %}
 
                 </div>
+        </div>
+
+
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    {% if config['inventory']['adSpace']['banner'][3] is defined %}
+                        <div class="j-adslot" id="{{config['inventory']['adSpace']['banner'][3]}}" data-adshape="banner"></div>
+                    {% endif %}
+                </div>
+            </div>
         </div>
 
 
