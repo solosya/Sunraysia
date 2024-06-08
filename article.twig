@@ -328,7 +328,6 @@
                         {% endif %}
                         <div class="c-article__container"  itemprop="articleBody">
                             {{ArticleContent | raw}} 
-                            <div style="display:none">test data</div>
                         </div>
                     </div>
 
@@ -356,6 +355,15 @@
         {{this.render("partials/article/paywall.twig", {networkData: networkData, paywallType: paywallType }) | raw}}
     {% endif %}
 
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                {% if config['inventory']['adSpace']['banner'][2] is defined %}
+                    <div class="j-adslot" id="{{config['inventory']['adSpace']['banner'][2]}}" data-adshape="banner"></div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
 
     {% if recentArticles | length > 0 %}
         <div class="container">
@@ -390,8 +398,8 @@
         </div>
     {% endif %}
 
-    {% if config['inventory']['adSpace']['banner'][1] is defined %}
-        <div class="j-adslot" id="{{config['inventory']['adSpace']['banner'][1]}}" data-adshape="banner"></div>
+    {% if config['inventory']['adSpace']['banner'][3] is defined %}
+        <div class="j-adslot" id="{{config['inventory']['adSpace']['banner'][3]}}" data-adshape="banner"></div>
     {% endif %}
 
     {% set theKeywords = '' %}
