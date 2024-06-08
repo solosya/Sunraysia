@@ -209,6 +209,10 @@
         layout: layout,
     }) | raw }}
 
+    {% if config['inventory']['adSpace']['banner'][1] is defined and (config['inventory']['Under header'] is defined and config['inventory']['Under header'] == 1  ) %}
+        <div class="j-adslot advertisment__head" id="{{config['inventory']['adSpace']['banner'][1]}}" data-adshape="banner"></div>
+    {% endif %}
+    
     {% if config['inventory']['adSpace']['skyscraper'][0] is defined and 'centenary' not in layout|lower %}
         <div class="advertisment__skycontainer j-skycontainer">
             
