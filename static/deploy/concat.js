@@ -20912,7 +20912,7 @@ var layouts = {
 Acme.SigninView = new Acme.Signin('modal', 'signin-modal', layouts);
 
 
-$(document).on('click', '#signinBtn, #articleSigninBtn, .j-signin', function(e) {
+$(document).on('click', '#signinBtn, #articleSigninBtn, .j-signinModal', function(e) {
     e.preventDefault();
     Acme.SigninView.render("signin", "Log in");
 });
@@ -21278,7 +21278,7 @@ $(document).on('click', '#signinBtn, #articleSigninBtn, .j-signin', function(e) 
                         text = text + data.error[key] + " ";
                     }
                     if(text.trim() == 'Email already exists. Please provide another email.') {
-                        text = `This email address already exist, please provide another email or <a class="j-signin" href="javascript:;">click here to login</a>`
+                        text = `This email address already exist, please provide another email or <a class="j-signinModal" href="javascript:;">click here to login</a>`
                     }
                     console.log(text);
                     $('#signupErrors').html(text);
