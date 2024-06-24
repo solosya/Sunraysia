@@ -22097,7 +22097,7 @@ Acme.templates.signinFormTmpl =
     </div> \
     \
     <div class="c-form__buttons"> \
-        <button id="signinBtn" type="submit" class="c-button c-button--blue j-signin">Log in</button> \
+        <button id="modal-signinBtn" type="submit" class="c-button c-button--blue j-signin">Log in</button> \
     </div> \
     \
     <div class="c-login-modal__subaction"> \
