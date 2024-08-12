@@ -170,7 +170,23 @@
                     self.data['stripetoken'] = result.token.id;
                     self.data['planid'] = $('#planid').val();
                     self.data['redirect'] = false;
-                    submitForm();
+                    var usingCaptcha = false;
+                    // captcha_site_key is set in the subscribe twig template based on
+                    // rules set in the theme config and reCaptcha integration
+                    if (typeof window.Acme.captcha_site_key !== 'undefined') {
+                        usingCaptcha = true;
+                        grecaptcha.ready(function() {
+                            grecaptcha.execute(window.Acme.captcha_site_key, {action: 'submit'}).then(function(token) {
+                                self.data['g-recaptcha-response'] = token;
+                                submitForm();
+                            });
+                        });
+                    }
+
+
+                    if (!usingCaptcha) {
+                        submitForm();
+                    }
                 }
             });   
         }

@@ -1,5 +1,7 @@
 (function ($) {
-    window.Acme       = {};
+    if (typeof window.Acme === 'undefined') {
+        window.Acme   = {};
+    }    
     Acme.View         = {};
     Acme.Model        = {};
     Acme.Collection   = {};
