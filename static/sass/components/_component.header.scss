@@ -340,7 +340,8 @@
     }
 }
 .site-main {
-    @media #{$media-ipadPortrait} {
+    @media #{$mobile} {
         margin: 0 10px;
     }
 }
+

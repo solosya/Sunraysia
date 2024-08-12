@@ -1,10 +1,10 @@
 Acme.articleFeeds = {};
 
-$("img.lazyload").lazyload({
-  effect: "fadeIn",
-});
-
 $("document").ready(function () {
+  $("img.lazyload").lazyload({
+    effect: "fadeIn",
+  });
+
   var mobileView = 992;
   var desktopView = 1119;
   var pageWindow = $(window);
@@ -109,7 +109,6 @@ $("document").ready(function () {
   $(".user-menu-button-dropdown").click(function (event) {
     $(".user-menu-dropdown").toggle();
   });
-
 
   $(".js-hamDesktop").click(function (event) {
     event.preventDefault();

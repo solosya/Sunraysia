@@ -20,17 +20,25 @@
                 var position = parseInt($(elem).data('position'));
                 var existingStatus = $(elem).data('status');
                 var isSocial = $(elem).data('social');
+                var blogguid = $(elem).data('blogguid');
+
                 
                 if(isNaN(articleId) || articleId <= 0 || isNaN(position) || position <= 0) {
                     return;
                 }
-
                 var csrfToken = $('meta[name="csrf-token"]').attr("content");
+                var postParams = {id: articleId, status: existingStatus, social: isSocial, position: position, _csrf: csrfToken};
+
+                if(typeof blogguid != 'undefined' && blogguid != "") {
+                    postParams['blogGuid'] = blogguid;
+                }
+                
+                
                 $.ajax({
                     type: 'POST',
                     url: _appJsConfig.baseHttpPath + '/home/pin-article',
                     dataType: 'json',
-                    data: {id: articleId, status: existingStatus, social: isSocial, position: position, _csrf: csrfToken},
+                    data: postParams,
                     success: function(data, textStatus, jqXHR) {
                         $(elem).data('status', ((existingStatus == 1) ? 0 : 1));
                         var msg = (existingStatus == 1) ? "Article un-pinned successfully" : "Article pinned successfully";
@@ -42,6 +50,7 @@
                     },
                     error: function(jqXHR, textStatus, errorThrown){
                         if (opts.onError && typeof opts.onError === 'function') {
+                            console.log('mayank error')
                             opts.onError(elem, jqXHR.responseText);
                         }
                     },

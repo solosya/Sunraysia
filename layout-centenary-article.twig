@@ -257,7 +257,11 @@
 
 
                         <div class="c-article__container c-centenary-article__container">
-                                {{ ArticleContent | _resizeImages({'width': 600}) | raw }}
+                                {% if showPaywall == true %}
+                                    {{_AppHelper.getArticleExcerpt(article.content, 80) | raw}}
+                                {% else %}
+                                    {{ ArticleContent | _resizeImages({'width': 600}) | raw }}
+                                {% endif %}
                         </div>
 
 

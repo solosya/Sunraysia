@@ -97,10 +97,41 @@
 
 
 {% if showPaywall == true %}
-    {% set storySplit = ArticleContent | split('<p>')  %}
+    {% set ArticleContent = _AppHelper.getArticleExcerpt(ArticleContent, 400) | raw %}
+{% else %}
+    {% set ArticleContent = ArticleContent | _resizeImages({'width': 600, articleId: article.id, networkId:article.networkId }) | raw %}
+{% endif %}
+
+
+{% set storySplit = ArticleContent | split('</p>') %}
+
+{% if storySplit[1] %}
+    {% set ArticleContent = '' %}
+    {% for para in storySplit %}
+        {% set ArticleContent = ArticleContent ~ para ~ '</p>' %}
+        {% if loop.index == 1 %}
+            {% if networkData['id'] == '451' %}
+            {% set ArticleContent = ArticleContent ~ '<script data-wid="auto" type="text/javascript" src="https://content.viralize.tv/display/?zid=AAE89SfKQAO2gUjH"></script>' %}
+            {% elseif networkData['id'] == '452' %}
+                {% set ArticleContent = ArticleContent ~ '<script data-wid="auto" type="text/javascript" src="https://content.viralize.tv/display/?zid=AAFGZkdX9hrAMe34"></script>' %}
+                
+            {% elseif networkData['id'] == '453' %}
+                {% set ArticleContent = ArticleContent ~ '<script data-wid="auto" type="text/javascript" src="https://content.viralize.tv/display/?zid=AAFGZ8wFPtqFkEhL"></script>' %}
+                
+            {% elseif networkData['id'] == '570' %}
+                {% set ArticleContent = ArticleContent ~ '<script data-wid="auto" type="text/javascript" src="https://content.viralize.tv/display/?zid=AAFGZSAco4rnROta"></script>' %}
+                
+            {% endif %}
+            
+        {% endif %}
+    {% endfor %}
+{% endif %}
+
+{% if showPaywall == true %}
+    {# {% set storySplit = ArticleContent | split('<p>')  %}
     {% set para2_words = storySplit[2] | split(' ') | slice(0, 10) %}
     {% set para2 = para2_words | join(' ') ~ '</p>'  %}
-    {% set ArticleContent = '<p>' ~ [storySplit[1], storySplit[2]] | join('<p>') %}
+    {% set ArticleContent = '<p>' ~ [storySplit[1], storySplit[2]] | join('<p>') %} #}
 
 {% else %}
     {# Only grab these if article is not paywalled #}
@@ -120,14 +151,31 @@
                     {% set ArticleContent = ArticleContent ~ para ~ '</p>' %}
                     {% if loop.index == adPos['position'] %}
                         {% set ArticleContent = ArticleContent ~ '
-                            <div class="u-margin-top-30 u-margin-bottom-30 '~ adPos['class'] ~'">
+                            <div class="u-margin-top-30 u-margin-bottom-30 ccc'~ adPos['class'] ~'">
                                 <div class="j-adslot" id="' ~ inarticleslot ~ '" data-adshape="banner"></div>
                             </div>' %}
                     {% endif %}
                 {% endfor %}
             {% endif %}
         {% endif %}
+
+        {% else %}
     {% endif %}
+
+    
+    
+    {# {% if storySplit | length > 3 %}
+        {% if networkData['id'] == '451' %}
+            {% set ArticleContent = '<p>' ~ [storySplit[1], storySplit[2]],  | join('<p>') %}
+            <script data-wid="auto" type="text/javascript" src="https://content.viralize.tv/display/?zid=AAE89SfKQAO2gUjH"></script>
+        {% elseif networkData['id'] == '452' %}
+            <script data-wid="auto" type="text/javascript" src="https://content.viralize.tv/display/?zid=AAFGZkdX9hrAMe34"></script>
+        {% elseif networkData['id'] == '453' %}
+            <script data-wid="auto" type="text/javascript" src="https://content.viralize.tv/display/?zid=AAFGZ8wFPtqFkEhL"></script>
+        {% elseif networkData['id'] == '570' %}
+            <script data-wid="auto" type="text/javascript" src="https://content.viralize.tv/display/?zid=AAFGZSAco4rnROta"></script>
+        {% endif %}
+    {% endif %} #}
     
     {% set forceCache = true %}
     {% set cacheKey = 'articleRecent' ~ blogInfo.id %}
@@ -235,8 +283,8 @@
                                         </svg>
                                     </a>
                                     <a href="https://twitter.com/share?text={{ article.title|url_encode }}&url={{article.url}}"  target="_blank" class="c-article__social-link">
-                                        <svg  xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 18">
-                                            <path fill="#0e215d" fill-rule="evenodd" d="M19.938 2.823c.989-.588 1.662-1.42 2.02-2.496-.903.539-1.876.908-2.916 1.11C18.121.479 16.996 0 15.665 0c-1.28 0-2.371.445-3.275 1.336-.904.89-1.355 1.966-1.355 3.227 0 .336.033.68.102 1.033-1.893-.1-3.66-.571-5.297-1.412-1.636-.84-3.035-1.958-4.195-3.352-.426.705-.64 1.462-.64 2.269 0 .806.188 1.537.564 2.193.375.655.878 1.194 1.509 1.613-.734-.033-1.424-.226-2.072-.58-.018 1.16.333 2.126 1.048 2.95.717.824 1.604 1.345 2.661 1.563-.392.101-.793.151-1.202.151-.274 0-.563-.025-.87-.076.307.908.853 1.656 1.637 2.245.785.587 1.68.89 2.687.907-1.672 1.294-3.582 1.941-5.731 1.941-.41 0-.785-.017-1.125-.05 2.148 1.36 4.51 2.041 7.086 2.041 1.637.018 3.173-.234 4.604-.755 1.433-.522 2.661-1.202 3.685-2.042 1.023-.84 1.901-1.824 2.635-2.95.733-1.127 1.279-2.294 1.637-3.504.359-1.21.538-2.43.538-3.656 0-.253-.009-.446-.026-.58.904-.638 1.671-1.42 2.303-2.345 0 0-1.75.555-2.635.656z"/>
+                                        <svg xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 24 24" width="24" height="20">
+                                            <path fill="#0e215d" d="M 4.4042969 3 C 3.7572969 3 3.3780469 3.7287656 3.7480469 4.2597656 L 9.7363281 12.818359 L 3.7246094 19.845703 C 3.3356094 20.299703 3.6578594 21 4.2558594 21 L 4.9199219 21 C 5.2129219 21 5.4916406 20.871437 5.6816406 20.648438 L 10.919922 14.511719 L 14.863281 20.146484 C 15.238281 20.680484 15.849953 21 16.501953 21 L 19.835938 21 C 20.482937 21 20.862187 20.272188 20.492188 19.742188 L 14.173828 10.699219 L 19.900391 3.9902344 C 20.232391 3.6002344 19.955359 3 19.443359 3 L 18.597656 3 C 18.305656 3 18.027891 3.1276094 17.837891 3.3496094 L 12.996094 9.0097656 L 9.3945312 3.8554688 C 9.0205313 3.3194687 8.4098594 3 7.7558594 3 L 4.4042969 3 z"/>
                                         </svg>
                                     </a>
                                     <a href="https://www.linkedin.com/shareArticle?mini=true&url={{article.url}}&title={{article.title|url_encode}}"  target="_blank" class="c-article__social-link">
@@ -279,7 +327,7 @@
 
                         {% endif %}
                         <div class="c-article__container"  itemprop="articleBody">
-                            {{ ArticleContent | _resizeImages({'width': 600, articleId: article.id, networkId:article.networkId }) | raw }}
+                            {{ArticleContent | raw}} 
                         </div>
                     </div>
 
@@ -307,6 +355,15 @@
         {{this.render("partials/article/paywall.twig", {networkData: networkData, paywallType: paywallType }) | raw}}
     {% endif %}
 
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                {% if config['inventory']['adSpace']['banner'][2] is defined %}
+                    <div class="j-adslot" id="{{config['inventory']['adSpace']['banner'][2]}}" data-adshape="banner"></div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
 
     {% if recentArticles | length > 0 %}
         <div class="container">
@@ -341,8 +398,8 @@
         </div>
     {% endif %}
 
-    {% if config['inventory']['adSpace']['banner'][1] is defined %}
-        <div class="j-adslot" id="{{config['inventory']['adSpace']['banner'][1]}}" data-adshape="banner"></div>
+    {% if config['inventory']['adSpace']['banner'][3] is defined %}
+        <div class="j-adslot" id="{{config['inventory']['adSpace']['banner'][3]}}" data-adshape="banner"></div>
     {% endif %}
 
     {% set theKeywords = '' %}

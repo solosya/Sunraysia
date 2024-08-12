@@ -24,12 +24,12 @@
     {% set editSocial = 'j-editSocialPost' %}
 {% endif %}
 
-
 <div class="btn_overlay articleMenu">
     
     {# HIDE BUTTON #}
     <button title           = "Hide" 
             data-guid       = "{{guid}}" 
+            data-blogguid   = "{{blogguid}}" 
             class           = "btnhide social-tooltip HideBlogArticle" 
             type            = "button" 
             data-social     = "{{type}}">
@@ -61,6 +61,8 @@
     <button data-position   = "{{position}}" 
             data-social     = "{{type}}" 
             data-id         = "{{id}}" 
+            data-guid       = "{{guid}}" 
+            data-blogguid   = "{{blogguid}}"
             title           = "{{pinTitle}}" 
             class           = "btnhide social-tooltip PinArticleBtn {{pinClass}}" 
             type            = "button" 

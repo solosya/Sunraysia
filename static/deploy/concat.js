@@ -16165,17 +16165,25 @@ var extend = function(child, parent) { for (var key in parent) { if (hasProp.cal
                 var position = parseInt($(elem).data('position'));
                 var existingStatus = $(elem).data('status');
                 var isSocial = $(elem).data('social');
+                var blogguid = $(elem).data('blogguid');
+
                 
                 if(isNaN(articleId) || articleId <= 0 || isNaN(position) || position <= 0) {
                     return;
                 }
-
                 var csrfToken = $('meta[name="csrf-token"]').attr("content");
+                var postParams = {id: articleId, status: existingStatus, social: isSocial, position: position, _csrf: csrfToken};
+
+                if(typeof blogguid != 'undefined' && blogguid != "") {
+                    postParams['blogGuid'] = blogguid;
+                }
+                
+                
                 $.ajax({
                     type: 'POST',
                     url: _appJsConfig.baseHttpPath + '/home/pin-article',
                     dataType: 'json',
-                    data: {id: articleId, status: existingStatus, social: isSocial, position: position, _csrf: csrfToken},
+                    data: postParams,
                     success: function(data, textStatus, jqXHR) {
                         $(elem).data('status', ((existingStatus == 1) ? 0 : 1));
                         var msg = (existingStatus == 1) ? "Article un-pinned successfully" : "Article pinned successfully";
@@ -16187,6 +16195,7 @@ var extend = function(child, parent) { for (var key in parent) { if (hasProp.cal
                     },
                     error: function(jqXHR, textStatus, errorThrown){
                         if (opts.onError && typeof opts.onError === 'function') {
+                            console.log('mayank error')
                             opts.onError(elem, jqXHR.responseText);
                         }
                     },
@@ -20345,11 +20354,11 @@ Acme.UserProfileController.prototype.listingEvents = function() {
     
 Acme.articleFeeds = {};
 
-$("img.lazyload").lazyload({
-  effect: "fadeIn",
-});
-
 $("document").ready(function () {
+  $("img.lazyload").lazyload({
+    effect: "fadeIn",
+  });
+
   var mobileView = 992;
   var desktopView = 1119;
   var pageWindow = $(window);
@@ -20454,7 +20463,6 @@ $("document").ready(function () {
   $(".user-menu-button-dropdown").click(function (event) {
     $(".user-menu-dropdown").toggle();
   });
-
 
   $(".js-hamDesktop").click(function (event) {
     event.preventDefault();
@@ -20904,7 +20912,7 @@ var layouts = {
 Acme.SigninView = new Acme.Signin('modal', 'signin-modal', layouts);
 
 
-$('#signinBtn, #articleSigninBtn').on('click', function(e) {
+$(document).on('click', '#signinBtn, #articleSigninBtn, .j-signinModal', function(e) {
     e.preventDefault();
     Acme.SigninView.render("signin", "Log in");
 });
@@ -20982,7 +20990,7 @@ $('#signinBtn, #articleSigninBtn').on('click', function(e) {
             "firstname"         : ["notEmpty"], 
             "lastname"          : ["notEmpty"], 
             "password"          : ["notEmpty"],
-            "email"             : ["notEmpty"], 
+            "email"             : ["notEmpty"],
             "terms"             : ["isTrue"],
             "subscription_choice":["notEmpty"]
         };
@@ -21154,6 +21162,13 @@ $('#signinBtn, #articleSigninBtn').on('click', function(e) {
             // $('#signup').val(signup);
             $input.val(name).addClass('shrink');
             $('#total_cost').text(cost);
+            
+            $addressFieldInfo = $('#displayAddress_info');
+            if(plan == '9d11bab3-b33e-492b-9c78-6ae8f09f417c') {
+                $addressFieldInfo.removeClass('d-none');
+            }else {
+                $addressFieldInfo.hasClass('d-none') ? '' : $addressFieldInfo.addClass('d-none');
+            }
 
             $('.j-plan-subscribe').each(function(i, e) {
                 var button = $(e);
@@ -21261,8 +21276,12 @@ $('#signinBtn, #articleSigninBtn').on('click', function(e) {
                     var text = ''
                     for (var key in data.error) {
                         text = text + data.error[key] + " ";
-                    } 
-                    $('#signupErrors').text(text);
+                    }
+                    if(text.trim() == 'Email already exists. Please provide another email.') {
+                        text = `This email address already exist, please provide another email or <a class="j-signinModal" href="javascript:;">click here to login</a>`
+                    }
+                    console.log(text);
+                    $('#signupErrors').html(text);
                 }   
             },
             error: function(data) {
@@ -21807,6 +21826,7 @@ var cardTemplateBottom =
                         title="{{pinTitle}}" \
                         class="btnhide social-tooltip PinArticleBtn {{# ifCond isPinned "==" 1 }}selected{{/ifCond}}" \
                         type="button" \
+                        data-guid= "{{guid}}" \
                         data-status="{{isPinned}}"> \
                     <i class="fa fa-thumb-tack"></i>\
                     <span class="u-display-none">{{pinText}}</span> \
@@ -22077,7 +22097,7 @@ Acme.templates.signinFormTmpl =
     </div> \
     \
     <div class="c-form__buttons"> \
-        <button id="signinBtn" type="submit" class="c-button c-button--blue j-signin">Log in</button> \
+        <button id="modal-signinBtn" type="submit" class="c-button c-button--blue j-signin">Log in</button> \
     </div> \
     \
     <div class="c-login-modal__subaction"> \

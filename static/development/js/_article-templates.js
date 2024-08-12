@@ -88,6 +88,7 @@ var cardTemplateBottom =
                         title="{{pinTitle}}" \
                         class="btnhide social-tooltip PinArticleBtn {{# ifCond isPinned "==" 1 }}selected{{/ifCond}}" \
                         type="button" \
+                        data-guid= "{{guid}}" \
                         data-status="{{isPinned}}"> \
                     <i class="fa fa-thumb-tack"></i>\
                     <span class="u-display-none">{{pinText}}</span> \
@@ -358,7 +359,7 @@ Acme.templates.signinFormTmpl =
     </div> \
     \
     <div class="c-form__buttons"> \
-        <button id="signinBtn" type="submit" class="c-button c-button--blue j-signin">Log in</button> \
+        <button id="modal-signinBtn" type="submit" class="c-button c-button--blue j-signin">Log in</button> \
     </div> \
     \
     <div class="c-login-modal__subaction"> \
