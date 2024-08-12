@@ -1,5 +1,7 @@
 (function ($) {
+    console.log('setting up framework')
     if (typeof window.Acme === 'undefined') {
+        console.log('setting Acme namespace')
         window.Acme   = {};
     }    
     Acme.View         = {};
