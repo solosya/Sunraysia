@@ -387,7 +387,7 @@
                 if (typeof window.Acme === "undefined") {
                     window.Acme = {};
                 }
-
+                console.log('setting site key', "{{site_key}}" )
                 window.Acme.captcha_site_key = "{{site_key}}";
             </script>
         {% endif %}
