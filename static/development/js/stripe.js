@@ -151,8 +151,25 @@
             if ( this.data.signup == 1 ) {
                 self.data['signuponly'] = 1;
             }
+           
             
-            submitForm();
+            var usingCaptcha = false;
+            // captcha_site_key is set in the subscribe twig template based on
+            // rules set in the theme config and reCaptcha integration
+            if (typeof window.Acme.captcha_site_key !== 'undefined') {
+                usingCaptcha = true;
+                grecaptcha.ready(function() {
+                    grecaptcha.execute(window.Acme.captcha_site_key, {action: 'submit'}).then(function(token) {
+                        self.data['g-recaptcha-response'] = token;
+                        submitForm();
+                    });
+                });
+            }
+
+
+            if (!usingCaptcha) {
+                submitForm();
+            }
 
         } else {
 

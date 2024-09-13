@@ -106,7 +106,6 @@
                         var forecastTmp = Handlebars.compile(this.templates.forecast);
                         var range = Math.round(data.day_high) + '&#176; - ' + Math.round(data.day_low) + '&#176;'
 
-                        console.log('making weather drowpdown panel');
                         this.container.html(
                             weatherTmp( {
                                 "icon": weatherIcons( data.icon ),
