@@ -142,7 +142,7 @@
 
                                                                            
 
-                                        <div class="c-paywall-card__panel">
+                                        <div class="c-paywall-card__panel bottom_panel">
 
                                             <ul class="c-paywall-card__Details c-paywall-card__Details-md">
                                                 <li>{{(plan.description|replace({'@': '</li><li>'}))|raw}}</li>
@@ -166,8 +166,6 @@
                                             >Select</button>
                                             {% if plan.trial_status == "1" %}
                                                 <div class="c-button" style="color:#c51515;background-color:#fff;cursor:unset;">Includes {{plan.trial_period}}-day trial</div>
-                                            {% else %}
-                                                <div class="c-button" style="color:#fff;background-color:#fff;cursor:unset;"></div>
                                             {% endif %}
 
 
