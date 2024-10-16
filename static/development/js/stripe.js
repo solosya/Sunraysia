@@ -115,7 +115,7 @@
             }
         }
     };
-    SubscribeForm.prototype.submit = function(event) 
+    SubscribeForm.prototype.submit = async function(event) 
     {
         var self = this;
         event.preventDefault();
@@ -130,14 +130,34 @@
             return;
         }
 
-        function submitForm() {
-            formhandler(self.data, '/auth/paywall-signup').then(function(response) {
+        async function generateRecaptchaToken() {
+            return new Promise((resolve) => {
+                grecaptcha.ready(function () {
+                grecaptcha
+                    .execute(window.Acme.captcha_site_key, { action: "submit" })
+                    .then(function (token) {
+                    resolve(token);
+                    });
+                });
+            });
+        }
 
+        async function submitForm() {
+
+            if (typeof window.Acme.captcha_site_key !== "undefined") {
+                self.data["g-recaptcha-response"] = await generateRecaptchaToken();
+            }
+
+            var idempotency_key = $("#idempotency_key").html();
+            if (typeof idempotency_key !== "undefined" && idempotency_key != "") {
+                self.data["idempotency_key"] = idempotency_key; // Duplicate Request Prevent
+            }
+
+            formhandler(self.data, '/auth/paywall-signup').then(function(response) {
                 if (response.success == 1) {
                     // setTimeout('window.location.href = location.origin + "/auth/thank-you";', 2000);
                     window.location.href = location.origin + '/auth/thank-you';
                 }
-                
             });
         }
 
@@ -156,26 +176,28 @@
             var usingCaptcha = false;
             // captcha_site_key is set in the subscribe twig template based on
             // rules set in the theme config and reCaptcha integration
-            if (typeof window.Acme.captcha_site_key !== 'undefined') {
-                usingCaptcha = true;
-                grecaptcha.ready(function() {
-                    grecaptcha.execute(window.Acme.captcha_site_key, {action: 'submit'}).then(function(token) {
-                        self.data['g-recaptcha-response'] = token;
-                        submitForm();
-                    });
-                });
-            }
+            // if (typeof window.Acme.captcha_site_key !== 'undefined') {
+            //     usingCaptcha = true;
+            //     grecaptcha.ready(function() {
+            //         grecaptcha.execute(window.Acme.captcha_site_key, {action: 'submit'}).then(function(token) {
+            //             self.data['g-recaptcha-response'] = token;
+            //             submitForm();
+            //         });
+            //     });
+            // }
 
 
-            if (!usingCaptcha) {
-                submitForm();
-            }
+            // if (!usingCaptcha) {
+            //     submitForm();
+            // }
+
+            await submitForm();
 
         } else {
 
             modal.render("spinner", "Your request is being processed.");
 
-            var stripeCall = stripe.createToken(card).then(function(result) {
+            var stripeCall = stripe.createToken(card).then(async function(result) {
                 if (result.error) {
                     modal.closeWindow();
                     // Inform the user if there was an error
@@ -187,23 +209,24 @@
                     self.data['stripetoken'] = result.token.id;
                     self.data['planid'] = $('#planid').val();
                     self.data['redirect'] = false;
+                    await submitForm();
                     var usingCaptcha = false;
                     // captcha_site_key is set in the subscribe twig template based on
                     // rules set in the theme config and reCaptcha integration
-                    if (typeof window.Acme.captcha_site_key !== 'undefined') {
-                        usingCaptcha = true;
-                        grecaptcha.ready(function() {
-                            grecaptcha.execute(window.Acme.captcha_site_key, {action: 'submit'}).then(function(token) {
-                                self.data['g-recaptcha-response'] = token;
-                                submitForm();
-                            });
-                        });
-                    }
+                    // if (typeof window.Acme.captcha_site_key !== 'undefined') {
+                    //     usingCaptcha = true;
+                    //     grecaptcha.ready(function() {
+                    //         grecaptcha.execute(window.Acme.captcha_site_key, {action: 'submit'}).then(function(token) {
+                    //             self.data['g-recaptcha-response'] = token;
+                    //             submitForm();
+                    //         });
+                    //     });
+                    // }
 
 
-                    if (!usingCaptcha) {
-                        submitForm();
-                    }
+                    // if (!usingCaptcha) {
+                    //     submitForm();
+                    // }
                 }
             });   
         }
@@ -419,6 +442,10 @@
 
                     formdata = {"stripetoken":result.token.id}
                     formhandler(formdata, '/user/update-payment-details').then(function() {
+                        var idempotency_key = $('#idempotency_key').html();
+                        if(typeof idempotency_key !== "undefined" && idempotency_key != "") { 
+                            requestData['idempotency_key'] = idempotency_key; // Duplicate Request Prevent 
+                        } 
                         modal.closeWindow();
                         location.reload();
                     });
