@@ -197,7 +197,7 @@
 <body class="body {{ layout }} {{ pageClass }}" data-class="{{ pageClass | split(' ')[0] }}"  data-networkid="{{networkData['id']}}" data-v="27">
 
 {{ this.beginBody() }}
-      
+    <div id="idempotency_key" class="u-hide" >{{_AppHelper.getStripeIdempotencyKey()}}</div>
     {% if config['inventory']['adSpace']['banner'][0] is defined %}
         <div class="j-adslot advertisment__head" id="{{config['inventory']['adSpace']['banner'][0]}}" data-adshape="banner"></div>
     {% endif %}
