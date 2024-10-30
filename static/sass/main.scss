@@ -191,6 +191,6 @@
 .layout-paywall .j-adslot-filled,  
 .layout-paywall + ins, 
 .layout-paywall + iframe + ins,
-.layout-paywall + iframe:nth-of-type(2) + ins,
-.layout-paywall + iframe:nth-of-type(3) + ins,
-.layout-paywall + iframe:nth-of-type(4) + ins {display:none !important;}
+.layout-paywall + iframe + iframe + ins,
+.layout-paywall + iframe + iframe + iframe + ins,
+.layout-paywall + iframe + iframe + iframe + iframe + ins {display:none !important;}
