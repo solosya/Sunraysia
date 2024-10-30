@@ -188,3 +188,6 @@
 @import "acme-card";
 @import "acme-card-1";
 @import "acme-card-10";  // classifieds lightbox
+.layout-paywall .j-adslot-filled,  
+.layout-paywall + ins, 
+.layout-paywall + iframe + ins {display:none !important;}
