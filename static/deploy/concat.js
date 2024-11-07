@@ -21371,11 +21371,11 @@ $(document).on('click', '#signinBtn, #articleSigninBtn, .j-signinModal', functio
                     // Send the token to your server
 
                     formdata = {"stripetoken":result.token.id}
+                    var idempotency_key = $('#idempotency_key').html();
+                    if(typeof idempotency_key !== "undefined" && idempotency_key != "") { 
+                        formdata['idempotency_key'] = idempotency_key; // Duplicate Request Prevent 
+                    } 
                     formhandler(formdata, '/user/update-payment-details').then(function() {
-                        var idempotency_key = $('#idempotency_key').html();
-                        if(typeof idempotency_key !== "undefined" && idempotency_key != "") { 
-                            requestData['idempotency_key'] = idempotency_key; // Duplicate Request Prevent 
-                        } 
                         modal.closeWindow();
                         location.reload();
                     });
