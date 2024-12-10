@@ -33,10 +33,14 @@
 
 
         {% set activeClass = '' %}
-
-
-        {% if (parentItem.link == _AppHelper.getServerUrl()) or (subMenu and name | lower == current | lower) %}
-            {% set activeClass = 'open' %}
+        {% if url_prefix is defined and url_prefix is not empty %}
+            {% if (parentItem.link == _AppHelper.getServerUrl()) or (subMenu and (name | lower == current | lower and url_prefix == parentItem.blogUrlPrefix)) %}
+                {% set activeClass = 'open' %}
+            {% endif %}
+        {% else %}
+            {% if (parentItem.link == _AppHelper.getServerUrl()) or (subMenu and name | lower == current | lower) %}
+                {% set activeClass = 'open' %}
+            {% endif %}
         {% endif %}
 
         <li class="c-classified-menu__item {{activeClass}}">
@@ -46,7 +50,7 @@
                 {% if children %}
                     {% set pageType = "category" %}
                 {% endif %}
-                href="?{{pageType}}={{name | replace({" " : '%20'}) | replace({"&":"%26"}) | lower}}"
+                href="?{{pageType}}={{name | replace({" " : '%20'}) | replace({"&":"%26"}) | lower}}&key={{parentItem.blogUrlPrefix}}"
 
                 {% if parentItem.target != "" %} 
                     target="{{parentItem.target}}"
@@ -75,7 +79,8 @@
                     'menu': parentItem.children,
                     'current': current,
                     'subMenu': true,
-                    'display': display
+                    'display': display,
+                    'url_prefix': url_prefix
                 }) | raw }}
             {% endif %}
         </li>
