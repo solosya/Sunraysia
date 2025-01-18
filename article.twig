@@ -45,6 +45,9 @@
 
 
 {% set showPaywall = false %}
+
+{% set paywallReason = article.showPaywallReason is defined ? article.showPaywallReason : "" %}
+
 {% set ArticleContent = article.content %}
 {% set pwstats = {} %}
 {% if not _User.isGuest() %}
@@ -219,7 +222,7 @@
 {% endif %}
 
 
-<main id="main" class="u-margin-top-60 u-margin-bottom-60" role="main" itemscope itemtype="http://schema.org/NewsArticle">
+<main id="main" class="u-margin-top-60 u-margin-bottom-60" role="main"  data-paywall-reason="{{paywallReason}}" itemscope itemtype="http://schema.org/NewsArticle">
     <meta itemscope itemprop="mainEntityOfPage"  itemType="https://schema.org/WebPage" itemid="{{article.url}}"/>
         <meta itemprop="url" content="{{article.url}}">
         <meta itemprop="dateModified" content="{{article.updatedAt}}">
