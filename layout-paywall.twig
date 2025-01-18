@@ -116,9 +116,11 @@
 
                 <div class="row u-margin-top-100 u-tablet-margin-top-40">
                     
-                    <div class="offset-lg-1 col-lg-10" style="background:yello">
+                    <div class="offset-lg-1 col-lg-10">
                         <div class="row c-payWall--pricing__planbox justify-content-md-center">
-                            
+                            <div class="c-paywall-header u-text-center" style="display:none">
+                                <div class="c-paywall-header__title" data-b="bow">Subscribe to <span class="c-paywall-header__title-break">{{networkData.title}}</span></div>
+                            </div>
 			                {% for plan in plans %}
                                
 
@@ -140,7 +142,7 @@
 
                                                                            
 
-                                        <div class="c-paywall-card__panel">
+                                        <div class="c-paywall-card__panel bottom_panel">
 
                                             <ul class="c-paywall-card__Details c-paywall-card__Details-md">
                                                 <li>{{(plan.description|replace({'@': '</li><li>'}))|raw}}</li>
@@ -164,8 +166,6 @@
                                             >Select</button>
                                             {% if plan.trial_status == "1" %}
                                                 <div class="c-button" style="color:#c51515;background-color:#fff;cursor:unset;">Includes {{plan.trial_period}}-day trial</div>
-                                            {% else %}
-                                                <div class="c-button" style="color:#fff;background-color:#fff;cursor:unset;"></div>
                                             {% endif %}
 
 
@@ -387,7 +387,6 @@
                 if (typeof window.Acme === "undefined") {
                     window.Acme = {};
                 }
-                console.log('setting site key', "{{site_key}}" )
                 window.Acme.captcha_site_key = "{{site_key}}";
             </script>
         {% endif %}

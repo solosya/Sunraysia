@@ -13,10 +13,14 @@
 {% endif %}
 
 
-{% set DeadlineText = "Deadlines: Monday edition – 10am, 3 days prior. Tuesday to Saturday editions – 10am, 1 day prior. Discounts apply for publishing on multiple days." %}
+{% set DeadlineText = "Deadlines: Monday edition – 10am, 3 days prior. Wednesday, Friday and Saturday editions – 10am, 1 day prior. Discounts apply for publishing on multiple days." %}
 
 {% if networkTitle == 'The Guardian'  or networkTitle == 'Gannawarra Times' %}
-    {% set DeadlineText = "Monday edition: Deadline 4pm Friday<br />Wednesday edition: Deadline 12pm Tuesday<br />Friday edition: Deadline 12pm Thursday" %}
+    {% set DeadlineText = "Tuesday edition: Deadline 12pm Monday<br />Friday edition: Deadline 12pm Thursday" %}
+{% endif %}
+
+{% if networkTitle == 'Broken Hill Times' %}
+    {% set DeadlineText = "Deadlines: Friday edition – 10am, 1 day prior. Discounts apply for publishing on multiple days." %}
 {% endif %}
 
 
@@ -69,10 +73,10 @@
                                         <li class="u-font-size-15 u-line-height-15">1) Registration numbers are required for all relevant classifications (motor vehicles, caravans...)</li>
                                         <li class="u-font-size-15 u-line-height-15">2) IDs are required when placing a birth notice, wedding notice and engagement notice</li>
                                         <li class="u-font-size-15 u-line-height-15">3) All trade ads must have the licence name and no. appear in the ad</li>
-                                        
-                                        {% if networkTitle == 'The Guardian'  or networkTitle == 'Gannawarra Times' %}
+                                        <li class="u-font-size-15 u-line-height-15">4) All pet notices must include a source number from PER </li>
+                                        {# {% if networkTitle == 'The Guardian'  or networkTitle == 'Gannawarra Times' %}
                                             <li class="u-font-size-15">4) All pet notices must include a source number from PER </li>
-                                        {% endif %}
+                                        {% endif %} #}
 
                                     </ul>
                                     <ul class="c-formrequirement__list u-margin-top-20">

@@ -12,7 +12,7 @@
 {% set articleCount = 0 %}
 
 {% set contentType = "article" %}
-{% if blogData['additionalInfo']['contenttype'] is defined and blogData['additionalInfo']['contenttype'] is not empty %}
+{% if blogData['additionalInfo']['contenttype'] is defined %}
     {% set contentType = blogData['additionalInfo']['contenttype'] %}
 {% endif %}
 
@@ -26,21 +26,14 @@
 {# This page can either render panels or entire section work of articles #}
 {% set fullPage = false %}
 {% set limit = 3 %}
- {% set url_prefix = "" %}
-{% if url.query | length > 0 %}
 
-   
-    {% if url.query.key is defined and url.query.key != "" %}
-        {% set url_prefix = url.query.key  %}
-    {% endif %}
+{% if url.query | length > 0 %}
 
 
     {# SECTION VIEW #}
     {% if url.query.section is defined and url.query.section != "" %}
         {% set section = url.query.section | replace({'%20': " "}) %}
-        
-        {% set panels = [{'blogTitle': section, 'blogUrlPrefix': url_prefix}] %}
-       
+        {% set panels = [{'blogTitle': section}] %}
         {% set currentPage = section %}
 
         {% set blogTitle = "" %}
@@ -49,26 +42,18 @@
         {% set limit = 12 %}
     {% endif %}
 
-    
-
     {# CATEGORY VIEW #}
     {% if url.query.category is defined and url.query.category != "" %}
 
         {% set currentPage = url.query.category | replace({'%20': " "}) | replace({"%26":"&"}) %}
+        
         {# if category view, we need to get the sections within this category to display
         as panels.  We get them from the sidemenu #}
         {% set break = false %}
         {% for panel in sideMenu if not break  %}
-            {% if url_prefix is not empty %}
-                {% if panel.blogTitle | lower == currentPage | lower and panel.blogUrlPrefix == url_prefix %}
-                    {% set panels = panel.children %}
-                    {% set break = true %}
-                {% endif %}
-            {% else %}
-                {% if panel.blogTitle | lower == currentPage | lower  %}
-                    {% set panels = panel.children %}
-                    {% set break = true %}
-                {% endif %}
+            {% if panel.blogTitle | lower == currentPage | lower %}
+                {% set panels = panel.children %}
+                {% set break = true %}
             {% endif %}
         {% endfor %}
     {% endif %}
@@ -80,7 +65,6 @@
 
 {# Get the blog feed for the section(s)  #}
 {% for panel in panels %}
-
 
     {% set break = false %}
     
@@ -100,55 +84,26 @@
 
 
         {# FOR PRODUCTION #}
-        {% if panel.blogUrlPrefix is defined and panel.blogUrlPrefix is not empty %}
 
-            {% if blogTitle | lower == panel.blogTitle | lower and panel.blogUrlPrefix == blog.url_prefix %}
+        {% if blogTitle | lower == panel.blogTitle | lower %}
+            
+            {% set feed = _Blog.getBlogFeed({
+                'offset' : 0, 
+                'blogid' : blog.guid,
+                'limit'  : limit
+                })
+            %}
 
-                {% set feed = _Blog.getBlogFeed({
-                    'offset' : 0, 
-                    'blogid' : blog.guid,
-                    'limit'  : limit
-                    })
-                %}
+            {% set blogFeeds = blogFeeds | merge({
+                (blog.title) : {
+                    'feed'      : feed,
+                    'link'      : blog.link,
+                    'guid'      : blog.guid,
+                    'count'     : _Blog.getBlogFeedArticleCount({ "blog_id": blog.id})
 
-                {% set blogFeeds = blogFeeds | merge({
-                    (blog.title) : {
-                        'feed'      : feed,
-                        'link'      : blog.link,
-                        'guid'      : blog.guid,
-                        'count'     : _Blog.getBlogFeedArticleCount({ "blog_id": blog.id})
-                        }
+                    }
                 }) %}
-
-                {% set break = true %}
-
-            {% endif %}
-
-
-        {% else %}
-
-            {% if blogTitle | lower == panel.blogTitle | lower %}
-
-                {% set feed = _Blog.getBlogFeed({
-                    'offset' : 0, 
-                    'blogid' : blog.guid,
-                    'limit'  : limit
-                    })
-                %}
-
-                {% set blogFeeds = blogFeeds | merge({
-                    (blog.title) : {
-                        'feed'      : feed,
-                        'link'      : blog.link,
-                        'guid'      : blog.guid,
-                        'count'     : _Blog.getBlogFeedArticleCount({ "blog_id": blog.id})
-                        }
-                }) %}
-
-                {% set break = true %}
-
-            {% endif %}
-
+            {% set break = true %}
         {% endif %}
 
     {% endfor %}
@@ -216,11 +171,10 @@
                         Classifieds Side Menu
               ********************************************* #}
             <aside class="acme-col-12 acme-col-lg-3 acme-col-md-4 acme-col-sm-4">
-                <div id="classified-menu" class="c-classified-menu c-classified-menu-xs ii">
+                <div id="classified-menu" class="c-classified-menu c-classified-menu-xs">
                     {{ this.render('/partials/_menu-classifieds.twig', {
                         'menu': sideMenu,
-                        'current': currentPage,
-                        'url_prefix': url_prefix
+                        'current': currentPage
                     }) | raw }}
                 </div>
             </aside>

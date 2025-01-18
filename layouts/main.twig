@@ -103,7 +103,7 @@
 
 
     {% if _AppHelper.getApplicationEnv() == 'PROD'%}
-        <link rel="stylesheet" href="{{networkData.templatePath}}/static/deploy/concat.min.css?v=916c8f83" type="text/css" media="all">
+        <link rel="stylesheet" href="{{networkData.templatePath}}/static/deploy/concat.min.css?v=679f5959" type="text/css" media="all">
     {% else %}
 
         <link rel='stylesheet' href='{{networkData.templatePath}}/static/deploy/concat.css' type='text/css' media='all' />
@@ -195,10 +195,10 @@
 </head>
 
 
-<body class="body {{ layout }} {{ pageClass }}" data-class="{{ pageClass | split(' ')[0] }}"  data-networkid="{{networkData['id']}}" data-v="26">
+<body class="body {{ layout }} {{ pageClass }}" data-class="{{ pageClass | split(' ')[0] }}"  data-networkid="{{networkData['id']}}" data-v="27">
 
 {{ this.beginBody() }}
-      
+    <div id="idempotency_key" class="u-hide" >{{_AppHelper.getStripeIdempotencyKey()}}</div>
     {% if config['inventory']['adSpace']['banner'][0] is defined %}
         <div class="j-adslot advertisment__head" id="{{config['inventory']['adSpace']['banner'][0]}}" data-adshape="banner"></div>
     {% endif %}
