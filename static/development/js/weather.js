@@ -22,20 +22,22 @@
         {
             var self = this;
             // Acme.server.fetch('https://weather.pagemasters.com.au/weather?q=' + this.location)
-            Acme.server.fetch('https://weather.publish.net.au/weather?q=' + this.location)
-                .done(function(r) {
-                    self.data = r.data[0];
-                    if (self.data.location.indexOf("Err:") == 0) {
-                        localStorage.removeItem('weather-location');
-                        localStorage.removeItem('weather-town');
-                        
-                    } else {
-                        Acme.PubSub.publish("state_changed", {'weather-data': self});
-                    }
+            if(this.location != undefined) {  
+                Acme.server.fetch('https://weather.publish.net.au/weather?q=' + this.location)
+                    .done(function(r) {
+                        self.data = r.data[0];
+                        if (self.data.location.indexOf("Err:") == 0) {
+                            localStorage.removeItem('weather-location');
+                            localStorage.removeItem('weather-town');
+                            
+                        } else {
+                            Acme.PubSub.publish("state_changed", {'weather-data': self});
+                        }
 
-                }).fail(function(r) {
-                    console.log(r);
-                });
+                    }).fail(function(r) {
+                        console.log(r);
+                    });
+            }
         };
     
 
